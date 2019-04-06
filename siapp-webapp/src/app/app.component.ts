@@ -6,6 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  
+  isSigned = false;
 
-  title = 'siapp-webapp';
+  constructor() {
+
+  }
+
+  doLogin($event) {
+    console.log("el fer es una tola pero me la chupa");
+    this.isSigned = true;
+  }
+
+
 }

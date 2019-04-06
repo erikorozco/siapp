@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
 import { TopbarComponent } from './modules/dashboard/components/topbar/topbar.component';
+import { LoginComponent } from './modules/users/components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    TopbarComponent
+    TopbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

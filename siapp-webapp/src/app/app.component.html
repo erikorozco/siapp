@@ -1,2 +1,12 @@
-<app-sidebar></app-sidebar>
-<app-topbar></app-topbar>
+<ng-container *ngIf="!isSigned">
+    <app-login (loginHandler)="doLogin($event)"></app-login>
+</ng-container>
+
+<ng-container *ngIf="isSigned">
+    <div id="page-top">
+        <div id="wrapper">
+            <app-sidebar class="bg-gradient-primary"></app-sidebar>
+            <app-topbar></app-topbar>
+        </div>
+    </div>
+</ng-container>
