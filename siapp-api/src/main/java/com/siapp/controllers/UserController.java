@@ -12,7 +12,7 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import com.siapp.exceptions.ResourceNotFound;
 import com.siapp.lists.UserList;
 import com.siapp.models.User;
-import com.siapp.repositories.UserRepository;
+import com.siapp.services.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponses;
 public class UserController {
 
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
     @ApiOperation(value = "Get all users", notes = "Returns a list of Users.class", response = UserList.class, responseContainer="List")
 //    @ApiResponses(value={
@@ -36,8 +36,8 @@ public class UserController {
 //    		@ApiResponse(code=404,message="Note not found", response=ResourceNotFound.class)
 //	})
     @GetMapping("/getAllUsers")
-    public List<User> getAllNotes() {
-        return userRepository.findAll();
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 	
 }
