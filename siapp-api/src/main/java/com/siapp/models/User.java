@@ -22,61 +22,65 @@ import java.util.Date;
 public class User implements Serializable {
 
 	@Id
+	@Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    private Integer id;
 	
-	@NotBlank
-    private Long id_terapeuta;
+	@Column(name = "id_terapeuta", nullable = false)
+    private Integer terapistId;
 
     @NotBlank
-    private String nom_usuario;
+    @Column(name = "nom_usuario")
+    private String username;
 
     @NotBlank
-    private String contraseña;
+    @Column(name = "contraseña")
+    private String password;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "creado", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(name = "actualizado", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
     
     //Setters and Getters
 
-	public Long getId_usuario() {
-		return id_usuario;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId_usuario(Long id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Long getId_terapeuta() {
-		return id_terapeuta;
+	public Integer getTerapistId() {
+		return terapistId;
 	}
 
-	public void setId_terapeuta(Long id_terapeuta) {
-		this.id_terapeuta = id_terapeuta;
+	public void setTerapistId(Integer terapistId) {
+		this.terapistId = terapistId;
 	}
 
-	public String getNom_usuario() {
-		return nom_usuario;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNom_usuario(String nom_usuario) {
-		this.nom_usuario = nom_usuario;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+	
 
 	public Date getCreatedAt() {
 		return createdAt;
