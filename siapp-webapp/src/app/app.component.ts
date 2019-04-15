@@ -12,7 +12,7 @@ export class AppComponent {
   currentYear: number;
 
   constructor() {
-    this.isSigned =  true;
+    this.isSigned =  false;
     this.controlPanelModule = 'Inicio';
     this.currentYear = new Date().getFullYear();
   }

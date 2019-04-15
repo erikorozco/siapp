@@ -8,4 +8,4 @@ import { LoginComponent } from './components/login/login.component';
     CommonModule
   ]
 })
-export class UsersModule { }
+export class AuthModule { }
