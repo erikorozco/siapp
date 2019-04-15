@@ -7,14 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  isSigned = true;
+  isSigned: boolean;
+  controlPanelModule: string;
+  currentYear: number;
 
   constructor() {
-
+    this.isSigned =  true;
+    this.controlPanelModule = 'Inicio';
+    this.currentYear = new Date().getFullYear();
   }
 
   doLogin($event) {
-    console.log("el fer es una tola pero me la chupa");
     this.isSigned = true;
   }
 
