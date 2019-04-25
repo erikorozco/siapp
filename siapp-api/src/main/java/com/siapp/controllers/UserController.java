@@ -28,12 +28,25 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "/user", description = "Users Module Controller", produces = "application/json")
+@Api(value = "/users", description = "Users Module Controller", produces = "application/json")
 @RequestMapping("/users")
 public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+	
+	@GetMapping("/private")
+    public String privateArea() {
+        return "private";
+    }
+	
+	
+	
 	
     @ApiOperation(value = "Get all Users", notes = "Returns a list of User.class", response = UserList.class, responseContainer="List")
     @ApiResponses(value={
