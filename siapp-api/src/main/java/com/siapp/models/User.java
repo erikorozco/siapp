@@ -1,34 +1,31 @@
 package com.siapp.models;
 
 import java.util.Date;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-
 import java.io.Serializable;
-import java.util.Date;
-
-
 
 @Entity
 @Table(name = "usuario")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
-        allowGetters = true)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 	
-	@Column(name = "id_terapeuta", nullable = false)
-    private Integer terapistId;
-
     @NotBlank
     @Column(name = "nom_usuario")
     private String username;
@@ -36,19 +33,44 @@ public class User implements Serializable {
     @NotBlank
     @Column(name = "contraseña")
     private String password;
+    
+    @Column(name = "estaActivo",columnDefinition="BOOLEAN DEFAULT false")
+    private boolean isActive;
 
-    @Column(name = "creado", nullable = false, updatable = false)
+    @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(name = "actualizado", nullable = false)
+    @Column(name = "actualizado", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+	
+	@JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
+    private Terapist terapist;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(
+		name="usario_rol",
+		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),
+		inverseJoinColumns=@JoinColumn(name="id_rol", referencedColumnName="id"))
+	private List<Role> roles;
+   
+	//Constructor
+	public User() {}
+	
+    public User(String username, String password, List<Role> roles, boolean isActive) {
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.isActive = isActive;
+	}
     
-    //Setters and Getters
 
+	//Setters and Getters
 	public Integer getId() {
 		return id;
 	}
@@ -56,13 +78,13 @@ public class User implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Integer getTerapistId() {
-		return terapistId;
+	
+	public Terapist getTerapist() {
+		return terapist;
 	}
-
-	public void setTerapistId(Integer terapistId) {
-		this.terapistId = terapistId;
+	
+	public void setTerapist(Terapist terapist) {
+		this.terapist = terapist;
 	}
 
 	public String getUsername() {
@@ -80,7 +102,14 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;
@@ -97,5 +126,13 @@ public class User implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean active) {
+		this.isActive = active;
+	}
+			
 }
