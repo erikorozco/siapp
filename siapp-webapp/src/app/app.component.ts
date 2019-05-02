@@ -6,15 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  
-  isSigned = false;
+
+  isSigned: boolean;
+  controlPanelModule: string;
+  currentYear: number;
 
   constructor() {
-
+    this.isSigned =  false;
+    this.controlPanelModule = 'Inicio';
+    this.currentYear = new Date().getFullYear();
   }
 
   doLogin($event) {
-    console.log("el fer es una tola pero me la chupa");
     this.isSigned = true;
   }
 

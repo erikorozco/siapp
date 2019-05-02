@@ -1,4 +1,57 @@
 //EDIT USUARIO TABLE
 ALTER TABLE usuario 
-ADD COLUMN created_at timestamp without time zone,
-ADD COLUMN updated_at timestamp without time zone
+ADD COLUMN creado timestamp without time zone,
+ADD COLUMN actualizado timestamp without time zone,
+ADD COLUMN esta_activo boolean;
+ALTER TABLE usuario ALTER COLUMN id_terapeuta SET NOT NULL;
+ALTER TABLE usuario ALTER COLUMN esta_activo SET DEFAULT true;
+UPDATE usuario set esta_activo=TRUE;
+
+//Edit terapeuta table
+ALTER TABLE terapeuta 
+ADD COLUMN creado timestamp without time zone,
+ADD COLUMN actualizado timestamp without time zone;
+
+
+//TABLE rol
+
+-- DROP TABLE rol;
+
+CREATE TABLE rol
+(
+  id serial NOT NULL,
+  nombre character varying(255),
+  creado timestamp without time zone,
+  actualizado timestamp without time zone,
+  CONSTRAINT rol_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE rol
+  OWNER TO postgres;
+
+
+//TABLE usuario_rol
+
+-- DROP TABLE usario_rol;
+
+CREATE TABLE usario_rol
+(
+  id_usuario integer NOT NULL,
+  id_rol integer NOT NULL,
+  creado timestamp without time zone,
+  actualizado timestamp without time zone,
+  CONSTRAINT pk PRIMARY KEY (id_usuario, id_rol),
+  CONSTRAINT fk1ekuw74kit2ylvb9egfs3g4s4 FOREIGN KEY (id_rol)
+      REFERENCES rol (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fkqau3vffohsh66duwt932ew45t FOREIGN KEY (id_usuario)
+      REFERENCES usuario (id_usuario) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE usario_rol
+  OWNER TO postgres;
