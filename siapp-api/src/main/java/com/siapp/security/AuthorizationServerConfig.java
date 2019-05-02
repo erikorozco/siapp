@@ -37,7 +37,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT")
         .scopes("read","write","trust")
         .resourceIds("oauth2-resource")
-        .accessTokenValiditySeconds(50)
+        .accessTokenValiditySeconds(3600)
         .secret(passwordEncoder.encode("secret"));
 	}
 

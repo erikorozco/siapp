@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "terapeuta")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Terapist implements Serializable {
+public class Therapist implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class Terapist implements Serializable {
     private Date updatedAt;
 	
     @JsonBackReference
-    @OneToOne(mappedBy = "terapist", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "therapist", cascade = CascadeType.ALL)
     private User user;
   
     //Setters and Getters
