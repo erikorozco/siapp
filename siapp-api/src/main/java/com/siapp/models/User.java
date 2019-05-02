@@ -34,8 +34,8 @@ public class User implements Serializable {
     @Column(name = "contraseña")
     private String password;
     
-    @Column(name = "estaActivo",columnDefinition="BOOLEAN DEFAULT false")
-    private boolean isActive;
+    @Column(name = "estaActivo")
+    private boolean active;
 
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,9 +50,9 @@ public class User implements Serializable {
 	@JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
-    private Terapist terapist;
+    private Therapist therapist;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinTable(
 		name="usario_rol",
 		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),
@@ -60,13 +60,15 @@ public class User implements Serializable {
 	private List<Role> roles;
    
 	//Constructor
-	public User() {}
+	public User() {
+		this.active = true;
+	}
 	
-    public User(String username, String password, List<Role> roles, boolean isActive) {
+    public User(String username, String password, List<Role> roles, boolean active) {
 		this.username = username;
 		this.password = password;
 		this.roles = roles;
-		this.isActive = isActive;
+		this.active = active;
 	}
     
 
@@ -79,12 +81,12 @@ public class User implements Serializable {
 		this.id = id;
 	}
 	
-	public Terapist getTerapist() {
-		return terapist;
+	public Therapist getTerapist() {
+		return therapist;
 	}
 	
-	public void setTerapist(Terapist terapist) {
-		this.terapist = terapist;
+	public void setTerapist(Therapist terapist) {
+		this.therapist = terapist;
 	}
 
 	public String getUsername() {
@@ -128,11 +130,11 @@ public class User implements Serializable {
 	}
 
 	public boolean isActive() {
-		return isActive;
+		return active;
 	}
 
 	public void setActive(boolean active) {
-		this.isActive = active;
+		this.active = active;
 	}
 			
 }

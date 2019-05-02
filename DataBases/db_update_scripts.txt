@@ -1,8 +1,11 @@
 //EDIT USUARIO TABLE
 ALTER TABLE usuario 
 ADD COLUMN creado timestamp without time zone,
-ADD COLUMN actualizado timestamp without time zone;
+ADD COLUMN actualizado timestamp without time zone,
+ADD COLUMN esta_activo boolean;
 ALTER TABLE usuario ALTER COLUMN id_terapeuta SET NOT NULL;
+ALTER TABLE usuario ALTER COLUMN esta_activo SET DEFAULT true;
+UPDATE usuario set esta_activo=TRUE;
 
 //Edit terapeuta table
 ALTER TABLE terapeuta 
