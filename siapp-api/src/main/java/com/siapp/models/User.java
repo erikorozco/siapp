@@ -52,7 +52,7 @@ public class User implements Serializable {
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 		name="usario_rol",
 		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),
@@ -81,11 +81,11 @@ public class User implements Serializable {
 		this.id = id;
 	}
 	
-	public Therapist getTerapist() {
+	public Therapist getTherapist() {
 		return therapist;
 	}
 	
-	public void setTerapist(Therapist terapist) {
+	public void setTherapist(Therapist terapist) {
 		this.therapist = terapist;
 	}
 

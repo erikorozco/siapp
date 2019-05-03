@@ -3,15 +3,17 @@ package com.siapp.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.siapp.constants.Model;
 import com.siapp.exceptions.ResourceAlreadyExistsException;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.User;
 import com.siapp.repositories.UserRepository;
+import com.siapp.utilities.IgnoredProperties;
 
 
 @Service
@@ -37,11 +39,6 @@ public class UserService {
 	 */
 	public boolean checkUsernameAvailability(String username) {
 		return !userRepository.findByUsername(username).isPresent();
-		/**if( !userRepository.findByUsername(username).isPresent() ) {
-			return true;
-		} else {
-			return false;
-		}**/
 	}
 
 	public User create(User user) throws ResourceAlreadyExistsException {
@@ -66,15 +63,14 @@ public class UserService {
 		if( checkUsernameAvailability(userDetails.getUsername()) ) {
 	        User user = userRepository.findById(id)
 	                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));       
-
-	        user.setUsername(userDetails.getUsername());
+	       	        
+	        BeanUtils.copyProperties(userDetails, user, IgnoredProperties.getIgnoredProperties(Model.USER));
 	        user.setPassword(passwordEncoder.encode(user.getPassword()));
-	        user.setActive(userDetails.isActive());
 	        
-	        if(userDetails.getTerapist() != null) {
-	        	therapistService.update(userDetails.getTerapist().getId(), userDetails.getTerapist());
+	        if(userDetails.getTherapist() != null) {
+	        	therapistService.update(user.getTherapist().getId(), userDetails.getTherapist());
 	        }
-
+	        
 	        return userRepository.save(user);
 		} else {
 			throw new ResourceAlreadyExistsException("User", "Username", userDetails.getUsername());

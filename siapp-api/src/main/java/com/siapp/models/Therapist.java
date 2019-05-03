@@ -1,3 +1,4 @@
+
 package com.siapp.models;
 
 import java.io.Serializable;
@@ -60,7 +61,7 @@ public class Therapist implements Serializable {
     private Date updatedAt;
 	
     @JsonBackReference
-    @OneToOne(mappedBy = "therapist", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "therapist",  cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
     private User user;
   
     //Setters and Getters

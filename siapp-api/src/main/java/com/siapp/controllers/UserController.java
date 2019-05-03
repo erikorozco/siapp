@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.Forbidden;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
-import com.siapp.exceptions.ResourceNotFoundException;
+import com.siapp.exceptions.ResourceAlreadyExistsException;
 import com.siapp.lists.UserList;
 import com.siapp.models.User;
 import com.siapp.services.UserService;
@@ -57,15 +55,12 @@ public class UserController {
     
 	@ApiOperation(value = "Create new User", notes = "Returns a User.class", response = User.class)
     @ApiResponses(value={
-    		@ApiResponse(code=200,message="Users Details Retrieved",response=UserList.class),
-    		@ApiResponse(code=500,message="Internal Server Error", response=InternalError.class),
-    		@ApiResponse(code=401,message="Unauthorized", response=Unauthorized.class),
-    		@ApiResponse(code=403,message="Forbidden", response=Forbidden.class),
-    		@ApiResponse(code=404,message="Note not found", response=ResourceNotFoundException.class)
+    		@ApiResponse(code=200,message="User Details Retrieved",response=UserList.class),
+    		@ApiResponse(code=409,message="Username already exists", response=ResourceAlreadyExistsException.class)
 	})
     @PostMapping("/createUser")
     public User createUser(@Valid @RequestBody User user) {
-    	return userService.create(user);
+			return userService.create(user);	
     }
     
     @ApiOperation(value = "Get User by ID", notes = "Returns a User.class", response = User.class)
