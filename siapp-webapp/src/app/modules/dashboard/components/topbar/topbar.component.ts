@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor() { }
+  @Input() userProperties: any;
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+    window.sessionStorage.removeItem('token');
+    window.sessionStorage.clear();
+    this.router.navigate(['login']);
   }
 
 }

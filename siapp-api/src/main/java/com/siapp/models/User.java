@@ -52,7 +52,7 @@ public class User implements Serializable {
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinTable(
 		name="usario_rol",
 		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),

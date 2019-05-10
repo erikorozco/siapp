@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,14 @@ export class AppComponent {
   controlPanelModule: string;
   currentYear: number;
 
-  constructor() {
+  constructor(private router: Router) {
     this.isSigned =  false;
     this.controlPanelModule = 'Inicio';
     this.currentYear = new Date().getFullYear();
-  }
 
-  doLogin($event) {
-    this.isSigned = true;
+    if (!window.sessionStorage.getItem('token')) {
+      this.router.navigate(['login']);
+    }
   }
 
 

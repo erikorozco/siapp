@@ -61,7 +61,7 @@ public class Therapist implements Serializable {
     private Date updatedAt;
 	
     @JsonBackReference
-    @OneToOne(mappedBy = "therapist",  cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "therapist",  cascade = CascadeType.ALL)
     private User user;
   
     //Setters and Getters

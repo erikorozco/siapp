@@ -1,0 +1,47 @@
+<ng-container>
+    <div id="page-top">
+        <div id="wrapper">
+            <app-sidebar class="bg-gradient-primary"></app-sidebar>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <app-topbar></app-topbar>
+                    <!-- HERE SHOULD BE THE ROUTER OUTLET INSTEAD THE FOLLOWING CODE  -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Panel de control -> {{ controlPanelModule }}</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
+                        </div>
+
+                        <!-- Content Row -->
+                        <!-- <div class="row"> -->
+                        <router-outlet>
+
+                        </router-outlet>
+                        <!-- </div> -->
+
+
+
+                    </div>
+                    <!-- /.container-fluid -->
+
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Devio {{ currentYear }}</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+                    <!-- Scroll to Top Button-->
+                    <a class="scroll-to-top rounded" href="#page-top">
+                        <i class="fas fa-angle-up"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
