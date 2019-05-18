@@ -37,6 +37,7 @@ export class AuthService {
 
   logout() {
     window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('username');
     window.sessionStorage.clear();
     this.router.navigate(['login']);
   }

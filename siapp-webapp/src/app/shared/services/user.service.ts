@@ -28,4 +28,8 @@ export class UserService {
     return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.updateUser + id, user);
   }
 
+  findUserByName(username: string): Observable<any> {
+    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.findUserByName + username);
+  }
+
 }

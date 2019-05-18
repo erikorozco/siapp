@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -18,6 +19,7 @@ import { AuthService } from './shared/services/auth.service';
 // CORE
 import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
+import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { NavigationTreeComponent } from './modules/dashboard/components/navigati
     ListUserComponent,
     DashboardComponent,
     FormUserComponent,
-    NavigationTreeComponent
+    NavigationTreeComponent,
+    TablePaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { NavigationTreeComponent } from './modules/dashboard/components/navigati
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     UserService,

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.exceptions.ResourceAlreadyExistsException;
+import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.lists.UserList;
 import com.siapp.models.User;
 import com.siapp.services.UserService;
@@ -81,6 +82,12 @@ public class UserController {
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer id) {
         return userService.delete(id);
+    }
+    
+    @ApiOperation(value = "Find User by Username", notes = "Returns a User.class", response = User.class)
+    @GetMapping("/findUserByName/{username}")
+    public User findUserByName(@PathVariable(value = "username") String username) {
+        return userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "name", username));
     }
     
 }

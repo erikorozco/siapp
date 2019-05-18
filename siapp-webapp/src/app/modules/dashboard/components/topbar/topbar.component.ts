@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from '../../../../shared/services/user.service';
 
 @Component({
   selector: 'app-topbar',
@@ -9,11 +10,20 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class TopbarComponent implements OnInit {
 
-  @Input() userProperties: any;
+  @Input() userId: number;
+  firstName: string;
+  lastName: string;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.findUserByName(window.sessionStorage.getItem('username')).subscribe(data => {
+      this.firstName = data.therapist.name;
+      this.lastName = data.therapist.last_name;
+    }, error => {
+
+    });
+  }
 
   logout() {
     this.authService.logout();

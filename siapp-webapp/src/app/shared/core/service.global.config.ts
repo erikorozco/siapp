@@ -7,7 +7,8 @@ export const API_URL_CONFIG = {
         getUser : 'getUser/',
         createUser : 'createUser',
         updateUser : 'updateUser/',
-        filterUsers: 'filterUsers/'
+        filterUsers: 'filterUsers/',
+        findUserByName:  'findUserByName/'
       }
     }
 };

@@ -3,6 +3,7 @@ import { UserService } from '../../../../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-user',
@@ -13,9 +14,6 @@ export class FormUserComponent implements OnInit {
 
   userForm: FormGroup;
   user: User;
-  successAlert = false;
-  errorAlert = false;
-  message = '';
 
   formProperties: any = {
     action: '',
@@ -26,6 +24,7 @@ export class FormUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private toastr: ToastrService,
     private routes: ActivatedRoute
   ) {}
 
@@ -60,16 +59,21 @@ export class FormUserComponent implements OnInit {
       this.user = this.userForm.value;
       this.user.roles = [{id: 2}];//SET THE ADMIN ROL, THEN CHANGE THIS LOGIC
       this.user.active = true;
+
       this.userService.createUser(this.userForm.value).subscribe(data => {
-        this.message = 'Usuario creado exitosamente';
-        this.successAlert = true;
+        this.toastr.success('El usuario ha isdo creado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'users']);
       }, error => {
-        this.message = 'El usuario ya existe';
-        this.errorAlert = true;
+        this.toastr.error('Este usuario ya existe', 'Operacion invalida');
       });
+
     } else {
-      console.log('edit');
+      this.userService.updateUser(this.formProperties.params.id, this.userForm.value).subscribe(data => {
+        this.toastr.success('El usuario ha isdo actualizado exitosamente', 'Operacion exitosa');
+        this.router.navigate(['home', 'users']);
+      }, error => {
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
     }
   }
 

@@ -60,22 +60,17 @@ public class UserService {
 	
 	public User update(Integer id, User userDetails) throws ResourceAlreadyExistsException {
 		
-		if( checkUsernameAvailability(userDetails.getUsername()) ) {
-	        User user = userRepository.findById(id)
+		User user = userRepository.findById(id)
 	                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));       
 	       	        
-	        BeanUtils.copyProperties(userDetails, user, IgnoredProperties.getIgnoredProperties(Model.USER));
+		BeanUtils.copyProperties(userDetails, user, IgnoredProperties.getIgnoredProperties(Model.USER));
 	        user.setPassword(passwordEncoder.encode(user.getPassword()));
 	        
-	        if(userDetails.getTherapist() != null) {
-	        	therapistService.update(user.getTherapist().getId(), userDetails.getTherapist());
-	        }
+	    if(userDetails.getTherapist() != null) {
+	    	therapistService.update(user.getTherapist().getId(), userDetails.getTherapist());
+	    }
 	        
-	        return userRepository.save(user);
-		} else {
-			throw new ResourceAlreadyExistsException("User", "Username", userDetails.getUsername());
-		}
-		
+	    return userRepository.save(user);
 	}
 
 	public ResponseEntity<?> delete(Integer id) {
