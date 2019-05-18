@@ -3,13 +3,16 @@ export const API_URL_CONFIG = {
     usersAPI: {
       name: 'users/',
       endpoints: {
-        getAll : 'getAllUsers'
+        getAll : 'getAllUsers',
+        getUser : 'getUser/',
+        createUser : 'createUser',
+        updateUser : 'updateUser/',
+        filterUsers: 'filterUsers/'
       }
     }
 };
 
 export const TOKEN_CONFIG = {
-    tokenKey: 'token',
     accessTokenKey: 'access_token',
     oauthKey: 'oauth/token'
 };

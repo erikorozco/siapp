@@ -11,9 +11,8 @@ import { HttpParams } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  @Output() loginHandler = new EventEmitter ();
   loginForm: FormGroup;
-  invalidLogin: boolean = false;
+  invalidLogin = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 

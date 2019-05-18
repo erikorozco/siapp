@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api.response';
 import { Observable } from 'rxjs/index';
@@ -9,13 +9,23 @@ import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 export class UserService {
 
   baseUrl: string = URL_CONF.baseURL + URL_CONF.usersAPI.name;
+  response = null;
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<ApiResponse> {
-    // return this.http.get<ApiResponse>(this.baseUrl
-    //                                 + URL_CONF.usersAPI.endpoints.getAll + `?${TOKEN.accessTokenKey}=`
-    //                                 + JSON.parse(window.sessionStorage.getItem(TOKEN.tokenKey)).access_token);
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );
+  }
+
+  getUser(id: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getUser + id);
+  }
+
+  createUser(user: User): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.createUser, user);
+  }
+
+  updateUser(id: number, user: User): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.updateUser + id, user);
   }
 
 }

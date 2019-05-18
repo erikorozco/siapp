@@ -6,20 +6,17 @@ import 'rxjs/add/operator/do';
 import {Injectable} from '@angular/core';
 import { HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const authInfo = JSON.parse(window.sessionStorage.getItem('token'))
-    const token = authInfo ? authInfo.access_token : '';
-
-    console.log(request);
-
-    if (token && !request.url.includes('oauth/token')) {
+    if (this.authService.isLoggedIn() && !request.url.includes('oauth/token')) {
+      const token = this.authService.getAuthorizationToken();
       request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + token,

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -10,11 +11,14 @@ import { TopbarComponent } from './modules/dashboard/components/topbar/topbar.co
 import { LoginComponent } from './modules/users/components/login/login.component';
 import { ListUserComponent } from './modules/users/components/list-user/list-user.component';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
+import { FormUserComponent } from './modules/users/components/form-user/form-user.component';
 // SERVICES
 import { UserService } from './shared/services/user.service';
 import { AuthService } from './shared/services/auth.service';
 // CORE
 import { Interceptor } from './shared/core/interceptor';
+import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
+
 
 @NgModule({
   declarations: [
@@ -23,14 +27,17 @@ import { Interceptor } from './shared/core/interceptor';
     TopbarComponent,
     LoginComponent,
     ListUserComponent,
-    DashboardComponent
+    DashboardComponent,
+    FormUserComponent,
+    NavigationTreeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     UserService,

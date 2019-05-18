@@ -12338,3 +12338,20 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
     width: 100%
 }
+
+.columnActions {
+    text-align: center;
+}
+
+.columnActions button {
+    margin-right: .8em;
+}
+
+.has-error>input {
+    border: 2px solid rgba(220, 20, 60, 0.3);
+}
+
+.feedback-field {
+    color: #DC143C;
+    padding-top: 2px;
+}
