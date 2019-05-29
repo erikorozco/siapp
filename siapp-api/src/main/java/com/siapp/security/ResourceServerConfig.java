@@ -17,8 +17,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	        .disable()
 	        .and()
 			.authorizeRequests()
-			.antMatchers("/").permitAll()
-			.antMatchers("/users/private").authenticated();
+			.antMatchers(
+					"/v2/api-docs",
+                    "/configuration/ui",
+                    "/swagger-resources/**",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**",
+                    "/users/findUserByName/**",
+                    "/**"
+                    ).permitAll();
+			//.antMatchers("/users/**").access("hasRole('ADMIN')");
+			//.antMatchers("/users/private").authenticated();
 	}
 	
 }

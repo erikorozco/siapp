@@ -5,9 +5,22 @@
     <h1 class="h3 mb-0 text-gray-800"> <a [routerLink]="['/home']">Panel de control</a> -> Terapeutas</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
 </div>
-<div class="card shadow mb-4 container-fluid">
+<div *ngIf="users">
+    <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
+</div>
+
+
+
+<!-- <div class="card shadow mb-4 container-fluid">
     <div class="card-header row">
-        <h6 class="font-weight-bold text-primary col-md-6">Terapeutas</h6>
+        <div class="col-md-6 text-left">
+            <a [routerLink]="['/home/add-user']" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                        </span>
+                <span class="text">Agregar Terapeuta</span>
+            </a>
+        </div>
         <div class="col-md-6 text-right">
             <a [routerLink]="['/home/add-user']" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
@@ -17,7 +30,7 @@
             </a>
         </div>
     </div>
-    <div class="card-body row">
+    <div class="card-body row mb-4">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -57,4 +70,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->

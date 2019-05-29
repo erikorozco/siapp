@@ -5,6 +5,7 @@ import { ListUserComponent } from './modules/users/components/list-user/list-use
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { FormUserComponent } from './modules/users/components/form-user/form-user.component';
 import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
+import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -19,11 +20,13 @@ const ROUTES: Routes = [
       { path: 'edit-user', redirectTo: 'add-user' },
       { path: 'view-user/:id', component: FormUserComponent },
       { path: 'view-user', redirectTo: 'add-user' },
+      { path: 'user-records/:therapistId/:userId', component: UserRecordsComponent },
+      { path: 'user-records', component: ListUserComponent },
   ] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(ROUTES)],
+  imports: [RouterModule.forRoot(ROUTES, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

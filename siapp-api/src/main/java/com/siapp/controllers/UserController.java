@@ -1,6 +1,7 @@
 package com.siapp.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -78,6 +79,12 @@ public class UserController {
         return userService.update(id, userDetails);
     }
     
+    @ApiOperation(value = "Update Status User by ID", notes = "Returns a User.class", response = User.class)
+    @PutMapping("/updateUserStatus/{id}")
+    public User updateUserStatus(@PathVariable(value = "id") Integer id) {
+        return userService.updateStatus(id);
+    }
+    
     @ApiOperation(value = "Delete User by ID", notes = "Returns 200")
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer id) {
@@ -87,7 +94,7 @@ public class UserController {
     @ApiOperation(value = "Find User by Username", notes = "Returns a User.class", response = User.class)
     @GetMapping("/findUserByName/{username}")
     public User findUserByName(@PathVariable(value = "username") String username) {
-        return userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "name", username));
+        return userService.findByUsername(username);
     }
     
 }

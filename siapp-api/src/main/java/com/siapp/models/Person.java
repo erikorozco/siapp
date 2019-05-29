@@ -1,25 +1,20 @@
-
 package com.siapp.models;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,32 +23,32 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "terapeuta")
+@Table(name = "persona")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Therapist implements Serializable {
+public class Person  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_terapeuta")
+	@Column(name = "id_persona")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "especialidad")
-	private String speciality;
-	
-	@Column(name = "nombret")
+	@Column(name = "nombre")
 	private String name;
 	
-	@Column(name = "apellidopt")
-	private String last_name;
+	@Column(name = "apellidop")
+	private String lastName;
 	
-	@Column(name = "apellidomt")
-	private String second_last_name;
+	@Column(name = "apellidom")
+	private String secondLastName;
 	
 	@Column(name = "telefono")
 	private String phone;
+	
+	@Column(name = "esta_activo")
+	private boolean active;
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -64,30 +59,18 @@ public class Therapist implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-	
-    @JsonBackReference
-    @OneToOne(mappedBy = "therapist",  cascade = CascadeType.ALL)
-    private User user;
     
     @JsonBackReference
-	@ManyToMany(mappedBy="therapists", fetch = FetchType.LAZY)
-	private List<Record> records;
-  
-    //Setters and Getters
+    @OneToOne(mappedBy = "person",  cascade = CascadeType.ALL)
+    private Record person;
+
+    //GETTERS AND SETTERS
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getSpeciality() {
-		return speciality;
-	}
-
-	public void setSpeciality(String speciality) {
-		this.speciality = speciality;
 	}
 
 	public String getName() {
@@ -98,20 +81,20 @@ public class Therapist implements Serializable {
 		this.name = name;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public String getSecond_last_name() {
-		return second_last_name;
+	public String getSecondLastName() {
+		return secondLastName;
 	}
 
-	public void setSecond_last_name(String second_last_name) {
-		this.second_last_name = second_last_name;
+	public void setSecondLastName(String secondLastName) {
+		this.secondLastName = secondLastName;
 	}
 
 	public String getPhone() {
@@ -120,6 +103,14 @@ public class Therapist implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public Date getCreatedAt() {
@@ -138,20 +129,12 @@ public class Therapist implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public User getUser() {
-		return user;
+	public Record getPerson() {
+		return person;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPerson(Record person) {
+		this.person = person;
 	}
-
-	public List<Record> getRecords() {
-		return records;
-	}
-
-	public void setRecords(List<Record> records) {
-		this.records = records;
-	}
-
+      
 }

@@ -1,0 +1,5 @@
+<h1 *ngIf="therapist" class="h3 mb-0 text-gray-800">
+    <a [routerLink]="['/home']">Panel de control</a> ->
+    <a [routerLink]="['/home/users']">Terapeutas</a> ->
+    <a [routerLink]="['/home/view-user', this.params.userId]">{{therapist.name}} {{therapist.last_name}}</a> -> Expedientes
+</h1>

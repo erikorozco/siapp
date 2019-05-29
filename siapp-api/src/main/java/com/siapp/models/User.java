@@ -5,6 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,7 +36,7 @@ public class User implements Serializable {
     @Column(name = "contraseña")
     private String password;
     
-    @Column(name = "estaActivo")
+    @Column(name = "esta_activo")
     private boolean active;
 
     @Column(name = "creado", nullable = true, updatable = false)
@@ -52,7 +54,8 @@ public class User implements Serializable {
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(
 		name="usario_rol",
 		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),

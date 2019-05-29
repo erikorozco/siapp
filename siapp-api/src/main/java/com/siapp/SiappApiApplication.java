@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.siapp.models.Role;
 import com.siapp.models.User;
+import com.siapp.repositories.UserRepository;
 import com.siapp.services.UserService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;

@@ -28,6 +28,10 @@ public class TherapistService {
 		return therapistRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Therapist", "id", id));
 	}
 	
+	public List<Object> findTherapistRecords(Integer id) {
+		return therapistRepository.findTherapistRecords(id);
+	}
+	
 	public Therapist update(Integer id, Therapist terapistDetails) {
         Therapist terapist = therapistRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Therapist", "id", id));

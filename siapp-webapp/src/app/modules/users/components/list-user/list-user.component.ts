@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../shared/services/user.service';
 import { User } from '../../../../shared/models/user.model';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-user',
@@ -11,8 +12,13 @@ import { Router } from '@angular/router';
 export class ListUserComponent implements OnInit {
 
   users: any;
+  tableProperties: any;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit() {
     this.getAllUsers();
@@ -21,6 +27,23 @@ export class ListUserComponent implements OnInit {
   getAllUsers() {
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;
+      this.tableProperties = [{
+          headElements: ['Nombre', 'Apellidos', 'Epecialidad', 'Estado', 'Acciones'],
+          datasource: data,
+          maxVisibleItems: 10,
+          filterFunction : this.filterUsers,
+          tableActions: {
+            view: true,
+            edit: true,
+            delete: false,
+            print: false,
+            updateStatus: true,
+            add: {
+              route: ['/home', 'add-user'],
+              text: 'Agregar Terapeuta'
+            }
+          }
+      }];
     }, error => {});
   }
 
@@ -32,12 +55,49 @@ export class ListUserComponent implements OnInit {
     this.router.navigate(['home/edit-user', user.id]);
   }
 
-  deleteUser() {
+  updateUserStatus(user: User) {
+    this.userService.updateUserStatus(user.id).subscribe(response => {
+      this.router.navigate(['home/view-user', user.id]);
+      this.toastr.success('El estado el usario ha sido actualizado exitosamente', 'Operacion exitosa');
+    });
+  }
+
+  executeAction({value, action}) {
+    switch (action) {
+      case 'view':
+        this.viewUser(value);
+        break;
+      case 'edit':
+        this.editUser(value);
+        break;
+      case 'updateStatus':
+        this.updateUserStatus(value);
+        break;
+      default:
+        console.log(`${action} is not a valid option`);
+        break;
+    }
 
   }
 
-  filterUsers() {
-
+  filterUsers(previousElements, searchText) {
+    return previousElements.filter(
+      element => {
+        if (element.therapist.speciality.toLowerCase().includes(searchText.toLowerCase())
+            || element.therapist.name.toLowerCase().includes(searchText.toLowerCase())
+            || element.therapist.last_name.toLowerCase().includes(searchText.toLowerCase())
+            || element.therapist.second_last_name.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+              element.tableFields = [
+                                    element.therapist.name,
+                                    element.therapist.last_name + ' ' + element.therapist.second_last_name,
+                                    element.therapist.speciality,
+                                    element.active ? 'Acitvo' : 'Inactivo'
+                                  ];
+              return element;
+            }
+      }
+    );
   }
 
 }

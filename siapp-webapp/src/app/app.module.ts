@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -20,6 +21,8 @@ import { AuthService } from './shared/services/auth.service';
 import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
 import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
+import { StatusComponent } from './shared/components/status/status.component';
+import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
 
 
 @NgModule({
@@ -32,10 +35,13 @@ import { TablePaginationComponent } from './modules/table-pagination/table-pagin
     DashboardComponent,
     FormUserComponent,
     NavigationTreeComponent,
-    TablePaginationComponent
+    TablePaginationComponent,
+    StatusComponent,
+    UserRecordsComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

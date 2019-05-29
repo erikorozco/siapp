@@ -41,6 +41,7 @@ export class FormUserComponent implements OnInit {
 
     if (this.formProperties.action === 'view-user') {
       this.userService.getUser(this.formProperties.params.id).subscribe(data => {
+        this.user = data;
         this.userForm.setValue(data);
       }, error => {console.log(error); });
       this.userForm.disable();

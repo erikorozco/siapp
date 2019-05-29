@@ -1,157 +1,160 @@
 <!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+<ng-container *ngIf="this.roles">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="./">
-        <div class="sidebar-brand-icon">
-            <i class="fab fa-speakap"></i>
-        </div>
-        <!-- <div class="sidebar-brand-text mx-3">SIAPP<sup>1</sup></div> -->
-        <div class="sidebar-brand-text mx-3">SIAPP</div>
-    </a>
+    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Panel de control</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Módulos
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-folder"></i>
-            <span>Expedientes</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Acciones:</h6>
-                <a class="collapse-item" href="buttons.html">
-                    <i class="fas fa-folder"></i>
-                    <span> Expedientes</span>
-                </a>
-                <a class="collapse-item" href="cards.html">
-                    <i class="fas fa-folder-plus"></i>
-                    <span>Apertura de expediente</span>
-                </a>
-                <a class="collapse-item" href="cards.html">
-                    <i class="fas fa-folder-plus"></i>
-                    <span>Urgencias</span>
-                </a>
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="./">
+            <div class="sidebar-brand-icon">
+                <i class="fab fa-speakap"></i>
             </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReception" aria-expanded="true" aria-controls="collapseReception">
-            <i class="fas fa-calendar"></i>
-            <span>Recepción</span>
+            <!-- <div class="sidebar-brand-text mx-3">SIAPP<sup>1</sup></div> -->
+            <div class="sidebar-brand-text mx-3">SIAPP</div>
         </a>
-        <div id="collapseReception" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Acciones:</h6>
-                <a class="collapse-item" href="buttons.html">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span> Agenda</span>
-                </a>
-                <a class="collapse-item" href="cards.html">
-                    <i class="fas fa-ticket-alt"></i>
-                    <span> Recibos</span>
-                </a>
-            </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Panel de control</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Módulos
         </div>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConsultorio" aria-expanded="true" aria-controls="collapseReception">
-            <i class="fas fa-desktop"></i>
-            <span>Consultorio</span>
-        </a>
-        <div id="collapseConsultorio" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Acciones:</h6>
-                <a class="collapse-item" href="buttons.html">
-                    <i class="fas fa-user-friends"></i>
-                    <span> Pacientes</span>
-                </a>
-                <a class="collapse-item" href="cards.html">
-                    <i class="fas fa-book-medical"></i>
-                    <span> Sesión</span>
-                </a>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li *ngIf="this.roles.includes('ADMIN')" class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-folder"></i>
+                <span>Expedientes</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Acciones:</h6>
+                    <a class="collapse-item" href="buttons.html">
+                        <i class="fas fa-folder"></i>
+                        <span> Expedientes</span>
+                    </a>
+                    <a class="collapse-item" href="cards.html">
+                        <i class="fas fa-folder-plus"></i>
+                        <span>Apertura de expediente</span>
+                    </a>
+                    <a class="collapse-item" href="cards.html">
+                        <i class="fas fa-folder-plus"></i>
+                        <span>Urgencias</span>
+                    </a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePharmacy" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-prescription-bottle-alt"></i>
-            <span>Farmacia</span>
-        </a>
-        <div id="collapsePharmacy" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Acciones:</h6>
-                <a class="collapse-item" href="buttons.html">
-                    <i class="fas fa-dolly-flatbed"></i>
-                    <span> Inventario</span>
-                </a>
-                <a class="collapse-item" href="buttons.html">
-                    <i class="fas fa-arrow-alt-circle-down"></i>
-                    <span> Salida de producto</span>
-                </a>
+        <li *ngIf="roles.includes('ADMIN') || roles.includes('ADMINISTRATIVE')" class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReception" aria-expanded="true" aria-controls="collapseReception">
+                <i class="fas fa-calendar"></i>
+                <span>Recepción</span>
+            </a>
+            <div id="collapseReception" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Acciones:</h6>
+                    <a class="collapse-item" href="buttons.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span> Agenda</span>
+                    </a>
+                    <a class="collapse-item" href="cards.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span> Recibos</span>
+                    </a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Administración
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-user-md"></i>
-            <span>Terapeutas</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Login Screens:</h6> -->
-                <a class="collapse-item" routerLink="users">Terapeutas</a>
-                <a class="collapse-item" href="register.html">Permiso a expedientes</a>
-                <div class="collapse-divider"></div>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConsultorio" aria-expanded="true" aria-controls="collapseReception">
+                <i class="fas fa-desktop"></i>
+                <span>Consultorio</span>
+            </a>
+            <div id="collapseConsultorio" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Acciones:</h6>
+                    <a class="collapse-item" href="buttons.html">
+                        <i class="fas fa-user-friends"></i>
+                        <span> Pacientes</span>
+                    </a>
+                    <a class="collapse-item" href="cards.html">
+                        <i class="fas fa-book-medical"></i>
+                        <span> Sesión</span>
+                    </a>
+                </div>
             </div>
+        </li>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li *ngIf="roles.includes('ADMIN') || roles.includes('ADMINISTRATIVE')" class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePharmacy" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-prescription-bottle-alt"></i>
+                <span>Farmacia</span>
+            </a>
+            <div id="collapsePharmacy" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Acciones:</h6>
+                    <a class="collapse-item" href="buttons.html">
+                        <i class="fas fa-dolly-flatbed"></i>
+                        <span> Inventario</span>
+                    </a>
+                    <a class="collapse-item" href="buttons.html">
+                        <i class="fas fa-arrow-alt-circle-down"></i>
+                        <span> Salida de producto</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Administración
         </div>
-    </li>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Reportes estadisticos</span></a>
-    </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li *ngIf="roles.includes('ADMIN') || roles.includes('SUPERADMIN')" class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-user-md"></i>
+                <span>Terapeutas</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <!-- <h6 class="collapse-header">Login Screens:</h6> -->
+                    <a class="collapse-item" routerLink="users">Terapeutas</a>
+                    <a class="collapse-item" href="register.html">Permiso a expedientes</a>
+                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+        <!-- Nav Item - Charts -->
+        <li *ngIf="roles.includes('ADMIN')" class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Reportes estadisticos</span></a>
+        </li>
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <!-- <div class="text-center d-none d-md-inline">
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <!-- <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div> -->
 
-</ul>
-<!-- End of Sidebar -->
+    </ul>
+    <!-- End of Sidebar -->
+</ng-container>

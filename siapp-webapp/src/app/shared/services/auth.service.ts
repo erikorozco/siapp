@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) { }
   baseUrl: string = URL_CONF.baseURL;
   accessToken: string;
+
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(loginPayload) {
     const headers = {

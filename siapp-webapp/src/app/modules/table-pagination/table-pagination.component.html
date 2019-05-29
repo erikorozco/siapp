@@ -1,25 +1,52 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
+<div class="card shadow mb-4 container-fluid">
+    <div class="card-header row">
+        <div class="col-md-6 text-left">
             <div class="md-form">
-                <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
-                <label for="search-input">Search</label>
+                <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" placeholder="Buscar..." mdbInput>
+                <!-- <label for="search-input">Search</label> -->
             </div>
         </div>
-        <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+        <div class="col-md-6 text-right">
+            <a [routerLink]="tableActions.add.route" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                    </span>
+                <span class="text">{{tableActions.add.text}}</span>
+            </a>
+        </div>
+        <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1 mt-4 table-component">
             <thead class="sticky-top">
                 <tr>
                     <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{head | titlecase}}
-                        <mdb-icon fas icon="sort"></mdb-icon>
+                        <!-- <mdb-icon fas icon="sort"></mdb-icon> -->
                     </th>
                 </tr>
             </thead>
             <tbody #row>
-                <tr mdbTableCol *ngFor="let el of elements; let i = index">
-                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{el.id}}</th>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">{{el.first}}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.last}}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.handle}}</td>
+                <tr mdbTableCol *ngFor="let item of elements; let i = index">
+                    <ng-container *ngFor="let value of item.tableFields; let j = index">
+                        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row"> {{ value | uppercase }}</td>
+                    </ng-container>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="columnActions">
+                        <button mdbBtn mdbTooltip="Ver detalles" placement="top" mdbWavesEffect *ngIf="tableActions.view" class="btn btn-info btn-circle" title="Ver detalle" (click)="action(item, 'view')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button mdbBtn mdbTooltip="Editar" placement="top" mdbWavesEffect *ngIf="tableActions.edit" class="btn btn-primary btn-circle" title="Editar" (click)="action(item, 'edit')">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button mdbBtn mdbTooltip="Eliminar" placement="top" mdbWavesEffect *ngIf="tableActions.delete" class="btn btn-danger btn-circle" title="Eliminar" (click)="action(item, 'delete')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-danger btn-circle" title="Imprimir" (click)="action(item, 'print')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <ng-container mdbWavesEffect *ngIf="tableActions.updateStatus">
+                            <button mdbBtn mdbTooltip="{{item.active? 'Desactivar': 'Activar'}}" placement="top" [ngClass]="{'btn-success': item.active, 'btn-light' : !item.active}" class="btn btn-circle" (click)="action(item, 'updateStatus')">
+                                <i class="fas" [ngClass]="{'fa-toggle-on': item.active, 'fa-toggle-off' : !item.active}"></i>
+                            </button>
+                            <!-- <app-status [statusProperties]="[item.active]"></app-status> -->
+                        </ng-container>
+                    </td>
                 </tr>
             </tbody>
             <tfoot class="grey lighten-5 w-100">
@@ -32,4 +59,3 @@
         </table>
     </div>
 </div>
-<!-- (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)" -->

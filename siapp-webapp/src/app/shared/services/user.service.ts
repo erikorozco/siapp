@@ -16,7 +16,7 @@ export class UserService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );
   }
 
-  getUser(id: number): Observable<ApiResponse> {
+  getUser(id: number): Observable<any> {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getUser + id);
   }
 
@@ -26,6 +26,10 @@ export class UserService {
 
   updateUser(id: number, user: User): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.updateUser + id, user);
+  }
+
+  updateUserStatus(id: number): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.updateUserStatus + id, {});
   }
 
   findUserByName(username: string): Observable<any> {

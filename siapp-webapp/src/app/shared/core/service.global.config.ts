@@ -7,10 +7,18 @@ export const API_URL_CONFIG = {
         getUser : 'getUser/',
         createUser : 'createUser',
         updateUser : 'updateUser/',
+        updateUserStatus : 'updateUserStatus/',
         filterUsers: 'filterUsers/',
         findUserByName:  'findUserByName/'
       }
-    }
+    },
+    therapistsAPI: {
+      name: 'therapists/',
+      endpoints: {
+        getAll : 'getAllTherapists',
+        getTherapist : 'getTherapist/'
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

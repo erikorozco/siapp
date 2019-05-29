@@ -12355,3 +12355,12 @@ body.sidebar-toggled footer.sticky-footer {
     color: #DC143C;
     padding-top: 2px;
 }
+
+.status-button {
+    background: transparent;
+    border: none;
+}
+
+.table-component>tbody>tr {
+    color: black;
+}

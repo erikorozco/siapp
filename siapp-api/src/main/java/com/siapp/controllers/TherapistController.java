@@ -31,6 +31,12 @@ public class TherapistController {
     public List<Therapist> getAllTherapists() {
         return therapistService.getAllTherapists();
     }
+	
+	@ApiOperation(value = "Get all the records that belongs to the given therapist")
+    @GetMapping("/findTherapistRecords/{id}")
+    public List<Object> findTherapistRecords(@PathVariable(value = "id") Integer id) {
+        return therapistService.findTherapistRecords(id);
+    }
     
 	@ApiOperation(value = "Create new Therapist", notes = "Returns a Therapist.class", response = Therapist.class)
     @PostMapping("/createTherapist")

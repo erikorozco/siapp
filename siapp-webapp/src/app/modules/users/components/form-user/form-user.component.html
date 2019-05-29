@@ -1,65 +1,79 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
         <a [routerLink]="['/home']">Panel de control</a> ->
-        <a [routerLink]="['/home/users']">Terapeutas</a> -> Nuevo Terapueta
+        <a [routerLink]="['/home/users']">Terapeutas</a> -> {{ this.formProperties.action === 'view-user'? 'Ver Terapueta' : '' }} {{ this.formProperties.action === 'edit-user'? 'Editar Terapueta' : '' }} {{ this.formProperties.action === 'add-user'?
+        'Nuevo Terapueta' : '' }}
     </h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
+    <div class="form-group" *ngIf="this.formProperties.action === 'view-user'">
+        <h3 [ngClass]="{'text-success': userForm.get('active').value, 'text-danger': !userForm.get('active').value}">{{ userForm.get('active').value? 'Cuenta activa' : 'Cuenta desactivada' }}</h3>
+    </div>
+    <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a> -->
 </div>
-<div class="col-md-9 pl-5 text border-left-primary">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="therapist">
-            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.name') } ">
-                <label for="name">Nombre *</label>
-                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre">
-                <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.name')">
+<div class="row">
+    <div class="col-md-9 pl-5 text border-left-primary">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div formGroupName="therapist">
+                <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.name') } ">
+                    <label for="name">Nombre *</label>
+                    <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre">
+                    <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.name')">
+                        <h6 class="feedback-field">Este campo es requerido</h6>
+                    </div>
+                    <!-- <small id="emailHelp " class="form-text text-muted ">We'll never share your email with anyone else.</small> -->
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.last_name') } ">
+                    <label for="name">Apellido Paterno *</label>
+                    <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Apellido paterno">
+                    <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.last_name')">
+                        <h6 class="feedback-field">Este campo es requerido</h6>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.second_last_name') } ">
+                    <label for="name">Apellido Materno *</label>
+                    <input type="text" class="form-control" formControlName="second_last_name" id="second_last_name" placeholder="Apellido materno">
+                    <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.second_last_name')">
+                        <h6 class="feedback-field">Este campo es requerido</h6>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.phone') } ">
+                    <label for="name">Teléfono *</label>
+                    <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Teléfono">
+                    <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.phone')">
+                        <h6 class="feedback-field">Este campo es requerido</h6>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.speciality') } ">
+                    <label for="name">Especialidad *</label>
+                    <input type="text" class="form-control" formControlName="speciality" id="speciality" placeholder="Especialidad">
+                    <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.speciality')">
+                        <h6 class="feedback-field">Este campo es requerido</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('username') } ">
+                <label for="name">Nombre de usuario *</label>
+                <input type="text" class="form-control" formControlName="username" id="username" placeholder="Usuario">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('username')">
                     <h6 class="feedback-field">Este campo es requerido</h6>
                 </div>
-                <!-- <small id="emailHelp " class="form-text text-muted ">We'll never share your email with anyone else.</small> -->
             </div>
-            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.last_name') } ">
-                <label for="name">Apellido Paterno *</label>
-                <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Apellido paterno">
-                <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.last_name')">
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('password') } ">
+                <label for="name">Contraseña *</label>
+                <input type="password" class="form-control" formControlName="password" id="password" placeholder="Contraseña">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('password')">
                     <h6 class="feedback-field">Este campo es requerido</h6>
                 </div>
+                <small class="form-text text-muted ">Asegurese de utilizar una contraseña que recuerde</small>
             </div>
-            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.second_last_name') } ">
-                <label for="name">Apellido Materno *</label>
-                <input type="text" class="form-control" formControlName="second_last_name" id="second_last_name" placeholder="Apellido materno">
-                <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.second_last_name')">
-                    <h6 class="feedback-field">Este campo es requerido</h6>
-                </div>
-            </div>
-            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.phone') } ">
-                <label for="name">Teléfono *</label>
-                <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Teléfono">
-                <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.phone')">
-                    <h6 class="feedback-field">Este campo es requerido</h6>
-                </div>
-            </div>
-            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('therapist.speciality') } ">
-                <label for="name">Especialidad *</label>
-                <input type="text" class="form-control" formControlName="speciality" id="speciality" placeholder="Especialidad">
-                <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.speciality')">
-                    <h6 class="feedback-field">Este campo es requerido</h6>
-                </div>
-            </div>
-        </div>
-        <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('username') } ">
-            <label for="name">Nombre de usuario *</label>
-            <input type="text" class="form-control" formControlName="username" id="username" placeholder="Usuario">
-            <div class="form-control-feedback" *ngIf="requiredFieldValidation('username')">
-                <h6 class="feedback-field">Este campo es requerido</h6>
-            </div>
-        </div>
-        <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('password') } ">
-            <label for="name">Contraseña *</label>
-            <input type="password" class="form-control" formControlName="password" id="password" placeholder="Contraseña">
-            <div class="form-control-feedback" *ngIf="requiredFieldValidation('password')">
-                <h6 class="feedback-field">Este campo es requerido</h6>
-            </div>
-            <small class="form-text text-muted ">Asegurese de utilizar una contraseña que recuerde</small>
-        </div>
-        <button [disabled]="userForm.invalid || userForm.disabled || userForm.pristine" type="submit " class="btn btn-success btn-lg">Guardar</button>
-    </form>
+            <button [disabled]="userForm.invalid || userForm.disabled || userForm.pristine" type="submit " class="btn btn-success btn-lg">Guardar</button>
+        </form>
+    </div>
+    <div *ngIf="this.formProperties.action === 'view-user' && this.user" class="col-md-3 text-right">
+        <a [routerLink]="['/home', 'user-records', user.therapist.id, user.id]" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-folder"></i>
+            </span>
+            <span class="text">Expedientes</span>
+        </a>
+    </div>
 </div>

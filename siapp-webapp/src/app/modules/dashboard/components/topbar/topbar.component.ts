@@ -20,13 +20,19 @@ export class TopbarComponent implements OnInit {
     this.userService.findUserByName(window.sessionStorage.getItem('username')).subscribe(data => {
       this.firstName = data.therapist.name;
       this.lastName = data.therapist.last_name;
-    }, error => {
-
-    });
+    }, error => {});
   }
 
   logout() {
     this.authService.logout();
+  }
+
+  onOpen(event: any) {
+    console.log(event);
+  }
+
+  onClose(event: any) {
+    console.log(event);
   }
 
 }

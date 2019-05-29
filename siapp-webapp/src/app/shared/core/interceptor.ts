@@ -7,11 +7,14 @@ import {Injectable} from '@angular/core';
 import { HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router,
+              private authService: AuthService,
+              private toastr: ToastrService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -41,6 +44,10 @@ export class Interceptor implements HttpInterceptor {
       }, error => {
         if (error.status === 401) {
           this.router.navigate(['login']);
+        }
+        if (error.status === 403) {
+          this.router.navigate(['home']);
+          this.toastr.error('No cuentas con los accesos necesarios para acceder a este módulo', 'Acceso restringido');
         }
       })
     );
