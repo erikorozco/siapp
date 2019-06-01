@@ -4,7 +4,6 @@ package com.siapp.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,7 +20,6 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -65,11 +61,11 @@ public class Therapist implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 	
-    @JsonBackReference
+    @JsonBackReference(value="userReference")
     @OneToOne(mappedBy = "therapist",  cascade = CascadeType.ALL)
     private User user;
     
-    @JsonBackReference
+    @JsonBackReference(value="recordsReference")
 	@ManyToMany(mappedBy="therapists", fetch = FetchType.LAZY)
 	private List<Record> records;
   

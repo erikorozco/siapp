@@ -243,8 +243,9 @@ public class Record implements Serializable {
 	@Column(name = "anotaciones")
 	private String notes;
 	
-	@Column(name = "genograma")
-	private String genogram;
+	//@Column(name = "genograma")
+	//private String genogram;
+	//  "genogram": "string",
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -263,10 +264,10 @@ public class Record implements Serializable {
 		inverseJoinColumns=@JoinColumn(name="id_terapeuta", referencedColumnName="id_terapeuta"))
 	private List<Therapist> therapists;
 	
-	@JsonManagedReference
+	@JsonManagedReference(value = "personReference")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-	private Person person;
+	private Person person;	
 
 	//SETTERS AND GETTERS
 	public Integer getId() {
@@ -821,13 +822,13 @@ public class Record implements Serializable {
 		this.notes = notes;
 	}
 
-	public String getGenogram() {
-		return genogram;
-	}
-
-	public void setGenogram(String genogram) {
-		this.genogram = genogram;
-	}
+//	public String getGenogram() {
+//		return genogram;
+//	}
+//
+//	public void setGenogram(String genogram) {
+//		this.genogram = genogram;
+//	}
 
 	public Date getCreatedAt() {
 		return createdAt;

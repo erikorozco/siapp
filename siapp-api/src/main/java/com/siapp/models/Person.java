@@ -60,7 +60,7 @@ public class Person  implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
     
-    @JsonBackReference
+    @JsonBackReference(value="personReference")
     @OneToOne(mappedBy = "person",  cascade = CascadeType.ALL)
     private Record person;
 

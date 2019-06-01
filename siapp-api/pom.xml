@@ -8,10 +8,10 @@
 		<version>2.1.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>saludintegral</groupId>
-	<artifactId>saludintegral-api</artifactId>
+	<groupId>siapp</groupId>
+	<artifactId>siapp-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>saludintegral-api</name>
+	<name>siapp-api</name>
 	<description>Salud Integral Application</description>
 
 	<properties>

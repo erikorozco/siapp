@@ -1,10 +1,7 @@
 package com.siapp.controllers;
 
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.exceptions.ResourceAlreadyExistsException;
-import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.lists.UserList;
 import com.siapp.models.User;
 import com.siapp.services.UserService;
@@ -33,17 +29,7 @@ import io.swagger.annotations.ApiResponses;
 public class UserController {
 
 	@Autowired
-	UserService userService;
-	
-	@GetMapping("/home")
-    public String home() {
-        return "home";
-    }
-	
-	@GetMapping("/private")
-    public String privateArea() {
-        return "private";
-    }
+	UserService userService;	
 	
 	@ApiOperation(value = "Check username availability", notes = "Returns true if username is available", response = Boolean.class)
     @GetMapping("/checkUsernameAvailability/{username}")

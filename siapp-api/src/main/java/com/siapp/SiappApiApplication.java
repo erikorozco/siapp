@@ -2,8 +2,11 @@ package com.siapp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +49,12 @@ public class SiappApiApplication {
     @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+    
+    @PostConstruct
+    public void init(){
+        //TimeZone.setDefault(TimeZone.getTimeZone("GMT-5"));
+    	//System.setProperty("user.timezone", "UTC");
     }
     
 	public static void main(String[] args) {

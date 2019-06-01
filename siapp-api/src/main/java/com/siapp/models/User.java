@@ -49,7 +49,7 @@ public class User implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 	
-	@JsonManagedReference
+	@JsonManagedReference(value="userReference")
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
@@ -57,7 +57,7 @@ public class User implements Serializable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(cascade = CascadeType.REFRESH)
 	@JoinTable(
-		name="usario_rol",
+		name="usuario_rol",
 		joinColumns=@JoinColumn(name="id_usuario", referencedColumnName="id_usuario"),
 		inverseJoinColumns=@JoinColumn(name="id_rol", referencedColumnName="id"))
 	private List<Role> roles;
