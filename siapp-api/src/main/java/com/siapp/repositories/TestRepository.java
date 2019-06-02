@@ -14,12 +14,12 @@ public interface TestRepository  extends JpaRepository<User, Integer> {
 	@Query(
 	value = "DELETE FROM usuario_rol",
 	nativeQuery = true)
-	void deleteAllRecordTherapists();
+	void deleteAllRolesUsers();
 	
 	@Modifying
     @Transactional
 	@Query(
-	value = "DELETE FROM usuario",
+	value = "DELETE FROM usuario when nom_usuario != 'root'",
 	nativeQuery = true)
 	void deleteAllUsers();
 	
@@ -29,4 +29,11 @@ public interface TestRepository  extends JpaRepository<User, Integer> {
 	value = "DELETE FROM rol",
 	nativeQuery = true)
 	void deleteAllRoles();
+	
+	@Modifying
+    @Transactional
+	@Query(
+	value = "DELETE FROM terapeuta when nombret != 'root'",
+	nativeQuery = true)
+	void deleteAllTherapists();
 }

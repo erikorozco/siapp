@@ -10,10 +10,10 @@ public class TestService {
 	@Autowired
 	TestRepository testRepository;
 
-	public void deleteAllRecordTherapists() {
-		testRepository.deleteAllRecordTherapists();
-		testRepository.deleteAllUsers();
-		testRepository.deleteAllRoles();
+	public void deleteAll() {
+		//testRepository.deleteAllRolesUsers();
+		//testRepository.deleteAllUsers();
+		//testRepository.deleteAllRoles();
 	}
 
 

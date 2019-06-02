@@ -21,3 +21,15 @@ sesion=session
 terapeuta=therapist
 ticketfarm=pharmacyticket
 usuario=user
+
+AUTOMATION CONFIG
+https://www.protractortest.org/#/tutorial
+
+1-npm install -g protractor
+2-webdriver-manager update
+3-webdriver-manager start
+4-npm install
+5-See the conf.js file on comment or comment the spec files wanted to run
+6-Run npm test or potractor test
+
+

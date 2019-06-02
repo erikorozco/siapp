@@ -26,9 +26,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                     "/webjars/**",
                     "/users/findUserByName/**",
                     "/**"//REMOVER ESTO
-                    ).permitAll();
+                    ).permitAll()
 			//.antMatchers("/users/**").access("hasRole('ADMIN')");
-			//.antMatchers("/apiTestUtil/**").access("hasRole('GODADMIN')");
+			.antMatchers("/apiTestUtil/**").access("hasRole('GODADMIN')");
 			//.antMatchers("/users/private").authenticated();
 	}
 	

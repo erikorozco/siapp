@@ -25,7 +25,7 @@ public class TestController {
     @ApiOperation(value = "Delete all the record_therapist rows relation", notes = "Returns 200")
     @PostMapping("/deleteAllRecordTherapist")
     public String deleteRole() {
-        //testService.deleteAllRecordTherapists();
+        testService.deleteAll();
         return "TODO SALIO BIEN";
     }
 
