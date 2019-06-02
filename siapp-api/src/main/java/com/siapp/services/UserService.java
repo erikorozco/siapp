@@ -65,7 +65,7 @@ public class UserService {
 	                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));       
 	       	        
 		BeanUtils.copyProperties(userDetails, user, IgnoredProperties.getIgnoredProperties(Model.USER));
-	        user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    user.setPassword(passwordEncoder.encode(user.getPassword()));
 	        
 	    if(userDetails.getTherapist() != null) {
 	    	therapistService.update(user.getTherapist().getId(), userDetails.getTherapist());

@@ -20,6 +20,9 @@ public class IgnoredProperties {
 		case THERPIST:			
 			ignoredProperties = new String[]{"id", "createdAt", "updatedAt", "user"};
 			break;
+		case RECORD:
+			ignoredProperties = new String[]{"id", "createdAt", "updatedAt", "therapists"};
+			break;
 		default:
 			ignoredProperties = new String[]{"id", "createdAt", "updatedAt"};
 		}
