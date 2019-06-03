@@ -17,12 +17,14 @@ import { FormUserComponent } from './modules/users/components/form-user/form-use
 // SERVICES
 import { UserService } from './shared/services/user.service';
 import { AuthService } from './shared/services/auth.service';
+import { RecordService } from './shared/services/record-service'
 // CORE
 import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
 import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
 import { StatusComponent } from './shared/components/status/status.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
+import { AssignRecordComponent } from './modules/users/components/assign-record/assign-record.component';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { UserRecordsComponent } from './modules/users/components/user-records/us
     NavigationTreeComponent,
     TablePaginationComponent,
     StatusComponent,
-    UserRecordsComponent
+    UserRecordsComponent,
+    AssignRecordComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { UserRecordsComponent } from './modules/users/components/user-records/us
   ],
   providers: [
     UserService,
+    RecordService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

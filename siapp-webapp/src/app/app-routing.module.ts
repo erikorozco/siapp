@@ -6,6 +6,7 @@ import { DashboardComponent } from './modules/dashboard/components/dashboard/das
 import { FormUserComponent } from './modules/users/components/form-user/form-user.component';
 import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
+import { AssignRecordComponent } from './modules/users/components/assign-record/assign-record.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -22,6 +23,8 @@ const ROUTES: Routes = [
       { path: 'view-user', redirectTo: 'add-user' },
       { path: 'user-records/:therapistId/:userId', component: UserRecordsComponent },
       { path: 'user-records', component: ListUserComponent },
+      { path: 'assign-record', redirectTo: 'users' },
+      { path: 'assign-record/:therapistId', component: AssignRecordComponent },
   ] },
 ];
 

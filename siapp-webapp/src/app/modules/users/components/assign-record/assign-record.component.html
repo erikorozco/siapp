@@ -1,8 +1,9 @@
 <h1 *ngIf="therapist" class="h3 mb-0 text-gray-800">
     <a [routerLink]="['/home']">Panel de control</a> ->
     <a [routerLink]="['/home/users']">Terapeutas</a> ->
-    <a [routerLink]="['/home/view-user', this.params.userId]">{{therapist.name}} {{therapist.last_name}}</a> -> Expedientes
+    <a [routerLink]="['/home/view-user', this.params.userId]">{{therapist.name}} {{therapist.last_name}}</a> -> Asignar Expedientes
 </h1>
+<h1 class="mt-5">Seleccione un expediente</h1>
 <div *ngIf="records">
     <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
 </div>

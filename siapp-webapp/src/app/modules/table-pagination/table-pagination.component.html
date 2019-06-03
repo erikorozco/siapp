@@ -6,7 +6,7 @@
                 <!-- <label for="search-input">Search</label> -->
             </div>
         </div>
-        <div class="col-md-6 text-right">
+        <div *ngIf="tableActions.add" class="col-md-6 text-right">
             <a [routerLink]="tableActions.add.route" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
@@ -25,7 +25,7 @@
             <tbody #row>
                 <tr mdbTableCol *ngFor="let item of elements; let i = index">
                     <ng-container *ngFor="let value of item.tableFields; let j = index">
-                        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row"> {{ value | uppercase }}</td>
+                        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row"> {{ value }}</td>
                     </ng-container>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="columnActions">
                         <button mdbBtn mdbTooltip="Ver detalles" placement="top" mdbWavesEffect *ngIf="tableActions.view" class="btn btn-info btn-circle" title="Ver detalle" (click)="action(item, 'view')">
@@ -39,6 +39,12 @@
                         </button>
                         <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-danger btn-circle" title="Imprimir" (click)="action(item, 'print')">
                             <i class="fas fa-trash"></i>
+                        </button>
+                        <button mdbBtn mdbTooltip="Expedientes" placement="top" mdbWavesEffect *ngIf="tableActions.viewRecords" class="btn btn-warning btn-circle" title="Expedientes" (click)="action(item, 'viewRecords')">
+                            <i class="fas fa-folder"></i>
+                        </button>
+                        <button mdbBtn mdbTooltip="Seleccionar" placement="top" mdbWavesEffect *ngIf="tableActions.assign" class="btn btn-info btn-circle" title="Seleccionar" (click)="action(item, 'assign')">
+                            <i class="fas fa-arrow-alt-circle-right"></i>
                         </button>
                         <ng-container mdbWavesEffect *ngIf="tableActions.updateStatus">
                             <button mdbBtn mdbTooltip="{{item.active? 'Desactivar': 'Activar'}}" placement="top" [ngClass]="{'btn-success': item.active, 'btn-light' : !item.active}" class="btn btn-circle" (click)="action(item, 'updateStatus')">

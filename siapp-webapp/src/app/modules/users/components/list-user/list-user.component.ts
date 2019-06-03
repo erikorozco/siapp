@@ -38,6 +38,7 @@ export class ListUserComponent implements OnInit {
             delete: false,
             print: false,
             updateStatus: true,
+            viewRecords: true,
             add: {
               route: ['/home', 'add-user'],
               text: 'Agregar Terapeuta'
@@ -62,6 +63,11 @@ export class ListUserComponent implements OnInit {
     });
   }
 
+  viewRecords(user: User) {
+    this.router.navigate(['home/user-records', user.therapist.id, user.id]);
+  }
+
+
   executeAction({value, action}) {
     switch (action) {
       case 'view':
@@ -72,6 +78,9 @@ export class ListUserComponent implements OnInit {
         break;
       case 'updateStatus':
         this.updateUserStatus(value);
+        break;
+      case 'viewRecords':
+        this.viewRecords(value);
         break;
       default:
         console.log(`${action} is not a valid option`);

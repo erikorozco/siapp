@@ -23,5 +23,26 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 	nativeQuery = true)
 	List<Object[]> findRecordsByTherapistId(@Param("therapistId") Integer therapistId );
 	
+	
+	@Query(
+			value = "SELECT DISTINCT "
+					+ "expediente.id_expediente, "
+					+ "expediente.\"estadoPaciente\", "
+					+ "nombre, "
+					+ "apellidop, "
+					+ "apellidom "
+					+ "FROM expediente\n" +  
+					"INNER JOIN persona ON expediente.id_persona = persona.id_persona\n" + 
+					"ORDER BY nombre ASC",
+			nativeQuery = true)
+	List<Object[]> getAllRecords();
+	
+	@Query(
+			value = "INSERT INTO expediente_terapeuta(\n" + 
+					"	id_expediente, id_terapeuta)\n" + 
+					"    VALUES (:recordId, :therapistId) RETURNING id_expediente_terapeuta;",
+			nativeQuery = true)
+	Integer assignRecord(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
+	
 //	public Optional<Record> findByTherapistsId(Integer id);
 }

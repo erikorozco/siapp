@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.models.Record;
+import com.siapp.models.TherapistRecordPermission;
 import com.siapp.models.User;
 import com.siapp.services.RecordService;
 import io.swagger.annotations.Api;
@@ -37,9 +38,15 @@ public class RecordController {
         return recordService.findRecordsByTherapistId(id);
     }
 	
+	@ApiOperation(value = "Get all the records")
+    @GetMapping("/getAll")
+    public List<HashMap<String, Object>> findTherapistRecords() {
+        return recordService.getAllRecords();
+    }
+	
 	@ApiOperation(value = "Create new Record", notes = "Returns a Record.class", response = Record.class)
     @PostMapping("/createRecord")
-    public Record createUser(@Valid @RequestBody Record Record) {
+    public Record createRecord(@Valid @RequestBody Record Record) {
 			return recordService.create(Record);	
     }
 	
@@ -47,6 +54,12 @@ public class RecordController {
     @PutMapping("/updateRecord/{id}")
     public Record updateRecord(@PathVariable(value = "id") Integer id, @Valid @RequestBody Record recordDetails) {
         return recordService.update(id, recordDetails);
+    }
+    
+	@ApiOperation(value = "Assign a Record to therapists", notes = "Returns OK", response = Record.class)
+    @PostMapping("/assignRecord")
+    public Integer assignRecord(@Valid @RequestBody TherapistRecordPermission therapistRecordPermission) {
+		return recordService.assignRecord(therapistRecordPermission);
     }
 	
 //	@ApiOperation(value = "Get a record by Therapist id", notes = "Record.class", response = Record.class)

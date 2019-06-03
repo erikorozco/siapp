@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.siapp.constants.Model;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Record;
+import com.siapp.models.TherapistRecordPermission;
 import com.siapp.repositories.RecordRepository;
 import com.siapp.utilities.IgnoredProperties;
 import com.siapp.utilities.RecordUtil;
@@ -30,6 +31,10 @@ public class RecordService {
 		return RecordUtil.convertFindRecordsByTherapistArrayToObject(recordRepository.findRecordsByTherapistId(id));
 	}
 	
+	public List<HashMap<String, Object>> getAllRecords() {
+		return RecordUtil.convertFindRecordsByTherapistArrayToObject(recordRepository.getAllRecords());
+	} 
+	
 	public Record create(Record record) {
 		//record.setGenogram(null);
 		return recordRepository.save(record);
@@ -47,6 +52,10 @@ public class RecordService {
 	    }
 		
 		return recordRepository.save(record);
+	}
+	
+	public Integer assignRecord(TherapistRecordPermission therapistRecordPermission) {
+		return recordRepository.assignRecord(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId());
 	}
 	
 	

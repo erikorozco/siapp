@@ -1,38 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { TherapistService } from '../../../../shared/services/therapist.service';
-import { ActivatedRoute } from '@angular/router';
-import { Therapist } from '../../../../shared/models/therapist.model';
 import { RecordService } from '../../../../shared/services/record-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TherapistService } from 'src/app/shared/services/therapist.service';
+import { Therapist } from 'src/app/shared/models/therapist.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-user-records',
-  templateUrl: './user-records.component.html',
-  styleUrls: ['./user-records.component.css']
+  selector: 'app-assign-record',
+  templateUrl: './assign-record.component.html',
+  styleUrls: ['./assign-record.component.css']
 })
-export class UserRecordsComponent implements OnInit {
+export class AssignRecordComponent implements OnInit {
 
   params: any;
-  therapist: Therapist;
   records: any;
   tableProperties: any;
+  therapist: Therapist;
 
   constructor(
     private therapistServie: TherapistService,
     private recordService: RecordService,
-    private routes: ActivatedRoute
-    ) { }
+    private routes: ActivatedRoute,
+    private toastr: ToastrService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.getUrlParams();
     this.getTherapist();
-    this.getRecords();
-  }
-
-  getTherapist() {
-    this.therapistServie.getTherapist(this.params.therapistId).subscribe( data => {
-      this.therapist = data;
-    }, error => {});
+    this.getAllRecords();
   }
 
   getUrlParams() {
@@ -41,8 +38,38 @@ export class UserRecordsComponent implements OnInit {
     });
   }
 
-  getRecords() {
-    this.recordService.getRecordsByTherapistId(this.params.therapistId).subscribe(data => {
+  getTherapist() {
+    this.therapistServie.getTherapist(this.params.therapistId).subscribe( data => {
+      this.therapist = data;
+    }, error => {});
+  }
+
+  executeAction({value, action}) {
+    switch (action) {
+      case 'assign':
+        this.assignRecord(value);
+        break;
+      default:
+        console.log(`${action} is not a valid option`);
+        break;
+    }
+
+  }
+
+  assignRecord(value) {
+    const payload = {
+      recordId: value.recordId,
+      therapistId: this.params.therapistId
+    };
+
+    this.recordService.assignRecord(payload).subscribe( data => {
+      this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
+      this.router.navigate(['home', 'users']);
+    }, error => {});
+  }
+
+  getAllRecords() {
+    this.recordService.getAllRecords().subscribe( data => {
       this.records = data;
       this.tableProperties = [{
         headElements: ['No. Expediente', 'Nombre', 'Apellidos', 'Estado', 'Acciones'],
@@ -50,31 +77,19 @@ export class UserRecordsComponent implements OnInit {
         maxVisibleItems: 10,
         filterFunction : this.filterRecords,
         tableActions: {
-          view: true,
+          view: false,
           edit: false,
-          delete: true,
+          delete: false,
           print: false,
           updateStatus: false,
-          add: {
-            route: ['/home', 'assign-record', this.params.therapistId],
-            text: 'Asignar Paciente'
-          }
+          assign: true,
+          // add: {
+          //   route: ['/home', 'assign-record', this.params.therapistId],
+          //   text: 'Asignar Paciente'
+          // }
         }
       }];
     }, error => {});
-  }
-
-  executeAction({value, action}) {
-    switch (action) {
-      case 'view':
-      console.log(value);
-        // this.viewUser(value);
-        break;
-      default:
-        console.log(`${action} is not a valid option`);
-        break;
-    }
-
   }
 
   filterRecords(previousElements, searchText) {
@@ -97,6 +112,5 @@ export class UserRecordsComponent implements OnInit {
       }
     );
   }
-
 
 }
