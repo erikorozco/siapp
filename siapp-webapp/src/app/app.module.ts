@@ -6,6 +6,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { OverlayModule } from '@angular/cdk/overlay';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -17,7 +19,7 @@ import { FormUserComponent } from './modules/users/components/form-user/form-use
 // SERVICES
 import { UserService } from './shared/services/user.service';
 import { AuthService } from './shared/services/auth.service';
-import { RecordService } from './shared/services/record-service'
+import { RecordService } from './shared/services/record-service';
 // CORE
 import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
@@ -50,7 +52,9 @@ import { AssignRecordComponent } from './modules/users/components/assign-record/
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    OverlayModule,
+    MatDialogModule
   ],
   providers: [
     UserService,
@@ -60,8 +64,9 @@ import { AssignRecordComponent } from './modules/users/components/assign-record/
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true
-    }
+    },
+    MatDialog
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

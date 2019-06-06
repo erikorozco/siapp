@@ -28,7 +28,8 @@ export const API_URL_CONFIG = {
         findRecordById : 'findRecordById/',
         findRecordsByTherapistId : 'findRecordsByTherapistId/',
         createRecord : 'createRecord',
-        updateRecord : 'updateRecord/'
+        updateRecord : 'updateRecord/',
+        removeRecordPermission: 'removeRecordPermission'
       }
     },
 };

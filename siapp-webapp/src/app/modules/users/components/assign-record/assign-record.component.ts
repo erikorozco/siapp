@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { RecordService } from '../../../../shared/services/record-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TherapistService } from 'src/app/shared/services/therapist.service';
+import { Router } from '@angular/router';
 import { Therapist } from 'src/app/shared/models/therapist.model';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -17,31 +17,17 @@ export class AssignRecordComponent implements OnInit {
   records: any;
   tableProperties: any;
   therapist: Therapist;
+  data: any;
 
   constructor(
-    private therapistServie: TherapistService,
     private recordService: RecordService,
-    private routes: ActivatedRoute,
     private toastr: ToastrService,
     private router: Router,
+    public dialogRef: MatDialogRef<AssignRecordComponent>,
   ) { }
 
   ngOnInit() {
-    this.getUrlParams();
-    this.getTherapist();
     this.getAllRecords();
-  }
-
-  getUrlParams() {
-    this.routes.params.subscribe(params => {
-      this.params = params;
-    });
-  }
-
-  getTherapist() {
-    this.therapistServie.getTherapist(this.params.therapistId).subscribe( data => {
-      this.therapist = data;
-    }, error => {});
   }
 
   executeAction({value, action}) {
@@ -59,12 +45,14 @@ export class AssignRecordComponent implements OnInit {
   assignRecord(value) {
     const payload = {
       recordId: value.recordId,
-      therapistId: this.params.therapistId
+      therapistId: this.data.therapistId
     };
 
     this.recordService.assignRecord(payload).subscribe( data => {
+      this.dialogRef.close();
       this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
-      this.router.navigate(['home', 'users']);
+      this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+      this.router.navigate(['home', 'user-records', this.data.therapistId, this.data.userId]));
     }, error => {});
   }
 
@@ -82,11 +70,7 @@ export class AssignRecordComponent implements OnInit {
           delete: false,
           print: false,
           updateStatus: false,
-          assign: true,
-          // add: {
-          //   route: ['/home', 'assign-record', this.params.therapistId],
-          //   text: 'Asignar Paciente'
-          // }
+          assign: true
         }
       }];
     }, error => {});

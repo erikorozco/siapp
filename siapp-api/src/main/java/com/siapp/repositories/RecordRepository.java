@@ -2,8 +2,10 @@ package com.siapp.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.siapp.models.Record;
 
@@ -37,12 +39,21 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 			nativeQuery = true)
 	List<Object[]> getAllRecords();
 	
+	
 	@Query(
 			value = "INSERT INTO expediente_terapeuta(\n" + 
 					"	id_expediente, id_terapeuta)\n" + 
 					"    VALUES (:recordId, :therapistId) RETURNING id_expediente_terapeuta;",
 			nativeQuery = true)
 	Integer assignRecord(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
+	
+	
+	@Modifying
+    @Transactional
+	@Query(
+			value = "DELETE FROM expediente_terapeuta WHERE  id_expediente = :recordId AND id_terapeuta = :therapistId",
+			nativeQuery = true)
+	Integer removeRecordPermission(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
 	
 //	public Optional<Record> findByTherapistsId(Integer id);
 }

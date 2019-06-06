@@ -29,4 +29,8 @@ export class RecordService {
     return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.assignRecord, recordTherapistPermission);
   }
 
+  removeRecordPermission(recordTherapistPermission: any): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.removeRecordPermission, recordTherapistPermission);
+  }
+
 }

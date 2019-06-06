@@ -58,7 +58,8 @@ export class ListUserComponent implements OnInit {
 
   updateUserStatus(user: User) {
     this.userService.updateUserStatus(user.id).subscribe(response => {
-      this.router.navigate(['home/view-user', user.id]);
+      this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+      this.router.navigate(['home', 'users']));
       this.toastr.success('El estado el usario ha sido actualizado exitosamente', 'Operacion exitosa');
     });
   }

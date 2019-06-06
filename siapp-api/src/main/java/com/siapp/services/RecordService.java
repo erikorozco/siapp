@@ -58,6 +58,9 @@ public class RecordService {
 		return recordRepository.assignRecord(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId());
 	}
 	
+	public Integer removeRecordPermission(TherapistRecordPermission therapistRecordPermission) {
+		return recordRepository.removeRecordPermission(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId());
+	}
 	
 	
 //	public Optional<Record> getRecordByTherapistIdTest(Integer id) {

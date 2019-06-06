@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,10 +58,17 @@ public class RecordController {
         return recordService.update(id, recordDetails);
     }
     
-	@ApiOperation(value = "Assign a Record to therapists", notes = "Returns OK", response = Record.class)
+	@ApiOperation(value = "Assign a Record to therapists", response = Record.class)
     @PostMapping("/assignRecord")
     public Integer assignRecord(@Valid @RequestBody TherapistRecordPermission therapistRecordPermission) {
 		return recordService.assignRecord(therapistRecordPermission);
+    }
+	
+    @ApiOperation(value = "Delete User by ID", notes = "Returns 200")
+    @PostMapping("/removeRecordPermission")
+    public String removeRecordPermission(@Valid @RequestBody TherapistRecordPermission therapistRecordPermission) {
+        recordService.removeRecordPermission(therapistRecordPermission);
+        return "200";
     }
 	
 //	@ApiOperation(value = "Get a record by Therapist id", notes = "Record.class", response = Record.class)
