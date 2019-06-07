@@ -23,10 +23,9 @@ import { RecordService } from './shared/services/record-service';
 // CORE
 import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
-import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
-import { StatusComponent } from './shared/components/status/status.component';
+import { TablePaginationComponent } from './shared/components/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
-import { AssignRecordComponent } from './modules/users/components/assign-record/assign-record.component';
+import { AssignRecordComponent } from './modules/records/components/list-records/list-records.component';
 
 
 @NgModule({
@@ -40,7 +39,6 @@ import { AssignRecordComponent } from './modules/users/components/assign-record/
     FormUserComponent,
     NavigationTreeComponent,
     TablePaginationComponent,
-    StatusComponent,
     UserRecordsComponent,
     AssignRecordComponent
   ],

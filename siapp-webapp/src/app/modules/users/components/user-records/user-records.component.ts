@@ -3,7 +3,7 @@ import { TherapistService } from '../../../../shared/services/therapist.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Therapist } from '../../../../shared/models/therapist.model';
 import { RecordService } from '../../../../shared/services/record-service';
-import { AssignRecordComponent } from '../assign-record/assign-record.component';
+import { AssignRecordComponent } from '../../../records/components/list-records/list-records.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 

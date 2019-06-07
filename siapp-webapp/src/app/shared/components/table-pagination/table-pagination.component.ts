@@ -4,7 +4,6 @@ import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstra
 import { filter } from 'rxjs/operators';
 import { element } from 'protractor';
 
-
 @Component({
   selector: 'app-table-pagination',
   templateUrl: './table-pagination.component.html',

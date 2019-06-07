@@ -7,9 +7,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'app-assign-record',
-  templateUrl: './assign-record.component.html',
-  styleUrls: ['./assign-record.component.css']
+  selector: 'app-list-records',
+  templateUrl: './list-records.component.html',
+  styleUrls: ['./list-records.component.css']
 })
 export class AssignRecordComponent implements OnInit {
 

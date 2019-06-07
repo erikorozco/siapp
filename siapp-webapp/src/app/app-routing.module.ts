@@ -4,9 +4,9 @@ import { LoginComponent } from './modules/users/components/login/login.component
 import { ListUserComponent } from './modules/users/components/list-user/list-user.component';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { FormUserComponent } from './modules/users/components/form-user/form-user.component';
-import { TablePaginationComponent } from './modules/table-pagination/table-pagination.component';
+import { TablePaginationComponent } from './shared/components/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
-import { AssignRecordComponent } from './modules/users/components/assign-record/assign-record.component';
+import { AssignRecordComponent } from './modules/records/components/list-records/list-records.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
