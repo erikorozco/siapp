@@ -3,27 +3,26 @@ import { RecordService } from '../../../../shared/services/record-service';
 import { Router } from '@angular/router';
 import { Therapist } from 'src/app/shared/models/therapist.model';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialogRef } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-records',
-  templateUrl: './list-records.component.html',
-  styleUrls: ['./list-records.component.css']
+  templateUrl: './list-records-dialog.component.html',
+  styleUrls: ['./list-records-dialog.component.css']
 })
-export class AssignRecordComponent implements OnInit {
+export class ListRecordsDialogComponent implements OnInit {
 
   params: any;
   records: any;
   tableProperties: any;
   therapist: Therapist;
-  data: any;
 
   constructor(
     private recordService: RecordService,
     private toastr: ToastrService,
     private router: Router,
-    public dialogRef: MatDialogRef<AssignRecordComponent>,
+    public dialogRef: MatDialogRef<ListRecordsDialogComponent>,
+    //@Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
@@ -32,28 +31,11 @@ export class AssignRecordComponent implements OnInit {
 
   executeAction({value, action}) {
     switch (action) {
-      case 'assign':
-        this.assignRecord(value);
-        break;
       default:
         console.log(`${action} is not a valid option`);
         break;
     }
 
-  }
-
-  assignRecord(value) {
-    const payload = {
-      recordId: value.recordId,
-      therapistId: this.data.therapistId
-    };
-
-    this.recordService.assignRecord(payload).subscribe( data => {
-      this.dialogRef.close();
-      this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
-      this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-      this.router.navigate(['home', 'user-records', this.data.therapistId, this.data.userId]));
-    }, error => {});
   }
 
   getAllRecords() {

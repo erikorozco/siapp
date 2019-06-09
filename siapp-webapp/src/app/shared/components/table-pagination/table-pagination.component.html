@@ -51,7 +51,7 @@
                         <button mdbBtn mdbTooltip="Expedientes" placement="top" mdbWavesEffect *ngIf="tableActions.viewRecords" class="btn btn-warning btn-circle" title="Expedientes" (click)="action(item, 'viewRecords')">
                             <i class="fas fa-folder"></i>
                         </button>
-                        <button mdbBtn mdbTooltip="Seleccionar" placement="top" mdbWavesEffect *ngIf="tableActions.assign" class="btn btn-info btn-circle" title="Seleccionar" (click)="action(item, 'assign')">
+                        <button mdbBtn mdbTooltip="Seleccionar" placement="top" mdbWavesEffect *ngIf="tableActions.assign" class="btn btn-info btn-circle" title="Seleccionar" [mat-dialog-close]="item">
                             <i class="fas fa-arrow-alt-circle-right"></i>
                         </button>
                         <ng-container mdbWavesEffect *ngIf="tableActions.updateStatus">

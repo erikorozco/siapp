@@ -25,7 +25,8 @@ import { Interceptor } from './shared/core/interceptor';
 import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
 import { TablePaginationComponent } from './shared/components/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
-import { AssignRecordComponent } from './modules/records/components/list-records/list-records.component';
+import { ListRecordsDialogComponent } from './modules/records/components/list-records-dialog/list-records-dialog.component';
+import { ListPersonComponent } from './modules/records/components/list-person/list-person.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { AssignRecordComponent } from './modules/records/components/list-records
     NavigationTreeComponent,
     TablePaginationComponent,
     UserRecordsComponent,
-    AssignRecordComponent
+    ListRecordsDialogComponent,
+    ListPersonComponent,
   ],
   imports: [
     BrowserModule,

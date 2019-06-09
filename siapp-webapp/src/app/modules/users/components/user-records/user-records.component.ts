@@ -3,8 +3,8 @@ import { TherapistService } from '../../../../shared/services/therapist.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Therapist } from '../../../../shared/models/therapist.model';
 import { RecordService } from '../../../../shared/services/record-service';
-import { AssignRecordComponent } from '../../../records/components/list-records/list-records.component';
-import { MatDialog } from '@angular/material/dialog';
+import { ListRecordsDialogComponent } from '../../../records/components/list-records-dialog/list-records-dialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -28,15 +28,6 @@ export class UserRecordsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     ) { }
-
-    openAddDialog(value) {
-      const dialogRef = this.dialog.open(AssignRecordComponent);
-      dialogRef.componentInstance.data = value;
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-    }
 
   ngOnInit() {
     this.getUrlParams();
@@ -94,6 +85,28 @@ export class UserRecordsComponent implements OnInit {
 
   }
 
+  assignRecord(value) {
+    const dialogRef = this.dialog.open(ListRecordsDialogComponent, { width: '1000px'/*, data: {name: this.name, animal: this.animal}*/ });
+    //dialogRef.componentInstance.data1 = value;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const record = Object.keys(result).map(k => result[k]);
+        const payload = {
+          recordId: record[0],
+          therapistId: this.params.therapistId
+        };
+
+        this.recordService.assignRecord(payload).subscribe( data => {
+          dialogRef.close();
+          this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
+          this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+          this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
+        }, error => {});
+      }
+    });
+  }
+
   executeAction({value, action}) {
     switch (action) {
       case 'view':
@@ -101,7 +114,7 @@ export class UserRecordsComponent implements OnInit {
         // this.viewUser(value);
         break;
       case 'openAddModal':
-        this.openAddDialog(value);
+        this.assignRecord(value);
         break;
       case 'delete':
         this.deleteRecordPermission(value);

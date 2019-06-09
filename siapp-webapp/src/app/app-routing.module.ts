@@ -6,7 +6,8 @@ import { DashboardComponent } from './modules/dashboard/components/dashboard/das
 import { FormUserComponent } from './modules/users/components/form-user/form-user.component';
 import { TablePaginationComponent } from './shared/components/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
-import { AssignRecordComponent } from './modules/records/components/list-records/list-records.component';
+import { ListRecordsDialogComponent } from './modules/records/components/list-records-dialog/list-records-dialog.component';
+import { ListPersonComponent } from './modules/records/components/list-person/list-person.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -24,7 +25,8 @@ const ROUTES: Routes = [
       { path: 'user-records/:therapistId/:userId', component: UserRecordsComponent },
       { path: 'user-records', component: ListUserComponent },
       { path: 'assign-record', redirectTo: 'users' },
-      { path: 'assign-record/:therapistId', component: AssignRecordComponent },
+      { path: 'assign-record/:therapistId', component: ListRecordsDialogComponent },
+      { path: 'records', component: ListPersonComponent },
   ] },
 ];
 
