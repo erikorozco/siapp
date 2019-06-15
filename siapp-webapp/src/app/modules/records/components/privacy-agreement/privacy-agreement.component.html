@@ -1,3 +1,11 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Panel de control</a> ->
+        <a [routerLink]="['/home', 'records']">Pacientes</a> ->
+        <a [routerLink]="['/home', 'record-summary', this.params.personId ]">{{ this.person }} -> </a>
+        <a>Aviso de privacidad</a>
+    </h1>
+</div>
 <h1 mat-dialog-title>Aviso de privacidad</h1>
 <mat-dialog-content class="mat-typography">
     <h3>Develop across all platforms</h3>

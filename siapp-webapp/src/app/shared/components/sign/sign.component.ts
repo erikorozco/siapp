@@ -40,10 +40,12 @@ export class SignComponent implements OnInit, AfterViewInit{
   captureSign = (action) => {
     if (action === 'clean') {
       this.signaturePad.clear();
+    } else {
+      this.getSign.emit({
+        value: this.signaturePad.toDataURL()
+      });
     }
-    this.getSign.emit({
-      value: this.signaturePad.toDataURL()
-    });
+
   }
 
 }

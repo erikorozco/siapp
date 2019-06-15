@@ -3,6 +3,7 @@ import { PrivacyAgreementService } from '../../../../shared/services/privacy-agr
 import { ToastrService } from 'ngx-toastr';
 import { PrivacyAgreement } from '../../../../shared/models/privacy-agreement.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PersonService } from '../../../../shared/services/person.service';
 
 @Component({
   selector: 'app-privacy-agreement',
@@ -12,17 +13,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PrivacyAgreementComponent implements OnInit {
 
   params: any;
+  person: any;
 
   constructor(
     private privacyAgreementService: PrivacyAgreementService,
+    private personService: PersonService,
     private toastr: ToastrService,
     private routes: ActivatedRoute,
     private router: Router,
   ) { }
 
   ngOnInit() {
+
     this.routes.params.subscribe(params => {
       this.params = params;
+    });
+
+    this.getPersonInformation();
+
+  }
+
+  getPersonInformation() {
+    this.personService.getPerson(this.params.personId).subscribe(data => {
+      this.person = `${data.name} ${data.lastName} ${data.secondLastName}`;
+    }, error => {
+      console.log(error);
     });
   }
 
