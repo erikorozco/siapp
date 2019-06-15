@@ -21,8 +21,6 @@ public class RecordService {
 	@Autowired
 	RecordRepository recordRepository;
 	
-	
-	
 	public Record findRecordById(Integer id) {
 		return recordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Record", "id", id));
 	}

@@ -8,6 +8,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SignaturePadModule } from 'angular2-signaturepad';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -27,6 +29,11 @@ import { TablePaginationComponent } from './shared/components/table-pagination/t
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
 import { ListRecordsDialogComponent } from './modules/records/components/list-records-dialog/list-records-dialog.component';
 import { ListPersonComponent } from './modules/records/components/list-person/list-person.component';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
+import { FormPersonComponent } from './modules/records/components/form-person/form-person.component';
+import { RecordSummaryComponent } from './modules/records/components/record-summary/record-summary.component';
+import { PrivacyAgreementComponent } from './modules/records/components/privacy-agreement/privacy-agreement.component';
+import { SignComponent } from './shared/components/sign/sign.component';
 
 
 @NgModule({
@@ -43,6 +50,11 @@ import { ListPersonComponent } from './modules/records/components/list-person/li
     UserRecordsComponent,
     ListRecordsDialogComponent,
     ListPersonComponent,
+    LoadingSpinnerComponent,
+    FormPersonComponent,
+    RecordSummaryComponent,
+    PrivacyAgreementComponent,
+    SignComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +66,9 @@ import { ListPersonComponent } from './modules/records/components/list-person/li
     ToastrModule.forRoot(),
     MDBBootstrapModule.forRoot(),
     OverlayModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    SignaturePadModule
   ],
   providers: [
     UserService,

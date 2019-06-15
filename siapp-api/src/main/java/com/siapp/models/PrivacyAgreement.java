@@ -10,45 +10,37 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "persona")
+@Table(name = "acuerdoprivacidad")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Person  implements Serializable {
+public class PrivacyAgreement implements Serializable  {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@Column(name = "id_persona")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "nombre")
-	private String name;
+	@Column(name = "firma")
+	private String sign;
 	
-	@Column(name = "apellidop")
-	private String lastName;
-	
-	@Column(name = "apellidom")
-	private String secondLastName;
-	
-	@Column(name = "telefono")
-	private String phone;
-	
-	@Column(name = "esta_activo")
-	private boolean active;
+	@JsonManagedReference(value = "personPrivacyReference")
+	@OneToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+	private Person person;
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -59,16 +51,7 @@ public class Person  implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-    
-    @JsonBackReference(value="personReference")
-    @OneToOne(mappedBy = "person",  cascade = CascadeType.ALL)
-    private Record record;
-    
-    @JsonBackReference(value="personPrivacyReference")
-    @OneToOne(mappedBy = "person",  cascade = CascadeType.ALL)
-    private PrivacyAgreement privacyAgreement;
 
-    //GETTERS AND SETTERS
 	public Integer getId() {
 		return id;
 	}
@@ -77,44 +60,20 @@ public class Person  implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getSign() {
+		return sign;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getSecondLastName() {
-		return secondLastName;
-	}
-
-	public void setSecondLastName(String secondLastName) {
-		this.secondLastName = secondLastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	public Date getCreatedAt() {
@@ -132,13 +91,7 @@ public class Person  implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+    
+    
 
-	public Record getRecord() {
-		return record;
-	}
-
-	public void setRecord(Record record) {
-		this.record = record;
-	}
-      
 }

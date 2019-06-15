@@ -73,7 +73,7 @@ describe("TEST USERS CRUD MODULE", function() {
         it("Can deactivate user", function(done) {
             UserListPage.clickDeactivateButton();
             CoreControls.waitForSuccessNotification();
-            expect(browser.getCurrentUrl()).toContain("home/view-user");
+            expect(browser.getCurrentUrl()).toContain("home/users");
             done();
         });
     });

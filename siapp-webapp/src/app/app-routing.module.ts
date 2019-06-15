@@ -8,6 +8,9 @@ import { TablePaginationComponent } from './shared/components/table-pagination/t
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
 import { ListRecordsDialogComponent } from './modules/records/components/list-records-dialog/list-records-dialog.component';
 import { ListPersonComponent } from './modules/records/components/list-person/list-person.component';
+import { FormPersonComponent } from './modules/records/components/form-person/form-person.component';
+import { RecordSummaryComponent } from './modules/records/components/record-summary/record-summary.component';
+import { PrivacyAgreementComponent } from './modules/records/components/privacy-agreement/privacy-agreement.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -27,6 +30,15 @@ const ROUTES: Routes = [
       { path: 'assign-record', redirectTo: 'users' },
       { path: 'assign-record/:therapistId', component: ListRecordsDialogComponent },
       { path: 'records', component: ListPersonComponent },
+      { path: 'add-person', component: FormPersonComponent },
+      { path: 'edit-person/:id', component: FormPersonComponent },
+      { path: 'edit-person', redirectTo: 'add-person' },
+      { path: 'view-person/:id', component: FormPersonComponent },
+      { path: 'view-person', redirectTo: 'add-person' },
+      { path: 'record-summary/:personId', component: RecordSummaryComponent },
+      { path: 'record-summary', redirectTo: 'records' },
+
+      { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
   ] },
 ];
 

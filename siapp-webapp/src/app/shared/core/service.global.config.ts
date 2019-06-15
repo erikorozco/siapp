@@ -32,6 +32,22 @@ export const API_URL_CONFIG = {
         removeRecordPermission: 'removeRecordPermission'
       }
     },
+    personsAPI: {
+      name: 'persons/',
+      endpoints: {
+        getAll : 'getAllPersons',
+        getPerson : 'getPerson/',
+        createPerson: 'createPerson',
+        updatePerson : 'updatePerson/',
+      }
+    },
+    privacyAgreementAPI: {
+      name: 'privacyAgreement/',
+      endpoints: {
+        getPrivacyAgreement : 'get/',
+        createPrivacyAgreement : 'create',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

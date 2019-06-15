@@ -1,0 +1,57 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Panel de control</a> ->
+        <a [routerLink]="['/home/records']">Pacientes</a> -> {{ this.formProperties.action === 'view-person'? 'Ver Paciente' : '' }} {{ this.formProperties.action === 'edit-person'? 'Editar Paciente' : '' }} {{ this.formProperties.action === 'add-person'?
+        'Nuevo Paciente' : '' }}
+    </h1>
+    <div class="form-group" *ngIf="this.formProperties.action === 'view-person'">
+        <h3 [ngClass]="{'text-success': personForm.get('active').value, 'text-danger': !personForm.get('active').value}">{{ personForm.get('active').value? 'Cuenta activa' : 'Cuenta desactivada' }}</h3>
+    </div>
+    <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a> -->
+</div>
+<div class="row">
+    <div class="col-md-9 pl-5 text border-left-primary">
+        <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('name') } ">
+                <label for="name">Nombre del paciente *</label>
+                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre del paciente">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('name')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('lastName') } ">
+                <label for="name">Apellido Paterno *</label>
+                <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Apellido Paterno">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('lastName')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+                <!-- <small class="form-text text-muted ">Asegurese de utilizar una contraseña que recuerde</small> -->
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('secondLastName') } ">
+                <label for="name">Apellido Materno *</label>
+                <input type="text" class="form-control" formControlName="secondLastName" id="secondLastName" placeholder="Apellido Materno">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('secondLastName')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+                <!-- <small class="form-text text-muted ">Asegurese de utilizar una contraseña que recuerde</small> -->
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('phone') } ">
+                <label for="name">Número de Teléfono </label>
+                <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Teléfono">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('phone')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+                <!-- <small class="form-text text-muted ">Asegurese de utilizar una contraseña que recuerde</small> -->
+            </div>
+            <button [disabled]="personForm.invalid || personForm.disabled || personForm.pristine" type="submit " class="btn btn-success btn-lg">Guardar</button>
+        </form>
+    </div>
+    <div *ngIf="this.formProperties.action === 'view-person' && this.person" class="col-md-3 text-right">
+        <!-- <a [routerLink]="['/home', 'user-records', user.therapist.id, person.id]" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+              <i class="fas fa-folder"></i>
+          </span>
+            <span class="text">Expedientes</span>
+        </a> -->
+    </div>
+</div>

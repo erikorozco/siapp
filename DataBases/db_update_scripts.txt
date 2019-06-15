@@ -70,6 +70,28 @@ ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean;
 UPDATE expediente set esta_activo=TRUE;
 
+-- Table: acuerdoprivacidad
+
+-- DROP TABLE acuerdoprivacidad;
+
+CREATE TABLE acuerdoprivacidad
+(
+  id serial NOT NULL,
+  firma character varying,
+  id_persona integer,
+  creado timestamp without time zone,
+  actualizado timestamp without time zone,
+  CONSTRAINT acuerdoprivacidad_pkey PRIMARY KEY (id),
+  CONSTRAINT acuerdoprivacidad_id_persona_fkey FOREIGN KEY (id_persona)
+      REFERENCES persona (id_persona) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE acuerdoprivacidad
+  OWNER TO postgres;
+
 
   //NO NECESSARY TABLES
   PCITA

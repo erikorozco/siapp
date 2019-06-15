@@ -66,6 +66,8 @@ export class ListRecordsDialogComponent implements OnInit {
             || element.recordPatientSecondLastName.toLowerCase().includes(searchText.toLowerCase())
             || element.recordStatus.toLowerCase().includes(searchText.toLowerCase())
             || element.recordId.toString().includes(searchText)
+            || (`${element.recordPatientName.toLowerCase()} ${element.recordPatientLastName.toLowerCase()} ${element.recordPatientSecondLastName.toLowerCase()}`)
+            .includes(searchText.toLowerCase())
             ) {
               element.tableFields = [
                 element.recordId,

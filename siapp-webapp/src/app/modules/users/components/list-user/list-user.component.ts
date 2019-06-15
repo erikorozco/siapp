@@ -38,7 +38,9 @@ export class ListUserComponent implements OnInit {
             delete: false,
             print: false,
             updateStatus: true,
-            viewRecords: true,
+            viewRecords: {
+              toolTip: 'Ver Expedientes',
+            },
             add: {
               route: ['/home', 'add-user'],
               text: 'Agregar Terapeuta'
@@ -97,6 +99,8 @@ export class ListUserComponent implements OnInit {
             || element.therapist.name.toLowerCase().includes(searchText.toLowerCase())
             || element.therapist.last_name.toLowerCase().includes(searchText.toLowerCase())
             || element.therapist.second_last_name.toLowerCase().includes(searchText.toLowerCase())
+            || (`${element.therapist.name.toLowerCase()} ${element.therapist.last_name.toLowerCase()} ${element.therapist.second_last_name.toLowerCase()}`)
+                .includes(searchText.toLowerCase())
             ) {
               element.tableFields = [
                                     element.therapist.name,
