@@ -29,7 +29,7 @@ export class FormUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.formVlidatorBuilder();
+    this.formValidatorBuilder();
 
     this.routes.url.subscribe(url => {
       this.formProperties.action = url[0].path;
@@ -82,7 +82,7 @@ export class FormUserComponent implements OnInit {
     return this.userForm.get(field).invalid && this.userForm.get(field).touched;
   }
 
-  formVlidatorBuilder(): void {
+  formValidatorBuilder(): void {
     this.userForm = this.formBuilder.group({
       id: ['', ],
       password: ['', Validators.compose([Validators.required])],

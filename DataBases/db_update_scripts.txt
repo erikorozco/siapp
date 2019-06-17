@@ -60,6 +60,7 @@ ALTER TABLE usario_rol
 ALTER TABLE persona 
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
+ADD COLUMN correo character varying,
 ADD COLUMN esta_activo boolean;
 UPDATE persona set esta_activo=TRUE;
 

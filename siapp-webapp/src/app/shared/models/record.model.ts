@@ -40,7 +40,8 @@ export class Record {
       lastName: string;
       name: string;
       phone: string;
-      secondLastName: string
+      secondLastName: string;
+      email: string;
     };
     presuntiveDiagnostic: string;
     professionalWhoAttended: string;

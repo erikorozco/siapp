@@ -29,6 +29,11 @@ public class RecordService {
 		return RecordUtil.convertFindRecordsByTherapistArrayToObject(recordRepository.findRecordsByTherapistId(id));
 	}
 	
+	public Record findRecordByPersonId(Integer personId) {
+		return recordRepository.findByPersonId(personId).orElse(null);
+		//return recordRepository.findByPersonId(personId).orElseThrow(() -> new ResourceNotFoundException("Record", "person id", personId));
+	}
+	
 	public List<HashMap<String, Object>> getAllRecords() {
 		return RecordUtil.convertFindRecordsByTherapistArrayToObject(recordRepository.getAllRecords());
 	} 

@@ -34,6 +34,12 @@ public class RecordController {
         return recordService.findRecordById(id);
     }
 	
+	@ApiOperation(value = "Get a record by person Id id", notes = "Record.class", response = Record.class)
+    @GetMapping("/findRecordByPersonId/{personId}")
+    public Record findRecordByPersonId(@PathVariable(value = "personId") Integer personId) {
+        return recordService.findRecordByPersonId(personId);
+    }
+	
 	@ApiOperation(value = "Get all the records that belongs to the given therapist")
     @GetMapping("/findRecordsByTherapistId/{id}")
     public List<HashMap<String, Object>> findTherapistRecords(@PathVariable(value = "id") Integer id) {

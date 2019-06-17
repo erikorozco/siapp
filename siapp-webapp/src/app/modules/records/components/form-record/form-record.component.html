@@ -1,0 +1,173 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
+    <h1 class="h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Panel de control</a> ->
+        <a [routerLink]="['/home/records']">Pacientes</a> ->
+        <a [routerLink]="['/home', 'record-summary', this.params.personId ]">{{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}} -> </a> {{ (this.action === 'existing-person-opening-record' || this.action === 'new-person-opening-record')?
+        'Apertura de expediente' : '' }} {{this.action === 'edit-record' ? 'Editar Expediente' : ''}} {{this.action === 'view-record' ? 'Ver Expediente' : ''}}
+    </h1>
+</div>
+<div class="row">
+    <div class="col-md-12 pl-5 text border-left-primary">
+        <!-- <form [formGroup]="recordForm" (ngSubmit)="onSubmit()"> -->
+        <form [formGroup]="recordForm">
+            <mat-tab-group class="mt-2 form-tab-custom">
+                <mat-tab class="" label="Información personal">
+                    <div formGroupName="person" class="mt-2">
+                        <!-- Left side of the form -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.name') } ">
+                                <label for="name">Nombre *</label>
+                                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre">
+                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.name')">
+                                    <h6 class="feedback-field">Este campo es requerido</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.lastName') } ">
+                                <label for="lastName">Apellida Paterno *</label>
+                                <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Apellida Paterno">
+                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.lastName')">
+                                    <h6 class="feedback-field">Este campo es requerido</h6>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.secondLastName') } ">
+                                <label for="secondLastName">Apellido Materno *</label>
+                                <input type="text" class="form-control" formControlName="secondLastName" id="secondLastName" placeholder="Apellido Materno">
+                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.secondLastName')">
+                                    <h6 class="feedback-field">Este campo es requerido</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.phone') } ">
+                                <label for="phone">Número de teléfono</label>
+                                <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Número de teléfono">
+                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.phone')">
+                                    <h6 class="feedback-field">Este campo es requerido</h6>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.email') } ">
+                                <label for="email">Correo electronico</label>
+                                <input type="text" class="form-control" formControlName="email" id="email" placeholder="correo@ejemplo.com">
+                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.email')">
+                                    <h6 class="feedback-field">Este campo es requerido</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('bornDate') } ">
+                            <label for="bornDate">Fecha de nacimiento *</label>
+                            <input (change)="calculateAge()" type="date" class="form-control" formControlName="bornDate" id="bornDate" placeholder="DD-MM-AAAA">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('bornDate')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                            <!-- <div class="form-control-feedback" *ngIf="requiredFormatPattern('bornDate')">
+                                <h6 class="feedback-field">El formato debe ser DD-MM-AAAA</h6>
+                            </div> -->
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('age') } ">
+                            <label for="age">Edad</label>
+                            <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="age" id="age" placeholder="Edad">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('age')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <hr style="height:2px; border:none; color:#4e73df; background-color: #4e73df"> -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
+                            <label for="gender">Sexo *</label>
+                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
+                              <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
+                                {{ gender.value }}
+                              </option>
+                            </select>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('civilStatus') } ">
+                            <label for="civilStatus">Estado Civil *</label>
+                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="civilStatus" id="civilStatus" placeholder="DD-MM-AAAA">
+                              <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
+                                {{ civilStatus.value }}
+                              </option>
+                            </select>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('civilStatus')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('address') } ">
+                            <label for="address">Domicilio</label>
+                            <input type="text" class="form-control" formControlName="address" id="address" placeholder="Domicilio">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('address')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
+                            <label for="city">Municipio</label>
+                            <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('city')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('parish') } ">
+                            <label for="parish">Parroquia</label>
+                            <input type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquia">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('parish')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('colony') } ">
+                            <label for="colony">Colonia</label>
+                            <input type="text" class="form-control" formControlName="colony" id="colony" placeholder="Colonia">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('colony')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+                            <label for="escolarity">Escolaridad *</label>
+                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="escolarity" id="escolarity" placeholder="DD-MM-AAAA">
+                              <option *ngFor="let escolarity of this.recordFormOptions.escolarity" [ngValue]="escolarity">
+                                {{ escolarity.value }}
+                              </option>
+                            </select>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('religion') } ">
+                            <label for="religion">Religión</label>
+                            <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religión">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('religion')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('ocupation') } ">
+                            <label for="ocupation">Ocupación</label>
+                            <input type="text" class="form-control" formControlName="ocupation" id="ocupation" placeholder="Ocupación">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('ocupation')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Second"> Content 2 </mat-tab>
+                <mat-tab label="Third"> Content 3 </mat-tab>
+            </mat-tab-group>
+        </form>
+    </div>
+</div>

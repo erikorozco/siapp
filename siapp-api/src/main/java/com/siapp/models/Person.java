@@ -47,6 +47,9 @@ public class Person  implements Serializable {
 	@Column(name = "telefono")
 	private String phone;
 	
+	@Column(name = "correo")
+	private String email;
+	
 	@Column(name = "esta_activo")
 	private boolean active;
 	
@@ -107,6 +110,14 @@ public class Person  implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public boolean isActive() {

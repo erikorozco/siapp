@@ -1,6 +1,8 @@
 package com.siapp.repositories;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,5 +57,5 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 			nativeQuery = true)
 	Integer removeRecordPermission(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
 	
-//	public Optional<Record> findByTherapistsId(Integer id);
+	public Optional<Record> findByPersonId(Integer personId);
 }

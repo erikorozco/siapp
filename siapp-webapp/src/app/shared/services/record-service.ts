@@ -17,8 +17,12 @@ export class RecordService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.findRecordById + id);
   }
 
-  getRecordsByTherapistId(id: number): Observable<any> {
-    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.findRecordsByTherapistId + id);
+  getRecordsByTherapistId(therapistId: number): Observable<any> {
+    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.findRecordsByTherapistId + therapistId);
+  }
+
+  getRecordByPersonId(personId: number): Observable<any> {
+    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.findRecordByPersonId + personId);
   }
 
   getAllRecords(): Observable<any> {

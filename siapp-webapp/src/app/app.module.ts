@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { MatTabsModule } from '@angular/material/tabs';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -34,6 +35,8 @@ import { FormPersonComponent } from './modules/records/components/form-person/fo
 import { RecordSummaryComponent } from './modules/records/components/record-summary/record-summary.component';
 import { PrivacyAgreementComponent } from './modules/records/components/privacy-agreement/privacy-agreement.component';
 import { SignComponent } from './shared/components/sign/sign.component';
+import { RecordInformationComponent } from './modules/records/components/record-summary/components/record-information/record-information.component';
+import { FormRecordComponent } from './modules/records/components/form-record/form-record.component';
 
 
 @NgModule({
@@ -55,6 +58,8 @@ import { SignComponent } from './shared/components/sign/sign.component';
     RecordSummaryComponent,
     PrivacyAgreementComponent,
     SignComponent,
+    RecordInformationComponent,
+    FormRecordComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +73,8 @@ import { SignComponent } from './shared/components/sign/sign.component';
     OverlayModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    SignaturePadModule
+    SignaturePadModule,
+    MatTabsModule
   ],
   providers: [
     UserService,

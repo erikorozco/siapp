@@ -27,6 +27,7 @@ export const API_URL_CONFIG = {
         getAll : 'getAll',
         findRecordById : 'findRecordById/',
         findRecordsByTherapistId : 'findRecordsByTherapistId/',
+        findRecordByPersonId : 'findRecordByPersonId/',
         createRecord : 'createRecord',
         updateRecord : 'updateRecord/',
         removeRecordPermission: 'removeRecordPermission'
