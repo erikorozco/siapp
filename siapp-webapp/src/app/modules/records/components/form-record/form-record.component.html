@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-12 pl-5 text border-left-primary">
         <!-- <form [formGroup]="recordForm" (ngSubmit)="onSubmit()"> -->
-        <form [formGroup]="recordForm">
+        <form [formGroup]="recordForm" class="mb-lg-5">
             <mat-tab-group class="mt-2 form-tab-custom">
                 <mat-tab class="" label="Información personal">
                     <div formGroupName="person" class="mt-2">
@@ -81,7 +81,7 @@
                             <label for="gender">Sexo *</label>
                             <select (change)="calculateAge()" type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
                               <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
-                                {{ gender.value }}
+                                {{ gender }}
                               </option>
                             </select>
                             <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
@@ -92,7 +92,7 @@
                             <label for="civilStatus">Estado Civil *</label>
                             <select (change)="calculateAge()" type="option" class="form-control" formControlName="civilStatus" id="civilStatus" placeholder="DD-MM-AAAA">
                               <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
-                                {{ civilStatus.value }}
+                                {{ civilStatus }}
                               </option>
                             </select>
                             <div class="form-control-feedback" *ngIf="requiredFieldValidation('civilStatus')">
@@ -136,18 +136,24 @@
                     <div class="form-row">
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
                             <label for="escolarity">Escolaridad *</label>
-                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="escolarity" id="escolarity" placeholder="DD-MM-AAAA">
-                              <option *ngFor="let escolarity of this.recordFormOptions.escolarity" [ngValue]="escolarity">
-                                {{ escolarity.value }}
-                              </option>
-                            </select>
+                            <input type="text" class="form-control" formControlName="escolarity" id="escolarity" placeholder="Escolaridad" [matAutocomplete]="escolarityAutoComplete">
+                            <mat-autocomplete #escolarityAutoComplete="matAutocomplete">
+                                <mat-option *ngFor="let escolarity of escolarities | async" [value]="escolarity">
+                                    {{escolarity}}
+                                </mat-option>
+                            </mat-autocomplete>
                             <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('religion') } ">
                             <label for="religion">Religión</label>
-                            <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religión">
+                            <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religion" [matAutocomplete]="religionAutoComplete">
+                            <mat-autocomplete #religionAutoComplete="matAutocomplete">
+                                <mat-option *ngFor="let religion of religions | async" [value]="religion">
+                                    {{religion}}
+                                </mat-option>
+                            </mat-autocomplete>
                             <div class="form-control-feedback" *ngIf="requiredFieldValidation('religion')">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
@@ -162,6 +168,52 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('firstTime') } ">
+                            <label for="firstTime"> ¿Primera vez? *</label>
+                            <select type="option" class="form-control" formControlName="firstTime" id="firstTime">
+                            <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                              {{ yesNoOption.text }}
+                            </option>
+                          </select>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('firstTime')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoDerived') } ">
+                            <label for="whoDerived">¿Quién derivó?</label>
+                            <input type="text" class="form-control" formControlName="whoDerived" id="whoDerived" placeholder="¿Quién derivó?" [matAutocomplete]="whoDerivedAutoComplete">
+                            <mat-autocomplete #whoDerivedAutoComplete="matAutocomplete">
+                                <mat-option *ngFor="let deriver of derivers | async" [value]="deriver">
+                                    {{deriver}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whoDerived')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whenWasFirstTime') } ">
+                            <label for="whenWasFirstTime">¿Cuándo?</label>
+                            <input type="text" class="form-control" formControlName="whenWasFirstTime" id="whenWasFirstTime" placeholder="¿Cuándo?">
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whenWasFirstTime')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('consultationDisposition') } ">
+                            <label for="consultationDisposition"> Disposición para consulta *</label>
+                            <select type="option" class="form-control" formControlName="consultationDisposition" id="consultationDisposition">
+                                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                                  {{ yesNoOption.text }}
+                                </option>
+                              </select>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('consultationDisposition')">
+                                <h6 class="feedback-field">Este campo es requerido</h6>
+                            </div>
                         </div>
                     </div>
                 </mat-tab>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PersonService } from 'src/app/shared/services/person.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/record-form-constants';
+import { Observable } from 'rxjs';
+import {map, startWith, auditTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-record',
@@ -18,6 +20,9 @@ export class FormRecordComponent implements OnInit {
   person: any;
   recordForm: FormGroup;
   recordFormOptions = RecordFormOptions;
+  escolarities: Observable<string[]>;
+  religions: Observable<string[]>;
+  derivers: Observable<string[]>;
 
   constructor(
     private router: Router,
@@ -38,23 +43,9 @@ export class FormRecordComponent implements OnInit {
       this.params = params;
     });
 
+    this.executeAction();
     this.getPersonInformation();
-
-    if (this.action === 'existing-person-opening-record') {
-      this.personService.getPerson(this.params.personId).subscribe(data => {
-        this.recordForm.get(['person']).setValue(data);
-      }, error => {
-        console.log(error);
-      });
-
-    } else if (this.action === 'edit-user') {
-      // this.personService.getUser(this.params.personId).subscribe(data => {
-      //   this.userForm.setValue(data);
-      // }, error => { console.log(error); });
-
-    }
-
-    this.getPersonInformation();
+    this._initializeAutoCompleteFields();
   }
 
   getPersonInformation() {
@@ -78,12 +69,27 @@ export class FormRecordComponent implements OnInit {
     return this.recordForm.get(field).invalid && this.recordForm.get(field).touched;
   }
 
-  requiredFormatPattern(field) {
-    if (this.recordForm.get([field]).errors) {
-      return ('pattern' in this.recordForm.get([field]).errors);
+  executeAction() {
+    if (this.action === 'existing-person-opening-record') {
+      this.personService.getPerson(this.params.personId).subscribe(data => {
+        this.recordForm.get(['person']).setValue(data);
+      }, error => {
+        console.log(error);
+      });
+
+    } else if (this.action === 'edit-user') {
+      // this.personService.getUser(this.params.personId).subscribe(data => {
+      //   this.userForm.setValue(data);
+      // }, error => { console.log(error); });
+
     }
-    return false;
   }
+  // requiredFormatPattern(field) {
+  //   if (this.recordForm.get([field]).errors) {
+  //     return ('pattern' in this.recordForm.get([field]).errors);
+  //   }
+  //   return false;
+  // }
 
   formValidatorBuilder(): void {
     this.recordForm = this.formBuilder.group({
@@ -169,6 +175,34 @@ export class FormRecordComponent implements OnInit {
       workPlace: ['', Validators.compose([Validators.required])],
       workStatus: ['', Validators.compose([Validators.required])],
     });
+  }
+
+  // PRIVATE METHODS
+  private _filter(value: string, optionList: any): string[] {
+    const filterValue = value.toLowerCase();
+    return optionList.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private _initializeAutoCompleteFields() {
+    this.religions = this.recordForm.get(['religion']).valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value, this.recordFormOptions.religions))
+    );
+
+    this.escolarities = this.recordForm.get(['escolarity']).valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value, this.recordFormOptions.escolarities))
+    );
+
+    this.derivers = this.recordForm.get(['whoDerived']).valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value, this.recordFormOptions.derivers))
+    );
+
+
   }
 
 }
