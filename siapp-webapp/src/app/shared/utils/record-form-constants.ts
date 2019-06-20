@@ -29,6 +29,24 @@ export const RECORD_FORM_CONST = {
         'DIVORCIADO',
         'UNION LIBRE',
       ],
+      workStatus : [
+        'DESEMPLEADO',
+        'JUBILADO',
+        'INDIGENTE',
+        'ESTABLE',
+        'OTRO',
+      ],
+      houseStatus : [
+        'PROPIA',
+        'RENTADA',
+        'PRESTADA',
+      ],
+      medicalServices : [
+        'IMSS',
+        'ISSTE',
+        'SEGURO P.',
+        'PRIVADO',
+      ],
       religions : [
         'CATÓLICA',
         'CATÓLICA/CRISTIANA',

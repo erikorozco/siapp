@@ -15,6 +15,7 @@ import {map, startWith, auditTime} from 'rxjs/operators';
 })
 export class FormRecordComponent implements OnInit {
 
+  bmiText: string;
   params: any;
   action: string;
   person: any;
@@ -23,6 +24,7 @@ export class FormRecordComponent implements OnInit {
   escolarities: Observable<string[]>;
   religions: Observable<string[]>;
   derivers: Observable<string[]>;
+  toppings = new FormControl();
 
   constructor(
     private router: Router,
@@ -63,6 +65,26 @@ export class FormRecordComponent implements OnInit {
     // diff /= (60 * 60 * 24);
     // console.log( Math.abs(Math.round(diff / 365.25)) );
     this.recordForm.get(['age']).setValue(currentDate.getFullYear() - bornDate.getFullYear());
+  }
+
+  calculateBMI() {
+    const weight = this.recordForm.get(['weight']).value;
+    const size = this.recordForm.get(['size']).value / 100;
+    if (weight > 0 && size > 0) {
+      const bmi = (weight / (size * size));
+      this.recordForm.get(['bmi']).setValue(bmi);
+
+      if ( bmi > 30 ) {
+        this.bmiText = 'Obesidad';
+      } else if ( bmi > 25 && bmi < 29.99 ) {
+         this.bmiText = 'Sobrepeso';
+      } else if ( bmi > 18.5 && bmi < 24.99 ) {
+         this.bmiText = 'Peso saludable';
+      } else if ( bmi < 18.5) {
+        this.bmiText = 'Bja peso';
+      }
+
+    }
   }
 
   requiredFieldValidation(field) {
@@ -202,7 +224,7 @@ export class FormRecordComponent implements OnInit {
       map(value => this._filter(value, this.recordFormOptions.derivers))
     );
 
-
   }
+
 
 }
