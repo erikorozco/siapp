@@ -265,7 +265,7 @@ public class Record implements Serializable {
 	private List<Therapist> therapists;
 	
 	@JsonManagedReference(value = "personReference")
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
 	private Person person;	
 

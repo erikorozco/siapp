@@ -6,7 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/record-form-constants';
 import { Observable } from 'rxjs';
-import {map, startWith, auditTime} from 'rxjs/operators';
+import { map, startWith, auditTime} from 'rxjs/operators';
+import { StringUtil } from 'src/app/shared/utils/string-util';
+import { concat } from 'rxjs/observable/concat';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-form-record',
@@ -15,16 +18,24 @@ import {map, startWith, auditTime} from 'rxjs/operators';
 })
 export class FormRecordComponent implements OnInit {
 
+  stringUtil = StringUtil;
   bmiText: string;
   params: any;
   action: string;
   person: any;
+  record: any;
   recordForm: FormGroup;
   recordFormOptions = RecordFormOptions;
   escolarities: Observable<string[]>;
   religions: Observable<string[]>;
   derivers: Observable<string[]>;
-  toppings = new FormControl();
+  professionals: Observable<string[]>;
+  otherDerivedAreaFormControl = new FormControl('', Validators.compose([Validators.required]));
+  derivedAreasFormControl = new FormControl();
+  medicalServicesFormControl = new FormControl();
+  otherDerivedAreas = [];
+  derivedQuantitesFormGroup: FormGroup;
+  otherDerivedQuantitesFormGroup: FormGroup;
 
   constructor(
     private router: Router,
@@ -48,6 +59,7 @@ export class FormRecordComponent implements OnInit {
     this.executeAction();
     this.getPersonInformation();
     this._initializeAutoCompleteFields();
+
   }
 
   getPersonInformation() {
@@ -61,9 +73,6 @@ export class FormRecordComponent implements OnInit {
   calculateAge() {
     const bornDate = new Date(this.recordForm.get(['bornDate']).value);
     const currentDate = new Date();
-    // let diff = ( currentDate.getTime() - bornDate.getTime() ) / 1000;
-    // diff /= (60 * 60 * 24);
-    // console.log( Math.abs(Math.round(diff / 365.25)) );
     this.recordForm.get(['age']).setValue(currentDate.getFullYear() - bornDate.getFullYear());
   }
 
@@ -87,8 +96,39 @@ export class FormRecordComponent implements OnInit {
     }
   }
 
+  getDerivedAreas() {
+    this._createDerivedQuantities(this.derivedAreasFormControl.value);
+  }
+
+  addDerivedArea() {
+    this.otherDerivedAreas.push(this.otherDerivedAreaFormControl.value.toUpperCase());
+    this._createOtherDerivedQuantities(this.otherDerivedAreas);
+    this.otherDerivedAreaFormControl.setValue('');
+  }
+
   requiredFieldValidation(field) {
     return this.recordForm.get(field).invalid && this.recordForm.get(field).touched;
+  }
+
+  onSubmit() {
+    if (this.action === 'existing-person-opening-record') {
+      // Set the derivedTo and moneyShare values as a string
+      this.recordForm.get(['derivedTo']).setValue(this._getDerivedAreasValue());
+      this.recordForm.get(['moneyShare']).setValue(this._getDerivedQuotesValue());
+      this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
+      this.recordForm.get(['creation']).setValue(new Date());
+
+      this.record = this.recordForm.value;
+      this.recordSerive.createRecord(this.record).subscribe(data => {
+        this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
+        this.router.navigate(['home', 'record-summary', this.params.personId]);
+      }, error => {
+          console.log(error);
+      });
+
+    } else {
+
+    }
   }
 
   executeAction() {
@@ -97,6 +137,7 @@ export class FormRecordComponent implements OnInit {
         this.recordForm.get(['person']).setValue(data);
       }, error => {
         console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
       });
 
     } else if (this.action === 'edit-user') {
@@ -106,12 +147,6 @@ export class FormRecordComponent implements OnInit {
 
     }
   }
-  // requiredFormatPattern(field) {
-  //   if (this.recordForm.get([field]).errors) {
-  //     return ('pattern' in this.recordForm.get([field]).errors);
-  //   }
-  //   return false;
-  // }
 
   formValidatorBuilder(): void {
     this.recordForm = this.formBuilder.group({
@@ -224,7 +259,57 @@ export class FormRecordComponent implements OnInit {
       map(value => this._filter(value, this.recordFormOptions.derivers))
     );
 
+    this.professionals = this.recordForm.get(['professionalWhoAttended']).valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value, this.recordFormOptions.professionalWhoAttended))
+    );
+
   }
 
+  private _createDerivedQuantities(derivedAreas) {
+    const group = {};
+    derivedAreas.forEach(item => {
+
+      group[`formControl${StringUtil.trim(item)}`] = new FormControl('');
+    });
+    this.derivedQuantitesFormGroup = new FormGroup(group);
+  }
+
+  private _createOtherDerivedQuantities(otherDerivedAreas) {
+    const group = {};
+    otherDerivedAreas.forEach(item => {
+
+      group[`formControl${StringUtil.trim(item)}`] = new FormControl('');
+    });
+    this.otherDerivedQuantitesFormGroup = new FormGroup(group);
+  }
+
+  private _getDerivedQuotesValue() {
+    const quotesValues = [];
+    const quotes = Object.values(this.derivedQuantitesFormGroup.value);
+    const otherQuotes = Object.values(this.otherDerivedQuantitesFormGroup.value);
+    let quoteIndex = 0;
+
+    this.derivedAreasFormControl.value.forEach(derivedArea => {
+      quotesValues.push(`${derivedArea}: $${quotes[quoteIndex]}`);
+      quoteIndex++;
+    });
+
+    quoteIndex = 0;
+
+    this.otherDerivedAreas.forEach(derivedArea => {
+      quotesValues.push(`${derivedArea}: $${otherQuotes[quoteIndex]}`);
+      quoteIndex++;
+    });
+
+    return quotesValues.join(',');
+
+  }
+
+  private _getDerivedAreasValue() {
+    const derivedAreas = this.derivedAreasFormControl.value.concat(this.otherDerivedAreas);
+    return derivedAreas.join(',');
+  }
 
 }

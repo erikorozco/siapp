@@ -41,11 +41,29 @@ export const RECORD_FORM_CONST = {
         'RENTADA',
         'PRESTADA',
       ],
+      hygiene : [
+        'BUENA',
+        'REGULAR',
+        'MALA',
+        'DESCUIDADA',
+      ],
       medicalServices : [
         'IMSS',
         'ISSTE',
         'SEGURO P.',
         'PRIVADO',
+      ],
+      deriveAreas : [
+        'NEUROLOGÍA',
+        'NUTRICIÓN',
+        'PSICOLOGÍA',
+        'ASESORIA LEGAL',
+        'ATENCIÓN ESPIRITUAL',
+        'PSIQUIATRIA',
+        'INSTITUCIÓN',
+        'TALLER DE TANATOLOGÍA',
+        'TALLER DE SENTIDO DE LA VIDA',
+        'NEUROPSICOLOGÍA',
       ],
       religions : [
         'CATÓLICA',
@@ -76,7 +94,7 @@ export const RECORD_FORM_CONST = {
         'INICIATIVA PROPIA',
         'OTRO',
       ],
-      recordType: [
+      recordTypes: [
         'FAMILIAR',
         'INDIVIDUAL',
       ],
@@ -87,4 +105,8 @@ export const RECORD_FORM_CONST = {
         'DERIVADO',
         'BAJA',
       ],
+      professionalWhoAttended: [
+        'JAYDI CARREÑO ÁVALOS',
+        'JOSE ELÍAS PERÉZ MARTÍNEZ'
+      ]
 };
