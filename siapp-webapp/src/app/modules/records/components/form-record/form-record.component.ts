@@ -22,6 +22,8 @@ export class FormRecordComponent implements OnInit {
   bmiText: string;
   params: any;
   action: string;
+  genogramFile: any;
+  genogramSrc: '';
   person: any;
   record: any;
   recordForm: FormGroup;
@@ -31,8 +33,8 @@ export class FormRecordComponent implements OnInit {
   derivers: Observable<string[]>;
   professionals: Observable<string[]>;
   otherDerivedAreaFormControl = new FormControl('', Validators.compose([Validators.required]));
-  derivedAreasFormControl = new FormControl();
-  medicalServicesFormControl = new FormControl();
+  derivedAreasFormControl = new FormControl([]);
+  medicalServicesFormControl = new FormControl([]);
   otherDerivedAreas = [];
   derivedQuantitesFormGroup: FormGroup;
   otherDerivedQuantitesFormGroup: FormGroup;
@@ -60,6 +62,9 @@ export class FormRecordComponent implements OnInit {
     this.getPersonInformation();
     this._initializeAutoCompleteFields();
 
+    // Init derived areas form group to avoid nulls
+    this._createDerivedQuantities([]);
+    this._createOtherDerivedQuantities([]);
   }
 
   getPersonInformation() {
@@ -117,7 +122,8 @@ export class FormRecordComponent implements OnInit {
       this.recordForm.get(['moneyShare']).setValue(this._getDerivedQuotesValue());
       this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
       this.recordForm.get(['creation']).setValue(new Date());
-
+      // this.recordForm.get(['genogramUpload']).setValue(this.genogramFile);
+      
       this.record = this.recordForm.value;
       this.recordSerive.createRecord(this.record).subscribe(data => {
         this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
@@ -287,7 +293,8 @@ export class FormRecordComponent implements OnInit {
 
   private _getDerivedQuotesValue() {
     const quotesValues = [];
-    const quotes = Object.values(this.derivedQuantitesFormGroup.value);
+
+    const quotes =  Object.values(this.derivedQuantitesFormGroup.value);
     const otherQuotes = Object.values(this.otherDerivedQuantitesFormGroup.value);
     let quoteIndex = 0;
 
@@ -298,11 +305,12 @@ export class FormRecordComponent implements OnInit {
 
     quoteIndex = 0;
 
-    this.otherDerivedAreas.forEach(derivedArea => {
-      quotesValues.push(`${derivedArea}: $${otherQuotes[quoteIndex]}`);
-      quoteIndex++;
-    });
-
+    if (this.otherDerivedAreas.length !== 0) {
+      this.otherDerivedAreas.forEach(derivedArea => {
+        quotesValues.push(`${derivedArea}: $${otherQuotes[quoteIndex]}`);
+        quoteIndex++;
+      });
+    }
     return quotesValues.join(',');
 
   }
@@ -310,6 +318,23 @@ export class FormRecordComponent implements OnInit {
   private _getDerivedAreasValue() {
     const derivedAreas = this.derivedAreasFormControl.value.concat(this.otherDerivedAreas);
     return derivedAreas.join(',');
+  }
+
+  handleInputChange(e) {
+    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    var pattern = /image-*/;
+    var reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      alert('invalid format');
+      return;
+    }
+    this.genogramFile = file;
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+  _handleReaderLoaded(e) {
+    let reader = e.target;
+    this.genogramSrc = reader.result;
   }
 
 }

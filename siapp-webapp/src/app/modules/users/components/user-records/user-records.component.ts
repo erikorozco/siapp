@@ -110,8 +110,7 @@ export class UserRecordsComponent implements OnInit {
   executeAction({value, action}) {
     switch (action) {
       case 'view':
-        console.log(value);
-        // this.viewUser(value);
+        this.router.navigate(['home', 'record-summary', value.personId]);
         break;
       case 'openAddModal':
         this.assignRecord(value);

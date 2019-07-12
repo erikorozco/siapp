@@ -4,20 +4,6 @@
         <a [routerLink]="['/home/records']">Pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
     </h1>
 </div>
-<div class="row">
-    <div class="col-md-6 text-right">
-        <button (click)="viewPrivacyAgreement()" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-check"></i>
-            </span>
-            <span class="text">Acuerdo de privacidad</span>
-        </button>
-    </div>
-</div>
-
-
-
-
 <div class="container-fluid emp-profile">
     <form method="post">
         <div class="row">
@@ -38,14 +24,7 @@
                     <h6><b>Teléfono: </b>{{ this.person.phone }}</h6><br/>
                     <h6><b>Correo: </b>{{ this.person.email }}</h6><br/>
                     <!-- <h6><b>Estado del paciente: </b>{{ this.person.active ? 'Activo' : 'Inactivo' }}</h6><br/> -->
-                    <h6><b>Estado: </b>Logica para estado del expediente "en CURSO"</h6><br/>
-
-                    <!-- <p>SKILLS</p>
-                    <a href="">Web Designer</a><br/>
-                    <a href="">Web Developer</a><br/>
-                    <a href="">WordPress</a><br/>
-                    <a href="">WooCommerce</a><br/>
-                    <a href="">PHP, .Net</a><br/> -->
+                    <!-- <h6><b>Estado: </b>Logica para estado del expediente "en CURSO"</h6><br/> -->
                 </div>
             </div>
             <div class="col-md-9">
@@ -64,6 +43,18 @@
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reportes de sesión</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Archivos adjuntos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="dates-tab" data-toggle="tab" href="#dates" role="tab" aria-controls="dates" aria-selected="false">Citas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="privacy-agreement-tab" data-toggle="tab" href="#privacy-agreement" role="tab" aria-controls="privacy-agreement" aria-selected="false">Acuerdo de privacidad</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- HERE STARTS THE MENUS -->
@@ -75,7 +66,26 @@
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+                            <p>reportes de session</p>
+                        </div>
+                        <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+                            <p>Files</p>
+                        </div>
+                        <div class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
+                            <p>pruebas</p>
+                        </div>
+                        <div class="tab-pane fade" id="dates" role="tabpanel" aria-labelledby="dates-tab">
+                            <p>Citas</p>
+                        </div>
+                        <div class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
+                            <div class="col-md-6">
+                                <button (click)="viewPrivacyAgreement()" class="btn btn-success btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                         </span>
+                                     <span class="text">Acuerdo de privacidad</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

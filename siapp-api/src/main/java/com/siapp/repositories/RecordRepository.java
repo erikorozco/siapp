@@ -19,7 +19,8 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 			+ "expediente.\"estadoPaciente\", "
 			+ "nombre, "
 			+ "apellidop, "
-			+ "apellidom "
+			+ "apellidom, "
+			+ "persona.id_persona "
 			+ "FROM expediente\n" + 
 			"INNER JOIN expediente_terapeuta ON expediente_terapeuta.id_expediente = expediente.id_expediente\n" + 
 			"INNER JOIN persona ON expediente.id_persona = persona.id_persona\n" + 
@@ -34,7 +35,8 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 					+ "expediente.\"estadoPaciente\", "
 					+ "nombre, "
 					+ "apellidop, "
-					+ "apellidom "
+					+ "apellidom, "
+					+ "persona.id_persona "
 					+ "FROM expediente\n" +  
 					"INNER JOIN persona ON expediente.id_persona = persona.id_persona\n" + 
 					"ORDER BY nombre ASC",

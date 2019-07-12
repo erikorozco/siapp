@@ -3,7 +3,6 @@ package com.siapp.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,10 +18,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.persistence.Transient;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -243,9 +243,8 @@ public class Record implements Serializable {
 	@Column(name = "anotaciones")
 	private String notes;
 	
-	//@Column(name = "genograma")
-	//private String genogram;
-	//  "genogram": "string",
+	@Column(name = "genograma")
+	private byte[] genogram;
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -822,13 +821,24 @@ public class Record implements Serializable {
 		this.notes = notes;
 	}
 
-//	public String getGenogram() {
-//		return genogram;
-//	}
-//
-//	public void setGenogram(String genogram) {
-//		this.genogram = genogram;
-//	}
+	public byte[] getGenogram() {
+		return genogram;
+	}
+	
+	public void setGenogram(byte[] genogram) {
+		this.genogram = genogram;
+	}
+	
+	@Column(insertable = false, updatable = false)
+	@Transient
+	private MultipartFile genogramUpload;
+	
+	public void setGenogramUpload(MultipartFile genogramFile) {
+		this.genogramUpload = genogramFile;
+	}
+	public MultipartFile getGenogramUpload() {
+		return genogramUpload;
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;

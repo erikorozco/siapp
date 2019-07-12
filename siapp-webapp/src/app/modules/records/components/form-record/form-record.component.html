@@ -677,7 +677,12 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="Genograma"></mat-tab>
+                <mat-tab label="Genograma">
+                    <div class="image-upload">
+                        <img *ngIf="genogramSrc" [src]="genogramSrc" style="max-width:800px;max-height:600px" />
+                        <input name="imageUrl" type="file" accept="image/*" (change)="handleInputChange($event)" />
+                    </div>
+                </mat-tab>
                 <mat-tab label="Impresión diagnóstica">
                     <div class="form-row">
                         <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('presuntiveDiagnostic') } ">

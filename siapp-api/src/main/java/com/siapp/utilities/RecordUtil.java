@@ -16,6 +16,7 @@ public class RecordUtil {
 			map.put("recordPatientName", el[2]);
 			map.put("recordPatientLastName", el[3]);
 			map.put("recordPatientSecondLastName", el[4]);
+			map.put("personId", el[5]);
 			finalResult.add(map);
 		}
 		return finalResult;

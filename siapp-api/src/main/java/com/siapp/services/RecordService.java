@@ -1,19 +1,22 @@
 package com.siapp.services;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.siapp.constants.Model;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Record;
 import com.siapp.models.TherapistRecordPermission;
 import com.siapp.repositories.RecordRepository;
+import com.siapp.utilities.FileUtil;
 import com.siapp.utilities.IgnoredProperties;
 import com.siapp.utilities.RecordUtil;
+
 
 @Service
 public class RecordService {
@@ -22,7 +25,7 @@ public class RecordService {
 	RecordRepository recordRepository;
 	
 	public Record findRecordById(Integer id) {
-		return recordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Record", "id", id));
+		return recordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Record", "id", id));		
 	}
 	
 	public List<HashMap<String, Object>> findRecordsByTherapistId(Integer id) {
@@ -39,7 +42,15 @@ public class RecordService {
 	} 
 	
 	public Record create(Record record) {
-		//record.setGenogram(null);
+//		try {
+//			record.setGenogram(
+//					FileUtil.convertFileToBinaryStream(record.getGenogramUpload())
+//					);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+
 		return recordRepository.save(record);
 	}
 	
