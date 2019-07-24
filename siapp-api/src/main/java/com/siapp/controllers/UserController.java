@@ -22,7 +22,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Api(value = "/users", description = "Users Module Controller", produces = "application/json")
 @RequestMapping("/users")

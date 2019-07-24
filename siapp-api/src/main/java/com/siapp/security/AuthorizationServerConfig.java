@@ -47,15 +47,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				//.passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 	
-//	@Configuration
-//	class AuthenticationMananagerProvider extends WebSecurityConfigurerAdapter {
-//
-//		@Bean
-//		public AuthenticationManager authenticationManagerBean() throws Exception {
-//            return super.authenticationManagerBean();
-//        }
-//	}
-	
 }
 
 
