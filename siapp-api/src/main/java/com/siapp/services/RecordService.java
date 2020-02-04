@@ -8,6 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import com.siapp.constants.Model;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Record;
@@ -55,6 +56,7 @@ public class RecordService {
 	}
 	
 	public Record update(Integer id, Record recordDetails) {
+		
 		Record record = recordRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Record", "id", id));  
 		
@@ -74,6 +76,20 @@ public class RecordService {
 	
 	public Integer removeRecordPermission(TherapistRecordPermission therapistRecordPermission) {
 		return recordRepository.removeRecordPermission(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId());
+	}
+	
+	public void uploadGenogram(MultipartFile genogram, Integer recordId) {
+		try {
+			Record record = recordRepository.findById(recordId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Record", "id", recordId));
+			
+			record.setGenogram(FileUtil.convertFileToBinaryStream(genogram));
+			recordRepository.save(record);
+			
+		} catch (IOException e) {
+			throw new RuntimeException("FAIL!");
+		}
+		
 	}
 	
 	

@@ -8,12 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil {
 	
+	/**
+	 * 
+	 * @param file
+	 * @return byte[] compatible with postgres byte[] and Java swing application
+	 * @throws IOException
+	 */
 	public static byte[] convertFileToBinaryStream(MultipartFile file) throws IOException {
 		InputStream inputStream = file.getInputStream();
-		String originalName = file.getOriginalFilename();
-		String name = file.getName();
-		String contentType = file.getContentType();
-		long size = file.getSize();
 		
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 

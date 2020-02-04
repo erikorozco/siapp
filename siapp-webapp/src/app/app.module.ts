@@ -39,6 +39,7 @@ import { RecordInformationComponent } from './modules/records/components/record-
 import { FormRecordComponent } from './modules/records/components/form-record/form-record.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { GenogramComponent } from './modules/records/components/record-summary/components/genogram/genogram.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { MatSelectModule } from '@angular/material/select';
     SignComponent,
     RecordInformationComponent,
     FormRecordComponent,
+    GenogramComponent,
   ],
   imports: [
     BrowserModule,

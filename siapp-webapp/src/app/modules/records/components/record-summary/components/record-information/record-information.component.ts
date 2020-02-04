@@ -9,17 +9,14 @@ import { RecordService } from 'src/app/shared/services/record-service';
 })
 export class RecordInformationComponent implements OnInit {
 
-  @Input() personInfo;
-  personId: number;
+  @Input() personId;
   recordInfo: any;
-  genogramSrc: string;
 
   constructor(
     private recordService: RecordService
   ) { }
 
   ngOnInit() {
-    this.personId = this.personInfo[0];
     this.getRecordInformation();
   }
 
@@ -27,9 +24,6 @@ export class RecordInformationComponent implements OnInit {
     this.recordService.getRecordByPersonId(this.personId).subscribe(data => {
       if (data) {
         this.recordInfo = data;
-        this.genogramSrc = 'data:image/png;base64,' + data.genogram;
-        console.log(this.genogramSrc);
-        // this.genogramSrc = data.genogram;
       }
     }, error => {
     });

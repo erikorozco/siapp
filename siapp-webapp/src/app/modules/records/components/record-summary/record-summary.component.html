@@ -29,22 +29,18 @@
             </div>
             <div class="col-md-9">
                 <div class="profile-head" *ngIf="this.person">
-                    <!-- <h5>
-                        {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
-                    </h5> -->
-                    <!-- <h6>
-                        Paciente
-                    </h6> -->
-                    <!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
+                        </li>
+                        <li *ngIf="this.record" class="nav-item">
+                            <a class="nav-link" id="genogram-tab" data-toggle="tab" href="#genogram" role="tab" aria-controls="genogram" aria-selected="false">Genograma</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Archivos adjuntos</a>
+                            <a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Archivos adjuntos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
@@ -58,11 +54,16 @@
                     </ul>
                 </div>
                 <!-- HERE STARTS THE MENUS -->
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <ng-container *ngIf="this.person">
-                                <app-record-information [personInfo]="[this.person.id]"></app-record-information>
+                                <app-record-information [personId]="this.person.id"></app-record-information>
+                            </ng-container>
+                        </div>
+                        <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
+                            <ng-container *ngIf="this.record">
+                                <app-genogram [recordId]="this.record.id"></app-genogram>
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

@@ -24,13 +24,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                     "/configuration/security",
                     "/swagger-ui.html",
                     "/webjars/**",
-                    "/users/findUserByName/**",
-                    "/oauth/token/**",
-                    "/**"//REMOVER ESTO
+                    "/users/findUserByName/**"
+                    //"/oauth/token/**",
+                    //"/**"//REMOVER ESTO
                     ).permitAll()
 			//.antMatchers("/api/**").access("hasRole('ADMIN')")
 			//.antMatchers("/apiTestUtil/**").access("hasRole('GODADMIN')");
-			.antMatchers("/**").authenticated();
+			;//.antMatchers("/**").authenticated();
 	}
 	
 }

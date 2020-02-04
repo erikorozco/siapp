@@ -30,7 +30,8 @@ export const API_URL_CONFIG = {
         findRecordByPersonId : 'findRecordByPersonId/',
         createRecord : 'createRecord',
         updateRecord : 'updateRecord/',
-        removeRecordPermission: 'removeRecordPermission'
+        removeRecordPermission: 'removeRecordPermission',
+        uploadGenogram: 'uploadGenogram'
       }
     },
     personsAPI: {

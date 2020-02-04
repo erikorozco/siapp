@@ -8,8 +8,6 @@ import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/rec
 import { Observable } from 'rxjs';
 import { map, startWith, auditTime} from 'rxjs/operators';
 import { StringUtil } from 'src/app/shared/utils/string-util';
-import { concat } from 'rxjs/observable/concat';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-form-record',
@@ -22,8 +20,6 @@ export class FormRecordComponent implements OnInit {
   bmiText: string;
   params: any;
   action: string;
-  genogramFile: any;
-  genogramSrc: '';
   person: any;
   record: any;
   recordForm: FormGroup;
@@ -122,14 +118,13 @@ export class FormRecordComponent implements OnInit {
       this.recordForm.get(['moneyShare']).setValue(this._getDerivedQuotesValue());
       this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
       this.recordForm.get(['creation']).setValue(new Date());
-      // this.recordForm.get(['genogramUpload']).setValue(this.genogramFile);
-      
       this.record = this.recordForm.value;
       this.recordSerive.createRecord(this.record).subscribe(data => {
         this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'record-summary', this.params.personId]);
       }, error => {
-          console.log(error);
+        this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+        console.log(error);
       });
 
     } else {
@@ -318,23 +313,6 @@ export class FormRecordComponent implements OnInit {
   private _getDerivedAreasValue() {
     const derivedAreas = this.derivedAreasFormControl.value.concat(this.otherDerivedAreas);
     return derivedAreas.join(',');
-  }
-
-  handleInputChange(e) {
-    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-    var pattern = /image-*/;
-    var reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert('invalid format');
-      return;
-    }
-    this.genogramFile = file;
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
-  }
-  _handleReaderLoaded(e) {
-    let reader = e.target;
-    this.genogramSrc = reader.result;
   }
 
 }
