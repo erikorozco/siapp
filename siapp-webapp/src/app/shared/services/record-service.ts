@@ -45,7 +45,9 @@ export class RecordService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('recordId', recordId.toString());
-    return this.http.post<any>(this.baseUrl + URL_CONF.recordsAPI.endpoints.uploadGenogram, formData);
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(this.baseUrl + URL_CONF.recordsAPI.endpoints.uploadGenogram, formData, {responseType: 'json'});
   }
 
 }

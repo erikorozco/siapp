@@ -22,10 +22,16 @@ export class Interceptor implements HttpInterceptor {
       const token = this.authService.getAuthorizationToken();
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + token,
-          'Content-type': 'application/json',
+          Authorization: 'Bearer ' + token
         }
       });
+      // if (!(request.body instanceof FormData)) {
+      //     request = request.clone({
+      //     setHeaders: {
+      //       'Content-type': 'application/json',
+      //     }
+      //   });
+      // }
     }
 
     /*return next.handle(request).pipe/*.do(

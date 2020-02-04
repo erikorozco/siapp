@@ -11,9 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 export class GenogramComponent implements OnInit {
 
   @Input() recordId;
-  genogramFile: File;
+  genogramFile: any;
   genogramSrc = '';
   record: any;
+  loading = false;
 
   constructor(
     private router: Router,
@@ -27,11 +28,13 @@ export class GenogramComponent implements OnInit {
 
 
   uploadGenograma() {
+    this.loading = true;
     this.recordService.uploadGenogram(this.genogramFile, this.recordId).subscribe((response) => {
       if (response === 200) {
-        // this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-        // this.router.navigate(['home', 'record-summary', this.record.person.id]));
+        this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+        this.router.navigate(['home', 'record-summary', this.record.person.id]));
         this.toastr.success('El archivo ha sido cargado exitosamente', 'Operacion exitosa');
+        this.loading = false;
       }
     }, error => {
       this.toastr.error('Hubo un error al cargar el archivo', 'Operacion fallida');
