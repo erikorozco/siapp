@@ -4,11 +4,13 @@ import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api.response';
 import { Observable } from 'rxjs/index';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
+import { host } from '../core/service.global.config';
 
 @Injectable()
 export class UserService {
 
-  baseUrl: string = URL_CONF.baseURL + URL_CONF.usersAPI.name;
+  // baseUrl: string = URL_CONF.baseURL + URL_CONF.usersAPI.name;
+  baseUrl: string = host() + URL_CONF.usersAPI.name;
   response = null;
   constructor(private http: HttpClient) {}
 

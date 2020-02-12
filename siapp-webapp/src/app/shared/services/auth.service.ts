@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api.response';
-import { Observable } from 'rxjs/index';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 import { TOKEN_CONFIG as TOKEN } from '../core/service.global.config';
+import { host } from '../core/service.global.config';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
-  baseUrl: string = URL_CONF.baseURL;
+  baseUrl: string = host();
+  //baseUrl: string = URL_CONF.baseURL;
   accessToken: string;
 
   constructor(private http: HttpClient, private router: Router) { }
