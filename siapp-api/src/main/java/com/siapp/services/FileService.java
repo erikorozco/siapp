@@ -1,49 +1,74 @@
 package com.siapp.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.siapp.constants.Model;
+import com.siapp.models.File;
+import com.siapp.repositories.FileRepository;
+import com.siapp.utilities.FileUtil;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class FileService {
 	
-	Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	private final Path rootLocation = Paths.get("storage-dir");
+	private final Path therapistFilesLocation = Paths.get("storage-dir/therapist-dir");
+	private final Path personFilesLocation = Paths.get("storage-dir/person-dir");
+	
+	@Autowired
+	FileRepository fileRepository;
+	
+	@Autowired
+	TherapistService fileService;
+	
+	public List<HashMap<String, String>>  getPathFilesByPersonIdFromDB(Integer personId) {
+		List<File> fileList = fileRepository.findByPersonId(personId);
+		return FileUtil.getFolderFilesOnBase64(fileList, folderInitialize(String.valueOf(personId), Model.PERSON).toString());
+    }
 	
 	public void init() {
 		try {
 			if(Files.notExists(rootLocation)) {
-				Files.createDirectory(rootLocation);	
+				Files.createDirectory(rootLocation);
+				Files.createDirectory(therapistFilesLocation);
+				Files.createDirectory(personFilesLocation);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Could not initialize storage!");
 		}
 	}
 	
-	public void store(MultipartFile file) {
+	public void store(MultipartFile file, String personId, String therapistId, String description) throws IOException {
 	    try {
-	      Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
-	    } catch (Exception e) {
-	      throw new RuntimeException("FAIL!");
+	    	Path folderPath = this.folderInitialize(personId, Model.PERSON);
+	    	Path filePath = Paths.get(folderPath.toString().concat("/" + file.getOriginalFilename()));
+	    	if(Files.notExists(filePath)) {
+		    	Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()));
+			    File fileRow = new File(file.getOriginalFilename(), description, Integer.parseInt(personId), Integer.parseInt(therapistId));
+			    fileRepository.save(fileRow);
+	    	} else {
+	    		throw new FileAlreadyExistsException("FAIL!");
+	    	}
+	    } catch (RuntimeException e) {
+	    	throw new RuntimeException("FAIL!");
 	    }
 	}
 	
-	public Resource loadFile(String filename) throws IOException {
+	public Resource loadFile(String filename, String modelId, Model model) throws IOException {
 	    try {
-	    	Path file = rootLocation.resolve(filename);
+	    	Path folderPath = this.folderInitialize(modelId, model);
+	    	Path file = folderPath.resolve(filename);
 	    	Resource resource = new UrlResource(file.toUri());
 	    	if (resource.exists() || resource.isReadable()) {
 	    		return resource;
@@ -53,10 +78,25 @@ public class FileService {
 	    	} catch (MalformedURLException e) {
 	    		throw new RuntimeException("FAIL!");
 	    	}
-	  }
+	}
 	
 	public void deleteAll() {
 	    FileSystemUtils.deleteRecursively(rootLocation.toFile());
+	}
+	
+	public Path folderInitialize(String modelId, Model model) {
+		StringBuilder pathFolder = (model.equals(Model.PERSON)) ? new StringBuilder(personFilesLocation.toString()) : new StringBuilder(therapistFilesLocation.toString());
+		pathFolder.append("/");
+		pathFolder.append(modelId);
+		Path folderPathId = Paths.get(pathFolder.toString());
+		try {
+			if(Files.notExists(folderPathId)) {
+				Files.createDirectory(folderPathId);
+			}		
+		} catch (Exception e) {
+			throw new RuntimeException("Folder does not exitst!");
+		}
+		return folderPathId;
 	}
 	
 }
