@@ -73,6 +73,7 @@ public class File implements Serializable {
     	this.personId = personId;
     	this.therapist.setId(therapistId);
     	this.description = description;
+    	this.active = true;
     }
     
     

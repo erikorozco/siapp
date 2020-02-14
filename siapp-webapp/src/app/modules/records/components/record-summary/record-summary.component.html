@@ -9,13 +9,28 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="profile-img">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-2" *ngIf="loading">
+                            <mat-spinner></mat-spinner>
+                        </div>
+                    </div>
                     <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" /> -->
-                    <img src="../../../../../assets//vendor/images//avatar-1577909__340.png" alt="" />
-                    <!-- <img [src]="photoUrl" alt="" style="max" /> -->
+                    <img *ngIf="!photoSrc; else imageToUpload" src="../../../../../assets//vendor/images//avatar-1577909__340.png" class="img-thumbnail" />
+                    <ng-template #imageToUpload>
+                        <img [src]="photoSrc" class="img-thumbnail" style="width: 300px; height: auto;" />
+                    </ng-template>
                     <div class="file btn btn-lg btn-primary">
                         Cambiar foto
-                        <input type="file" name="imageUrl" (change)="handleInputChange($event)" />
+                        <input type="file" name="photoUrl" (change)="handleInputChange($event)" />
                     </div>
+                </div>
+                <div *ngIf="!isFileEmpty()" class="text-center">
+                    <button [disabled]="isFileEmpty()" type="button" (click)="uploadPhoto()" class="btn btn-success btn-md btn-icon-split mb-2">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="text">Guardar</span>
+                    </button>
                 </div>
                 <div class="profile-work" *ngIf="this.person">
                     <h5 class="mb-3">Información personal</h5>

@@ -24,14 +24,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value = "/files", description = "File Module Controller")
-@RequestMapping("/files")
-public class FileController {
+@Api(value = "/personAttachments", description = "Attachments Module Controller")
+@RequestMapping("/personAttachments")
+public class PersonAttachmentController {
 	
 	@Autowired
 	FileService fileService;
 		
-	@ApiOperation(value = "Get all the files attached for a person")
+	@ApiOperation(value = "Get all the images attached for a person")
     @GetMapping("/getImagesByPersonId/{personId}")
     public List<HashMap<String, String>> getAllFiles(@PathVariable(value = "personId") Integer personId) {
         return fileService.getPathFilesByPersonIdFromDB(personId);
@@ -49,18 +49,18 @@ public class FileController {
 	    	message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 	    	return ResponseEntity.status(HttpStatus.OK).body(message);
 	    } catch (FileAlreadyExistsException e) {
-	    	message = "FAIL to upload: " + file.getOriginalFilename() + " Already Exists!";
-	    	return ResponseEntity.status(HttpStatus.valueOf(403)).body(message);
+	    	message = "FaiL to upload: " + file.getOriginalFilename() + " Already Exists!";
+	    	return ResponseEntity.status(HttpStatus.valueOf(409)).body(message);
 	    } catch (Exception e) {
-	    	message = "FAIL to upload " + file.getOriginalFilename() + "!";
+	    	message = "FaiL to upload " + file.getOriginalFilename() + "!";
 	    	return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 	    }
 	}
 	
-	@ApiOperation(value = "Get attached file for a person Id", produces = MediaType.IMAGE_PNG_VALUE)
-	@GetMapping("/getFile/{filename:.+}/{personId}")
+	@ApiOperation(value = "Get an attached file for a person Id -> png, jpeg, pdf", produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping("/getFile/{personId}/{filename:.+}")
 	@ResponseBody
-	public ResponseEntity<byte[]> getFile(@PathVariable String filename, @PathVariable String personId) throws IOException {
+	public ResponseEntity<byte[]> getFile(@PathVariable String personId, @PathVariable String filename) throws IOException {
 	    Resource file = fileService.loadFile(filename, personId, com.siapp.constants.Model.PERSON);
 	    byte[] bytes = StreamUtils.copyToByteArray(file.getInputStream());
 	    return ResponseEntity

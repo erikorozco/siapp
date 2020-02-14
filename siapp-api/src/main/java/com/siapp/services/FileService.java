@@ -6,6 +6,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -57,7 +58,10 @@ public class FileService {
 		    	Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()));
 			    File fileRow = new File(file.getOriginalFilename(), description, Integer.parseInt(personId), Integer.parseInt(therapistId));
 			    fileRepository.save(fileRow);
-	    	} else {
+	    	} else if(file.getOriginalFilename().equals("profilePhoto.png")) {
+	    		Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+	    	}
+	    	else {
 	    		throw new FileAlreadyExistsException("FAIL!");
 	    	}
 	    } catch (RuntimeException e) {

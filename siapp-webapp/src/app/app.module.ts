@@ -41,6 +41,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { GenogramComponent } from './modules/records/components/record-summary/components/genogram/genogram.component';
 import { AttachmentsComponent } from './modules/records/components/record-summary/components/attachments/attachments.component';
+import { ImageViewComponent } from './shared/components/image-view/image-view.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { AttachmentsComponent } from './modules/records/components/record-summar
     FormRecordComponent,
     GenogramComponent,
     AttachmentsComponent,
+    ImageViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +97,9 @@ import { AttachmentsComponent } from './modules/records/components/record-summar
     },
     MatDialog
   ],
+  entryComponents: [
+    ImageViewComponent
+ ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

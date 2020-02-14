@@ -54,6 +54,14 @@ export const API_URL_CONFIG = {
         createPrivacyAgreement : 'create',
       }
     },
+    personAttachmentsAPI: {
+      name: 'personAttachments/',
+      endpoints: {
+        getFile : (personId, fileName) => `getFile/${personId}/${fileName}`,
+        getImagesByPersonId : 'getImagesByPersonId/',
+        uploadFile: 'uploadFile'
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

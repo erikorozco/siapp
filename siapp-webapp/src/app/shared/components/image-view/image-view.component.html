@@ -1,0 +1,17 @@
+<button type="button" class="close" aria-label="Close" [mat-dialog-close]="true">
+    <span aria-hidden="true">&times;</span> Cerrar
+  </button>
+<div class="card shadow mb-4 container-fluid">
+    <div class="col-lg-12" style="overflow:scroll; overflow-y:scroll;">
+        <img mdbTooltip="{{image.path}}" class="img-fluid img-thumbnail" style="height: auto; width: fit-content;" [src]="image.src" />
+        <ul class="list-group list-group-flush" style="color: black;">
+            <li class="list-group-item"><b>Autor:</b> {{image.therapist}}</li>
+            <li class="list-group-item"><b>Fecha:</b> {{image.createdAt | date}}</li>
+        </ul>
+        <div class="card-body">
+            <p class="card-text" style="color: black;">
+                {{image.description | uppercase}}
+            </p>
+        </div>
+    </div>
+</div>

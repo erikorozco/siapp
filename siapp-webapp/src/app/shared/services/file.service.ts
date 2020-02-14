@@ -9,12 +9,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FileService {
 
-  baseUrl: string = host() + URL_CONF.recordsAPI.name;
+  baseUrl: string = host() + URL_CONF.personAttachmentsAPI.name;
   response = null;
   constructor(private http: HttpClient) {}
 
-  getFile(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/files/ImageTestSIapp.png', {responseType: 'arraybuffer', observe: 'response'});
+  getFile(personId, fileName): Observable<any> {
+    let url = `${this.baseUrl}${URL_CONF.personAttachmentsAPI.endpoints.getFile(personId, fileName)}`;
+    return this.http.get(url, {responseType: 'arraybuffer', observe: 'response'});
+  }
+
+  getImagesByPersonId(personId): Observable<any> {
+    return this.http.get(this.baseUrl + URL_CONF.personAttachmentsAPI.endpoints.getImagesByPersonId + personId);
+  }
+
+  uploadFile(file: File, payload: any): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('personId', payload.personId);
+    formData.append('therapistId', payload.therapistId);
+    formData.append('description', payload.description);
+
+    return this.http.post(this.baseUrl + URL_CONF.personAttachmentsAPI.endpoints.uploadFile,
+                        formData,
+                        {responseType: 'text', observe: 'response'}
+                        );
   }
 
 }
