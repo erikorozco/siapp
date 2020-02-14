@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Therapist } from '../../../../shared/models/therapist.model';
 import { RecordService } from '../../../../shared/services/record-service';
 import { ListRecordsDialogComponent } from '../../../records/components/list-records-dialog/list-records-dialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -102,7 +102,9 @@ export class UserRecordsComponent implements OnInit {
           this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
           this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
           this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
-        }, error => {});
+        }, error => {
+          console.log(error);
+        });
       }
     });
   }

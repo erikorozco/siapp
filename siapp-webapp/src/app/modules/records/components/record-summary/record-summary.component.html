@@ -9,12 +9,28 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="profile-img">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-2" *ngIf="loading">
+                            <mat-spinner></mat-spinner>
+                        </div>
+                    </div>
                     <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" /> -->
-                    <img src="../../../../../assets//vendor/images//avatar-1577909__340.png" alt="" />
+                    <img *ngIf="!photoSrc; else imageToUpload" src="../../../../../assets//vendor/images//avatar-1577909__340.png" class="img-thumbnail" />
+                    <ng-template #imageToUpload>
+                        <img [src]="photoSrc" class="img-thumbnail" style="width: 300px; height: auto;" />
+                    </ng-template>
                     <div class="file btn btn-lg btn-primary">
                         Cambiar foto
-                        <input type="file" name="file" />
+                        <input type="file" name="photoUrl" (change)="handleInputChange($event)" />
                     </div>
+                </div>
+                <div *ngIf="!isFileEmpty()" class="text-center">
+                    <button [disabled]="isFileEmpty()" type="button" (click)="uploadPhoto()" class="btn btn-success btn-md btn-icon-split mb-2">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="text">Guardar</span>
+                    </button>
                 </div>
                 <div class="profile-work" *ngIf="this.person">
                     <h5 class="mb-3">Información personal</h5>
@@ -40,7 +56,7 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Archivos adjuntos</a>
+                            <a class="nav-link" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
@@ -69,8 +85,10 @@
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <p>reportes de session</p>
                         </div>
-                        <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
-                            <p>Files</p>
+                        <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
+                            <ng-container *ngIf="this.person">
+                                <app-attachments [personId]="this.person.id"></app-attachments>
+                            </ng-container>
                         </div>
                         <div class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
                             <p>pruebas</p>

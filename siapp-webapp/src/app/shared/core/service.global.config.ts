@@ -1,4 +1,8 @@
-import { assign } from 'lodash';
+
+export let host = () => {
+  return `${window.location.protocol}//${window.location.hostname}:8080/api/`;
+};
+
 export const API_URL_CONFIG = {
     baseURL: 'http://localhost:8080/api/',
     usersAPI: {
@@ -48,6 +52,14 @@ export const API_URL_CONFIG = {
       endpoints: {
         getPrivacyAgreement : 'get/',
         createPrivacyAgreement : 'create',
+      }
+    },
+    personAttachmentsAPI: {
+      name: 'personAttachments/',
+      endpoints: {
+        getFile : (personId, fileName) => `getFile/${personId}/${fileName}`,
+        getImagesByPersonId : 'getImagesByPersonId/',
+        uploadFile: 'uploadFile'
       }
     },
 };

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../shared/services/user.service';
 import { User } from '../../../../shared/models/user.model';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -23,7 +23,6 @@ export class ListUserComponent implements OnInit {
   ngOnInit() {
     this.getAllUsers();
   }
-
   getAllUsers() {
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;

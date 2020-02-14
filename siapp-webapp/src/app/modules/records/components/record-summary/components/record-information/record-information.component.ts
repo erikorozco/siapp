@@ -26,6 +26,7 @@ export class RecordInformationComponent implements OnInit {
         this.recordInfo = data;
       }
     }, error => {
+      console.log(error);
     });
   }
 

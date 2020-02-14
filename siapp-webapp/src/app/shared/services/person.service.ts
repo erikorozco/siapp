@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api.response';
 import { Observable } from 'rxjs/index';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
+import { host } from '../core/service.global.config';
 import { Person } from '../models/person.model';
 
 @Injectable({
@@ -11,7 +11,8 @@ import { Person } from '../models/person.model';
 })
 export class PersonService {
 
-  baseUrl: string = URL_CONF.baseURL + URL_CONF.personsAPI.name;
+  // baseUrl: string = URL_CONF.baseURL + URL_CONF.personsAPI.name;
+  baseUrl: string = host() + URL_CONF.personsAPI.name;
   response = null;
   constructor(private http: HttpClient) {}
 

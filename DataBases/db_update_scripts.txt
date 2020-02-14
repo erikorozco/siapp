@@ -94,6 +94,34 @@ ALTER TABLE acuerdoprivacidad
   OWNER TO postgres;
 
 
+  -- Table: archivo
+
+-- DROP TABLE archivo;
+
+CREATE TABLE archivo
+(
+  id serial NOT NULL,
+  id_terapeuta serial NOT NULL,
+  id_persona serial NOT NULL,
+  ruta character varying,
+  creado timestamp without time zone,
+  actualizado timestamp without time zone,
+  activo boolean,
+  descripcion character varying,
+  CONSTRAINT fk_persona_archivo FOREIGN KEY (id_persona)
+      REFERENCES persona (id_persona) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_terapeuta_archivo FOREIGN KEY (id_terapeuta)
+      REFERENCES terapeuta (id_terapeuta) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE archivo
+  OWNER TO postgres;
+
+
   //NO NECESSARY TABLES
   PCITA
   ATENCION
