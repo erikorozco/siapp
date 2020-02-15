@@ -33,8 +33,12 @@ export class GenogramComponent implements OnInit {
     this.loading = true;
     this.recordService.uploadGenogram(this.genogramFile, this.recordId).subscribe((res) => {
       if (res === 200) {
-        this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-        this.router.navigate(['home', 'record-summary', this.record.person.id]));
+        // this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+        // this.router.navigate(['home', 'record-summary', this.record.person.id]));
+        this.genogramFile = null;
+        this.genogramSrc = null;
+        this.fileLabel = 'Seleccione un archivo..';
+        this.ngOnInit();
         this.toastr.success('El archivo ha sido cargado exitosamente', 'Operacion exitosa');
         this.loading = false;
       }
@@ -56,7 +60,7 @@ export class GenogramComponent implements OnInit {
   }
 
   isFileEmpty(){
-    return typeof this.genogramFile === 'undefined';
+    return typeof this.genogramFile === 'undefined' || this.genogramFile === null;
   }
 
   handleInputChange(e) {

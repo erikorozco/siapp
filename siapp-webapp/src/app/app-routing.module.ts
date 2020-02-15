@@ -16,7 +16,7 @@ import { FormRecordComponent } from './modules/records/components/form-record/fo
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
   // { path: '**', component: DashboardComponent },
-   { path: 'test', component: TablePaginationComponent },
+  { path: 'test', component: TablePaginationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: DashboardComponent,
     children: [
@@ -42,7 +42,7 @@ const ROUTES: Routes = [
       { path: 'new-person-opening-record', component: FormRecordComponent },
 
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
-  ] },
+    ] },
 ];
 
 @NgModule({

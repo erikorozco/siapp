@@ -59,7 +59,7 @@ public class File implements Serializable {
     @Column(name = "id_persona")
     private Integer personId;
     
-    @JsonManagedReference(value="personReference")
+    @JsonManagedReference(value="therapistReference")
     @OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;

@@ -1,5 +1,6 @@
 package com.siapp.controllers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
@@ -61,15 +62,22 @@ public class PersonAttachmentController {
 	@GetMapping("/getFile/{personId}/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(@PathVariable String personId, @PathVariable String filename) throws IOException {
-	    Resource file = fileService.loadFile(filename, personId, com.siapp.constants.Model.PERSON);
-	    byte[] bytes = StreamUtils.copyToByteArray(file.getInputStream());
-	    return ResponseEntity
-                .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION)
-                .contentType(MediaType.IMAGE_PNG)
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(bytes);
+		try {
+			Resource file = fileService.loadFile(filename, personId, com.siapp.constants.Model.PERSON);
+			byte[] bytes = StreamUtils.copyToByteArray(file.getInputStream());
+		    return ResponseEntity
+	                .ok()
+	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+	                .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION)
+	                .contentType(MediaType.IMAGE_PNG)
+	                .contentType(MediaType.IMAGE_JPEG)
+	                .body(bytes);
+		} catch (FileNotFoundException e) {
+			byte[] bytesError = null;
+			return ResponseEntity.status(HttpStatus.valueOf(404)).body(bytesError);
+		}
+		
+	    
 	}
 	
 }

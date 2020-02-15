@@ -1,5 +1,6 @@
 package com.siapp.services;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -77,11 +78,11 @@ public class FileService {
 	    	if (resource.exists() || resource.isReadable()) {
 	    		return resource;
 	    	} else {
-	    		throw new RuntimeException("FAIL!");
+	    		throw new FileNotFoundException();
 	    	}
-	    	} catch (MalformedURLException e) {
+	    } catch (MalformedURLException e) {
 	    		throw new RuntimeException("FAIL!");
-	    	}
+	    }
 	}
 	
 	public void deleteAll() {

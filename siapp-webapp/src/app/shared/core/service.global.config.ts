@@ -62,6 +62,15 @@ export const API_URL_CONFIG = {
         uploadFile: 'uploadFile'
       }
     },
+    sessionsAPI: {
+      name: 'sessions/',
+      endpoints: {
+        getSessionsByRecordId : 'getSessionsByRecordId/',
+        getSession : 'getSession/',
+        createSession: 'createSession',
+        updateSession : 'updateSession/',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

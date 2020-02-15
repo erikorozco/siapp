@@ -26,6 +26,9 @@ public class IgnoredProperties {
 		case PERSON:			
 			ignoredProperties = new String[]{"id", "createdAt", "updatedAt", "record"};
 			break;	
+		case SESSION_REPORT:			
+			ignoredProperties = new String[]{"id", "sessionDate", "updatedAt"};
+			break;	
 		default:
 			ignoredProperties = new String[]{"id", "createdAt", "updatedAt"};
 		}

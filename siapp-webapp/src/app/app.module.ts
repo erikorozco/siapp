@@ -42,6 +42,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { GenogramComponent } from './modules/records/components/record-summary/components/genogram/genogram.component';
 import { AttachmentsComponent } from './modules/records/components/record-summary/components/attachments/attachments.component';
 import { ImageViewComponent } from './shared/components/image-view/image-view.component';
+import { ProfilePhotoComponent } from './modules/records/components/record-summary/components/profile-photo/profile-photo.component';
+import { ListSessionComponent } from './modules/records/components/list-session/list-session.component';
 
 
 @NgModule({
@@ -68,6 +70,8 @@ import { ImageViewComponent } from './shared/components/image-view/image-view.co
     GenogramComponent,
     AttachmentsComponent,
     ImageViewComponent,
+    ProfilePhotoComponent,
+    ListSessionComponent,
   ],
   imports: [
     BrowserModule,
