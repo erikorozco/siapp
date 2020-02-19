@@ -63,7 +63,7 @@
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <ng-container *ngIf="this.record">
-                                <app-list-session [recordId]="this.record.id"></app-list-session>
+                                <app-list-session [recordId]="this.record.id" [personId]="this.person.id"></app-list-session>
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">

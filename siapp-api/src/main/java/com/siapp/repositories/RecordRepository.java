@@ -59,4 +59,5 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 	Integer removeRecordPermission(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
 	
 	public Optional<Record> findByPersonId(Integer personId);
+	
 }

@@ -53,7 +53,7 @@ export const RECORD_FORM_CONST = {
         'SEGURO P.',
         'PRIVADO',
       ],
-      deriveAreas : [
+      derivedAreas : [
         'NEUROLOGÍA',
         'NUTRICIÓN',
         'PSICOLOGÍA',

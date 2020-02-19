@@ -710,7 +710,7 @@
                                         (+{{this.derivedAreasFormControl.value.length - 1}} {{this.derivedAreasFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
                                     </span>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let deriveArea of this.recordFormOptions.deriveAreas" [value]="deriveArea">{{deriveArea}}</mat-option>
+                                <mat-option *ngFor="let deriveArea of this.recordFormOptions.derivedAreas" [value]="deriveArea">{{deriveArea}}</mat-option>
                             </mat-select>
                             <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivedTo')">
                                 <h6 class="feedback-field">Este campo es requerido</h6>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ListSessionComponent implements OnInit {
 
+  @Input() personId;
   @Input() recordId;
   sessions: any;
   tableProperties: any;
@@ -37,11 +38,8 @@ export class ListSessionComponent implements OnInit {
           delete: false,
           print: false,
           updateStatus: false,
-          viewRecords: {
-            toolTip: 'Ver Expediente',
-          },
           add: {
-            route: ['/home', 'add-person'],
+            route: ['/home', 'add-session', this.recordId, 'person', this.personId],
             text: 'Agregar sesión'
           }
         }

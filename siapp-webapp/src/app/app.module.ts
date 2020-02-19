@@ -44,6 +44,7 @@ import { AttachmentsComponent } from './modules/records/components/record-summar
 import { ImageViewComponent } from './shared/components/image-view/image-view.component';
 import { ProfilePhotoComponent } from './modules/records/components/record-summary/components/profile-photo/profile-photo.component';
 import { ListSessionComponent } from './modules/records/components/list-session/list-session.component';
+import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { ListSessionComponent } from './modules/records/components/list-session/
     ImageViewComponent,
     ProfilePhotoComponent,
     ListSessionComponent,
+    FormSessionComponent,
   ],
   imports: [
     BrowserModule,

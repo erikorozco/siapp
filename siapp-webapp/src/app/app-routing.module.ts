@@ -12,6 +12,7 @@ import { FormPersonComponent } from './modules/records/components/form-person/fo
 import { RecordSummaryComponent } from './modules/records/components/record-summary/record-summary.component';
 import { PrivacyAgreementComponent } from './modules/records/components/privacy-agreement/privacy-agreement.component';
 import { FormRecordComponent } from './modules/records/components/form-record/form-record.component';
+import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -40,8 +41,8 @@ const ROUTES: Routes = [
       { path: 'record-summary', redirectTo: 'records' },
       { path: 'existing-person-opening-record/:personId', component: FormRecordComponent },
       { path: 'new-person-opening-record', component: FormRecordComponent },
-
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
+      { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent }
     ] },
 ];
 

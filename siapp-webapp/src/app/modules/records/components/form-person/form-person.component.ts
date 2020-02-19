@@ -88,6 +88,7 @@ export class FormPersonComponent implements OnInit {
       lastName: ['', Validators.compose([Validators.required])],
       secondLastName: ['', Validators.compose([Validators.required])],
       phone: ['', ],
+      email: ['', ],
       active: ['', ],
       createdAt: ['', ],
       updatedAt: ['', ]
