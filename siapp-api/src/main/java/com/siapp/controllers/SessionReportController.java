@@ -28,7 +28,7 @@ public class SessionReportController {
 	@ApiOperation(value = "Get all session reports by record ID")
     @GetMapping("/getSessionsByRecordId/{recordId}")
     public List<SessionReport> getAllPersons(@PathVariable(value = "recordId") Integer recordId) {
-        return sessionReportService.getSessionReportsByRecordId(recordId);
+		return sessionReportService.getSessionReportsByRecordId(recordId);
     }
 	
 	@ApiOperation(value = "Create new session report")

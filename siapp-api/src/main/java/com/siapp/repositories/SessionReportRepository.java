@@ -6,6 +6,8 @@ import com.siapp.models.SessionReport;
 
 public interface SessionReportRepository extends JpaRepository<SessionReport, Integer>   {
 	
-	public List<SessionReport> findByrecordId(Integer recordId);
+	public List<SessionReport> findByrecordIdOrderBySessionNumberDesc(Integer recordId);
+	
+	public SessionReport findTopByRecordIdOrderBySessionNumberDesc(Integer recordId);
 	
 }

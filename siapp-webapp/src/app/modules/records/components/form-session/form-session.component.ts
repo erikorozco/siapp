@@ -3,8 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionService } from '../../../../shared/services/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RECORD_FORM_CONST as SessionFormOptions } from 'src/app/shared/utils/record-form-constants';
+import { SESSION_FORM_CONST as SessionFormOptions } from 'src/app/shared/utils/session-form.constants';
 import { PersonService } from '../../../../shared/services/person.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-form-session',
@@ -13,6 +14,7 @@ import { PersonService } from '../../../../shared/services/person.service';
 })
 export class FormSessionComponent implements OnInit {
 
+  personId;
   sessionForm: FormGroup;
   session: any;
   record: any;
@@ -29,7 +31,8 @@ export class FormSessionComponent implements OnInit {
     private sessionService: SessionService,
     private toastr: ToastrService,
     private routes: ActivatedRoute,
-    private personService: PersonService
+    private personService: PersonService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -42,11 +45,49 @@ export class FormSessionComponent implements OnInit {
     this.routes.params.subscribe(params => {
       this.formProperties.params = params;
     });
+
     this.getPersonInformation();
+
+    if (this.formProperties.action === 'view-session') {
+      this.sessionService.getSession(this.formProperties.params.id).subscribe(data => {
+        this.session = data;
+        this.sessionForm.setValue(data);
+      }, error => {console.log(error); });
+      this.sessionForm.disable();
+
+    } else if (this.formProperties.action === 'edit-session') {
+      this.sessionService.getSession(this.formProperties.params.id).subscribe(data => {
+        this.sessionForm.setValue(data);
+      }, error => { console.log(error); });
+
+    }
+
   }
 
   onSubmit() {
+    if (this.formProperties.action === 'add-session') {
+      const userInfo = this.authService.getSession();
+      this.session = this.sessionForm.value;
+      this.session.active = true;
+      this.session.therapist.id = userInfo.therapist.id;
+      this.session.recordId = this.formProperties.params.recordId;
+      this.sessionService.createSession(this.sessionForm.value).subscribe(data => {
+        this.toastr.success('El reporte clínico ha sido creado exitosamente', 'Operacion exitosa');
+        this.router.navigate(['home', 'record-summary', this.formProperties.params.personId]);
+      }, error => {
+        console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
 
+    } else {
+      this.sessionService.updateSession(this.formProperties.params.id, this.sessionForm.value).subscribe(data => {
+        this.toastr.success('El reporte clínico ha isdo actualizado exitosamente', 'Operacion exitosa');
+        this.router.navigate(['home', 'record-summary', this.formProperties.params.personId]);
+      }, error => {
+        console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
+    }
   }
 
   getPersonInformation() {
@@ -67,12 +108,23 @@ export class FormSessionComponent implements OnInit {
       sessionType: ['', Validators.compose([Validators.required])],
       psychologicalOpening: ['', Validators.compose([Validators.required])],
       psychologicalAdvance: ['', Validators.compose([Validators.required])],
+      psychologicalDevelopment: ['', Validators.compose([Validators.required])],
       psychologicalAgreements: ['', Validators.compose([Validators.required])],
-      createdAt: ['', ],
-      updatedAt: ['', ],
       active: ['', ],
+      sessionNumber: ['', ],
+      recordId: ['', ],
+      sessionDate: ['', ],
+      nextDate: ['', ],
+      updatedAt: ['', ],
       therapist: this.formBuilder.group({
-        id: ['', ]
+        id: ['', ],
+        name: ['', ],
+        last_name: ['', ],
+        second_last_name: ['', ],
+        phone: ['', ],
+        speciality: ['', ],
+        createdAt: ['', ],
+        updatedAt: ['', ]
       })
     });
   }

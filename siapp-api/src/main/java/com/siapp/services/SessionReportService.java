@@ -19,7 +19,7 @@ public class SessionReportService {
 	SessionReportRepository sessionReportRepository;
 	
 	public List<SessionReport> getSessionReportsByRecordId(Integer recordId) {
-        return sessionReportRepository.findByrecordId(recordId);
+        return sessionReportRepository.findByrecordIdOrderBySessionNumberDesc(recordId);
     }
 	
 	public SessionReport findById(Integer id){
@@ -27,6 +27,7 @@ public class SessionReportService {
 	}
 	
 	public SessionReport create(SessionReport sessionReport) throws ResourceAlreadyExistsException {
+		sessionReport.setSessionNumber(this.findLastSessionNumber(sessionReport.getRecordId()) + 1);
 		return sessionReportRepository.save(sessionReport);
 	}
 	
@@ -45,6 +46,11 @@ public class SessionReportService {
 		sessionReportRepository.delete(sessionReport);
 
         return ResponseEntity.ok().build();
+	}
+	
+	public Integer findLastSessionNumber(Integer recordId) {
+		SessionReport lastSession = sessionReportRepository.findTopByRecordIdOrderBySessionNumberDesc(recordId);
+		return lastSession.getSessionNumber();
 	}
 
 }

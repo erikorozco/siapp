@@ -25,8 +25,8 @@
         <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1 mt-4 table-component">
             <thead class="sticky-top">
                 <tr>
-                    <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{head | titlecase}}
-                        <!-- <mdb-icon fas icon="sort"></mdb-icon> -->
+                    <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">
+                        {{head | titlecase}}
                     </th>
                 </tr>
             </thead>

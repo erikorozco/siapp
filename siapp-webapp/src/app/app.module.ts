@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -45,6 +45,9 @@ import { ImageViewComponent } from './shared/components/image-view/image-view.co
 import { ProfilePhotoComponent } from './modules/records/components/record-summary/components/profile-photo/profile-photo.component';
 import { ListSessionComponent } from './modules/records/components/list-session/list-session.component';
 import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
+import localeEsMX from '@angular/common/locales/es-MX';
+import { DatePipe, registerLocaleData } from '@angular/common';
+registerLocaleData(localeEsMX , 'es-MX');
 
 
 @NgModule({
@@ -101,7 +104,9 @@ import { FormSessionComponent } from './modules/records/components/form-session/
       useClass: Interceptor,
       multi: true
     },
-    MatDialog
+    MatDialog,
+    { provide: LOCALE_ID, useValue: 'es-MX' },
+    DatePipe
   ],
   entryComponents: [
     ImageViewComponent

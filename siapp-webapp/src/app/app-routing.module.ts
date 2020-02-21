@@ -42,7 +42,11 @@ const ROUTES: Routes = [
       { path: 'existing-person-opening-record/:personId', component: FormRecordComponent },
       { path: 'new-person-opening-record', component: FormRecordComponent },
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
-      { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent }
+      { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent },
+      { path: 'edit-session/:id/person/:personId', component: FormSessionComponent },
+      { path: 'edit-session', redirectTo: 'add-session' },
+      { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
+      { path: 'view-session', redirectTo: 'add-session' },
     ] },
 ];
 

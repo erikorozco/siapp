@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SessionService } from 'src/app/shared/services/session.service';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-session',
@@ -14,10 +15,11 @@ export class ListSessionComponent implements OnInit {
   sessions: any;
   tableProperties: any;
 
+
   constructor(
     private sessionService: SessionService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getSessions();
@@ -25,7 +27,6 @@ export class ListSessionComponent implements OnInit {
 
   getSessions() {
     this.sessionService.getSessionsByRecordId(this.recordId).subscribe((res) => {
-      console.log(res);
       this.sessions = res;
       this.tableProperties = [{
         headElements: ['# de sesión', 'Fecha', 'Tipo de sesión', 'Profesionista', 'Acciones'],
@@ -49,13 +50,21 @@ export class ListSessionComponent implements OnInit {
     });
   }
 
+  viewSession(session: any) {
+    this.router.navigate(['home', 'view-session', session.id, 'person', this.personId]);
+  }
+
+  editSession(session: any) {
+    this.router.navigate(['home', 'edit-session', session.id, 'person', this.personId]);
+  }
+
   executeAction({value, action}) {
     switch (action) {
       case 'view':
-        //this.viewPerson(value);
+        this.viewSession(value);
         break;
       case 'edit':
-        //this.editPerson(value);
+        this.editSession(value);
         break;
       default:
         console.log(`${action} is not a valid option`);
@@ -73,6 +82,10 @@ export class ListSessionComponent implements OnInit {
             || (`${element.therapist.name.toLowerCase()} ${element.therapist.last_name.toLowerCase()} ${element.therapist.second_last_name.toLowerCase()}`)
             .includes(searchText.toLowerCase())
             ) {
+              // const datePipe: DatePipe = new DatePipe('es-MX');
+              // var date = new Date(element.sessionDate);
+              // let a = datePipe.transform(date, 'dd-MM-yyyy', ,'es-MX');
+              // console.log(date)
               element.tableFields = [
                                     element.sessionNumber,
                                     element.sessionDate,
