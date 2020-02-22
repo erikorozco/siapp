@@ -1,44 +1,40 @@
 <ng-container *ngIf="this.recordInfo">
-    <div class="row">
-        <div class="col-md-6">
-            <label>User Id</label>
-        </div>
-        <div class="col-md-6">
-            <p>Kshiti123</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Name</label>
-        </div>
-        <div class="col-md-6">
-            <p>Kshiti Ghelani</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Email</label>
-        </div>
-        <div class="col-md-6">
-            <p>kshitighelani@gmail.com</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Phone</label>
-        </div>
-        <div class="col-md-6">
-            <p>123 456 7890</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Profession</label>
-        </div>
-        <div class="col-md-6">
-            <p>Web Developer and Designer</p>
-        </div>
-    </div>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Información personal
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                    Type your name and age
+                </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <mat-form-field class="col-md-3">
+                <mat-label>Edad cuando ingreso</mat-label>
+                <input matInput value="{{recordInfo.age}}" readonly>
+            </mat-form-field>
+            <mat-form-field class="col-md-3">
+                <mat-label>Edad actual</mat-label>
+                <input matInput value="{{calculateAge(recordInfo.bornDate)}}" readonly>
+            </mat-form-field>
+            <mat-form-field class="col-md-3">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput value="{{recordInfo.bornDate | date}}" readonly>
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Self aware panel
+                </mat-panel-title>
+                <mat-panel-description>
+                    Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>I'm visible because I am open</p>
+        </mat-expansion-panel>
+    </mat-accordion>
 </ng-container>
 <ng-container *ngIf="!this.recordInfo">
     <div class="text-left">

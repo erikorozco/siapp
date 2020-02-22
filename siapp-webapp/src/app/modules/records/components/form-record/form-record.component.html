@@ -88,7 +88,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
                             <label for="gender">Sexo *</label>
-                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
+                            <select type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
                               <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
                                 {{ gender }}
                               </option>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('civilStatus') } ">
                             <label for="civilStatus">Estado Civil *</label>
-                            <select (change)="calculateAge()" type="option" class="form-control" formControlName="civilStatus" id="civilStatus" placeholder="DD-MM-AAAA">
+                            <select type="option" class="form-control" formControlName="civilStatus" id="civilStatus" placeholder="DD-MM-AAAA">
                               <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
                                 {{ civilStatus }}
                               </option>

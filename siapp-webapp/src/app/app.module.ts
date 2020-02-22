@@ -11,6 +11,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -93,7 +95,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     SignaturePadModule,
     MatTabsModule,
     MatAutocompleteModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule,
+    MatInputModule
   ],
   providers: [
     UserService,
