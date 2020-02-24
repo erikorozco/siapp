@@ -36,7 +36,18 @@ export class RecordInformationComponent implements OnInit {
     const bornDate = new Date(recordBornDate);
     const currentDate = new Date();
     return currentDate.getFullYear() - bornDate.getFullYear();
-    // this.recordForm.get(['age']).setValue();
+  }
+
+  getBMIStatus(bmi) {
+      if ( bmi > 30 ) {
+        return  'Obesidad';
+      } else if ( bmi > 25 && bmi < 29.99 ) {
+         return  'Sobrepeso';
+      } else if ( bmi > 18.5 && bmi < 24.99 ) {
+         return  'Peso saludable';
+      } else if ( bmi < 18.5) {
+        return  'Bja peso';
+      }
   }
 
 }
