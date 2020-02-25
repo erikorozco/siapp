@@ -1,5 +1,6 @@
 package com.siapp.services;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Person;
 import com.siapp.repositories.PersonRepository;
 import com.siapp.utilities.IgnoredProperties;
+import com.siapp.utilities.PersonUtil;
 
 @Service
 public class PersonService {
@@ -46,6 +48,10 @@ public class PersonService {
 		personRepository.delete(person);
 
         return ResponseEntity.ok().build();
+	}
+	
+	public  List<HashMap<String, Object>> getAllPersonsQuery(){
+		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.getAllPersonsQuery());
 	}
 
 }

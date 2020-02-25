@@ -71,6 +71,14 @@ ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean;
 UPDATE expediente set esta_activo=TRUE;
 
+  //Edit sesion table
+ALTER TABLE sesion 
+ADD COLUMN actualizado timestamp without time zone,
+ADD COLUMN esta_activo boolean,
+ALTER COLUMN "fechaHoraCita" DROP NOT NULL;
+
+UPDATE sesion set esta_activo=TRUE;
+
 -- Table: acuerdoprivacidad
 
 -- DROP TABLE acuerdoprivacidad;

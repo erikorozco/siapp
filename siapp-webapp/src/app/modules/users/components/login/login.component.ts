@@ -14,7 +14,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   invalidLogin = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   onSubmit() {
     if (this.loginForm.invalid) {
@@ -28,9 +32,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginPayload.toString()).subscribe(data => {
         window.sessionStorage.setItem('token', JSON.stringify(data));
         window.sessionStorage.setItem('username', this.loginForm.controls.username.value);
+        this.authService.setSession(this.loginForm.controls.username.value);
         this.router.navigate(['home']);
     }, error => {
-        this.invalidLogin = true;
+      console.log(error);
+      this.invalidLogin = true;
     });
   }
 

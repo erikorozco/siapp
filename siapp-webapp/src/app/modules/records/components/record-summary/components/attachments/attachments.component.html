@@ -23,26 +23,20 @@
             <img [src]="fileSrc" class="img-fluid img-thumbnail" />
         </div>
     </div>
-    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 card zoom mb-4 ml-2 mr-2" *ngFor="let image of images">
-        <a aria-controls="collapseTwo" aria-expanded="true" data-toggle="collapse">
-            <img mdbTooltip="{{image.path}}" (click)="openImage(image)" class="img-fluid img-thumbnail" style="height: auto; width: fit-content;" [src]="image.src" />
-            <ul class="list-group list-group-flush" style="color: black;">
-                <li class="list-group-item"><b>Autor:</b> {{image.therapist}}</li>
-                <li class="list-group-item"><b>Fecha:</b> {{image.createdAt | date}}</li>
-            </ul>
-            <div class="card-body">
-                <p class="card-text" style="color: black;">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus facere, voluptate suscipit obcaecati hic facilis nostrum blanditiis ipsam expedita. Praesentium beatae ab est distinctio quo iure unde consectetur vel! Facere.{{image.description | uppercase}}
-                </p>
-            </div>
-        </a>
-        <!-- <div class="card zoom" style="width: 18rem;">
-            <a aria-controls="collapseTwo" aria-expanded="true" class="nav-link" data-toggle="collapse" href="#">
-                <img class="card-img-top img-fluid img-thumbnail" style="height: 200px; width: fit-content;" [src]="image.src">
+    <ng-container *ngFor="let image of images">
+        <div *ngIf="!(image.path === 'profilePhoto.png')" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 card zoom">
+            <a aria-controls="collapseTwo" aria-expanded="true" data-toggle="collapse">
+                <img mdbTooltip="{{image.path}}" (click)="openImage(image)" class="img-fluid img-thumbnail" style="height: auto; width: fit-content;" [src]="image.src" />
+                <ul class="list-group list-group-flush" style="color: black;">
+                    <li class="list-group-item"><b>Autor:</b> {{image.therapist}}</li>
+                    <li class="list-group-item"><b>Fecha:</b> {{image.createdAt | date}}</li>
+                </ul>
                 <div class="card-body">
-                    <p class="card-text">{{image.description}}</p>
+                    <p class="card-text" style="color: black;">
+                        {{image.description | uppercase}}
+                    </p>
                 </div>
             </a>
-        </div> -->
-    </div>
+        </div>
+    </ng-container>
 </div>

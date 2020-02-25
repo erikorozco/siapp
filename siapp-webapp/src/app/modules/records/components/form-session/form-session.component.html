@@ -1,0 +1,58 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
+    <h1 class="h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Panel de control</a> ->
+        <a [routerLink]="['/home/records']">Pacientes</a> ->
+        <a [routerLink]="['/home', 'record-summary', this.person.id ]">{{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}} -> </a> {{ (this.formProperties.action === 'add-session' )? 'Nuevo Reporte clínico' : '' }} {{this.formProperties.action
+        === 'edit-session' ? 'Editar Reporte clínico' : ''}} {{this.formProperties.action === 'view-session' ? 'Ver Reporte clínico' : ''}}
+    </h1>
+</div>
+<div class="row">
+    <div class="col-md-12 pl-5 text border-left-primary">
+        <form [formGroup]="sessionForm" (ngSubmit)="onSubmit()">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('sessionType') } ">
+                <label for="sessionType">Tipo de servicio *</label>
+                <select type="option" class="form-control" formControlName="sessionType" id="sessionType">
+              <option *ngFor="let sessionType of this.sessionFormOptions.sessionTypes" [ngValue]="sessionType">
+                {{ sessionType }}
+              </option>
+                </select>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('sessionType')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('psychologicalOpening') } ">
+                <label for="psychologicalOpening">Apertura:</label>
+                <textarea style="min-height: 150px;" type="textarea" class="form-control" formControlName="psychologicalOpening" id="psychologicalOpening" placeholder="Apertura"></textarea>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('psychologicalOpening')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('psychologicalDevelopment') } ">
+                <label for="psychologicalDevelopment">Desarrollo:</label>
+                <textarea style="min-height: 150px;" type="textarea" class="form-control" formControlName="psychologicalDevelopment" id="psychologicalDevelopment" placeholder="Desarrollo"></textarea>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('psychologicalDevelopment')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('psychologicalAgreements') } ">
+                <label for="psychologicalAgreements">Acuerdos:</label>
+                <textarea style="min-height: 150px;" type="textarea" class="form-control" formControlName="psychologicalAgreements" id="psychologicalAgreements" placeholder="Acuerdos"></textarea>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('psychologicalAgreements')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('psychologicalAdvance') } ">
+                <label for="psychologicalAdvance">Avances: Nivel de avance del paciente (1-10) *</label>
+                <select type="option" class="form-control" formControlName="psychologicalAdvance" id="psychologicalAdvance">
+                  <option *ngFor="let number of ['0','1','2','3','4','5','6','7','8','9','10']" [ngValue]="number">
+                    {{ number }}
+                  </option>
+                    </select>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('psychologicalAdvance')">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <button [disabled]="sessionForm.invalid || sessionForm.disabled || sessionForm.pristine" type="submit " class="btn btn-success btn-lg">Guardar</button>
+        </form>
+    </div>
+</div>

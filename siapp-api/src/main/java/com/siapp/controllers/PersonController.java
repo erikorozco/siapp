@@ -1,5 +1,6 @@
 package com.siapp.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,15 @@ public class PersonController {
 	@Autowired
 	PersonService personService;
 
-	@ApiOperation(value = "Get all Persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")
-    @GetMapping("/getAllPersons")
+    @GetMapping("/getAllPersonQuery")
     public List<Person> getAllPersons() {
         return personService.getAllPersons();
+    }
+    
+    @ApiOperation(value = "Get all Persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")
+	@GetMapping("/getAllPersons")
+	public List<HashMap<String, Object>> getAllPersonsQuery() {
+	    return personService.getAllPersonsQuery();
     }
     
 	@ApiOperation(value = "Create new Person", notes = "Returns a Person.class", response = Person.class)

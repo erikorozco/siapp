@@ -11915,8 +11915,9 @@ a:focus {
 .bg-login-image {
     /*background: url(https://source.unsplash.com/K4mSJ7kc0As/600x800);*/
     /* background: url(https://source.unsplash.com/Mv9hjnEUHR4/600x800); */
-    background: url(https://source.unsplash.com/random/600x800);
+    /* background: url(https://source.unsplash.com/random/600x800); */
     /* background-image: url(src/assets/vendor/images/favicon.png); */
+    background-image: url(../../../../../assets//vendor/images//loginImageSI.png);
     background-position: center;
     background-size: cover
 }

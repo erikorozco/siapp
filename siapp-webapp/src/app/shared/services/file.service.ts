@@ -3,6 +3,7 @@ import { host } from '../core/service.global.config';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class FileService {
 
   baseUrl: string = host() + URL_CONF.personAttachmentsAPI.name;
   response = null;
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getFile(personId, fileName): Observable<any> {
     let url = `${this.baseUrl}${URL_CONF.personAttachmentsAPI.endpoints.getFile(personId, fileName)}`;
@@ -26,7 +30,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('personId', payload.personId);
-    formData.append('therapistId', payload.therapistId);
+    formData.append('therapistId', this.authService.getSession().id);
     formData.append('description', payload.description);
 
     return this.http.post(this.baseUrl + URL_CONF.personAttachmentsAPI.endpoints.uploadFile,

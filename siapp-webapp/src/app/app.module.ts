@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -11,6 +11,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -42,6 +44,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { GenogramComponent } from './modules/records/components/record-summary/components/genogram/genogram.component';
 import { AttachmentsComponent } from './modules/records/components/record-summary/components/attachments/attachments.component';
 import { ImageViewComponent } from './shared/components/image-view/image-view.component';
+import { ProfilePhotoComponent } from './modules/records/components/record-summary/components/profile-photo/profile-photo.component';
+import { ListSessionComponent } from './modules/records/components/list-session/list-session.component';
+import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
+import localeEsMX from '@angular/common/locales/es-MX';
+import { DatePipe, registerLocaleData } from '@angular/common';
+registerLocaleData(localeEsMX , 'es-MX');
 
 
 @NgModule({
@@ -68,6 +76,9 @@ import { ImageViewComponent } from './shared/components/image-view/image-view.co
     GenogramComponent,
     AttachmentsComponent,
     ImageViewComponent,
+    ProfilePhotoComponent,
+    ListSessionComponent,
+    FormSessionComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +95,9 @@ import { ImageViewComponent } from './shared/components/image-view/image-view.co
     SignaturePadModule,
     MatTabsModule,
     MatAutocompleteModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule,
+    MatInputModule
   ],
   providers: [
     UserService,
@@ -95,7 +108,9 @@ import { ImageViewComponent } from './shared/components/image-view/image-view.co
       useClass: Interceptor,
       multi: true
     },
-    MatDialog
+    MatDialog,
+    { provide: LOCALE_ID, useValue: 'es-MX' },
+    DatePipe
   ],
   entryComponents: [
     ImageViewComponent

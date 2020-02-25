@@ -53,8 +53,12 @@ export class AttachmentsComponent implements OnInit {
     };
     this.fileService.uploadFile(this.fileInput, payload).subscribe((res) => {
       if (res.status === 200) {
-        this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-        this.router.navigate(['home', 'record-summary', this.personId]));
+        // this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+        // this.router.navigate(['home', 'record-summary', this.personId]));
+        this.fileInput = null;
+        this.fileSrc = null;
+        this.fileLabel = 'Seleccione un archivo..';
+        this.ngOnInit();
         this.toastr.success('El archivo ha sido cargado exitosamente', 'Operacion exitosa');
       } else if (res.status === 409) {
         this.toastr.error('Ya existe un archivo con este nombre', 'Operacion fallida');
@@ -67,7 +71,7 @@ export class AttachmentsComponent implements OnInit {
   }
 
   isFileEmpty() {
-    return typeof this.fileInput === 'undefined';
+    return typeof this.fileInput === 'undefined' || this.fileInput === null;
   }
 
   handleInputChange(e) {

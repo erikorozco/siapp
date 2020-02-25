@@ -11,6 +11,7 @@ export class RecordInformationComponent implements OnInit {
 
   @Input() personId;
   recordInfo: any;
+  panelOpenState = false;
 
   constructor(
     private recordService: RecordService
@@ -23,11 +24,30 @@ export class RecordInformationComponent implements OnInit {
   getRecordInformation() {
     this.recordService.getRecordByPersonId(this.personId).subscribe(data => {
       if (data) {
+        console.log(data);
         this.recordInfo = data;
       }
     }, error => {
       console.log(error);
     });
+  }
+
+  calculateAge(recordBornDate) {
+    const bornDate = new Date(recordBornDate);
+    const currentDate = new Date();
+    return currentDate.getFullYear() - bornDate.getFullYear();
+  }
+
+  getBMIStatus(bmi) {
+      if ( bmi > 30 ) {
+        return  'Obesidad';
+      } else if ( bmi > 25 && bmi < 29.99 ) {
+         return  'Sobrepeso';
+      } else if ( bmi > 18.5 && bmi < 24.99 ) {
+         return  'Peso saludable';
+      } else if ( bmi < 18.5) {
+        return  'Bja peso';
+      }
   }
 
 }

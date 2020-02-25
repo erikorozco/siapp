@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/record-form-constants';
 import { Observable } from 'rxjs';
-import { map, startWith, auditTime} from 'rxjs/operators';
+import { map, startWith} from 'rxjs/operators';
 import { StringUtil } from 'src/app/shared/utils/string-util';
 
 @Component({

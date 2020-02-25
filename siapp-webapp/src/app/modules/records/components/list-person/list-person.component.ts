@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from 'src/app/shared/services/person.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Person } from 'src/app/shared/models/person.model';
 
 @Component({
@@ -16,8 +15,7 @@ export class ListPersonComponent implements OnInit {
 
   constructor(
     private personService: PersonService,
-    private router: Router,
-    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -47,7 +45,9 @@ export class ListPersonComponent implements OnInit {
             }
           }
       }];
-    }, error => {});
+    }, error => {
+      console.log(error);
+    });
   }
 
   viewPerson(person: Person) {

@@ -8,29 +8,8 @@
     <form method="post">
         <div class="row">
             <div class="col-md-3">
-                <div class="profile-img">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-2" *ngIf="loading">
-                            <mat-spinner></mat-spinner>
-                        </div>
-                    </div>
-                    <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" /> -->
-                    <img *ngIf="!photoSrc; else imageToUpload" src="../../../../../assets//vendor/images//avatar-1577909__340.png" class="img-thumbnail" />
-                    <ng-template #imageToUpload>
-                        <img [src]="photoSrc" class="img-thumbnail" style="width: 300px; height: auto;" />
-                    </ng-template>
-                    <div class="file btn btn-lg btn-primary">
-                        Cambiar foto
-                        <input type="file" name="photoUrl" (change)="handleInputChange($event)" />
-                    </div>
-                </div>
-                <div *ngIf="!isFileEmpty()" class="text-center">
-                    <button [disabled]="isFileEmpty()" type="button" (click)="uploadPhoto()" class="btn btn-success btn-md btn-icon-split mb-2">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="text">Guardar</span>
-                    </button>
+                <div *ngIf="this.person">
+                    <app-profile-photo [personId]="this.person.id"></app-profile-photo>
                 </div>
                 <div class="profile-work" *ngIf="this.person">
                     <h5 class="mb-3">Información personal</h5>
@@ -52,8 +31,8 @@
                         <li *ngIf="this.record" class="nav-item">
                             <a class="nav-link" id="genogram-tab" data-toggle="tab" href="#genogram" role="tab" aria-controls="genogram" aria-selected="false">Genograma</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reportes de sesión</a>
+                        <li *ngIf="this.record" class="nav-item">
+                            <a class="nav-link" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
@@ -78,12 +57,14 @@
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
-                            <ng-container *ngIf="this.record">
+                            <ng-container *ngIf="this.record !== null && this.record !== undefined">
                                 <app-genogram [recordId]="this.record.id"></app-genogram>
                             </ng-container>
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <p>reportes de session</p>
+                        <div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
+                            <ng-container *ngIf="this.record !== null && this.record !== undefined">
+                                <app-list-session [recordId]="this.record.id" [personId]="this.person.id"></app-list-session>
+                            </ng-container>
                         </div>
                         <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
                             <ng-container *ngIf="this.person">
