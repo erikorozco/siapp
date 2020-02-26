@@ -50,7 +50,7 @@ public class SessionReportService {
 	
 	public Integer findLastSessionNumber(Integer recordId) {
 		SessionReport lastSession = sessionReportRepository.findTopByRecordIdOrderBySessionNumberDesc(recordId);
-		return lastSession.getSessionNumber();
+		return (lastSession == null)? 0 : lastSession.getSessionNumber();
 	}
 
 }

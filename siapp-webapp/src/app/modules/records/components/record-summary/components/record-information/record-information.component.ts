@@ -24,7 +24,6 @@ export class RecordInformationComponent implements OnInit {
   getRecordInformation() {
     this.recordService.getRecordByPersonId(this.personId).subscribe(data => {
       if (data) {
-        console.log(data);
         this.recordInfo = data;
       }
     }, error => {
