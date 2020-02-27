@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PersonService } from 'src/app/shared/services/person.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/record-form-constants';
-import { Observable } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 import { map, startWith} from 'rxjs/operators';
 import { StringUtil } from 'src/app/shared/utils/string-util';
 
@@ -14,8 +14,9 @@ import { StringUtil } from 'src/app/shared/utils/string-util';
   templateUrl: './form-record.component.html',
   styleUrls: ['./form-record.component.css']
 })
-export class FormRecordComponent implements OnInit {
+export class FormRecordComponent implements OnInit , OnDestroy {
 
+  subscription: Subscription;
   stringUtil = StringUtil;
   bmiText: string;
   params: any;
@@ -61,6 +62,33 @@ export class FormRecordComponent implements OnInit {
     // Init derived areas form group to avoid nulls
     this._createDerivedQuantities([]);
     this._createOtherDerivedQuantities([]);
+
+    this.checkRecordUnsaved();
+    const source = interval(15000);
+    this.subscription = source.subscribe(val => this.saveRecordProgress());
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  saveRecordProgress() {
+    const recordProgress = JSON.stringify(this.recordForm.value);
+    window.localStorage.setItem('recordFormFillProgress', recordProgress);
+  }
+
+  checkRecordUnsaved() {
+    if (window.localStorage.getItem('recordFormFillProgress')) {
+      const recordProgress = JSON.parse(window.localStorage.getItem('recordFormFillProgress'));
+      if (recordProgress.person.id === parseInt(this.params.personId, 10)) {
+        if (confirm(`Existe un registro sin guardar de ${recordProgress.person.name} ${recordProgress.person.lastName} ${recordProgress.person.secondLastName} ¿Deseas seguir capturando?`)) {
+            this.recordForm.setValue(recordProgress);
+         } else {
+           window.localStorage.removeItem('recordFormFillProgress');
+           window.localStorage.clear();
+         }
+      }
+    }
   }
 
   getPersonInformation() {
@@ -113,6 +141,7 @@ export class FormRecordComponent implements OnInit {
 
   onSubmit() {
     if (this.action === 'existing-person-opening-record') {
+      this.subscription.unsubscribe(); // Unsubscribe the progress listener
       // Set the derivedTo and moneyShare values as a string
       this.recordForm.get(['derivedTo']).setValue(this._getDerivedAreasValue());
       this.recordForm.get(['moneyShare']).setValue(this._getDerivedQuotesValue());
@@ -122,6 +151,8 @@ export class FormRecordComponent implements OnInit {
       this.recordSerive.createRecord(this.record).subscribe(data => {
         this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'record-summary', this.params.personId]);
+        window.localStorage.removeItem('recordFormFillProgress');
+        window.localStorage.clear();
       }, error => {
         this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
         console.log(error);
