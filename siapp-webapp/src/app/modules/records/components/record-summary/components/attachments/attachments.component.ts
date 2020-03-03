@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImageViewComponent } from '../../../../../../shared/components/image-view/image-view.component';
+import { AuthService } from '../../../../../../shared/services/auth.service';
 
 
 @Component({
@@ -23,7 +24,6 @@ export class AttachmentsComponent implements OnInit {
   constructor(
     private fileService: FileService,
     private toastr: ToastrService,
-    private router: Router,
     public dialog: MatDialog,
   ) { }
 
@@ -48,8 +48,8 @@ export class AttachmentsComponent implements OnInit {
     this.loading = true;
     const payload = {
       personId: this.personId,
-      therapistId: 1,//TODO- CHANGE THIS TO GET THE SESION ID
-      description: 'This is a description'
+      therapistId: '', // Values is being set on the service layer
+      description: ''
     };
     this.fileService.uploadFile(this.fileInput, payload).subscribe((res) => {
       if (res.status === 200) {

@@ -16,7 +16,7 @@ import { FormSessionComponent } from './modules/records/components/form-session/
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
-  // { path: '**', component: DashboardComponent },
+  // { path: '**', component: LoginComponent },
   { path: 'test', component: TablePaginationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: DashboardComponent,

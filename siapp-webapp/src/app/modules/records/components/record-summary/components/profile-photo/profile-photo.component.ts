@@ -19,10 +19,6 @@ export class ProfilePhotoComponent implements OnInit {
   loading = false;
 
   constructor(
-    private router: Router,
-    private routes: ActivatedRoute,
-    private personService: PersonService,
-    private recordService: RecordService,
     private toastr: ToastrService,
     private fileService: FileService,
     private fileUtil: FileUtil
@@ -46,7 +42,7 @@ export class ProfilePhotoComponent implements OnInit {
     this.loading = true;
     const payload = {
       personId: this.personId,
-      therapistId: 1,//TODO- CHANGE THIS TO GET THE SESION ID
+      therapistId: '', // Values is being set on the service layer
       description: 'Profile photo',
       isProfilePhoto: true
     };

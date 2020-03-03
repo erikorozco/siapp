@@ -31,7 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                                 .stream()
                                 .map(r -> "ROLE_" + r.getName().toUpperCase())
                                 .collect(Collectors.toList())
-                                .toArray(new String[]{}))))
+                                .toArray(new String[]{}))
+                ))
                 .orElseThrow(() -> new UsernameNotFoundException("No user with "
                         + "the name " + username + "was found in the database"));
 		return ud;

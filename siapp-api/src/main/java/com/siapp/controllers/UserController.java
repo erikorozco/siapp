@@ -1,9 +1,15 @@
 package com.siapp.controllers;
 
+import java.security.Principal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +35,22 @@ public class UserController {
 
 	@Autowired
 	UserService userService;	
+	
+	@GetMapping("/sso/me")
+	public Map<String, String> user(Principal principal) {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+	    if (principal != null) {
+	        OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
+	        Authentication authentication = oAuth2Authentication.getUserAuthentication();
+	        Map<String, String> details = new LinkedHashMap<>();
+	        details = (Map<String, String>) authentication.getDetails();
+	        System.out.println(details);
+	        Map<String, String> map = new LinkedHashMap<>();
+	        map.put("email", details.get("email"));
+	        return map;
+	    }
+	    return null;
+	}
 	
 	@ApiOperation(value = "Check username availability", notes = "Returns true if username is available", response = Boolean.class)
     @GetMapping("/checkUsernameAvailability/{username}")

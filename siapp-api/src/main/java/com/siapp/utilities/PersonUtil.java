@@ -20,6 +20,7 @@ public class PersonUtil {
 			map.put("updatedAt", el[6]);
 			map.put("active", el[7]);
 			map.put("email", el[8]);
+			map.put("recordId", el[9]);
 			finalResult.add(map);
 		}
 		return finalResult;

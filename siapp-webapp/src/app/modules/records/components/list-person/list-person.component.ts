@@ -26,7 +26,7 @@ export class ListPersonComponent implements OnInit {
     this.personService.getAllPersons().subscribe(data => {
       this.persons = data;
       this.tableProperties = [{
-          headElements: ['Nombre', 'Apellidos', 'Teléfono', 'Acciones'],
+          headElements: ['Nombre', 'Apellidos', 'Teléfono', '# Expediente', 'Acciones'],
           datasource: data,
           maxVisibleItems: 10,
           filterFunction : this.filterUsers,
@@ -89,11 +89,13 @@ export class ListPersonComponent implements OnInit {
             || element.phone.toLowerCase().includes(searchText.toLowerCase())
             || (`${element.name.toLowerCase()} ${element.lastName.toLowerCase()} ${element.secondLastName.toLowerCase()}`)
             .includes(searchText.toLowerCase())
+            || element.recordId == searchText
             ) {
               element.tableFields = [
                                     element.name,
                                     element.lastName + ' ' + element.secondLastName,
                                     element.phone,
+                                    element.recordId,
                                     //element.active ? 'Acitvo' : 'Inactivo'
                                   ];
               return element;
