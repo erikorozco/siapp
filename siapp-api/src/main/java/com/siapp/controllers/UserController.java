@@ -1,16 +1,12 @@
 package com.siapp.controllers;
 
 import java.security.Principal;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.siapp.exceptions.ResourceAlreadyExistsException;
 import com.siapp.lists.UserList;
 import com.siapp.models.User;
+import com.siapp.models.UserTokenDetails;
+import com.siapp.services.CustomUserDetailsService;
 import com.siapp.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,22 +32,34 @@ import io.swagger.annotations.ApiResponses;
 public class UserController {
 
 	@Autowired
-	UserService userService;	
+	UserService userService;
 	
-	@GetMapping("/sso/me")
-	public Map<String, String> user(Principal principal) {
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-	    if (principal != null) {
-	        OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
-	        Authentication authentication = oAuth2Authentication.getUserAuthentication();
-	        Map<String, String> details = new LinkedHashMap<>();
-	        details = (Map<String, String>) authentication.getDetails();
-	        System.out.println(details);
-	        Map<String, String> map = new LinkedHashMap<>();
-	        map.put("email", details.get("email"));
-	        return map;
+	@Autowired
+	CustomUserDetailsService tokenService;
+	
+	@GetMapping("/tokenDetails")
+	public Map<String, Object> user(Principal principal) {
+		UserTokenDetails user = tokenService.getUserTokenDetails();
+	    if (user != null) {
+	        Map<String, Object> details = new HashMap<>();
+	        details.put("userId", user.getAppUser().getId().toString());
+	        details.put("username", user.getAppUser().getUsername());
+	        details.put("therapistId", user.getAppUser().getTherapist().getId().toString());
+	        details.put("username", user.getAppUser().getId().toString());
+	        details.put("name", user.getAppUser().getTherapist().getName());
+	        details.put("lastName", user.getAppUser().getTherapist().getLast_name());
+	        details.put("secondLasName", user.getAppUser().getTherapist().getSecond_last_name());
+	        details.put("roles", user.getAppUser().getRoles());
+	        
+	        return details;
 	    }
 	    return null;
+	}
+	
+	@GetMapping("/sso/me")
+	public UserTokenDetails tokenDetails(Principal principal) {
+		UserTokenDetails user = tokenService.getUserTokenDetails();
+	    return user;
 	}
 	
 	@ApiOperation(value = "Check username availability", notes = "Returns true if username is available", response = Boolean.class)

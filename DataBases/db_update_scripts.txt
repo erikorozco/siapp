@@ -130,6 +130,29 @@ ALTER TABLE archivo
   OWNER TO postgres;
 
 
+
+  -- Table: log
+
+-- DROP TABLE log;
+
+CREATE TABLE log
+(
+  id_log integer NOT NULL DEFAULT nextval('log_id_seq'::regclass),
+  usuario character varying,
+  accion character varying,
+  metodo character varying,
+  creado timestamp without time zone,
+  CONSTRAINT log_pkey PRIMARY KEY (id_log)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE log
+  OWNER TO postgres;
+
+
+
+
   //NO NECESSARY TABLES
   PCITA
   ATENCION
