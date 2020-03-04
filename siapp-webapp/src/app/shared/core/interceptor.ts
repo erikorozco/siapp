@@ -50,8 +50,10 @@ export class Interceptor implements HttpInterceptor {
       }, error => {
         if (error.status === 401) {
           this.router.navigate(['login']);
-        }
-        if (error.status === 403) {
+        } else if(error.status === 0){
+          this.router.navigate(['login']);
+          this.toastr.error('¡¡¡CHALES!!! CONTACTA AL DESARROLLADOR DEL SISTEMA');
+        } else if (error.status === 403) {
           this.router.navigate(['home']);
           this.toastr.error('No cuentas con los accesos necesarios para acceder a este módulo', 'Acceso restringido');
         }

@@ -42,11 +42,10 @@ public class PersonAttachmentController {
 	@PostMapping("/uploadFile")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, 
 			  										@RequestParam("personId") String personId,
-			  										@RequestParam("therapistId") String therapistId,
 			  										@RequestParam("description") String description) {
 	    String message = "";
 	    try {
-	    	fileService.store(file, personId, therapistId, description);	 
+	    	fileService.store(file, personId, description);	 
 	    	message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 	    	return ResponseEntity.status(HttpStatus.OK).body(message);
 	    } catch (FileAlreadyExistsException e) {

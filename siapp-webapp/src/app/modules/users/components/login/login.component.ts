@@ -31,8 +31,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(loginPayload.toString()).subscribe(data => {
         window.sessionStorage.setItem('token', JSON.stringify(data));
-        window.sessionStorage.setItem('username', this.loginForm.controls.username.value);
-        this.authService.setSession(this.loginForm.controls.username.value);
         this.router.navigate(['home']);
     }, error => {
       console.log(error);

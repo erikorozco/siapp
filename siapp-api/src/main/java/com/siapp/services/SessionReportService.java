@@ -17,6 +17,9 @@ public class SessionReportService {
 	
 	@Autowired
 	SessionReportRepository sessionReportRepository;
+		
+	@Autowired
+	CustomUserDetailsService tokenService;
 	
 	public List<SessionReport> getSessionReportsByRecordId(Integer recordId) {
         return sessionReportRepository.findByrecordIdOrderBySessionNumberDesc(recordId);
@@ -28,6 +31,7 @@ public class SessionReportService {
 	
 	public SessionReport create(SessionReport sessionReport) throws ResourceAlreadyExistsException {
 		sessionReport.setSessionNumber(this.findLastSessionNumber(sessionReport.getRecordId()) + 1);
+		sessionReport.getTherapist().setId(this.tokenService.getUserTokenDetails().getAppUser().getTherapist().getId());
 		return sessionReportRepository.save(sessionReport);
 	}
 	

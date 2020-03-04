@@ -10,29 +10,25 @@ import { UserService } from '../../../../shared/services/user.service';
 })
 export class TopbarComponent implements OnInit {
 
-  @Input() userId: number;
+  @Input() userDetails: any;
   firstName: string;
   lastName: string;
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
-    this.userService.findUserByName(window.sessionStorage.getItem('username')).subscribe(data => {
-      this.firstName = data.therapist.name;
-      this.lastName = data.therapist.last_name;
-    }, error => {});
+    this.initializeUserInfo();
   }
 
   logout() {
     this.authService.logout();
   }
 
-  onOpen(event: any) {
-    console.log(event);
-  }
-
-  onClose(event: any) {
-    console.log(event);
+  initializeUserInfo() {
+    this.firstName = this.userDetails.name;
+    this.lastName = this.userDetails.lastName;
   }
 
 }

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SESSION_FORM_CONST as SessionFormOptions } from 'src/app/shared/utils/session-form.constants';
 import { PersonService } from '../../../../shared/services/person.service';
 import { AuthService } from '../../../../shared/services/auth.service';
+import { UserService } from '../../../../shared/services/user.service';
 
 @Component({
   selector: 'app-form-session',
@@ -32,7 +33,7 @@ export class FormSessionComponent implements OnInit {
     private toastr: ToastrService,
     private routes: ActivatedRoute,
     private personService: PersonService,
-    private authService: AuthService
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -66,10 +67,8 @@ export class FormSessionComponent implements OnInit {
 
   onSubmit() {
     if (this.formProperties.action === 'add-session') {
-      const userInfo = this.authService.getSession();
       this.session = this.sessionForm.value;
       this.session.active = true;
-      this.session.therapist.id = userInfo.therapist.id;
       this.session.recordId = this.formProperties.params.recordId;
       this.sessionService.createSession(this.sessionForm.value).subscribe(data => {
         this.toastr.success('El reporte clínico ha sido creado exitosamente', 'Operacion exitosa');

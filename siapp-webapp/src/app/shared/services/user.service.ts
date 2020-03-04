@@ -38,4 +38,7 @@ export class UserService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.findUserByName + username);
   }
 
+  getTokenDetails() {
+    return this.http.get<any>(this.baseUrl + URL_CONF.usersAPI.endpoints.tokenDetails);
+  }
 }

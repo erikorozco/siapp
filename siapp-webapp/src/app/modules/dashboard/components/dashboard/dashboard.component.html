@@ -1,10 +1,10 @@
 <ng-container>
     <div id="page-top">
-        <div id="wrapper">
-            <app-sidebar class="bg-gradient-primary"></app-sidebar>
+        <div id="wrapper" *ngIf="this.userDetails">
+            <app-sidebar [userDetails]="this.userDetails" class="bg-gradient-primary"></app-sidebar>
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    <app-topbar></app-topbar>
+                    <app-topbar [userDetails]="this.userDetails"></app-topbar>
                     <!-- HERE SHOULD BE THE ROUTER OUTLET INSTEAD THE FOLLOWING CODE  -->
                     <!-- Begin Page Content -->
                     <div class="container-fluid">

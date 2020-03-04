@@ -34,6 +34,9 @@ public class FileService {
 	@Autowired
 	TherapistService fileService;
 	
+	@Autowired
+	CustomUserDetailsService tokenService;
+	
 	public List<HashMap<String, String>>  getPathFilesByPersonIdFromDB(Integer personId) {
 		List<File> fileList = fileRepository.findByPersonId(personId);
 		return FileUtil.getFolderFilesOnBase64(fileList, folderInitialize(String.valueOf(personId), Model.PERSON).toString());
@@ -51,13 +54,18 @@ public class FileService {
 		}
 	}
 	
-	public void store(MultipartFile file, String personId, String therapistId, String description) throws IOException {
+	public void store(MultipartFile file, String personId, String description) throws IOException {
 	    try {
 	    	Path folderPath = this.folderInitialize(personId, Model.PERSON);
 	    	Path filePath = Paths.get(folderPath.toString().concat("/" + file.getOriginalFilename()));
 	    	if(Files.notExists(filePath)) {
 		    	Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()));
-			    File fileRow = new File(file.getOriginalFilename(), description, Integer.parseInt(personId), Integer.parseInt(therapistId));
+			    File fileRow = new File(
+			    		file.getOriginalFilename(), 
+			    		description, 
+			    		Integer.parseInt(personId), 
+			    		this.tokenService.getUserTokenDetails().getAppUser().getTherapist().getId()
+			    		);
 			    fileRepository.save(fileRow);
 	    	} else if(file.getOriginalFilename().equals("profilePhoto.png")) {
 	    		Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);

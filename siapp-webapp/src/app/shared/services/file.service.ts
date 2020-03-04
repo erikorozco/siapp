@@ -30,7 +30,6 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('personId', payload.personId);
-    formData.append('therapistId', this.authService.getSession().id);
     formData.append('description', payload.description);
 
     return this.http.post(this.baseUrl + URL_CONF.personAttachmentsAPI.endpoints.uploadFile,

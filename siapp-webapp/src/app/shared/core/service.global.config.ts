@@ -14,7 +14,8 @@ export const API_URL_CONFIG = {
         updateUser : 'updateUser/',
         updateUserStatus : 'updateUserStatus/',
         filterUsers: 'filterUsers/',
-        findUserByName:  'findUserByName/'
+        findUserByName:  'findUserByName/',
+        tokenDetails: 'tokenDetails'
       }
     },
     therapistsAPI: {

@@ -34,20 +34,16 @@
         <li *ngIf="this.roles.includes('ADMIN')" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-folder"></i>
-                <span>Expedientes</span>
+                <span>Pacientes</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Acciones:</h6>
                     <a class="collapse-item" routerLink="records">
                         <!-- <i class="fas fa-folder"></i> -->
-                        <span>Pacientes</span>
+                        <span>Expedientes</span>
                     </a>
-                    <a class="collapse-item" href="cards.html">
-                        <!-- <i class="fas fa-folder-plus"></i> -->
-                        <span>Apertura de expediente</span>
-                    </a>
-                    <a class="collapse-item" href="cards.html">
+                    <a class="collapse-item" href="/home">
                         <!-- <i class="fas fa-folder-plus"></i> -->
                         <span>Urgencias</span>
                     </a>
@@ -85,11 +81,7 @@
                     <h6 class="collapse-header">Acciones:</h6>
                     <a class="collapse-item" href="buttons.html">
                         <i class="fas fa-user-friends"></i>
-                        <span> Pacientes</span>
-                    </a>
-                    <a class="collapse-item" href="cards.html">
-                        <i class="fas fa-book-medical"></i>
-                        <span> Sesión</span>
+                        <span>Mis Pacientes</span>
                     </a>
                 </div>
             </div>
