@@ -226,6 +226,10 @@
                 <mat-label>Alteraciones en el habla</mat-label>
                 <input matInput value="{{ recordInfo.speakingAlterations }}" readonly>
             </mat-form-field>
+            <mat-form-field class="col-md-12">
+                <mat-label>Anotaciones</mat-label>
+                <textarea matInput [value]="recordInfo.notes" readonly></textarea>
+            </mat-form-field>
             <mat-form-field class="col-md-5">
                 <mat-label>Consume tabaco</mat-label>
                 <input matInput value="{{ recordInfo.smoke? 'SI' : 'NO' }}" readonly>

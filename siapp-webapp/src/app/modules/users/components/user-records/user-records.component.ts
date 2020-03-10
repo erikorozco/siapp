@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class UserRecordsComponent implements OnInit {
 
   params: any;
+  urlAction: string;
   therapist: Therapist;
   records: any;
   tableProperties: any;
@@ -45,6 +46,10 @@ export class UserRecordsComponent implements OnInit {
     this.routes.params.subscribe(params => {
       this.params = params;
     });
+
+    this.routes.url.subscribe(url => {
+       this.urlAction = url[0].path;
+    });
   }
 
   getRecords() {
@@ -58,12 +63,13 @@ export class UserRecordsComponent implements OnInit {
         tableActions: {
           view: true,
           edit: false,
-          delete: true,
+          delete: (this.urlAction === 'therapist-records') ? false : true,
           print: false,
           updateStatus: false,
+          addEnabled: (this.urlAction === 'therapist-records') ? false : true,
           addModal: {
             text: 'Asignar Paciente',
-            value: this.params
+            value: this.params,
           }
         }
       }];

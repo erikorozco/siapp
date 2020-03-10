@@ -49,6 +49,7 @@ import { ListSessionComponent } from './modules/records/components/list-session/
 import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
 import localeEsMX from '@angular/common/locales/es-MX';
 import { DatePipe, registerLocaleData } from '@angular/common';
+import { TherapistRecordsComponent } from './modules/records/components/therapist-records/therapist-records.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -79,6 +80,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     ProfilePhotoComponent,
     ListSessionComponent,
     FormSessionComponent,
+    TherapistRecordsComponent,
   ],
   imports: [
     BrowserModule,

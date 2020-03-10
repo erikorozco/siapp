@@ -72,6 +72,12 @@ export const API_URL_CONFIG = {
         updateSession : 'updateSession/',
       }
     },
+    rolesAPI: {
+      name: 'roles/',
+      endpoints: {
+        getAll : 'getAllRoles/',
+      }
+    }
 };
 
 export const TOKEN_CONFIG = {

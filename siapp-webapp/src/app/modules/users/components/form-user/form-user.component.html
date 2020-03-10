@@ -49,6 +49,29 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="rolesFormControl">Persmisos:</label>
+                <mat-select placeholder="Permisos" class="form-control" [formControl]="rolesFormControl" id="rolesFormControl" multiple>
+                    <mat-select-trigger>{{this.rolesFormControl.value.length > 0 ? this.rolesFormControl.value[0].name : ''}}
+                        <span *ngIf="this.rolesFormControl.value?.length > 1" class="example-additional-selection">
+                                (+{{this.rolesFormControl.value.length - 1}} {{this.rolesFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let role of this.userRoles" [value]="role">
+                        {{ translateRolName(role.name) }}
+                    </mat-option>
+                </mat-select>
+                <div class="form-control-feedback" *ngIf="this.rolesFormControl.invalid && this.rolesFormControl.touched">
+                    <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+            </div>
+            <div *ngIf="this.formProperties.action === 'edit-user' || this.formProperties.action === 'view-user'" class="form-group">
+                <ul>
+                    <li *ngFor="let role of this.rolesFormControl.value">
+                        {{translateRolName(role.name)}}
+                    </li>
+                </ul>
+            </div>
             <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('username') } ">
                 <label for="name">Nombre de usuario *</label>
                 <input type="text" class="form-control" formControlName="username" id="username" placeholder="Usuario">

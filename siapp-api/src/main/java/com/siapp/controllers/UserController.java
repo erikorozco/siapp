@@ -114,4 +114,10 @@ public class UserController {
         return userService.findByUsername(username);
     }
     
+    @ApiOperation(value = "Encode all the passwords", notes = "Just use once an the remove it")
+    @PutMapping("/apiTestUtil/encodePasswords")
+    public String encodePasswords() {
+        return userService.encodePasswords();
+    }
+    
 }

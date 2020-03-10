@@ -29,6 +29,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   religions: Observable<string[]>;
   derivers: Observable<string[]>;
   professionals: Observable<string[]>;
+  cities: Observable<string[]>;
   otherDerivedAreaFormControl = new FormControl('', Validators.compose([Validators.required]));
   derivedAreasFormControl = new FormControl([]);
   medicalServicesFormControl = new FormControl([]);
@@ -94,6 +95,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   getPersonInformation() {
     this.personService.getPerson(this.params.personId).subscribe(data => {
       this.person = data;
+      this.recordForm.get('person').disable();
     }, error => {
       console.log(error);
     });
@@ -137,6 +139,16 @@ export class FormRecordComponent implements OnInit , OnDestroy {
 
   requiredFieldValidation(field) {
     return this.recordForm.get(field).invalid && this.recordForm.get(field).touched;
+  }
+
+  requiredRadioInputValidation(radioValue, textInputValue) {
+    if (radioValue === false || radioValue === 'NO') {
+      return false;
+    } else if (radioValue === true && textInputValue === '') {
+      return true;
+    } else if (radioValue === 'SI' && textInputValue === '') {
+      return true;
+    }
   }
 
   onSubmit() {
@@ -188,7 +200,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
         lastName: ['', Validators.compose([Validators.required])],
         secondLastName: ['', Validators.compose([Validators.required])],
         phone: ['', Validators.compose([Validators.required])],
-        email: ['', Validators.compose([Validators.required])],
+        email: ['', ],
         active: ['', ],
         createdAt: ['', ],
         updatedAt: ['', ]
@@ -208,19 +220,19 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       consultationDisposition: ['', Validators.compose([Validators.required])],
       createdAt: ['', ],
       creation: ['', ],
-      derivedTo: ['', Validators.compose([Validators.required])],
+      derivedTo: ['', ],
       drinkAlcohol: ['', Validators.compose([Validators.required])],
-      drinkAlcoholFrecuency: ['', Validators.compose([Validators.required])],
-      drugsFrecuency: ['', Validators.compose([Validators.required])],
+      drinkAlcoholFrecuency: ['', ],
+      drugsFrecuency: ['', ],
       economicDependent: ['', Validators.compose([Validators.required])],
       escolarity: ['', Validators.compose([Validators.required])],
       firstTime: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
       houseStatus: ['', Validators.compose([Validators.required])],
       hygiene: ['', Validators.compose([Validators.required])],
-      medicalServices: ['', Validators.compose([Validators.required])],
+      medicalServices: ['', ],
       medicine: ['', Validators.compose([Validators.required])],
-      moneyShare: ['', Validators.compose([Validators.required])],
+      moneyShare: ['', ],
       monthlyIncome: ['', Validators.compose([Validators.required])],
       moodChanges: ['', Validators.compose([Validators.required])],
       notes: ['', Validators.compose([Validators.required])],
@@ -240,24 +252,24 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       recordType: ['', Validators.compose([Validators.required])],
       religion: ['', Validators.compose([Validators.required])],
       senorityOfWork: ['', Validators.compose([Validators.required])],
-      sinceWhenAlimentaryAlterations: ['', Validators.compose([Validators.required])],
-      sinceWhenMoodChanges: ['', Validators.compose([Validators.required])],
-      sinceWhenSleepingAlterarions: ['', Validators.compose([Validators.required])],
+      sinceWhenAlimentaryAlterations: ['', ],
+      sinceWhenMoodChanges: ['', ],
+      sinceWhenSleepingAlterarions: ['', ],
       sinceWhenWorkOcupation: ['', Validators.compose([Validators.required])],
       size: ['', Validators.compose([Validators.required])],
       sleepingAlterations: ['', Validators.compose([Validators.required])],
       smoke: ['', Validators.compose([Validators.required])],
-      smokeFrecuency: ['', Validators.compose([Validators.required])],
-      speakingAlterations: ['', Validators.compose([Validators.required])],
+      smokeFrecuency: ['', ],
+      speakingAlterations: ['', ],
       timeOnWorkStatus: ['', Validators.compose([Validators.required])],
       underTreatment: ['', Validators.compose([Validators.required])],
-      walkingAlterations: ['', Validators.compose([Validators.required])],
+      walkingAlterations: ['', ],
       weight: ['', Validators.compose([Validators.required])],
       whenWasFirstTime: ['', Validators.compose([Validators.required])],
-      whichAlimentaryAlterations: ['', Validators.compose([Validators.required])],
-      whichCriminalRecords: ['', Validators.compose([Validators.required])],
-      whichDrugs: ['', Validators.compose([Validators.required])],
-      whichSleepingAlterarions: ['', Validators.compose([Validators.required])],
+      whichAlimentaryAlterations: ['', ],
+      whichCriminalRecords: ['', ],
+      whichDrugs: ['', ],
+      whichSleepingAlterarions: ['', ],
       whoDerived: ['', Validators.compose([Validators.required])],
       whoWorks: ['', Validators.compose([Validators.required])],
       workOcupation: ['', Validators.compose([Validators.required])],
@@ -283,6 +295,12 @@ export class FormRecordComponent implements OnInit , OnDestroy {
     .pipe(
       startWith(''),
       map(value => this._filter(value, this.recordFormOptions.escolarities))
+    );
+
+    this.cities = this.recordForm.get(['city']).valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value, this.recordFormOptions.cities))
     );
 
     this.derivers = this.recordForm.get(['whoDerived']).valueChanges

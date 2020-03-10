@@ -13,6 +13,7 @@ import { RecordSummaryComponent } from './modules/records/components/record-summ
 import { PrivacyAgreementComponent } from './modules/records/components/privacy-agreement/privacy-agreement.component';
 import { FormRecordComponent } from './modules/records/components/form-record/form-record.component';
 import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
+import { TherapistRecordsComponent } from './modules/records/components/therapist-records/therapist-records.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -47,6 +48,7 @@ const ROUTES: Routes = [
       { path: 'edit-session', redirectTo: 'add-session' },
       { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
       { path: 'view-session', redirectTo: 'add-session' },
+      { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
     ] },
 ];
 

@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../../shared/services/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
+import { RoleService } from '../../../../shared/services/role.service';
 
 @Component({
   selector: 'app-form-user',
@@ -14,22 +15,25 @@ export class FormUserComponent implements OnInit {
 
   userForm: FormGroup;
   user: User;
+  rolesFormControl = new FormControl([], Validators.compose([Validators.required]));
+  userRoles: any;
 
   formProperties: any = {
     action: '',
     params: {}
   };
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
     private toastr: ToastrService,
-    private routes: ActivatedRoute
+    private routes: ActivatedRoute,
+    private roleService: RoleService
   ) {}
 
   ngOnInit() {
     this.formValidatorBuilder();
+    this.getRoles();
 
     this.routes.url.subscribe(url => {
       this.formProperties.action = url[0].path;
@@ -43,12 +47,16 @@ export class FormUserComponent implements OnInit {
       this.userService.getUser(this.formProperties.params.id).subscribe(data => {
         this.user = data;
         this.userForm.setValue(data);
+        this.rolesFormControl.setValue(data.roles);
       }, error => {console.log(error); });
       this.userForm.disable();
+      this.rolesFormControl.disable();
 
     } else if (this.formProperties.action === 'edit-user') {
       this.userService.getUser(this.formProperties.params.id).subscribe(data => {
+        this.user = data;
         this.userForm.setValue(data);
+        this.rolesFormControl.setValue(data.roles);
       }, error => { console.log(error); });
 
     }
@@ -56,9 +64,9 @@ export class FormUserComponent implements OnInit {
   }
 
   onSubmit() {
+    this.userForm.get('roles').setValue(this.rolesFormControl.value);
     if (this.formProperties.action === 'add-user') {
       this.user = this.userForm.value;
-      this.user.roles = [{id: 2}];//SET THE ADMIN ROL, THEN CHANGE THIS LOGIC
       this.user.active = true;
 
       this.userService.createUser(this.userForm.value).subscribe(data => {
@@ -80,6 +88,34 @@ export class FormUserComponent implements OnInit {
 
   requiredFieldValidation(field) {
     return this.userForm.get(field).invalid && this.userForm.get(field).touched;
+  }
+
+  changeDetection() {
+     return false;
+  }
+
+  getRoles() {
+    this.roleService.getAllRoles().subscribe((res) => {
+      this.userRoles = res;
+    });
+  }
+
+  translateRolName(rolName) {
+    let translatedName = '';
+    switch (rolName) {
+      case 'ADMIN':
+        translatedName = 'ADMINISTRADOR';
+        break;
+      case 'SUPERADMIN':
+        translatedName = 'SUPERADMINISTRADOR';
+        break;
+      case 'USER':
+        translatedName = 'TERAPEUTA';
+        break;
+      default:
+        translatedName = 'ROL NO REGISTRADO - NO USAR';
+    }
+    return translatedName;
   }
 
   formValidatorBuilder(): void {

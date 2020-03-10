@@ -10,7 +10,7 @@
     <div class="col-md-12 pl-5 text border-left-primary">
         <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" class="mb-lg-5">
             <div class="col-md-12 text-right mb-3">
-                <button type="submit " class="btn btn-success btn-lg btn-icon-split">
+                <button [disabled]="this.recordForm.invalid" type="submit" class="btn btn-success btn-lg btn-icon-split">
                 
                         <!-- <button [disabled]="recordForm.invalid || recordForm.disabled || recordForm.pristine" type="submit " class="btn btn-success btn-lg btn-icon-split"> -->
                             <span class="icon text-white-50">
@@ -19,6 +19,7 @@
                             <span class="text">Guardar</span>
                         </button>
             </div>
+            <!-- <button (click)="onSubmit()">Test</button> -->
             <mat-tab-group class="mt-2 form-tab-custom">
                 <mat-tab class="" label="Información personal">
                     <div formGroupName="person" class="mt-2">
@@ -119,9 +120,14 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
-                            <label for="city">Municipio</label>
-                            <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('city')">
+                            <label for="city">Municipio *</label>
+                            <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio" [matAutocomplete]="cityAutoComplete">
+                            <mat-autocomplete #cityAutoComplete="matAutocomplete">
+                                <mat-option *ngFor="let city of cities | async" [value]="city">
+                                    {{city}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -336,7 +342,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="Exploarción clínica / Sintomatología referida por el paciente">
+                <mat-tab label="Exploración clínica / Sintomatología referida por el paciente">
                     <div class="form-row">
                         <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('clinicExploration') } ">
                             <label for="clinicExploration">Exploración clínica:</label>
@@ -527,10 +533,10 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('smokeFrecuency') } ">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value) } ">
                             <label for="smokeFrecuency">Frecuencia *</label>
                             <input type="text" class="form-control" formControlName="smokeFrecuency" id="smokeFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('smokeFrecuency')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -547,10 +553,10 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('drinkAlcoholFrecuency') } ">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value) } ">
                             <label for="drinkAlcoholFrecuency">Frecuencia *</label>
                             <input type="text" class="form-control" formControlName="drinkAlcoholFrecuency" id="drinkAlcoholFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('drinkAlcoholFrecuency')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -567,17 +573,17 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('whichDrugs') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value) } ">
                             <label for="whichDrugs">¿Cuáles? *</label>
                             <input type="text" class="form-control" formControlName="whichDrugs" id="whichDrugs" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whichDrugs')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('drugsFrecuency') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value) } ">
                             <label for="drugsFrecuency">Frecuencia *</label>
                             <input type="text" class="form-control" formControlName="drugsFrecuency" id="drugsFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('drugsFrecuency')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -594,17 +600,17 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('whichSleepingAlterarions') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value) } ">
                             <label for="whichSleepingAlterarions">¿Cuáles? *</label>
                             <input type="text" class="form-control" formControlName="whichSleepingAlterarions" id="whichSleepingAlterarions" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whichSleepingAlterarions')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('sinceWhenSleepingAlterarions') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value) } ">
                             <label for="sinceWhenSleepingAlterarions">¿Desde cuándo? *</label>
                             <input type="text" class="form-control" formControlName="sinceWhenSleepingAlterarions" id="sinceWhenSleepingAlterarions" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('sinceWhenSleepingAlterarions')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -621,17 +627,17 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('whichAlimentaryAlterations') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value) } ">
                             <label for="whichAlimentaryAlterations">¿Cuáles? *</label>
                             <input type="text" class="form-control" formControlName="whichAlimentaryAlterations" id="whichAlimentaryAlterations" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whichAlimentaryAlterations')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredFieldValidation('sinceWhenAlimentaryAlterations') } ">
+                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value) } ">
                             <label for="sinceWhenAlimentaryAlterations">¿Desde cuándo? *</label>
                             <input type="text" class="form-control" formControlName="sinceWhenAlimentaryAlterations" id="sinceWhenAlimentaryAlterations" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('sinceWhenAlimentaryAlterations')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -648,10 +654,10 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('sinceWhenMoodChanges') } ">
-                            <label for="sinceWhenMoodChanges">¿Desde cuándo? *</label>
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value) } ">
+                            <label for="sinceWhenMoodChanges">¿Cúales y desde cuándo? *</label>
                             <input type="text" class="form-control" formControlName="sinceWhenMoodChanges" id="sinceWhenMoodChanges" placeholder="¿Desde cuándo?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('sinceWhenMoodChanges')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -668,10 +674,10 @@
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whichCriminalRecords') } ">
+                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value) } ">
                             <label for="whichCriminalRecords">¿Cuáles antecedentes? *</label>
                             <input type="text" class="form-control" formControlName="whichCriminalRecords" id="whichCriminalRecords" placeholder="¿Desde cuándo?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whichCriminalRecords')">
+                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value)">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div>
                         </div>
@@ -765,7 +771,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('professionalWhoAttended') } ">
-                            <label for="professionalWhoAttended">Escolaridad *</label>
+                            <label for="professionalWhoAttended">Profesional que atendió *</label>
                             <input type="text" class="form-control" formControlName="professionalWhoAttended" id="professionalWhoAttended" placeholder="Profesional que atendió" [matAutocomplete]="professionalsAutoComplete">
                             <mat-autocomplete #professionalsAutoComplete="matAutocomplete">
                                 <mat-option *ngFor="let professional of professionals | async" [value]="professional">

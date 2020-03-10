@@ -15,7 +15,7 @@ public class IgnoredProperties {
 		
 		switch (model) {
 		case USER:
-			ignoredProperties = new String[]{"id", "createdAt", "updatedAt", "therapist"};
+			ignoredProperties = new String[]{"id", "password", "createdAt", "updatedAt", "therapist"};
 			break;
 		case THERPIST:			
 			ignoredProperties = new String[]{"id", "createdAt", "updatedAt", "user"};

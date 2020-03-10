@@ -1,4 +1,4 @@
-//EDIT USUARIO TABLE
+--EDIT USUARIO TABLE
 ALTER TABLE usuario 
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
@@ -7,13 +7,13 @@ ALTER TABLE usuario ALTER COLUMN id_terapeuta SET NOT NULL;
 ALTER TABLE usuario ALTER COLUMN esta_activo SET DEFAULT true;
 UPDATE usuario set esta_activo=TRUE;
 
-//Edit terapeuta table
+--Edit terapeuta table
 ALTER TABLE terapeuta 
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone;
 
 
-//TABLE rol
+--TABLE rol
 
 -- DROP TABLE rol;
 
@@ -32,11 +32,11 @@ ALTER TABLE rol
   OWNER TO postgres;
 
 
-//TABLE usuario_rol
+--TABLE usuario_rol
 
--- DROP TABLE usario_rol;
+-- DROP TABLE usuario_rol;
 
-CREATE TABLE usario_rol
+CREATE TABLE usuario_rol
 (
   id_usuario integer NOT NULL,
   id_rol integer NOT NULL,
@@ -56,7 +56,7 @@ WITH (
 ALTER TABLE usario_rol
   OWNER TO postgres;
 
-  //Edit persona table
+  --Edit persona table
 ALTER TABLE persona 
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
@@ -64,14 +64,14 @@ ADD COLUMN correo character varying,
 ADD COLUMN esta_activo boolean;
 UPDATE persona set esta_activo=TRUE;
 
-  //Edit expediente table
+  --Edit expediente table
 ALTER TABLE expediente 
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean;
 UPDATE expediente set esta_activo=TRUE;
 
-  //Edit sesion table
+  --Edit sesion table
 ALTER TABLE sesion 
 ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean,
@@ -153,7 +153,7 @@ ALTER TABLE log
 
 
 
-  //NO NECESSARY TABLES
+  --NO NECESSARY TABLES
   PCITA
   ATENCION
   RESULTADO
