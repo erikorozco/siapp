@@ -27,7 +27,7 @@ import { AuthService } from './shared/services/auth.service';
 import { RecordService } from './shared/services/record-service';
 // CORE
 import { Interceptor } from './shared/core/interceptor';
-import { NavigationTreeComponent } from './modules/dashboard/components/navigation-tree/navigation-tree.component';
+import { NavigationTreeComponent } from './shared/components/navigation-tree/navigation-tree.component';
 import { TablePaginationComponent } from './shared/components/table-pagination/table-pagination.component';
 import { UserRecordsComponent } from './modules/users/components/user-records/user-records.component';
 import { ListRecordsDialogComponent } from './modules/records/components/list-records-dialog/list-records-dialog.component';

@@ -23,13 +23,25 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                     "/swagger-resources/**",
                     "/configuration/security",
                     "/swagger-ui.html",
-                    "/webjars/**"
-                    //"/oauth/token/**",
-                    //"/**"//REMOVER ESTO
+                    "/webjars/**",
+                    "/users/tokenDetails"
                     ).permitAll()
-			//.antMatchers("/api/**").access("hasRole('ADMIN')")
-			//.antMatchers("/apiTestUtil/**").access("hasRole('SUPERADMIN')");
-			;//.antMatchers("/**").authenticated();
+			//.antMatchers("/api/sessions").access("hasRole('USER')")
+			//.antMatchers("/api/users").access("hasRole('ADMIN')");
+			//.antMatchers("/apiTestUtil/**").access("hasRole('SUPERADMIN')")
+			//.antMatchers("/**").authenticated()
+			.antMatchers("/users/**").access("hasRole('ADMIN')");
 	}
+	
+//	@Override
+//	public void configure(HttpSecurity http) throws Exception {
+//        http
+//        .authorizeRequests()
+//        	.antMatchers("/users/**").access("hasRole('SUPERADMIN')")
+//          .and()
+//        .httpBasic()
+//        .and()
+//        .cors();
+//	}
 	
 }

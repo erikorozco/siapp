@@ -9,10 +9,14 @@
         You chose: <i>{{animal}}</i>
     </li>
 </ol> -->
-<h1 *ngIf="therapist" class="h3 mb-0 text-gray-800">
+<h1 *ngIf="therapist && this.urlAction !== 'therapist-records'" class="h3 mb-0 text-gray-800">
     <a [routerLink]="['/home']">Panel de control</a> ->
     <a [routerLink]="['/home/users']">Terapeutas</a> ->
     <a [routerLink]="['/home/view-user', this.params.userId]">{{therapist.name}} {{therapist.last_name}}</a> -> Expedientes
+</h1>
+<h1 *ngIf="therapist && this.urlAction === 'therapist-records'" class="h3 mb-0 text-gray-800">
+    <a [routerLink]="['/home']">Consultorio</a> ->
+    <a [routerLink]="['/home/therapist-records', this.params.therapistId, this.params.userId]">Mis pacientes</a>
 </h1>
 <div *ngIf="records">
     <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>

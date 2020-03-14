@@ -95,7 +95,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   getPersonInformation() {
     this.personService.getPerson(this.params.personId).subscribe(data => {
       this.person = data;
-      this.recordForm.get('person').disable();
+      //this.recordForm.get('person').disable();
     }, error => {
       console.log(error);
     });

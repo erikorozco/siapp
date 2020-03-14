@@ -7,12 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NavigationTreeComponent implements OnInit {
 
-   @Input() data = null; 
+  @Input() navigationPaths: [];
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.data)
   }
 
 }

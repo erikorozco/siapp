@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../shared/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,8 @@ export class DashboardComponent implements OnInit {
   userDetails: any;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.isSigned =  false;
     this.controlPanelModule = 'Inicio';
@@ -25,9 +27,13 @@ export class DashboardComponent implements OnInit {
     this.getUserDetails();
   }
 
+  // TO-DO: re implement this loigc with a service
   getUserDetails() {
     this.userService.getTokenDetails().subscribe((data) => {
-       this.userDetails = data;
+      this.userDetails = data;
+      if (data.roles.length === 1 && data.roles[0].name === 'USER') {
+        this.router.navigate(['home', 'therapist-records', data.therapistId, data.userId]);
+      }
     });
   }
 
