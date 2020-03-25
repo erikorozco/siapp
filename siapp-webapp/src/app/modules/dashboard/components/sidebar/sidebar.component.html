@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ng-container *ngIf="this.roles">
+<ng-container *ngIf="userDetails">
 
     <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -27,11 +27,11 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Módulos
+            Servicios
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li *ngIf="this.roles.includes('ADMIN')" class="nav-item">
+        <li *ngIf="this.isAdmin" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-folder"></i>
                 <span>Pacientes</span>
@@ -51,7 +51,7 @@
             </div>
         </li>
 
-        <li *ngIf="roles.includes('ADMINISTRATIVE')" class="nav-item">
+        <li *ngIf="isAdministrative" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReception" aria-expanded="true" aria-controls="collapseReception">
                 <i class="fas fa-calendar"></i>
                 <span>Recepción</span>
@@ -86,38 +86,16 @@
                 </div>
             </div>
         </li>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li *ngIf="roles.includes('ADMIN') || roles.includes('ADMINISTRATIVE')" class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePharmacy" aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-prescription-bottle-alt"></i>
-                <span>Farmacia</span>
-            </a>
-            <div id="collapsePharmacy" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Acciones:</h6>
-                    <a class="collapse-item" href="buttons.html">
-                        <i class="fas fa-dolly-flatbed"></i>
-                        <span> Inventario</span>
-                    </a>
-                    <a class="collapse-item" href="buttons.html">
-                        <i class="fas fa-arrow-alt-circle-down"></i>
-                        <span> Salida de producto</span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
         <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div class="sidebar-heading">
+        <div *ngIf="isAdmin" class="sidebar-heading">
             Administración
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li *ngIf="roles.includes('ADMIN') || roles.includes('SUPERADMIN')" class="nav-item">
+        <li *ngIf="isAdmin" class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-user-md"></i>
                 <span>Terapeutas</span>
@@ -133,7 +111,7 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <li *ngIf="roles.includes('ADMIN')" class="nav-item">
+        <li *ngIf="isAdmin" class="nav-item">
             <a class="nav-link" href="charts.html">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Reportes estadisticos</span></a>

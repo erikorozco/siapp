@@ -31,9 +31,9 @@ export class DashboardComponent implements OnInit {
   getUserDetails() {
     this.userService.getTokenDetails().subscribe((data) => {
       this.userDetails = data;
-      if (data.roles.length === 1 && data.roles[0].name === 'USER') {
-        this.router.navigate(['home', 'therapist-records', data.therapistId, data.userId]);
-      }
+      // if (data.roles.length === 1 && data.roles[0].name === 'USER') {
+      //   this.router.navigate(['home', 'therapist-records', data.therapistId, data.userId]);
+      // }
     });
   }
 

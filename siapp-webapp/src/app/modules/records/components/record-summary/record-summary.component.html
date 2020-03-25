@@ -1,15 +1,21 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
-    <h1 class="h3 mb-0 text-gray-800">
+    <h1 class="h3 mb-0 text-gray-800" *ngIf="isAdmin; else noAdmin">
         <a [routerLink]="['/home']">Panel de control</a> ->
         <a [routerLink]="['/home/records']">Pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
     </h1>
+    <ng-template #noAdmin>
+        <h1 class="h3 mb-0 text-gray-800">
+            <a [routerLink]="['/home']">Consultorio</a> ->
+            <a [routerLink]="['/home/therapist-records', this.userDetails.therapistId, this.userDetails.userId]">Mis pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
+        </h1>
+    </ng-template>
 </div>
 <div class="container-fluid emp-profile">
     <form method="post">
         <div class="row">
             <div class="col-md-3">
                 <div *ngIf="this.person">
-                    <app-profile-photo [personId]="this.person.id"></app-profile-photo>
+                    <app-profile-photo [personId]="this.person.id" [isAdmin]="isAdmin"></app-profile-photo>
                 </div>
                 <div class="profile-work" *ngIf="this.person">
                     <h5 class="mb-3">Información personal</h5>
@@ -58,7 +64,7 @@
                         </div>
                         <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
                             <ng-container *ngIf="this.record !== null && this.record !== undefined">
-                                <app-genogram [recordId]="this.record.id"></app-genogram>
+                                <app-genogram [recordId]="this.record.id" [isAdmin]="this.isAdmin"></app-genogram>
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">

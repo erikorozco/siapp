@@ -11,14 +11,17 @@ import { Observable } from 'rxjs/index';
 @Injectable()
 export class AuthService {
 
+  readonly RECEPTION_MODULE = 'receptionModule';
+  readonly ADMIN_MODULES = 'adminModule';
+
   baseUrl: string = host();
-  //baseUrl: string = URL_CONF.baseURL;
   accessToken: string;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private userService: UserService) { }
+    private userService: UserService
+  ) { }
 
   login(loginPayload) {
     const headers = {
@@ -41,6 +44,45 @@ export class AuthService {
     return token;
   }
 
+  logout() {
+    window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('session');
+    window.sessionStorage.removeItem('username');
+    window.sessionStorage.clear();
+    this.router.navigate(['login']);
+  }
+
+  isAllowed(roles: any[], module: string) {
+    switch (module) {
+      case this.RECEPTION_MODULE:
+        return this.isAdministrative(roles);
+      case this.ADMIN_MODULES:
+          return this.isAdmin(roles);
+    }
+
+  }
+
+  isAdministrative(roles: any[]) {
+    let isAdministrative = false;
+    roles.forEach((role) => {
+      if (role.name === 'ADMINISTRATIVE') {
+        isAdministrative = true;
+      }
+    });
+    return isAdministrative;
+  }
+
+  isAdmin(roles: any[]) {
+    let isAdmin = false;
+    roles.forEach((role) => {
+      if (role.name === 'ADMIN') {
+        isAdmin = true;
+      }
+    });
+    return isAdmin;
+  }
+
+  // DEPRECATED
   setSession(username) {
     this.userService.findUserByName(username).subscribe(data => {
       const userDetails = JSON.stringify(data);
@@ -50,6 +92,7 @@ export class AuthService {
       console.log(error);
     });
   }
+
   getSession(): any {
     let decodedSession;
     let session = window.sessionStorage.getItem('session');
@@ -64,14 +107,6 @@ export class AuthService {
       session = JSON.parse(decodedSession);
     }
     return session;
-  }
-
-  logout() {
-    window.sessionStorage.removeItem('token');
-    window.sessionStorage.removeItem('session');
-    window.sessionStorage.removeItem('username');
-    window.sessionStorage.clear();
-    this.router.navigate(['login']);
   }
 
 }

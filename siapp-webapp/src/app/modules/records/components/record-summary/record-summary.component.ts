@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PersonService } from 'src/app/shared/services/person.service';
 import { RecordService } from '../../../../shared/services/record-service';
-import { ToastrService } from 'ngx-toastr';
-import { FileService } from 'src/app/shared/services/file.service';
-import { FileUtil } from '../../../../shared/utils/file.util';
+import { UserService } from '../../../../shared/services/user.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-record-summary',
@@ -13,6 +12,8 @@ import { FileUtil } from '../../../../shared/utils/file.util';
 })
 export class RecordSummaryComponent implements OnInit {
 
+  isAdmin;
+  userDetails;
   params: any;
   person: any;
   record: any;
@@ -25,9 +26,8 @@ export class RecordSummaryComponent implements OnInit {
     private routes: ActivatedRoute,
     private personService: PersonService,
     private recordService: RecordService,
-    private toastr: ToastrService,
-    private fileService: FileService,
-    private fileUtil: FileUtil
+    private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -37,6 +37,7 @@ export class RecordSummaryComponent implements OnInit {
 
     this.getPersonInformation();
     this.getRecordInformation();
+    this.getUserInformation();
   }
 
   getPersonInformation() {
@@ -53,6 +54,13 @@ export class RecordSummaryComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  getUserInformation() {
+      this.userService.getTokenDetails().subscribe((data) => {
+        this.isAdmin = this.authService.isAllowed(data.roles, this.authService.ADMIN_MODULES);
+        this.userDetails = data;
+      });
   }
 
   viewPrivacyAgreement() {

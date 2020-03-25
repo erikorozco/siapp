@@ -14,6 +14,7 @@ import { FileUtil } from 'src/app/shared/utils/file.util';
 export class ProfilePhotoComponent implements OnInit {
 
   @Input() personId: number;
+  @Input() isAdmin;
   photoFile: any;
   photoSrc: any;
   loading = false;

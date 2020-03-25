@@ -9,7 +9,7 @@
         <!-- style="width: 300px; height: auto;" -->
         <img [src]="photoSrc" class="img-thumbnail" />
     </ng-template>
-    <div class="file btn btn-lg btn-primary">
+    <div *ngIf="this.isAdmin" class="file btn btn-lg btn-primary">
         Cambiar foto
         <input type="file" name="photoUrl" (change)="handleInputChange($event)" />
     </div>

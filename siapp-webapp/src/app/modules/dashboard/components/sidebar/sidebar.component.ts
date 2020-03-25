@@ -9,13 +9,17 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class SidebarComponent implements OnInit {
 
-  roles: string;
   @Input() userDetails: any;
+  isAdmin;
+  isAdministrative;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
-    this.roles = JSON.stringify(this.userDetails.roles);
+    this.isAdministrative = this.authService.isAllowed(this.userDetails.roles, this.authService.RECEPTION_MODULE);
+    this.isAdmin = this.authService.isAllowed(this.userDetails.roles, this.authService.ADMIN_MODULES);
   }
 
 }

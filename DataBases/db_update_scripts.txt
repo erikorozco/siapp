@@ -53,7 +53,7 @@ CREATE TABLE usuario_rol
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE usario_rol
+ALTER TABLE usuario_rol
   OWNER TO postgres;
 
   --Edit persona table

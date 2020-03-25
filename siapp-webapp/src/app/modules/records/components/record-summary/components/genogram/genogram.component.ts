@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { ToastrService } from 'ngx-toastr';
 import { FileUtil } from '../../../../../../shared/utils/file.util';
+import { AuthService } from '../../../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-genogram',
@@ -12,6 +13,7 @@ import { FileUtil } from '../../../../../../shared/utils/file.util';
 export class GenogramComponent implements OnInit {
 
   @Input() recordId;
+  @Input() isAdmin;
   genogramFile: any;
   genogramSrc = '';
   fileLabel = 'Seleccione un archivo..';
@@ -21,7 +23,8 @@ export class GenogramComponent implements OnInit {
   constructor(
     private router: Router,
     private recordService: RecordService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private autService: AuthService
   ) { }
 
   ngOnInit() {
