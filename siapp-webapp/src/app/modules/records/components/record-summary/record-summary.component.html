@@ -59,7 +59,7 @@
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <ng-container *ngIf="this.person">
-                                <app-record-information [personId]="this.person.id"></app-record-information>
+                                <app-record-information [isAdmin]="this.isAdmin" [personId]="this.person.id"></app-record-information>
                             </ng-container>
                         </div>
                         <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">

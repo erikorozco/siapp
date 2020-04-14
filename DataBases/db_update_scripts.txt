@@ -66,6 +66,9 @@ UPDATE persona set esta_activo=TRUE;
 
   --Edit expediente table
 ALTER TABLE expediente 
+ADD COLUMN localidad character varying,
+ADD COLUMN familiar character varying,
+ADD COLUMN derivacionexterna character varying,
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean;

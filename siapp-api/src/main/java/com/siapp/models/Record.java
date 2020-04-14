@@ -246,6 +246,15 @@ public class Record implements Serializable {
 	@Column(name = "genograma")
 	private byte[] genogram;
 	
+	@Column(name = "familiar")
+	private String familyContact;
+	
+	@Column(name = "localidad")
+	private String location;
+	
+	@Column(name = "derivacionexterna")
+	private String externalDerivation;
+	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -870,6 +879,30 @@ public class Record implements Serializable {
 	
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public String getFamilyContact() {
+		return familyContact;
+	}
+
+	public void setFamilyContact(String familyContact) {
+		this.familyContact = familyContact;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getExternalDerivation() {
+		return externalDerivation;
+	}
+
+	public void setExternalDerivation(String externalDerivation) {
+		this.externalDerivation = externalDerivation;
 	}
 	
 }

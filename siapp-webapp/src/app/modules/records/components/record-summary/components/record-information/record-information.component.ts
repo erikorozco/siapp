@@ -10,6 +10,7 @@ import { RecordService } from 'src/app/shared/services/record-service';
 export class RecordInformationComponent implements OnInit {
 
   @Input() personId;
+  @Input() isAdmin;
   recordInfo: any;
   panelOpenState = false;
 

@@ -17,10 +17,10 @@ import { TherapistRecordsComponent } from './modules/records/components/therapis
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
-  // { path: '**', component: LoginComponent },
   { path: 'test', component: TablePaginationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: DashboardComponent,
+  // https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3
     children: [
       { path: 'users', component: ListUserComponent },
       { path: 'add-user', component: FormUserComponent },
@@ -49,7 +49,9 @@ const ROUTES: Routes = [
       { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
       { path: 'view-session', redirectTo: 'add-session' },
       { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
-    ] },
+    ]
+  },
+  { path: '**', component: LoginComponent },
 ];
 
 @NgModule({

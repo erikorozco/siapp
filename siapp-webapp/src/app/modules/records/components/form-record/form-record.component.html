@@ -709,7 +709,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('derivedTo') } ">
                             <label for="derivedTo">Derivado a:</label>
-                            <mat-select (selectionChange)="getDerivedAreas();" placeholder="Servicios médicos" class="form-control" [formControl]="derivedAreasFormControl" id="derivedAreasFormControl" multiple>
+                            <mat-select (selectionChange)="getDerivedAreas();" placeholder="Areas" class="form-control" [formControl]="derivedAreasFormControl" id="derivedAreasFormControl" multiple>
                                 <mat-select-trigger>
                                     {{this.derivedAreasFormControl.value ? this.derivedAreasFormControl.value[0] : ''}}
                                     <span *ngIf="this.derivedAreasFormControl.value?.length > 1" class="example-additional-selection">

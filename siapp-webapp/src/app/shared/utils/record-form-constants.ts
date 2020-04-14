@@ -48,10 +48,13 @@ export const RECORD_FORM_CONST = {
         'DESCUIDADA',
       ],
       medicalServices : [
+        'CUALES TENEMOS AQUI?',
         'IMSS',
         'ISSTE',
-        'SEGURO P.',
-        'PRIVADO',
+        'SEGURO POPULAR',
+        'SEGURO PRIVADO',
+        'DIF',
+        'OTRO'
       ],
       derivedAreas : [
         'NEUROLOGÍA',
@@ -70,17 +73,17 @@ export const RECORD_FORM_CONST = {
         'CATÓLICA/CRISTIANA',
         'TESTIGO DE JEHOVÁ',
         'CULTO SANTA MUERTE',
-        'PRIMARIA',
         'JUDAISMO',
         'CRISTIANA',
-        'OTRA'
+        'OTRA',
+        'NINGUNA'
       ],
       escolarities: [
         'NINGUNA',
-        'PRIMARIA COMPLETA',
-        'SECUNDARIA COMPLETA',
-        'BACHILLERATO COMPLETA',
-        'LICENCIATURA COMPLETA',
+        'PRIMARIA',
+        'SECUNDARIA',
+        'BACHILLERATO',
+        'LICENCIATURA',
         'PRIMARIA INCOMPLETA',
         'SECUNDARIA INCOMPLETA',
         'BACHILLERATO INCOMPLETA',

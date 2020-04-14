@@ -52,6 +52,12 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
+  /**
+   * TO-DO: set the roles to session instead of hitting the API. Change logic on the implementer components.
+   * This method is used to grant modules permissions at component level
+   * @param roles [{name: 'rolNanme'}...]
+   * @param module ADMIN, ADMINISTRATIVE, USER
+   */
   isAllowed(roles: any[], module: string) {
     switch (module) {
       case this.RECEPTION_MODULE:
@@ -62,7 +68,7 @@ export class AuthService {
 
   }
 
-  isAdministrative(roles: any[]) {
+  private isAdministrative(roles: any[]) {
     let isAdministrative = false;
     roles.forEach((role) => {
       if (role.name === 'ADMINISTRATIVE') {
@@ -72,7 +78,7 @@ export class AuthService {
     return isAdministrative;
   }
 
-  isAdmin(roles: any[]) {
+  private isAdmin(roles: any[]) {
     let isAdmin = false;
     roles.forEach((role) => {
       if (role.name === 'ADMIN') {
