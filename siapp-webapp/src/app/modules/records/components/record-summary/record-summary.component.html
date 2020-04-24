@@ -1,14 +1,12 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
-    <h1 class="h3 mb-0 text-gray-800" *ngIf="isAdmin; else noAdmin">
+    <h1 class="h3 mb-0 text-gray-800" *ngIf="isAdmin;">
         <a [routerLink]="['/home']">Panel de control</a> ->
         <a [routerLink]="['/home/records']">Pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
     </h1>
-    <ng-template #noAdmin>
-        <h1 class="h3 mb-0 text-gray-800">
-            <a [routerLink]="['/home']">Consultorio</a> ->
-            <a [routerLink]="['/home/therapist-records', this.userDetails.therapistId, this.userDetails.userId]">Mis pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
-        </h1>
-    </ng-template>
+    <h1 *ngIf="isAdmin ==  false" class="h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Consultorio</a> ->
+        <a [routerLink]="['/home/therapist-records', this.userDetails.therapistId, this.userDetails.userId]">Mis pacientes</a> -> {{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}}
+    </h1>
 </div>
 <div class="container-fluid emp-profile">
     <form method="post">
@@ -32,7 +30,7 @@
                 <div class="profile-head" *ngIf="this.person">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
+                            <a class="nav-link active" (click)="render('home-tab')" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
                         </li>
                         <li *ngIf="this.record" class="nav-item">
                             <a class="nav-link" id="genogram-tab" data-toggle="tab" href="#genogram" role="tab" aria-controls="genogram" aria-selected="false">Genograma</a>
@@ -56,13 +54,13 @@
                 </div>
                 <!-- HERE STARTS THE MENUS -->
                 <div class="col-md-12">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-content profile-tab" id="myTabContent" [ngSwitch]="this.tab">
+                        <div *ngSwitchCase="'home-tab'" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <ng-container *ngIf="this.person">
                                 <app-record-information [isAdmin]="this.isAdmin" [personId]="this.person.id"></app-record-information>
                             </ng-container>
                         </div>
-                        <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
+                        <!-- <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
                             <ng-container *ngIf="this.record !== null && this.record !== undefined">
                                 <app-genogram [recordId]="this.record.id" [isAdmin]="this.isAdmin"></app-genogram>
                             </ng-container>
@@ -92,7 +90,7 @@
                                      <span class="text">Acuerdo de privacidad</span>
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

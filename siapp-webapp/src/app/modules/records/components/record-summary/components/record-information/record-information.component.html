@@ -341,6 +341,14 @@
                 <input matInput value="{{therapist.name + ' ' + therapist.last_name + ' ' + therapist.second_last_name}}" readonly>
             </mat-form-field>
         </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Genograma
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-genogram [recordId]="this.recordInfo.id" [isAdmin]="this.isAdmin"></app-genogram>
+        </mat-expansion-panel>
     </mat-accordion>
 </ng-container>
 <ng-container *ngIf="!this.recordInfo">
