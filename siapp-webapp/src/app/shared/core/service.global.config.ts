@@ -77,6 +77,15 @@ export const API_URL_CONFIG = {
       endpoints: {
         getAll : 'getAllRoles/',
       }
+    },
+    derivationAPI: {
+      name: 'derivations/',
+      endpoints: {
+        getDerivationByRecordId : 'getDerivationByRecordId/',
+        updateDerivation: 'update/',
+        createDerivation: 'create',
+        createDerivations: 'createDerivations'
+      }
     }
 };
 

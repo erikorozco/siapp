@@ -1,20 +1,53 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PersonService } from 'src/app/shared/services/person.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { RecordService } from 'src/app/shared/services/record-service';
-import { RECORD_FORM_CONST as RecordFormOptions } from 'src/app/shared/utils/record-form-constants';
-import { Observable, interval, Subscription } from 'rxjs';
-import { map, startWith} from 'rxjs/operators';
-import { StringUtil } from 'src/app/shared/utils/string-util';
+import {
+  Component,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import {
+  PersonService
+} from 'src/app/shared/services/person.service';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl
+} from '@angular/forms';
+import {
+  ToastrService
+} from 'ngx-toastr';
+import {
+  RecordService
+} from 'src/app/shared/services/record-service';
+import {
+  RECORD_FORM_CONST as RecordFormOptions
+} from 'src/app/shared/utils/record-form-constants';
+import {
+  Observable,
+  interval,
+  Subscription
+} from 'rxjs';
+import {
+  map,
+  startWith,
+  flatMap
+} from 'rxjs/operators';
+import {
+  StringUtil
+} from 'src/app/shared/utils/string-util';
+import {
+  DerivationService
+} from 'src/app/shared/services/derivation.service';
 
 @Component({
   selector: 'app-form-record',
   templateUrl: './form-record.component.html',
   styleUrls: ['./form-record.component.css']
 })
-export class FormRecordComponent implements OnInit , OnDestroy {
+export class FormRecordComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   stringUtil = StringUtil;
@@ -25,11 +58,14 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   record: any;
   recordForm: FormGroup;
   recordFormOptions = RecordFormOptions;
-  escolarities: Observable<string[]>;
-  religions: Observable<string[]>;
-  derivers: Observable<string[]>;
-  professionals: Observable<string[]>;
-  cities: Observable<string[]>;
+  escolarities: Observable < string[] > ;
+  religions: Observable < string[] > ;
+  derivers: Observable < string[] > ;
+  professionals: Observable < string[] > ;
+  cities: Observable < string[] > ;
+  locations: Observable < string[] > ;
+  parishes: Observable < string[] > ;
+  externalAreas: Observable < string[] > ;
   otherDerivedAreaFormControl = new FormControl('', Validators.compose([Validators.required]));
   derivedAreasFormControl = new FormControl([]);
   medicalServicesFormControl = new FormControl([]);
@@ -43,8 +79,9 @@ export class FormRecordComponent implements OnInit , OnDestroy {
     private personService: PersonService,
     private recordSerive: RecordService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private derivationService: DerivationService
+  ) {}
 
   ngOnInit() {
     this.formValidatorBuilder();
@@ -83,11 +120,11 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       const recordProgress = JSON.parse(window.localStorage.getItem('recordFormFillProgress'));
       if (recordProgress.person.id === parseInt(this.params.personId, 10)) {
         if (confirm(`Existe un registro sin guardar de ${recordProgress.person.name} ${recordProgress.person.lastName} ${recordProgress.person.secondLastName} ¿Deseas seguir capturando?`)) {
-            this.recordForm.setValue(recordProgress);
-         } else {
-           window.localStorage.removeItem('recordFormFillProgress');
-           window.localStorage.clear();
-         }
+          this.recordForm.setValue(recordProgress);
+        } else {
+          window.localStorage.removeItem('recordFormFillProgress');
+          window.localStorage.clear();
+        }
       }
     }
   }
@@ -95,7 +132,6 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   getPersonInformation() {
     this.personService.getPerson(this.params.personId).subscribe(data => {
       this.person = data;
-      //this.recordForm.get('person').disable();
     }, error => {
       console.log(error);
     });
@@ -114,13 +150,13 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       const bmi = (weight / (size * size));
       this.recordForm.get(['bmi']).setValue(bmi);
 
-      if ( bmi > 30 ) {
+      if (bmi > 30) {
         this.bmiText = 'Obesidad';
-      } else if ( bmi > 25 && bmi < 29.99 ) {
-         this.bmiText = 'Sobrepeso';
-      } else if ( bmi > 18.5 && bmi < 24.99 ) {
-         this.bmiText = 'Peso saludable';
-      } else if ( bmi < 18.5) {
+      } else if (bmi > 25 && bmi < 29.99) {
+        this.bmiText = 'Sobrepeso';
+      } else if (bmi > 18.5 && bmi < 24.99) {
+        this.bmiText = 'Peso saludable';
+      } else if (bmi < 18.5) {
         this.bmiText = 'Bja peso';
       }
 
@@ -137,6 +173,10 @@ export class FormRecordComponent implements OnInit , OnDestroy {
     this.otherDerivedAreaFormControl.setValue('');
   }
 
+  renderDerivationForm() {
+    console.log(this.recordForm.get(['externalDerivationForm']));
+  }
+
   requiredFieldValidation(field) {
     return this.recordForm.get(field).invalid && this.recordForm.get(field).touched;
   }
@@ -151,8 +191,10 @@ export class FormRecordComponent implements OnInit , OnDestroy {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.action === 'existing-person-opening-record') {
+
+
       this.subscription.unsubscribe(); // Unsubscribe the progress listener
       // Set the derivedTo and moneyShare values as a string
       this.recordForm.get(['derivedTo']).setValue(this._getDerivedAreasValue());
@@ -160,16 +202,51 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
       this.recordForm.get(['creation']).setValue(new Date());
       this.record = this.recordForm.value;
-      this.recordSerive.createRecord(this.record).subscribe(data => {
+
+      //Create record
+      const newRecord = await this.recordSerive.createRecord(this.record)
+      .toPromise()
+      .catch(
+        error => {
+          this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+          console.log(error);
+        });
+
+      // Create Derivations after record is created
+      const recordId = newRecord.id;
+      let derivations;
+      if (this.recordForm.get(['derivationType']).value === 'EXTERNA') {
+        derivations = this.createDerivationsPayload(recordId, 0, [], this.recordForm.get(['externalDerivationForm']).value);
+      } else {
+        derivations = this.createDerivationsPayload(recordId, 0, this.derivedAreasFormControl.value);
+      }
+      this.derivationService.createDerivations(derivations).subscribe((data) => {
         this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'record-summary', this.params.personId]);
         window.localStorage.removeItem('recordFormFillProgress');
         window.localStorage.clear();
       }, error => {
-        this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+        this.toastr.error('Hubo un error guardar las derivaciones', 'Operacion fallida');
         console.log(error);
       });
 
+      // this.recordSerive.createRecord(this.record).subscribe(data => {
+      //   const recordId = data.id;
+      //   // Create Derivations after record is created
+      //   if (this.recordForm.get(['derivationType']).value === 'EXTERNA') {
+      //     console.log(this.createDerivationsPayload(recordId, 0, [], this.recordForm.get(['externalDerivationForm']).value));
+      //   } else {
+      //     console.log(this.createDerivationsPayload(recordId, 0, this.derivedAreasFormControl.value));
+      //   }
+
+      //   this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
+      //   this.router.navigate(['home', 'record-summary', this.params.personId]);
+      //   window.localStorage.removeItem('recordFormFillProgress');
+      //   window.localStorage.clear();
+      // }, error => {
+      //   this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+      //   console.log(error);
+      // });
     } else {
 
     }
@@ -214,6 +291,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       chronicDisease: ['', Validators.compose([Validators.required])],
       ciminalRecords: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required])],
+      location: ['', Validators.compose([Validators.required])],
       civilStatus: ['', Validators.compose([Validators.required])],
       clinicExploration: ['', Validators.compose([Validators.required])],
       colony: ['', Validators.compose([Validators.required])],
@@ -221,12 +299,14 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       createdAt: ['', ],
       creation: ['', ],
       derivedTo: ['', ],
+      derivationType: ['', ],
       drinkAlcohol: ['', Validators.compose([Validators.required])],
       drinkAlcoholFrecuency: ['', ],
       drugsFrecuency: ['', ],
       economicDependent: ['', Validators.compose([Validators.required])],
       escolarity: ['', Validators.compose([Validators.required])],
       firstTime: ['', Validators.compose([Validators.required])],
+      familyContact: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
       houseStatus: ['', Validators.compose([Validators.required])],
       hygiene: ['', Validators.compose([Validators.required])],
@@ -275,6 +355,13 @@ export class FormRecordComponent implements OnInit , OnDestroy {
       workOcupation: ['', Validators.compose([Validators.required])],
       workPlace: ['', Validators.compose([Validators.required])],
       workStatus: ['', Validators.compose([Validators.required])],
+      externalDerivationForm: this.formBuilder.group({
+        derivedArea: ['', ],
+        reason: ['', ],
+        status: ['', ],
+        recordId: ['', ],
+        reEntryId: ['', ]
+      }),
     });
   }
 
@@ -286,34 +373,52 @@ export class FormRecordComponent implements OnInit , OnDestroy {
 
   private _initializeAutoCompleteFields() {
     this.religions = this.recordForm.get(['religion']).valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value, this.recordFormOptions.religions))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.religions))
+      );
 
     this.escolarities = this.recordForm.get(['escolarity']).valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value, this.recordFormOptions.escolarities))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.escolarities))
+      );
 
     this.cities = this.recordForm.get(['city']).valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value, this.recordFormOptions.cities))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.cities))
+      );
+
+    this.externalAreas = this.recordForm.get(['externalDerivationForm', 'derivedArea']).valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.externalAreas))
+      );
+
+    this.locations = this.recordForm.get(['location']).valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.locations))
+      );
+
+    this.parishes = this.recordForm.get(['parish']).valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.parishes))
+      );
 
     this.derivers = this.recordForm.get(['whoDerived']).valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value, this.recordFormOptions.derivers))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.derivers))
+      );
 
     this.professionals = this.recordForm.get(['professionalWhoAttended']).valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value, this.recordFormOptions.professionalWhoAttended))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.recordFormOptions.professionalWhoAttended))
+      );
 
   }
 
@@ -338,7 +443,7 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   private _getDerivedQuotesValue() {
     const quotesValues = [];
 
-    const quotes =  Object.values(this.derivedQuantitesFormGroup.value);
+    const quotes = Object.values(this.derivedQuantitesFormGroup.value);
     const otherQuotes = Object.values(this.otherDerivedQuantitesFormGroup.value);
     let quoteIndex = 0;
 
@@ -362,6 +467,34 @@ export class FormRecordComponent implements OnInit , OnDestroy {
   private _getDerivedAreasValue() {
     const derivedAreas = this.derivedAreasFormControl.value.concat(this.otherDerivedAreas);
     return derivedAreas.join(',');
+  }
+
+  public createDerivationsPayload(recordId ? , reEntryId ? , internalDerivations ? : string[], externalDerivation ? ) {
+    const derivationsPayload = [];
+    if (externalDerivation) {
+      const derivationItem = {
+        derivedArea: externalDerivation.derivedArea,
+        externalDerivation: true,
+        reEntryId: reEntryId,
+        reason: externalDerivation.reason,
+        recordId: recordId,
+        status: "EN CURSO"
+      }
+      derivationsPayload.push(derivationItem);
+    } else {
+      internalDerivations.forEach(element => {
+        const derivationItem = {
+          derivedArea: element,
+          externalDerivation: false,
+          reEntryId: reEntryId,
+          reason: "",
+          recordId: recordId,
+          status: "EN CURSO"
+        }
+        derivationsPayload.push(derivationItem);
+      });
+    }
+    return derivationsPayload;
   }
 
 }

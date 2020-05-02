@@ -22,8 +22,6 @@
                     <h6><b>Apellido M: </b>{{ this.person.secondLastName }}</h6><br/>
                     <h6><b>Teléfono: </b>{{ this.person.phone }}</h6><br/>
                     <h6><b>Correo: </b>{{ this.person.email }}</h6><br/>
-                    <!-- <h6><b>Estado del paciente: </b>{{ this.person.active ? 'Activo' : 'Inactivo' }}</h6><br/> -->
-                    <!-- <h6><b>Estado: </b>Logica para estado del expediente "en CURSO"</h6><br/> -->
                 </div>
             </div>
             <div class="col-md-9">
@@ -33,22 +31,19 @@
                             <a class="nav-link active" (click)="render('home-tab')" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
                         </li>
                         <li *ngIf="this.record" class="nav-item">
-                            <a class="nav-link" id="genogram-tab" data-toggle="tab" href="#genogram" role="tab" aria-controls="genogram" aria-selected="false">Genograma</a>
-                        </li>
-                        <li *ngIf="this.record" class="nav-item">
-                            <a class="nav-link" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
+                            <a class="nav-link" (click)="render('sessions-tab')" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
+                            <a class="nav-link" (click)="render('attachments-tab')" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
+                            <a class="nav-link" (click)="render('tests-tab')" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="dates-tab" data-toggle="tab" href="#dates" role="tab" aria-controls="dates" aria-selected="false">Citas</a>
+                            <a class="nav-link" (click)="render('dates-tab')" id="dates-tab" data-toggle="tab" href="#dates" role="tab" aria-controls="dates" aria-selected="false">Citas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="privacy-agreement-tab" data-toggle="tab" href="#privacy-agreement" role="tab" aria-controls="privacy-agreement" aria-selected="false">Acuerdo de privacidad</a>
+                            <a class="nav-link" (click)="render('privacy-agreement-tab')" id="privacy-agreement-tab" data-toggle="tab" href="#privacy-agreement" role="tab" aria-controls="privacy-agreement" aria-selected="false">Acuerdo de privacidad</a>
                         </li>
                     </ul>
                 </div>
@@ -60,28 +55,23 @@
                                 <app-record-information [isAdmin]="this.isAdmin" [personId]="this.person.id"></app-record-information>
                             </ng-container>
                         </div>
-                        <!-- <div class="tab-pane fade" id="genogram" role="tabpanel" aria-labelledby="genogram-tab">
-                            <ng-container *ngIf="this.record !== null && this.record !== undefined">
-                                <app-genogram [recordId]="this.record.id" [isAdmin]="this.isAdmin"></app-genogram>
-                            </ng-container>
-                        </div>
-                        <div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
+                        <div *ngSwitchCase="'sessions-tab'" class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                             <ng-container *ngIf="this.record !== null && this.record !== undefined">
                                 <app-list-session [recordId]="this.record.id" [personId]="this.person.id"></app-list-session>
                             </ng-container>
                         </div>
-                        <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
+                        <div *ngSwitchCase="'attachments-tab'" class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">
                             <ng-container *ngIf="this.person">
                                 <app-attachments [personId]="this.person.id"></app-attachments>
                             </ng-container>
                         </div>
-                        <div class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
+                        <div *ngSwitchCase="'tests-tab'" class="tab-pane fade" id="tests" role="tabpanel" aria-labelledby="tests-tab">
                             <p>pruebas</p>
                         </div>
-                        <div class="tab-pane fade" id="dates" role="tabpanel" aria-labelledby="dates-tab">
+                        <div *ngSwitchCase="'dates-tab'" class="tab-pane fade" id="dates" role="tabpanel" aria-labelledby="dates-tab">
                             <p>Citas</p>
                         </div>
-                        <div class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
+                        <div *ngSwitchCase="'privacy-agreement-tab'" class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
                             <div class="col-md-6">
                                 <button (click)="viewPrivacyAgreement()" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white-50">
@@ -90,7 +80,7 @@
                                      <span class="text">Acuerdo de privacidad</span>
                                 </button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
 

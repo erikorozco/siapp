@@ -41,15 +41,7 @@ public class RecordService {
 	} 
 	
 	public Record create(Record record) {
-//		try {
-//			record.setGenogram(
-//					FileUtil.convertFileToBinaryStream(record.getGenogramUpload())
-//					);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-
+		System.out.println(record);
 		return recordRepository.save(record);
 	}
 	

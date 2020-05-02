@@ -82,13 +82,12 @@ export class ListSessionComponent implements OnInit {
             || (`${element.therapist.name.toLowerCase()} ${element.therapist.last_name.toLowerCase()} ${element.therapist.second_last_name.toLowerCase()}`)
             .includes(searchText.toLowerCase())
             ) {
-              // const datePipe: DatePipe = new DatePipe('es-MX');
-              // var date = new Date(element.sessionDate);
-              // let a = datePipe.transform(date, 'dd-MM-yyyy', ,'es-MX');
-              // console.log(date)
+               const datePipe: DatePipe = new DatePipe('es-MX');
+               var date = new Date(element.sessionDate);
+               let a = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
               element.tableFields = [
                                     element.sessionNumber,
-                                    element.sessionDate,
+                                    a,
                                     element.sessionType,
                                     `${element.therapist.name} ${element.therapist.last_name} ${element.therapist.second_last_name}`
                                   ];

@@ -99,7 +99,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatAutocompleteModule,
     MatSelectModule,
     MatExpansionModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
     UserService,
