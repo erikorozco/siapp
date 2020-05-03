@@ -1,5 +1,6 @@
 package com.siapp.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.lists.TherapistList;
 import com.siapp.models.Therapist;
+import com.siapp.models.TherapistRecordPermission;
 import com.siapp.services.TherapistService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,6 +56,22 @@ public class TherapistController {
     @DeleteMapping("/deleteTherapist/{id}")
     public ResponseEntity<?> deleteTherapist(@PathVariable(value = "id") Integer id) {
         return therapistService.delete(id);
+    }
+    
+    @ApiOperation(value = "Get the ID's of the assigned records", notes = "Returns 200")
+    @GetMapping("/getAssignedRecordsId/{therapistId}")
+    public List<Integer> getAssignedRecrodsId(@PathVariable(value = "therapistId") Integer therapistId) {
+    	return therapistService.getAssignedRecrodsId(therapistId);
+ 
+    }
+    
+    @ApiOperation(value = "Return true if the record is assigned to the user or if user is ADMIN", notes = "Returns 200")
+    @GetMapping("/isAllowedToRecord/{therapistId}/{recordId}")
+    public HashMap<String, Boolean> isAllowedToRecord(@PathVariable(value = "therapistId") Integer therapistId, @PathVariable(value = "recordId") Integer recordId) {
+    	HashMap<String, Boolean> permission = new HashMap<>();
+    	Boolean isAllowed = therapistService.isAllowedToRecord(therapistId, recordId);
+    	permission.put("isAllowed", isAllowed);
+    	return permission;
     }
 	
 }

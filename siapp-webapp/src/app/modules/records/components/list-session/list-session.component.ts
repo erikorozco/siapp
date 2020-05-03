@@ -44,7 +44,7 @@ export class ListSessionComponent implements OnInit {
             text: 'Agregar sesión'
           }
         }
-    }];
+      }];
     }, error => {
       console.log(error);
     });

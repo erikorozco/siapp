@@ -55,10 +55,12 @@ export class AuthService {
   /**
    * TO-DO: set the roles to session instead of hitting the API. Change logic on the implementer components.
    * This method is used to grant modules permissions at component level
+   * Use isAllowedToPerformAction instead isAllowed
    * @param roles [{name: 'rolNanme'}...]
    * @param module ADMIN, ADMINISTRATIVE, USER
    */
-  isAllowed(roles: any[], module: string) {
+  async isAllowed(roles: any[], module: string) {
+    console.log(await this.isAllowedToPerformAction(1,909));
     switch (module) {
       case this.RECEPTION_MODULE:
         return this.isAdministrative(roles);
@@ -66,6 +68,26 @@ export class AuthService {
           return this.isAdmin(roles);
     }
 
+  }
+
+  /**
+   * Returns true if record is assigned to user OR
+   * return true if user is admin
+   * 
+   * Note: Whoever calls this funcions must to be ASYNC
+   * 
+   * @param therapistId 
+   * @param recordId 
+   */
+  async isAllowedToPerformAction(therapistId, recordId) {
+    const permission = await this.getPermission(therapistId, recordId).toPromise();
+    return permission.isAllowed;
+  }
+
+  private getPermission(therapistId, recordId) {
+    const url = `${this.baseUrl }${URL_CONF.therapistsAPI.name}${URL_CONF.therapistsAPI.endpoints.isAllowedToRecord}`;
+    const params= `${therapistId}/${recordId}`;
+    return this.http.get<any>(url + params);
   }
 
   private isAdministrative(roles: any[]) {

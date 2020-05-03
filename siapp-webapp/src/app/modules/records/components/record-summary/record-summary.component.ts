@@ -45,7 +45,6 @@ export class RecordSummaryComponent implements OnInit {
 
   render(tab) {
     this.tab = tab;
-    console.log(tab);
   }
 
   getPersonInformation() {

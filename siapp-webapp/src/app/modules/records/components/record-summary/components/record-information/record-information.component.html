@@ -65,6 +65,10 @@
                 <input matInput value="{{recordInfo.city}}" readonly>
             </mat-form-field>
             <mat-form-field class="col-md-5">
+                <mat-label>Localidad</mat-label>
+                <input matInput value="{{recordInfo.location}}" readonly>
+            </mat-form-field>
+            <mat-form-field class="col-md-5">
                 <mat-label>Colonia</mat-label>
                 <input matInput value="{{recordInfo.colony}}" readonly>
             </mat-form-field>
@@ -91,6 +95,10 @@
             <mat-form-field class="col-md-5">
                 <mat-label>Disposicón para consulta</mat-label>
                 <input matInput value="{{ recordInfo.consultationDisposition? 'SI' : 'NO' }}" readonly>
+            </mat-form-field>
+            <mat-form-field class="col-md-10">
+                <mat-label>Familiar de contácto</mat-label>
+                <input matInput value="{{ recordInfo.familyContact }}" readonly>
             </mat-form-field>
         </mat-expansion-panel>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">

@@ -60,6 +60,11 @@
                             </button>
                             <!-- <app-status [statusProperties]="[item.active]"></app-status> -->
                         </ng-container>
+                        <ng-container *ngIf="tableActions.customActions">
+                            <button *ngFor="let btnAction of tableActions.customActions;" mdbBtn mdbTooltip="{{btnAction.text}}" placement="top" mdbWavesEffect [ngClass]="btnAction.buttonClass" class="btn btn-circle" title="{{btnAction.text}}" (click)="action(item, 'view')">
+                                <i [ngClass]="btnAction.iconClass" class="fas"></i>
+                            </button>
+                        </ng-container>
                     </td>
                 </tr>
             </tbody>

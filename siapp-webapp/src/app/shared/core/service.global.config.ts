@@ -22,7 +22,9 @@ export const API_URL_CONFIG = {
       name: 'therapists/',
       endpoints: {
         getAll : 'getAllTherapists',
-        getTherapist : 'getTherapist/'
+        getTherapist : 'getTherapist/',
+        getAssignedRecordsId: 'getAssignedRecordsId/',
+        isAllowedToRecord: 'isAllowedToRecord/'
       }
     },
     recordsAPI: {

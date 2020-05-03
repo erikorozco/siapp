@@ -31,6 +31,9 @@
                             <a class="nav-link active" (click)="render('home-tab')" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
                         </li>
                         <li *ngIf="this.record" class="nav-item">
+                            <a class="nav-link" (click)="render('derivations-tab')" id="derivations-tab" data-toggle="tab" href="#derivations" role="tab" aria-controls="derivations" aria-selected="false">Derivaciones</a>
+                        </li>
+                        <li *ngIf="this.record" class="nav-item">
                             <a class="nav-link" (click)="render('sessions-tab')" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
@@ -53,6 +56,11 @@
                         <div *ngSwitchCase="'home-tab'" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <ng-container *ngIf="this.person">
                                 <app-record-information [isAdmin]="this.isAdmin" [personId]="this.person.id"></app-record-information>
+                            </ng-container>
+                        </div>
+                        <div *ngSwitchCase="'derivations-tab'" class="tab-pane fade show active" id="derivations" role="tabpanel" aria-labelledby="derivations-tab">
+                            <ng-container *ngIf="this.record">
+                                <app-derivations [recordId]="this.record.id"></app-derivations>
                             </ng-container>
                         </div>
                         <div *ngSwitchCase="'sessions-tab'" class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
