@@ -58,6 +58,7 @@ export class RecordSummaryComponent implements OnInit {
   getRecordInformation() {
     this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
       this.record = data;
+      this.authService.appendSession('record', data.id);
     }, error => {
       console.log(error);
     });

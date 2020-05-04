@@ -59,15 +59,13 @@ export class AuthService {
    * @param roles [{name: 'rolNanme'}...]
    * @param module ADMIN, ADMINISTRATIVE, USER
    */
-  async isAllowed(roles: any[], module: string) {
-    console.log(await this.isAllowedToPerformAction(1,909));
+  isAllowed(roles: any[], module: string) {
     switch (module) {
       case this.RECEPTION_MODULE:
         return this.isAdministrative(roles);
       case this.ADMIN_MODULES:
           return this.isAdmin(roles);
     }
-
   }
 
   /**
@@ -80,7 +78,10 @@ export class AuthService {
    * @param recordId 
    */
   async isAllowedToPerformAction(therapistId, recordId) {
-    const permission = await this.getPermission(therapistId, recordId).toPromise();
+    const permission = await this.getPermission(therapistId, recordId).toPromise().
+      catch(error => {
+        console.log(error);
+      });;
     return permission.isAllowed;
   }
 
@@ -110,30 +111,29 @@ export class AuthService {
     return isAdmin;
   }
 
-  // DEPRECATED
-  setSession(username) {
-    this.userService.findUserByName(username).subscribe(data => {
-      const userDetails = JSON.stringify(data);
-      const encodedSession = window.btoa(unescape(encodeURIComponent( userDetails )));
-      window.sessionStorage.setItem('session', encodedSession);
-    }, error => {
-      console.log(error);
-    });
+  // TODO: Encode Session
+  appendSession(key, value) {
+    let session;
+    if (window.sessionStorage.getItem('session') === null) {
+      session = {};
+    } else {
+      session = this.getSession();
+    }
+    const sessionString = JSON.stringify(this.appendItem(key, value, session));
+    //const encodedSession = window.btoa(unescape(encodeURIComponent( session )));
+    window.sessionStorage.setItem('session', sessionString);
   }
 
+  
   getSession(): any {
-    let decodedSession;
-    let session = window.sessionStorage.getItem('session');
-    if (session === null) {
-      window.addEventListener('storage', (e) => {
-        if (e.storageArea === sessionStorage) {
-          console.log(e);
-        }
-      });
-    } else {
-      decodedSession = decodeURIComponent(escape(window.atob( session )));
-      session = JSON.parse(decodedSession);
-    }
+    const session = window.sessionStorage.getItem('session');
+    //const decodedSession = decodeURIComponent(escape(window.atob( encodedSessionsession )));
+    const sessionJson = JSON.parse(session);
+    return sessionJson;
+  }
+
+  private appendItem(key, value, session) {
+    session[key] = value;
     return session;
   }
 

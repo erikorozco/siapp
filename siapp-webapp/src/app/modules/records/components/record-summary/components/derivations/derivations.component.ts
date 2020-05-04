@@ -55,13 +55,6 @@ export class DerivationsComponent implements OnInit {
               }
             }
           ]
-          // delete: false,
-          // print: false,
-          // updateStatus: false
-          // add: {
-          //   route: ['/home', 'add-session', this.recordId, 'person', 1],
-          //   text: 'Agregar sesión'
-          // }
         }
       }];
       console.log(data);
