@@ -2,18 +2,23 @@ package com.siapp.models;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -56,6 +61,10 @@ public class Derivation implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+    
+    @JsonBackReference(value="derivationReference")
+    @OneToOne(mappedBy = "derivation",  cascade = CascadeType.ALL)
+    private MedicalRelease medicalRelease;
     
     // GETTERS AND SETTERS
 	public Integer getId() {
@@ -133,5 +142,13 @@ public class Derivation implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-    
+
+	public MedicalRelease getMedicalRelease() {
+		return medicalRelease;
+	}
+
+	public void setMedicalRelease(MedicalRelease medicalRelease) {
+		this.medicalRelease = medicalRelease;
+	}
+	
 }

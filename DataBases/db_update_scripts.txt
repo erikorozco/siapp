@@ -181,6 +181,46 @@ ALTER TABLE public.derivacion
 
 
 
+-- public.alta definition
+
+-- Drop table
+
+-- DROP TABLE public.alta;
+
+CREATE TABLE public.alta (
+	id serial NOT NULL,
+	diagnostico varchar NULL,
+	resumenevolucion varchar NULL,
+	manejo varchar NULL,
+	motivo varchar NULL,
+	problemaspendientes varchar NULL,
+	planmanejo varchar NULL,
+	recomendaciones varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	fechaegreso timestamp NULL,
+	estadoactual varchar NULL,
+	id_derivacion int4 NOT NULL,
+	CONSTRAINT alta_pk PRIMARY KEY (id)
+);
+
+
+-- public.alta foreign keys
+
+ALTER TABLE public.alta ADD CONSTRAINT alta_fk FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
+
+
+
+
+
+
+
+
+
+
+
+
+
   --NO NECESSARY TABLES
   PCITA
   ATENCION

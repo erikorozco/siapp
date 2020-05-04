@@ -1,0 +1,23 @@
+<h1 class="mt-5">Seleccione una opción</h1>
+<div class="card shadow mb-4 container-fluid">
+  <div class="card-header row" style="overflow-x: scroll;">
+    <table mdbTable #tableEl="mdbTable"  stickyHeader="true" hover="true" striped="true" class="z-depth-1 mt-4 table-component">
+      <thead class="sticky-top">
+          <tr>
+              <th>Tipo</th>
+              <th>Accion</th>
+          </tr>
+      </thead>
+      <tbody #row>
+        <tr mdbTableCol *ngFor="let item of this.options">
+          <td>{{ item.text }}</td>
+          <td>
+            <button mdbBtn mdbTooltip="{{item.text}}" placement="top" mdbWavesEffect class="btn btn-info btn-circle" title="{{item.text}}" [mat-dialog-close]="item.value">
+              <i class="fas fa-arrow-alt-circle-right"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
