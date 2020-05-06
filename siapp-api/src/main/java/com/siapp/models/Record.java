@@ -252,8 +252,8 @@ public class Record implements Serializable {
 	@Column(name = "localidad")
 	private String location;
 	
-	@Column(name = "tipoderivacion")
-	private String derivationType;
+	@Column(name = "version")
+	private String version;
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -897,12 +897,12 @@ public class Record implements Serializable {
 		this.location = location;
 	}
 
-	public String getDerivationType() {
-		return derivationType;
+	public String getVersion() {
+		return version;
 	}
 
-	public void setDerivationType(String derivationType) {
-		this.derivationType = derivationType;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 	
 }

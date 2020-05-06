@@ -15,7 +15,7 @@ export class ReleaseTypesDialogComponent implements OnInit {
     },
     {
       text: "Alta voluntaria",
-      value: "ownMedicalRelease"
+      value: "voluntaryMedicalRelease"
     },
     {
       text: "Baja",

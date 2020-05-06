@@ -58,13 +58,6 @@ public class TherapistController {
         return therapistService.delete(id);
     }
     
-    @ApiOperation(value = "Get the ID's of the assigned records", notes = "Returns 200")
-    @GetMapping("/getAssignedRecordsId/{therapistId}")
-    public List<Integer> getAssignedRecrodsId(@PathVariable(value = "therapistId") Integer therapistId) {
-    	return therapistService.getAssignedRecrodsId(therapistId);
- 
-    }
-    
     @ApiOperation(value = "Return true if the record is assigned to the user or if user is ADMIN", notes = "Returns 200")
     @GetMapping("/isAllowedToRecord/{therapistId}/{recordId}")
     public HashMap<String, Boolean> isAllowedToRecord(@PathVariable(value = "therapistId") Integer therapistId, @PathVariable(value = "recordId") Integer recordId) {

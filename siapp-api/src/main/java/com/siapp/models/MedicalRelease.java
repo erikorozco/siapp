@@ -74,6 +74,10 @@ public class MedicalRelease implements Serializable {
 	@OneToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_derivacion", referencedColumnName = "id")
 	private Derivation derivation;
+	
+    @OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
+    private Therapist therapist;
 
 	//GETTERS AND SETTERS
 	public Integer getId() {
@@ -182,6 +186,14 @@ public class MedicalRelease implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Therapist getTherapist() {
+		return therapist;
+	}
+
+	public void setTherapist(Therapist therapist) {
+		this.therapist = therapist;
 	}
 	
 }

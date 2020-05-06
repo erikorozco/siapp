@@ -1,9 +1,6 @@
 package com.siapp.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.siapp.models.Derivation;
 import com.siapp.models.MedicalRelease;
 import com.siapp.services.MedicalReleaseService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -28,8 +22,9 @@ public class MedicalReleaseController {
 	@Autowired
 	MedicalReleaseService medicalReleaseService;
 
-    @GetMapping("/getByDerivationId/{derivationId}")
-    public List<MedicalRelease> getDerivationByRecordId(@PathVariable(value = "derivationId") Integer derivationId) {
+    @ApiOperation(value = "Find medicalRelease by derivation ID", notes = "Returns a MedicalRelease.class", response = MedicalRelease.class)
+    @GetMapping("/getByMedicalRelease/{derivationId}")
+    public MedicalRelease getByMedicalRelase(@PathVariable(value = "derivationId") Integer derivationId) {
         return medicalReleaseService.findByDerivationId(derivationId);
     }
     

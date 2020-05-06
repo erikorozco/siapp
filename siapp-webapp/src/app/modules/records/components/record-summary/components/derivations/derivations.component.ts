@@ -3,6 +3,8 @@ import { DerivationService } from 'src/app/shared/services/derivation.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ReleaseTypesDialogComponent } from './components/release-types-dialog/release-types-dialog.component';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-derivations',
@@ -17,7 +19,9 @@ export class DerivationsComponent implements OnInit {
 
   constructor(
     private derivationService: DerivationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -69,25 +73,23 @@ export class DerivationsComponent implements OnInit {
   }
 
   openReleaseOptionsModal(value) {
-    console.log(value);
-    const dialogRef = this.dialog.open(ReleaseTypesDialogComponent, { width: '500px'/*, data: {name: this.name, animal: this.animal}*/ });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-        // const payload = {
-        //   recordId: record[0],
-        //   therapistId: this.params.therapistId
-        // };
-
-        // this.recordService.assignRecord(payload).subscribe( data => {
-        //   dialogRef.close();
-        //   this.toastr.success('El paciente ha isdo asignado exitosamente', 'Operacion exitosa');
-        //   this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-        //   this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
-        // }, error => {
-        //   console.log(error);
-        // });
+    this.authService.appendSession('derivation', value.id);
+    const dialogRef = this.dialog.open(ReleaseTypesDialogComponent, { width: '500px'});
+    dialogRef.afterClosed().subscribe(option => {
+      if (option) {
+        switch(option) {
+          case 'medicalRelease':
+            this.router.navigate(['home', 'add-medical-release', value.id]);
+            break;
+          case 'voluntaryMedicalRelease':
+            this.router.navigate(['home', 'add-medical-release', value.id]);
+            break;
+          case 'unsubscribeMedicalRelease':
+            this.router.navigate(['home', 'add-medical-release', value.id]);
+            break;
+          default:
+           console.log('Invalid option selected');
+        }
       }
     });
 

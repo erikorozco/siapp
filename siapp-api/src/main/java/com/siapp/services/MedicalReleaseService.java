@@ -15,8 +15,8 @@ public class MedicalReleaseService {
 	@Autowired
 	MedicalReleaseRepository medicalReleaseRepository;
 	
-	public List<MedicalRelease> findByDerivationId(Integer derivationId) {
-		return this.medicalReleaseRepository.findByDerivationId(derivationId);
+	public MedicalRelease findByDerivationId(Integer derivationId) {
+		return this.medicalReleaseRepository.findOneByDerivationId(derivationId);
 	}
 	
 	public MedicalRelease create(MedicalRelease derivation) {

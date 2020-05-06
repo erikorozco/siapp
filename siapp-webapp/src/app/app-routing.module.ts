@@ -15,6 +15,7 @@ import { FormRecordComponent } from './modules/records/components/form-record/fo
 import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
 import { TherapistRecordsComponent } from './modules/records/components/therapist-records/therapist-records.component';
 import { RecordActionGuardService } from './shared/services/record-action-guard.service';
+import { FormMedicalReleaseComponent } from './modules/records/components/form-medical-release/form-medical-release.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -51,8 +52,8 @@ const ROUTES: Routes = [
       { path: 'view-session', redirectTo: 'add-session' },
       { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
       {
-         path: 'tests', 
-        component: ListUserComponent,
+         path: 'add-medical-release/:derivationId', 
+        component: FormMedicalReleaseComponent,
         canActivate:  [RecordActionGuardService]
       },
     ]

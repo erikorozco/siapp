@@ -68,7 +68,7 @@ UPDATE persona set esta_activo=TRUE;
 ALTER TABLE expediente 
 ADD COLUMN localidad character varying,
 ADD COLUMN familiar character varying,
-ADD COLUMN tipoderivacion character varying,
+ADD COLUMN version character varying,
 ADD COLUMN creado timestamp without time zone,
 ADD COLUMN actualizado timestamp without time zone,
 ADD COLUMN esta_activo boolean;
@@ -154,7 +154,6 @@ ALTER TABLE log
   OWNER TO postgres;
 
 
-
 -- public.derivacion definition
 
 -- Drop table
@@ -162,7 +161,6 @@ ALTER TABLE log
 -- DROP TABLE public.derivacion;
 
 CREATE TABLE public.derivacion (
-  CONSTRAINT derivacion_pk PRIMARY KEY (id),
 	externa bool NULL,
 	area varchar NULL,
 	creado timestamp NULL,
@@ -171,13 +169,17 @@ CREATE TABLE public.derivacion (
 	id_reingreso int4 NULL,
 	motivo varchar NULL,
 	estado varchar NULL,
-	id serial NOT NULL
+	id serial NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	cuota varchar NULL,
+	CONSTRAINT derivacion_pk PRIMARY KEY (id)
 );
 
-TABLESPACE pg_default;
 
-ALTER TABLE public.derivacion
-    OWNER to postgres;
+-- public.derivacion foreign keys
+
+ALTER TABLE public.derivacion ADD CONSTRAINT derivacion_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+
 
 
 
@@ -201,6 +203,7 @@ CREATE TABLE public.alta (
 	fechaegreso timestamp NULL,
 	estadoactual varchar NULL,
 	id_derivacion int4 NOT NULL,
+	id_terapeuta int4 NOT NULL,
 	CONSTRAINT alta_pk PRIMARY KEY (id)
 );
 
@@ -208,6 +211,8 @@ CREATE TABLE public.alta (
 -- public.alta foreign keys
 
 ALTER TABLE public.alta ADD CONSTRAINT alta_fk FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
+ALTER TABLE public.alta ADD CONSTRAINT terapueta_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+
 
 
 
