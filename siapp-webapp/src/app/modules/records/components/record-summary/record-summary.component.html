@@ -60,7 +60,7 @@
                         </div>
                         <div *ngSwitchCase="'derivations-tab'" class="tab-pane fade show active" id="derivations" role="tabpanel" aria-labelledby="derivations-tab">
                             <ng-container *ngIf="this.record">
-                                <app-derivations [recordId]="this.record.id"></app-derivations>
+                                <app-derivations [recordId]="this.record.id" [personId]="this.person.id"></app-derivations>
                             </ng-container>
                         </div>
                         <div *ngSwitchCase="'sessions-tab'" class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">

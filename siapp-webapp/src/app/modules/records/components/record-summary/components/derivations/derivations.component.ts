@@ -13,7 +13,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class DerivationsComponent implements OnInit {
 
-  @Input() recordId;  
+  @Input() recordId;
+  @Input() personId;
   derivations: any;
   tableProperties: any;
 
@@ -46,6 +47,7 @@ export class DerivationsComponent implements OnInit {
   getRecordDerivations() {
     this.derivationService.getDerivationByRecordId(this.recordId).subscribe(data => {
       this.derivations = data;
+      console.log(data);
       this.tableProperties = [{
         headElements: ['Tipo', 'Area', 'Estado', 'Fecha', 'Acciones'],
         datasource: data,
@@ -53,9 +55,10 @@ export class DerivationsComponent implements OnInit {
         filterFunction : this.filterDerivations,
         tableActions: {
           add: {
-            route: ['/home', 'add-derivation', this.recordId],
+            route: ['/home', 'add-derivation', this.recordId, 'person', this.personId],
             text: 'Agregar derivación'
           },
+          edit: true,
           view: true,
           customActions: [
             {
@@ -65,7 +68,7 @@ export class DerivationsComponent implements OnInit {
                 'fa-check': true
               },
               buttonClass: {
-                'btn-primary': true
+                'btn-success': true
               }
             }
           ]

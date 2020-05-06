@@ -41,4 +41,8 @@ public class DerivationService {
 		return "OK";
 	}
 
+	public Derivation find(Integer id) {
+		return this.derivationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Derivation Resport", "id", id));
+	}
+
 }

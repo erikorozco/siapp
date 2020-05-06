@@ -53,6 +53,8 @@ import { TherapistRecordsComponent } from './modules/records/components/therapis
 import { DerivationsComponent } from './modules/records/components/record-summary/components/derivations/derivations.component';
 import { FormMedicalReleaseComponent } from './modules/records/components/form-medical-release/form-medical-release.component';
 import { ReleaseTypesDialogComponent } from './modules/records/components/record-summary/components/derivations/components/release-types-dialog/release-types-dialog.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -87,6 +89,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     DerivationsComponent,
     FormMedicalReleaseComponent,
     ReleaseTypesDialogComponent,
+    NotFoundComponent,
+    FormDerivationComponent
   ],
   imports: [
     BrowserModule,

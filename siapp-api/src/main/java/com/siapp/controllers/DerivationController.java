@@ -22,6 +22,11 @@ public class DerivationController {
 	
 	@Autowired
 	DerivationService derivationService;
+	
+	@GetMapping("/getDerivation/{id}")
+    public Derivation get(@PathVariable(value = "id") Integer id) {
+        return derivationService.find(id);
+    }
 
     @GetMapping("/getDerivationByRecordId/{recordId}")
     public List<Derivation> getDerivationByRecordId(@PathVariable(value = "recordId") Integer recordId) {

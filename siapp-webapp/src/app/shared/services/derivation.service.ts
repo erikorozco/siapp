@@ -16,6 +16,10 @@ export class DerivationService {
     private http: HttpClient
   ) {}
 
+  get(id: number): Observable<any> {
+    return this.http.get<any>(this.baseUrl + URL_CONF.derivationAPI.endpoints.getDerivation + id);
+  }
+
   getDerivationByRecordId(id: number): Observable<any> {
     return this.http.get<any>(this.baseUrl + URL_CONF.derivationAPI.endpoints.getDerivationByRecordId + id);
   }

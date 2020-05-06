@@ -1,0 +1,10 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
+  <h1 class="h3 mb-0 text-gray-800">
+      <a [routerLink]="['/home']">Panel de control</a> ->
+      <a [routerLink]="['/home/records']">Pacientes</a> ->
+      <a [routerLink]="['/home', 'record-summary', this.person.id ]">{{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}} -> </a> {{ (this.formProperties.action === 'add-session' )? 'Nuevo Reporte clínico' : '' }} {{this.formProperties.action
+      === 'edit-session' ? 'Editar Reporte clínico' : ''}} {{this.formProperties.action === 'view-session' ? 'Ver Reporte clínico' : ''}}
+  </h1>
+</div>
+
+<!-- Implementar logica con subjectBehavio para guardar nombre del paciente en la session. -->

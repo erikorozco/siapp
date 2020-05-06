@@ -83,6 +83,7 @@ export const API_URL_CONFIG = {
     derivationAPI: {
       name: 'derivations/',
       endpoints: {
+        getDerivation: 'getDerivation/',
         getDerivationByRecordId : 'getDerivationByRecordId/',
         updateDerivation: 'update/',
         createDerivation: 'create',
