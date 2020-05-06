@@ -57,14 +57,5 @@ public class TherapistController {
     public ResponseEntity<?> deleteTherapist(@PathVariable(value = "id") Integer id) {
         return therapistService.delete(id);
     }
-    
-    @ApiOperation(value = "Return true if the record is assigned to the user or if user is ADMIN", notes = "Returns 200")
-    @GetMapping("/isAllowedToRecord/{therapistId}/{recordId}")
-    public HashMap<String, Boolean> isAllowedToRecord(@PathVariable(value = "therapistId") Integer therapistId, @PathVariable(value = "recordId") Integer recordId) {
-    	HashMap<String, Boolean> permission = new HashMap<>();
-    	Boolean isAllowed = therapistService.isAllowedToRecord(therapistId, recordId);
-    	permission.put("isAllowed", isAllowed);
-    	return permission;
-    }
-	
+
 }

@@ -51,22 +51,5 @@ public class TherapistService {
 
         return ResponseEntity.ok().build();
 	}
-
-	public List<Integer> getAssignedRecrodsId(Integer therapistId) {
-		return therapistRepository.getAssignedRecrodsId(therapistId);
-
-	}
-
-	public boolean isAllowedToRecord(Integer therapistId, Integer recordId) {
-		Integer recordPermission = therapistRepository.getRecordPermission(therapistId, recordId);
-		UserTokenDetails user = tokenService.getUserTokenDetails();
-		boolean isAdmin = false;
-		for (Role role : user.getAppUser().getRoles()) {
-			if (role.getName().equals("ADMIN") || role.getName().equals("SUPERADMIN")) {
-				isAdmin = true;
-			}
-		}
-		return (recordPermission > 0 || isAdmin);
-	}
 	
 }
