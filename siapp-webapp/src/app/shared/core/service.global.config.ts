@@ -88,7 +88,13 @@ export const API_URL_CONFIG = {
         createDerivation: 'create',
         createDerivations: 'createDerivations'
       }
-    }
+    },
+    permissionAPI: {
+      name: 'permissions/',
+      endpoints: {
+        isAllowedToRecord: 'isAllowedTo'
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

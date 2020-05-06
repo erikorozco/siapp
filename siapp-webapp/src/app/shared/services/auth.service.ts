@@ -69,26 +69,30 @@ export class AuthService {
   }
 
   /**
-   * Returns true if record is assigned to user OR
+   * Returns true if entity is assigned to user OR
    * return true if user is admin
+   * 
    * 
    * Note: Whoever calls this funcions must to be ASYNC
    * 
-   * @param therapistId 
-   * @param recordId 
+   * @param entity record, session, derivation, admin, superadmin
+   * @param entityId use 0 if check a role only
    */
-  async isAllowedToPerformAction(therapistId, recordId) {
-    const permission = await this.getPermission(therapistId, recordId).toPromise().
+  async isAllowedToPerformAction(entity: string, entityId) {
+    const permission = await this.getPermission(entity, entityId).toPromise().
       catch(error => {
         console.log(error);
-      });;
+      });
     return permission.isAllowed;
   }
 
-  private getPermission(therapistId, recordId) {
-    const url = `${this.baseUrl }${URL_CONF.therapistsAPI.name}${URL_CONF.therapistsAPI.endpoints.isAllowedToRecord}`;
-    const params= `${therapistId}/${recordId}`;
-    return this.http.get<any>(url + params);
+  private getPermission(entity, entityId) {
+    const payload = {
+      entity : entity,
+      entityId : entityId
+    }
+    const url = `${this.baseUrl }${URL_CONF.permissionAPI.name}${URL_CONF.permissionAPI.endpoints.isAllowedToRecord}`;
+    return this.http.post<any>(url, payload );
   }
 
   private isAdministrative(roles: any[]) {

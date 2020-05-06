@@ -52,6 +52,10 @@ export class DerivationsComponent implements OnInit {
         maxVisibleItems: 10,
         filterFunction : this.filterDerivations,
         tableActions: {
+          add: {
+            route: ['/home', 'add-derivation', this.recordId],
+            text: 'Agregar derivación'
+          },
           view: true,
           customActions: [
             {
