@@ -33,8 +33,8 @@ public class Derivation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "externa")
-	private boolean externalDerivation;
+	@Column(name = "tipoderivacion")
+	private String derivationType;
 	
 	@Column(name = "area")
 	private String derivedArea;
@@ -81,12 +81,12 @@ public class Derivation implements Serializable {
 		this.id = id;
 	}
 
-	public boolean isExternalDerivation() {
-		return externalDerivation;
+	public String getDerivationType() {
+		return derivationType;
 	}
 
-	public void setExternalDerivation(boolean externalDerivation) {
-		this.externalDerivation = externalDerivation;
+	public void setDerivationType(String derivationType) {
+		this.derivationType = derivationType;
 	}
 
 	public String getDerivedArea() {

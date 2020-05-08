@@ -161,7 +161,7 @@ ALTER TABLE log
 -- DROP TABLE public.derivacion;
 
 CREATE TABLE public.derivacion (
-	externa bool NULL,
+	tipoderivacion varchar NULL,
 	area varchar NULL,
 	creado timestamp NULL,
 	actualizado timestamp NULL,
@@ -212,7 +212,8 @@ CREATE TABLE public.alta (
 
 ALTER TABLE public.alta ADD CONSTRAINT alta_fk FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
 ALTER TABLE public.alta ADD CONSTRAINT terapueta_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
-
+ALTER TABLE public.expediente ALTER COLUMN "derivadoA" DROP NOT NULL;
+ALTER TABLE public.expediente ALTER COLUMN cuota DROP NOT NULL;
 
 
 

@@ -55,6 +55,7 @@ import { FormMedicalReleaseComponent } from './modules/records/components/form-m
 import { ReleaseTypesDialogComponent } from './modules/records/components/record-summary/components/derivations/components/release-types-dialog/release-types-dialog.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
+import { ListUserDialogComponent } from './modules/users/components/list-user-dialog/list-user-dialog.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -90,7 +91,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormMedicalReleaseComponent,
     ReleaseTypesDialogComponent,
     NotFoundComponent,
-    FormDerivationComponent
+    FormDerivationComponent,
+    ListUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +128,8 @@ registerLocaleData(localeEsMX , 'es-MX');
   ],
   entryComponents: [
     ImageViewComponent,
-    ReleaseTypesDialogComponent
+    ReleaseTypesDialogComponent,
+    ListUserDialogComponent
  ],
   bootstrap: [AppComponent],
 })

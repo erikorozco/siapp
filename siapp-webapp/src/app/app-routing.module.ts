@@ -56,8 +56,23 @@ const ROUTES: Routes = [
       {
         path: 'add-derivation/:recordId/person/:personId', 
         component: FormDerivationComponent,
-        canActivate:  [RecordActionGuardService]
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'admin'
+        }
       },
+      {
+        path: 'view-derivation/:derivationId/person/:personId',
+        component: FormDerivationComponent
+      },
+      {
+        path: 'edit-derivation/:derivationId/person/:personId',
+        component: FormDerivationComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      }
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

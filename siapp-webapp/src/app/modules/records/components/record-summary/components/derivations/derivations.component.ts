@@ -33,7 +33,13 @@ export class DerivationsComponent implements OnInit {
   executeAction({value, action}) {
     switch (action) {
       case 'view':
+        this.authService.appendSession('derivation', value.id);
+        this.router.navigate(['home', 'view-derivation', value.id,'person', this.personId]);
         break;
+      case 'edit':
+        this.authService.appendSession('derivation', value.id);
+        this.router.navigate(['home', 'edit-derivation', value.id,'person', this.personId]);
+        break;  
       case 'changeStatus':
         this.openReleaseOptionsModal(value);
           break;
@@ -112,9 +118,8 @@ export class DerivationsComponent implements OnInit {
             const datePipe: DatePipe = new DatePipe('es-MX');
             var date = new Date(element.createdAt);
             let customDate = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
-            const derivationType = element.externalDerivation ? 'EXTERNA' : 'INTERNA';
             element.tableFields = [
-                                    derivationType,
+                                    element.derivationType,
                                     element.derivedArea,
                                     element.status,
                                     customDate,

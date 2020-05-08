@@ -67,6 +67,10 @@ export const RECORD_FORM_CONST = {
         'TALLER DE TANATOLOGÍA',
         'TALLER DE SENTIDO DE LA VIDA',
         'NEUROPSICOLOGÍA',
+        'CAPA',
+        'HOSPITAL REGIONAL',
+        'IMSS',
+        'DIF'
       ],
       religions : [
         'CATÓLICA',
