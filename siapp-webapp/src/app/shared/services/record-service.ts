@@ -43,6 +43,10 @@ export class RecordService {
     return this.http.post<any>(this.baseUrl + URL_CONF.recordsAPI.endpoints.createRecord, record);
   }
 
+  updateRecord(recordId: number ,record: any): Observable<any> {
+    return this.http.put<any>(this.baseUrl + URL_CONF.recordsAPI.endpoints.updateRecord + recordId, record);
+  }
+
   uploadGenogram(file: File, recordId: number): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);

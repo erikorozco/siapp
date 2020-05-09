@@ -275,8 +275,8 @@ ALTER TABLE public.encuesta ADD CONSTRAINT encuesta_fk_derivacion FOREIGN KEY (i
 
 
 
-
-
+-- Avoid nulls on autocomplete
+update expediente set localidad = ' ';
 
 
 

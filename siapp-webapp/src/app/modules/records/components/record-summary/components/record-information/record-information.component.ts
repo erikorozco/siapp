@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Record } from 'src/app/shared/models/record.model';
 import { RecordService } from 'src/app/shared/services/record-service';
+import { DerivationService } from 'src/app/shared/services/derivation.service';
 
 @Component({
   selector: 'app-record-information',
@@ -13,9 +14,12 @@ export class RecordInformationComponent implements OnInit {
   @Input() isAdmin;
   recordInfo: any;
   panelOpenState = false;
+  derivations;
+  recordVersion;
 
   constructor(
-    private recordService: RecordService
+    private recordService: RecordService,
+    private derivationService: DerivationService
   ) { }
 
   ngOnInit() {
@@ -26,6 +30,14 @@ export class RecordInformationComponent implements OnInit {
     this.recordService.getRecordByPersonId(this.personId).subscribe(data => {
       if (data) {
         this.recordInfo = data;
+        this.recordVersion = data.version;
+        
+        if (this.recordVersion == 2) {
+          this.derivationService.getDerivationByRecordId(data.id).subscribe((data) => {
+            this.derivations = data;
+          });
+        }
+
       }
     }, error => {
       console.log(error);

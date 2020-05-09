@@ -70,17 +70,14 @@ export class FormDerivationComponent implements OnInit {
 
       //Get medicalRelease or drop and survey if exists on view mode
       this.medicalReleaseSevice.getByMedicalReleaseByDerivationId(this.derivationId).subscribe((data) => {
-        console.log(data);
         this.medicalRelase = data;
       });
 
       this.dropService.getByDropByDerivationId(this.derivationId).subscribe((data) => {
-        console.log(data);
         this.drop = data;
       });
 
       this.surveyService.getBySurveyByDerivationId(this.derivationId).subscribe((data) => {
-        console.log(data);
         this.survey = data;
       });
 

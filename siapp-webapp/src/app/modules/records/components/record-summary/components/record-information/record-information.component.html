@@ -319,16 +319,24 @@
                 <mat-label>Diagnóstico presuntivo</mat-label>
                 <textarea matInput [value]="recordInfo.presuntiveDiagnostic" readonly></textarea>
             </mat-form-field>
-            <div class="col-md-12">
-                <label for="">Derivado a:</label>
-                <ul *ngFor="let area of recordInfo.derivedTo.split(',')">
-                    <li>{{area}}</li>
-                </ul>
+            <div *ngIf="this.recordVersion !== '2'">
+                <div  class="col-md-12">
+                    <label for="">Derivado a:</label>
+                    <ul *ngFor="let area of recordInfo.derivedTo.split(',')">
+                        <li>{{area}}</li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <label for="">Cuotas:</label>
+                    <ul *ngFor="let cuota of recordInfo.moneyShare.split(',')">
+                        <li>{{cuota}}</li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-12">
-                <label for="">Cuotas:</label>
-                <ul *ngFor="let cuota of recordInfo.moneyShare.split(',')">
-                    <li>{{cuota}}</li>
+            <div *ngIf="this.recordVersion == 2" class="col-md-12">
+                <label for="">Derivado a:</label>
+                <ul *ngFor="let derivation of this.derivations">
+                    <li>{{derivation.derivedArea}} - ${{derivation.recoveryCost}}</li>
                 </ul>
             </div>
             <!-- <mat-form-field class="col-md-12">
@@ -366,6 +374,17 @@
                   <i class="fas fa-plus"></i>
                   </span>
             <span class="text">Apertura de expediente</span>
+        </a>
+    </div>
+</ng-container>
+<hr>
+<ng-container *ngIf="this.recordInfo">
+    <div *ngIf="this.isAdmin" class="text-left">
+        <a [routerLink]="['/home', 'edit-record', this.recordInfo.id, 'person', this.personId ]" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+                  <i class="fas fa-pencil-alt"></i>
+                  </span>
+            <span class="text">Editar expediente</span>
         </a>
     </div>
 </ng-container>

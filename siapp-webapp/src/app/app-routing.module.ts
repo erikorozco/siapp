@@ -47,7 +47,7 @@ const ROUTES: Routes = [
       { path: 'record-summary/:personId', component: RecordSummaryComponent },
       { path: 'record-summary', redirectTo: 'records' },
       { path: 'existing-person-opening-record/:personId', component: FormRecordComponent },
-      { path: 'new-person-opening-record', component: FormRecordComponent },
+      { path: 'edit-record/:recordId/person/:personId', component: FormRecordComponent },
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
       { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent },
       { path: 'edit-session/:id/person/:personId', component: FormSessionComponent },
