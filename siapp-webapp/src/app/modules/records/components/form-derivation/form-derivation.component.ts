@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ListUserDialogComponent } from 'src/app/modules/users/components/list-user-dialog/list-user-dialog.component';
 import { MedicalReleaseService } from 'src/app/shared/services/medical-release.service';
 import { DropService } from 'src/app/shared/services/drop.service';
+import { SurveyService } from 'src/app/shared/services/survey.service';
 
 @Component({
   selector: 'app-form-derivation',
@@ -49,6 +50,7 @@ export class FormDerivationComponent implements OnInit {
     private derivationService: DerivationService,
     private medicalReleaseSevice: MedicalReleaseService,
     private dropService: DropService,
+    private surveyService: SurveyService,
     private toastr: ToastrService,
     private routes: ActivatedRoute,
     public dialog: MatDialog
@@ -77,7 +79,11 @@ export class FormDerivationComponent implements OnInit {
         this.drop = data;
       });
 
-      //Put survey here
+      this.surveyService.getBySurveyByDerivationId(this.derivationId).subscribe((data) => {
+        console.log(data);
+        this.survey = data;
+      });
+
 
     } else if (this.action === 'edit-derivation') {
       this.derivationService.get(this.derivationId).subscribe(data => {

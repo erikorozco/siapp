@@ -239,6 +239,7 @@ CREATE TABLE public.baja (
 	tipobaja varchar NULL,
 	id_derivacion int4 NOT NULL
 );
+ALTER TABLE public.baja ADD CONSTRAINT baja_pk PRIMARY KEY (id);
 
 
 -- public.baja foreign keys
@@ -247,6 +248,30 @@ ALTER TABLE public.baja ADD CONSTRAINT baja_fk FOREIGN KEY (id_terapeuta) REFERE
 ALTER TABLE public.baja ADD CONSTRAINT derivacion_fk FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
 
 
+
+
+-- public.encuesta definition
+
+-- Drop table
+
+-- DROP TABLE public.encuesta;
+
+CREATE TABLE public.encuesta (
+	id serial NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	motivospersonales varchar NULL,
+	motivosservicio varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_derivacion int4 NOT NULL,
+	CONSTRAINT encuesta_pk PRIMARY KEY (id)
+);
+
+
+-- public.encuesta foreign keys
+
+ALTER TABLE public.encuesta ADD CONSTRAINT encuesta_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+ALTER TABLE public.encuesta ADD CONSTRAINT encuesta_fk_derivacion FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
 
 
 

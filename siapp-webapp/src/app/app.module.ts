@@ -57,6 +57,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
 import { ListUserDialogComponent } from './modules/users/components/list-user-dialog/list-user-dialog.component';
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
+import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -94,7 +95,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     NotFoundComponent,
     FormDerivationComponent,
     ListUserDialogComponent,
-    FormDropComponent
+    FormDropComponent,
+    FormSurveyComponent
   ],
   imports: [
     BrowserModule,

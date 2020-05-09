@@ -63,7 +63,6 @@ export class DerivationsComponent implements OnInit {
             route: ['/home', 'add-derivation', this.recordId, 'person', this.personId],
             text: 'Agregar derivación'
           },
-          edit: true,
           view: true,
           customActions: [
             {
@@ -75,6 +74,17 @@ export class DerivationsComponent implements OnInit {
               },
               buttonClass: {
                 'btn-success': true
+              }
+            },
+            {
+              display: (derivation) => {return  derivation.status === 'EN CURSO'},  
+              text: 'Editar',
+              action: 'edit',
+              iconClass: {
+                'fa-pencil-alt': true
+              },
+              buttonClass: {
+                'btn-primary': true
               }
             }
           ]

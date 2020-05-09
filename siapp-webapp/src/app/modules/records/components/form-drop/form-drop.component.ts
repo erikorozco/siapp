@@ -91,14 +91,14 @@ export class FormDropComponent implements OnInit {
   onSubmit() {
     if (this.action === 'add-drop') {
       this.dropForm.get(['derivation', 'id']).setValue(this.derivationId);
-      this.dropForm.get(['therapist', 'id']).setValue(123);
       this.dropForm.get(['familyContact']).setValue(this.getFamilyContact());
       this.dropForm.get(['whoRequestInfo']).setValue(this.getWhoRequestInfo());
       this.dropForm.get(['witnesses']).setValue(this.getWitnesses());
 
       this.dropService.createDrop(this.dropForm.value).subscribe(data => {
         this.toastr.success('El alta voluntaria o baja ha sido creada exitosamente', 'Operacion exitosa');
-        this.router.navigate(['home', 'record-summary', this.personId]);// Redirigira encuesta de satisfaccion
+        this.toastr.success('Ahora es necesario llenar la encuesta de satisfacción', 'Operacion exitosa');
+        this.router.navigate(['home', 'add-survey', this.derivationId ,'person', this.personId]);// Redirigira encuesta de satisfaccion
       }, error => {
         this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
       });

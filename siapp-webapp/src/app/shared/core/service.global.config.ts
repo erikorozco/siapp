@@ -114,6 +114,15 @@ export const API_URL_CONFIG = {
         create: 'create',
       }
     },
+    surveyAPI: {
+      name: 'surveys/',
+      endpoints: {
+        getBySurveyByDerivationId: 'getBySurveyByDerivationId/',
+        getSurvey: 'getSurvey/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

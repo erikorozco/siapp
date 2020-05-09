@@ -1,4 +1,5 @@
-<app-navigation-tree *ngIf="this.action !== 'view-drop'" [entityAction]="this.action" [personId]="this.personId"></app-navigation-tree>
+<app-navigation-tree *ngIf="this.action !== 'view-drop'" [entityAction]="this.action" [personId]="this.personId">
+</app-navigation-tree>
 <div class="row">
   <div class="col-md-12 pl-5 text border-left-primary">
     <form [formGroup]="dropForm" (ngSubmit)="onSubmit()">
@@ -47,8 +48,7 @@
             <h6 class="feedback-field">Este campo es requerido</h6>
           </div>
         </div>
-        <div class="form-group col-md-6"
-          [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.sign') } ">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.sign') } ">
           <label for="sign">Firma o INE de quien solicita</label>
           <input type="text" class="form-control" formControlName="sign" id="sign"
             placeholder="Firma o INE de quien solicita">
@@ -129,21 +129,21 @@
       </div>
       <hr>
       <div *ngIf="this.action !== 'view-drop'">
-        <div  class="form-row">
+        <div class="form-row">
           <div class="form-group col-md-6">
             <label for="witnessesFormControlName">Nombre del testigo:</label>
-            <input type="text" class="form-control" [formControl]="witnessesFormControlName" id="witnessesFormControlName"
-              placeholder="Escriba el nombre del testigo">
+            <input type="text" class="form-control" [formControl]="witnessesFormControlName"
+              id="witnessesFormControlName" placeholder="Escriba el nombre del testigo">
           </div>
           <div class="form-group col-md-6">
             <label for="witnessesFormControlSign"># INE testigo:</label>
-            <input type="text" class="form-control" [formControl]="witnessesFormControlSign" id="witnessesFormControlSign"
-              placeholder="Escriba el núnero de INE del testigo">
+            <input type="text" class="form-control" [formControl]="witnessesFormControlSign"
+              id="witnessesFormControlSign" placeholder="Escriba el núnero de INE del testigo">
           </div>
         </div>
         <div class="form-row">
-        
-      </div>
+
+        </div>
         <div class="form-group col-md-12 text-right">
           <button type="button" [disabled]="witnessesFormControlName.invalid || witnessesFormControlSign.invalid"
             (click)="addWitness()" class="btn btn-success btn-icon-split mt-3">
@@ -154,18 +154,19 @@
           </button>
         </div>
       </div>
-            <div class="form-row">
+      <div class="form-row">
         <div *ngIf="this.action !== 'view-drop'" class="form-group col-md-2 text-center mt-4">
-          <button [disabled]="this.action === 'view-derivation'" class="btn btn-info btn" type="button" (click)="openTherapistsModal()">Terapeuta</button>
+          <button [disabled]="this.action === 'view-drop'" class="btn btn-info btn" type="button"
+            (click)="openTherapistsModal()">Terapeuta</button>
         </div>
         <div class="form-group col-md-6">
           <div formGroupName="therapist" class="mt-2">
             <label for="reason">Nombre del terapeuta:</label>
-            <input type="text" class="form-control" readonly
-              placeholder="Nombre del Terapeuta" value="{{this.therapistName}}">
-              <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
-                <h6 class="feedback-field">Este campo es requerido</h6>
-              </div>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
           </div>
         </div>
       </div>

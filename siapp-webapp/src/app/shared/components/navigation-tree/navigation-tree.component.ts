@@ -59,6 +59,8 @@ export class NavigationTreeComponent implements OnInit {
         return 'alta médica';
       case 'drop':
         return 'baja médica';  
+      case 'survey':
+        return 'encuesta de satisfacción';
     }
   }
 

@@ -115,5 +115,19 @@
         [isChild]="true">
       </app-form-medical-release>
     </mat-expansion-panel>
+    <!-- Extesion panel for survey starts -->
+    <mat-expansion-panel *ngIf="this.survey">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Encuesta de satisfacción
+        </mat-panel-title>
+        <mat-panel-description>
+          Encuesta de satisfacción realizada para calidad del servicio
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-survey [iPersonId]="this.personId" [iSurveyId]="this.survey.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-survey>
+    </mat-expansion-panel>
   </mat-accordion>
 </ng-container>

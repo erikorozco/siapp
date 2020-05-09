@@ -19,6 +19,7 @@ import { FormMedicalReleaseComponent } from './modules/records/components/form-m
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
+import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -85,6 +86,14 @@ const ROUTES: Routes = [
       {
         path: 'add-drop/:derivationId/person/:personId',
         component: FormDropComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-survey/:derivationId/person/:personId',
+        component: FormSurveyComponent,
         canActivate:  [RecordActionGuardService],
         data: {
           entity: 'derivation'

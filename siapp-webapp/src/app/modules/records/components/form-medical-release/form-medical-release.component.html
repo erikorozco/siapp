@@ -85,7 +85,7 @@
           </div>
         </div>
       </div>
-      <div class="form-row">
+      <div *ngIf="this.action === 'view-medical-release'" class="form-row">
         <div class="form-group col-md-6">
           <div formGroupName="therapist" class="mt-2">
             <label for="reason">Nombre del terapeuta:</label>
