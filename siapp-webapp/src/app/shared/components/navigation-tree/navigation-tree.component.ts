@@ -55,6 +55,10 @@ export class NavigationTreeComponent implements OnInit {
         return 'derivación'
       case 'session':
         return 'reporte clínico';
+      case 'medical':
+        return 'alta médica';
+      case 'drop':
+        return 'baja médica';  
     }
   }
 

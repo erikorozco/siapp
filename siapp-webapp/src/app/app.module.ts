@@ -56,6 +56,7 @@ import { ReleaseTypesDialogComponent } from './modules/records/components/record
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
 import { ListUserDialogComponent } from './modules/users/components/list-user-dialog/list-user-dialog.component';
+import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -92,7 +93,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     ReleaseTypesDialogComponent,
     NotFoundComponent,
     FormDerivationComponent,
-    ListUserDialogComponent
+    ListUserDialogComponent,
+    FormDropComponent
   ],
   imports: [
     BrowserModule,

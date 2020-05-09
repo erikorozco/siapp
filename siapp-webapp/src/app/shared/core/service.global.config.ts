@@ -96,6 +96,24 @@ export const API_URL_CONFIG = {
         isAllowedToRecord: 'isAllowedTo'
       }
     },
+    medicalReleaseAPI: {
+      name: 'medicalReleases/',
+      endpoints: {
+        getByMedicalReleaseByDerivationId: 'getByMedicalReleaseByDerivationId/',
+        getMedicalRealease: 'getMedicalRealease/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
+    dropAPI: {
+      name: 'drops/',
+      endpoints: {
+        getByDropByDerivationId: 'getByDropByDerivationId/',
+        getDrop: 'getDrop/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

@@ -65,16 +65,17 @@
           </div>
         </div>
         <div class="form-group col-md-2 text-center mt-4">
-          <button [disabled]="this.action === 'view-derivation'" class="btn btn-info btn" type="button" (click)="openTherapistsModal()">Terapeuta</button>
+          <button [disabled]="this.action === 'view-derivation'" class="btn btn-info btn" type="button"
+            (click)="openTherapistsModal()">Terapeuta</button>
         </div>
         <div class="form-group col-md-6">
           <div formGroupName="therapist" class="mt-2">
             <label for="reason">Nombre del terapeuta:</label>
-            <input type="text" class="form-control" readonly
-              placeholder="Nombre del Terapeuta" value="{{this.therapistName}}">
-              <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
-                <h6 class="feedback-field">Este campo es requerido</h6>
-              </div>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
           </div>
         </div>
       </div>
@@ -83,3 +84,36 @@
     </form>
   </div>
 </div>
+<hr>
+<h4>Información relacionada</h4>
+<ng-container *ngIf="true">
+  <mat-accordion>
+    <mat-expansion-panel *ngIf="this.drop">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Fomulario de salida
+        </mat-panel-title>
+        <mat-panel-description>
+          Alta voluntaria o baja
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-drop [iPersonId]="this.personId" [iDropId]="this.drop.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-drop>
+    </mat-expansion-panel>
+    <!-- Extension panel for medical release starts -->
+    <mat-expansion-panel *ngIf="this.medicalRelase">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Fomulario de salida
+        </mat-panel-title>
+        <mat-panel-description>
+          Alta médica
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-medical-release [iPersonId]="this.personId" [iMedicalReleaseId]="this.medicalRelase.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-medical-release>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>

@@ -14,12 +14,8 @@ export class ReleaseTypesDialogComponent implements OnInit {
       value: "medicalRelease"
     },
     {
-      text: "Alta voluntaria",
-      value: "voluntaryMedicalRelease"
-    },
-    {
-      text: "Baja",
-      value: "unsubscribeMedicalRelease"
+      text: "Alta voluntaria o Baja",
+      value: "medicalDrop"
     }
   ]
 

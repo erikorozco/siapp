@@ -21,10 +21,16 @@ public class MedicalReleaseController {
 	
 	@Autowired
 	MedicalReleaseService medicalReleaseService;
+	
+    @ApiOperation(value = "Find medicalRelease by  ID", notes = "Returns a MedicalRelease.class", response = MedicalRelease.class)
+    @GetMapping("/getMedicalRealease/{id}")
+    public MedicalRelease get(@PathVariable(value = "id") Integer id) {
+        return medicalReleaseService.findById(id);
+    }
 
     @ApiOperation(value = "Find medicalRelease by derivation ID", notes = "Returns a MedicalRelease.class", response = MedicalRelease.class)
-    @GetMapping("/getByMedicalRelease/{derivationId}")
-    public MedicalRelease getByMedicalRelase(@PathVariable(value = "derivationId") Integer derivationId) {
+    @GetMapping("/getByMedicalReleaseByDerivationId/{derivationId}")
+    public MedicalRelease getByMedicalReleaseByDerivationId(@PathVariable(value = "derivationId") Integer derivationId) {
         return medicalReleaseService.findByDerivationId(derivationId);
     }
     

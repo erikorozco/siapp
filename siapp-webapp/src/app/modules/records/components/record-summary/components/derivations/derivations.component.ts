@@ -53,7 +53,6 @@ export class DerivationsComponent implements OnInit {
   getRecordDerivations() {
     this.derivationService.getDerivationByRecordId(this.recordId).subscribe(data => {
       this.derivations = data;
-      console.log(data);
       this.tableProperties = [{
         headElements: ['Tipo', 'Area', 'Estado', 'Fecha', 'Acciones'],
         datasource: data,
@@ -68,6 +67,7 @@ export class DerivationsComponent implements OnInit {
           view: true,
           customActions: [
             {
+              display: (derivation) => {return  derivation.status === 'EN CURSO'},  
               text: 'Dar de alta/baja',
               action: 'changeStatus',
               iconClass: {
@@ -92,13 +92,10 @@ export class DerivationsComponent implements OnInit {
       if (option) {
         switch(option) {
           case 'medicalRelease':
-            this.router.navigate(['home', 'add-medical-release', value.id]);
+            this.router.navigate(['home', 'add-medical-release', value.id, 'person', this.personId]);
             break;
-          case 'voluntaryMedicalRelease':
-            this.router.navigate(['home', 'add-medical-release', value.id]);
-            break;
-          case 'unsubscribeMedicalRelease':
-            this.router.navigate(['home', 'add-medical-release', value.id]);
+          case 'medicalDrop':
+            this.router.navigate(['home', 'add-drop', value.id, 'person', this.personId]);
             break;
           default:
            console.log('Invalid option selected');
@@ -114,6 +111,7 @@ export class DerivationsComponent implements OnInit {
         if (
           element.derivedArea.toLowerCase().includes(searchText.toLowerCase())
           || element.status.toString().toLowerCase().includes(searchText.toLowerCase())
+          || element.derivationType.toLowerCase().includes(searchText.toLowerCase())
         ) {
             const datePipe: DatePipe = new DatePipe('es-MX');
             var date = new Date(element.createdAt);

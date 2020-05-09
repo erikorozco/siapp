@@ -10,6 +10,8 @@ import {
 } from 'src/app/shared/utils/record-form-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ListUserDialogComponent } from 'src/app/modules/users/components/list-user-dialog/list-user-dialog.component';
+import { MedicalReleaseService } from 'src/app/shared/services/medical-release.service';
+import { DropService } from 'src/app/shared/services/drop.service';
 
 @Component({
   selector: 'app-form-derivation',
@@ -37,10 +39,16 @@ export class FormDerivationComponent implements OnInit {
   derivedAreas: Observable < string[] > ;
   therapistName: string;
 
+  medicalRelase: any;
+  drop: any;
+  survey: any
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private derivationService: DerivationService,
+    private medicalReleaseSevice: MedicalReleaseService,
+    private dropService: DropService,
     private toastr: ToastrService,
     private routes: ActivatedRoute,
     public dialog: MatDialog
@@ -58,6 +66,19 @@ export class FormDerivationComponent implements OnInit {
       }, error => {console.log(error); });
       this.derivationForm.disable();
 
+      //Get medicalRelease or drop and survey if exists on view mode
+      this.medicalReleaseSevice.getByMedicalReleaseByDerivationId(this.derivationId).subscribe((data) => {
+        console.log(data);
+        this.medicalRelase = data;
+      });
+
+      this.dropService.getByDropByDerivationId(this.derivationId).subscribe((data) => {
+        console.log(data);
+        this.drop = data;
+      });
+
+      //Put survey here
+
     } else if (this.action === 'edit-derivation') {
       this.derivationService.get(this.derivationId).subscribe(data => {
         this.derivationForm.setValue(data);
@@ -72,7 +93,7 @@ export class FormDerivationComponent implements OnInit {
     if(this.isChild) {
       this.action = this.iAction;
       this.recordId = this.iRecordId;
-      this.personId = this.iRecordId;
+      this.personId = this.iPersonId;
       this.derivationId = this.iDerivationId;
     } else {
       this.routes.url.subscribe(url => {

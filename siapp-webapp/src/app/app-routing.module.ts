@@ -18,6 +18,7 @@ import { RecordActionGuardService } from './shared/services/record-action-guard.
 import { FormMedicalReleaseComponent } from './modules/records/components/form-medical-release/form-medical-release.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
+import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -68,6 +69,22 @@ const ROUTES: Routes = [
       {
         path: 'edit-derivation/:derivationId/person/:personId',
         component: FormDerivationComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-medical-release/:derivationId/person/:personId',
+        component: FormMedicalReleaseComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-drop/:derivationId/person/:personId',
+        component: FormDropComponent,
         canActivate:  [RecordActionGuardService],
         data: {
           entity: 'derivation'

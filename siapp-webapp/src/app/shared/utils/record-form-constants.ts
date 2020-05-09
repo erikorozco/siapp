@@ -119,7 +119,12 @@ export const RECORD_FORM_CONST = {
         'EN CURSO',
         'ALTA ABIERTA',
         'ALTA DEFINITIVA',
+        'ALTA VOLUNTARIA',
         'DERIVADO',
+        'BAJA',
+      ],
+      dropTypes: [
+        'ALTA VOLUNTARIA',
         'BAJA',
       ],
       professionalWhoAttended: [

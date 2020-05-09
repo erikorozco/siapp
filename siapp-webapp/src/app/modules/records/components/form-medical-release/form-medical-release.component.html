@@ -1,3 +1,104 @@
-<p>
-  form-medical-release works!
-</p>
+<app-navigation-tree  *ngIf="this.action !== 'view-medical-release'" [entityAction]="this.action" [personId]="this.personId"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="medicalReleaseForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('releaseDate') } ">
+          <label for="releaseDate">Fecha de alta *</label>
+          <input *ngIf="this.action !== 'view-medical-release'" type="date" class="form-control" formControlName="releaseDate" id="releaseDate">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('releaseDate')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <div *ngIf="this.action === 'view-medical-release' && this.medicalRelease">
+            <h5>
+              {{ this.medicalRelease.releaseDate | date }}
+            </h5>
+          </div>
+        </div>
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('reason') } ">
+          <label for="reason">Motivo del egreso</label>
+          <input type="text" class="form-control" formControlName="reason" id="reason" placeholder="Motivo del egreso">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('reason')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <small id="reason" class="form-text text-muted">Maximo beneficio, mejoria, exitus</small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('diagnostic') } ">
+          <label for="diagnostic">Diagnosticos de ingreso:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="diagnostic"
+            id="diagnostic" placeholder="Diagnosticos de ingreso"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <small id="releaseDate" class="form-text text-muted">Contiene diagnóstico principal y secundarios</small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('actualStatus') } ">
+          <label for="actualStatus">Resumen de evolución y estado actual:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="actualStatus"
+            id="actualStatus" placeholder="Resumen de evolución y estado actual"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('actualStatus')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('bahaviorDuringStay') } ">
+          <label for="bahaviorDuringStay">Manejo durante la estancia:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="bahaviorDuringStay"
+            id="bahaviorDuringStay" placeholder="Manejo durante la estancia"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('bahaviorDuringStay')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('pendingProblems') } ">
+          <label for="pendingProblems">Problemas clínicos pendientes:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="pendingProblems"
+            id="pendingProblems" placeholder="Problemas clínicos pendientes"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('pendingProblems')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('ationPlan') } ">
+          <label for="ationPlan">Plan de manejo:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="ationPlan"
+            id="ationPlan" placeholder="Plan de manejo"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('ationPlan')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('recommendations') } ">
+          <label for="recommendations">Recomendaciones:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="recommendations"
+            id="recommendations" placeholder="Recomendaciones"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('recommendations')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div formGroupName="therapist" class="mt-2">
+            <label for="reason">Nombre del terapeuta:</label>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button [disabled]="medicalReleaseForm.invalid || medicalReleaseForm.disabled || medicalReleaseForm.pristine"
+        type="submit " class="btn btn-success btn-lg">Guardar</button>
+    </form>
+  </div>
+</div>

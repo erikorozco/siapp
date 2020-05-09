@@ -58,19 +58,6 @@ export class TablePaginationComponent implements OnInit, AfterViewInit {
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    // console.log(prev)
-
-    // const convertToString = (iterable) => {
-    //   const values = Object.keys(iterable).map(property => {
-    //     const value = iterable[property];
-    //     if (typeof value === 'object' && !!value) {
-    //       return  convertToString(value);
-    //     } else {
-    //       return value;
-    //     }
-    //   });
-    //   return values;
-    // };
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
@@ -78,21 +65,7 @@ export class TablePaginationComponent implements OnInit, AfterViewInit {
     }
 
     if (this.searchText) {
-      // console.log(this.tableProperties[0].filterFunction);
       this.elements = this.tableProperties[0].filterFunction(prev, this.searchText);
-      // this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      // this.elements = this.previous.filter(
-      //   element => {
-      //       // const values = convertToString(element);
-      //     //  return JSON.stringify(element).toLowerCase().includes(this.searchText.toLowerCase());
-      //       // return values.join('/').toLowerCase().includes(this.searchText.toLowerCase());
-      //     return (element.therapist.speciality.toLowerCase().includes(this.searchText.toLowerCase())
-      //         || element.therapist.name.toLowerCase().includes(this.searchText.toLowerCase())
-      //         || element.therapist.last_name.toLowerCase().includes(this.searchText.toLowerCase())
-      //         || element.therapist.second_last_name.toLowerCase().includes(this.searchText.toLowerCase())
-      //         );
-      //   }
-      // );
       this.mdbTable.setDataSource(prev);
     }
 

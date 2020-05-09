@@ -218,6 +218,36 @@ ALTER TABLE public.expediente ALTER COLUMN cuota DROP NOT NULL;
 
 
 
+-- public.baja definition
+
+-- Drop table
+
+-- DROP TABLE public.baja;
+
+CREATE TABLE public.baja (
+	id serial NOT NULL,
+	solicitante varchar NULL,
+	resumenclinico varchar NULL,
+	recomendaciones varchar NULL,
+	id_cartaresponsabilidad varchar NULL,
+	contactofamiliar varchar NULL,
+	testigos varchar NULL,
+	comentarios varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_terapeuta int4 NOT NULL,
+	tipobaja varchar NULL,
+	id_derivacion int4 NOT NULL
+);
+
+
+-- public.baja foreign keys
+
+ALTER TABLE public.baja ADD CONSTRAINT baja_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+ALTER TABLE public.baja ADD CONSTRAINT derivacion_fk FOREIGN KEY (id_derivacion) REFERENCES derivacion(id);
+
+
+
 
 
 
