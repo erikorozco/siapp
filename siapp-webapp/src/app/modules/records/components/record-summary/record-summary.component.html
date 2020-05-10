@@ -65,7 +65,7 @@
                         </div>
                         <div *ngSwitchCase="'sessions-tab'" class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                             <ng-container *ngIf="this.record !== null && this.record !== undefined">
-                                <app-list-session [recordId]="this.record.id" [personId]="this.person.id"></app-list-session>
+                                <app-sessions-summary  [recordId]="this.record.id" [personId]="this.person.id" [isAdmin]="this.isAdmin"></app-sessions-summary>
                             </ng-container>
                         </div>
                         <div *ngSwitchCase="'attachments-tab'" class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">

@@ -211,7 +211,6 @@ export class FormRecordComponent implements OnInit, OnDestroy {
 
     } else if (this.action === 'edit-record') {
       this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
-        console.log(data)
         data.therapists  = [];
         this.recordForm.setValue(data);
       }, error => { console.log(error); });

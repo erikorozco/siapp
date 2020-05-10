@@ -38,9 +38,11 @@ public class PermissionService  {
 		case "record":
 			return permissionRepository.getRecordPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
 		case "session":
-			return permissionRepository.getRecordPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
+			return permissionRepository.getSessionPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
 		case "derivation":
-			return permissionRepository.getRecordPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
+			return permissionRepository.getDerivationPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
+		case "nutritionSession":
+			return permissionRepository.getNutritionSessionPermission(user.getAppUser().getTherapist().getId(), entityId) > 0 || isAdmin(user);
 		case "admin":
 			return isAdmin(user);
 		case "super":

@@ -20,6 +20,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
+import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -50,10 +51,29 @@ const ROUTES: Routes = [
       { path: 'edit-record/:recordId/person/:personId', component: FormRecordComponent },
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
       { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent },
-      { path: 'edit-session/:id/person/:personId', component: FormSessionComponent },
+      { 
+        path: 'edit-session/:id/person/:personId', 
+        component: FormSessionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'session'
+        }
+      },
       { path: 'edit-session', redirectTo: 'add-session' },
       { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
       { path: 'view-session', redirectTo: 'add-session' },
+      { path: 'add-nutrition-session/:recordId/person/:personId', component: FormNutritionSessionComponent },
+      { 
+        path: 'edit-nutrition-session/:id/person/:personId', 
+        component: FormNutritionSessionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'nutritionSession'
+        }
+      },
+      { path: 'edit-nutrition-session', redirectTo: 'add-nutrition-session' },
+      { path: 'view-nutrition-session/:id/person/:personId', component: FormNutritionSessionComponent },
+      { path: 'view-nutrition-session', redirectTo: 'add-nutrition-session' },
       { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
       {
         path: 'add-derivation/:recordId/person/:personId', 

@@ -58,6 +58,9 @@ import { FormDerivationComponent } from './modules/records/components/form-deriv
 import { ListUserDialogComponent } from './modules/users/components/list-user-dialog/list-user-dialog.component';
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
+import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
+import { ListNutritionSessionComponent } from './modules/records/components/list-nutrition-session/list-nutrition-session.component';
+import { SessionsSummaryComponent } from './modules/records/components/record-summary/components/sessions-summary/sessions-summary.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -96,7 +99,10 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormDerivationComponent,
     ListUserDialogComponent,
     FormDropComponent,
-    FormSurveyComponent
+    FormSurveyComponent,
+    FormNutritionSessionComponent,
+    ListNutritionSessionComponent,
+    SessionsSummaryComponent
   ],
   imports: [
     BrowserModule,

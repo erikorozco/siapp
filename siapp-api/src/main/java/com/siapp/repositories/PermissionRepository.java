@@ -49,4 +49,17 @@ public interface PermissionRepository extends JpaRepository<Therapist, Integer> 
 			nativeQuery = true)
 	Integer getDerivationPermission(Integer therapistId, Integer id);
 	
+	
+	
+	@Query(
+			value = "select\n" + 
+					"	count(*)\n" + 
+					"from\n" + 
+					"	sesionnutricion s\n" + 
+					"where\n" + 
+					"	s.id_terapeuta = :therapistId\n" + 
+					"	and s.id = :id",
+			nativeQuery = true)
+	Integer getNutritionSessionPermission(Integer therapistId, Integer id);
+	
 }

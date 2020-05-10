@@ -61,6 +61,8 @@ export class NavigationTreeComponent implements OnInit {
         return 'baja médica';  
       case 'survey':
         return 'encuesta de satisfacción';
+      case 'nutrition':
+        return 'reporte nutricional';  
     }
   }
 

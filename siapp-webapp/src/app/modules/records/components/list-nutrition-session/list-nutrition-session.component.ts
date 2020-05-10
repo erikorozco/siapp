@@ -1,48 +1,44 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SessionService } from 'src/app/shared/services/session.service';
+import { NutritionSessionService } from 'src/app/shared/services/nutrition-session.service';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-list-session',
-  templateUrl: './list-session.component.html',
-  styleUrls: ['./list-session.component.css']
+  selector: 'app-list-nutrition-session',
+  templateUrl: './list-nutrition-session.component.html',
+  styleUrls: ['./list-nutrition-session.component.css']
 })
-export class ListSessionComponent implements OnInit {
+export class ListNutritionSessionComponent implements OnInit {
 
   @Input() personId;
   @Input() recordId;
-  sessions: any;
+  nutritionSessions: any;
   tableProperties: any;
 
-
   constructor(
-    private sessionService: SessionService,
+    private nutritionSessionService: NutritionSessionService,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.getSessions();
+    this.getNutritionSessions()
   }
 
-  getSessions() {
-    this.sessionService.getSessionsByRecordId(this.recordId).subscribe((res) => {
-      this.sessions = res;
+  getNutritionSessions() {
+    this.nutritionSessionService.getByRecordId(this.recordId).subscribe((res) => {
+      this.nutritionSessions = res;
       this.tableProperties = [{
-        headElements: ['# de sesión', 'Fecha', 'Tipo de sesión', 'Profesionista', 'Acciones'],
+        headElements: ['# de sesión', 'Fecha', 'Profesionista', 'Acciones'],
         datasource: res,
         maxVisibleItems: 10,
         filterFunction : this.filterSessions,
         tableActions: {
           view: true,
           edit: true,
-          delete: false,
-          print: false,
-          updateStatus: false,
           add: {
-            route: ['/home', 'add-session', this.recordId, 'person', this.personId],
+            route: ['/home', 'add-nutrition-session', this.recordId, 'person', this.personId],
             text: 'Agregar sesión'
           }
         }
@@ -52,22 +48,22 @@ export class ListSessionComponent implements OnInit {
     });
   }
 
-  viewSession(session: any) {
-    this.router.navigate(['home', 'view-session', session.id, 'person', this.personId]);
+  viewNutritionSession(nutritionSession: any) {
+    this.router.navigate(['home', 'view-nutrition-session', nutritionSession.id, 'person', this.personId]);
   }
 
-  editSession(session: any) {
-    this.router.navigate(['home', 'edit-session', session.id, 'person', this.personId]);
+  editNutritionSession(nutritionSession: any) {
+    this.router.navigate(['home', 'edit-nutrition-session', nutritionSession.id, 'person', this.personId]);
   }
 
   executeAction({value, action}) {
     switch (action) {
       case 'view':
-        this.viewSession(value);
+        this.viewNutritionSession(value);
         break;
       case 'edit':
-        this.authService.appendSession('session', value.id);
-        this.editSession(value);
+        this.authService.appendSession('nutritionSession', value.id);
+        this.editNutritionSession(value);
         break;
       default:
         console.log(`${action} is not a valid option`);
@@ -76,22 +72,19 @@ export class ListSessionComponent implements OnInit {
 
   }
 
-
   filterSessions(previousElements, searchText) {
     return previousElements.filter(
       element => {
-        if (element.sessionType.toLowerCase().includes(searchText.toLowerCase())
-            || element.sessionNumber.toString().toLowerCase().includes(searchText.toLowerCase())
+        if (element.sessionNumber.toString().toLowerCase().includes(searchText.toLowerCase())
             || (`${element.therapist.name.toLowerCase()} ${element.therapist.last_name.toLowerCase()} ${element.therapist.second_last_name.toLowerCase()}`)
             .includes(searchText.toLowerCase())
             ) {
                const datePipe: DatePipe = new DatePipe('es-MX');
-               var date = new Date(element.sessionDate);
+               var date = new Date(element.createdAt);
                let a = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
               element.tableFields = [
                                     element.sessionNumber,
                                     a,
-                                    element.sessionType,
                                     `${element.therapist.name} ${element.therapist.last_name} ${element.therapist.second_last_name}`
                                   ];
               return element;

@@ -279,7 +279,40 @@ ALTER TABLE public.encuesta ADD CONSTRAINT encuesta_fk_derivacion FOREIGN KEY (i
 update expediente set localidad = ' ';
 
 
+ALTER TABLE public.sesion ADD acuerdossensible bool NULL DEFAULT false;
+ALTER TABLE public.sesion ADD desarrollosensible bool NULL DEFAULT false;
+ALTER TABLE public.sesion ADD aperturasensible bool NULL DEFAULT false;
 
+
+-- public.sesionnutricion definition
+
+-- Drop table
+
+-- DROP TABLE public.sesionnutricion;
+
+CREATE TABLE public.sesionnutricion (
+	id serial NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	numerosesion int4 NULL,
+	talla float4 NOT NULL,
+	peso float4 NOT NULL,
+	imc float4 NOT NULL,
+	sintomas varchar NULL,
+	diagnostico varchar NULL,
+	plan varchar NULL,
+	comentarios varchar NULL,
+	avance varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_expediente int4 NOT NULL,
+	CONSTRAINT sesionnutricion_pk PRIMARY KEY (id)
+);
+
+
+-- public.sesionnutricion foreign keys
+
+ALTER TABLE public.sesionnutricion ADD CONSTRAINT sesionnutricion_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+ALTER TABLE public.sesionnutricion ADD CONSTRAINT sesionnutricion_fk_exp FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente);
 
 
   --NO NECESSARY TABLES

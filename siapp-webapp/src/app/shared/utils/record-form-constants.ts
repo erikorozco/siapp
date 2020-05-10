@@ -58,7 +58,6 @@ export const RECORD_FORM_CONST = {
       ],
       derivedAreas : [
         'NEUROLOGÍA',
-        'NUTRICIÓN',
         'PSICOLOGÍA',
         'ASESORIA LEGAL',
         'ATENCIÓN ESPIRITUAL',

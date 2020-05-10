@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { SessionService } from '../../../../shared/services/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +16,7 @@ import { UserService } from '../../../../shared/services/user.service';
 export class FormSessionComponent implements OnInit {
 
   personId;
+  therapistId;
   sessionForm: FormGroup;
   session: any;
   record: any;
@@ -25,6 +26,10 @@ export class FormSessionComponent implements OnInit {
     action: '',
     params: {}
   };
+
+  isOpeningSensitive = new FormControl(false, );
+  isDevelopmentSensitive = new FormControl(false, );
+  isAgreementsSensitive = new FormControl(false, );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,17 +53,21 @@ export class FormSessionComponent implements OnInit {
     });
 
     this.getPersonInformation();
+    this.getTherapistInformation();
+
 
     if (this.formProperties.action === 'view-session') {
       this.sessionService.getSession(this.formProperties.params.id).subscribe(data => {
-        this.session = data;
+        this.session = this.checkSensitiveData(data);
+        console.log(this.session)
         this.sessionForm.setValue(data);
       }, error => {console.log(error); });
       this.sessionForm.disable();
 
     } else if (this.formProperties.action === 'edit-session') {
       this.sessionService.getSession(this.formProperties.params.id).subscribe(data => {
-        this.sessionForm.setValue(data);
+        this.session = this.checkSensitiveData(data);
+        this.sessionForm.setValue(this.session);
       }, error => { console.log(error); });
 
     }
@@ -97,6 +106,12 @@ export class FormSessionComponent implements OnInit {
     });
   }
 
+  getTherapistInformation() {
+    this.userService.getTokenDetails().subscribe((data) => {
+      this.therapistId = data.therapistId;
+    })
+  }
+
   requiredFieldValidation(field) {
     return this.sessionForm.get(field).invalid && this.sessionForm.get(field).touched;
   }
@@ -109,6 +124,9 @@ export class FormSessionComponent implements OnInit {
       psychologicalAdvance: ['', Validators.compose([Validators.required])],
       psychologicalDevelopment: ['', Validators.compose([Validators.required])],
       psychologicalAgreements: ['', Validators.compose([Validators.required])],
+      openingSensitiveData: [false, Validators.compose([Validators.required])],
+      developmentSensitiveData: [false, Validators.compose([Validators.required])],
+      agreementsSensitiveData: [false, Validators.compose([Validators.required])],
       active: ['', ],
       sessionNumber: ['', ],
       recordId: ['', ],
@@ -127,4 +145,18 @@ export class FormSessionComponent implements OnInit {
       })
     });
   }
+
+  checkSensitiveData(session) {
+    if (session.openingSensitiveData === true) {
+       session.psychologicalOpening = (session.therapist.id === Number(this.therapistId)) ? session.psychologicalOpening : 'Este contenido esta protegido por el creador';
+    }
+    if (session.developmentSensitiveData === true) {
+       session.psychologicalDevelopment = (session.therapist.id === Number(this.therapistId)) ? session.psychologicalDevelopment : 'Este contenido esta protegido por el creador';
+    }
+    if (session.agreementsSensitiveData === true) {
+       session.psychologicalAgreements = (session.therapist.id === Number(this.therapistId)) ? session.psychologicalAgreements : 'Este contenido esta protegido por el creador';
+    }
+    return session;
+  }
+
 }

@@ -1,0 +1,24 @@
+<mat-accordion>
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Reportes de sesión
+      </mat-panel-title>
+      <mat-panel-description>
+        (Psicología, Psiquiatría, Neurología, etc)
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-list-session [recordId]="this.recordId" [personId]="this.personId"></app-list-session>
+  </mat-expansion-panel>
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Reportes de sesión nutricionales
+      </mat-panel-title>
+      <mat-panel-description>
+        Nutricón
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-list-nutrition-session [recordId]="this.recordId" [personId]="this.personId"></app-list-nutrition-session>
+  </mat-expansion-panel>
+</mat-accordion>

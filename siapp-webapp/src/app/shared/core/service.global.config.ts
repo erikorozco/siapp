@@ -123,6 +123,15 @@ export const API_URL_CONFIG = {
         create: 'create',
       }
     },
+    nutritionSessionAPI: {
+      name: 'nutritionSessions/',
+      endpoints: {
+        getByRecordId: 'getByRecordId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {
