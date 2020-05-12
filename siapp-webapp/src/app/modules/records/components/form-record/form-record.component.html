@@ -1,689 +1,802 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.person">
-    <h1 class="h3 mb-0 text-gray-800">
-        <a [routerLink]="['/home']">Panel de control</a> ->
-        <a [routerLink]="['/home/records']">Pacientes</a> ->
-        <a [routerLink]="['/home', 'record-summary', this.params.personId ]">{{ this.person.name }} {{ this.person.lastName }} {{ this.person.secondLastName}} -> </a> {{ (this.action === 'existing-person-opening-record' || this.action === 'new-person-opening-record')?
-        'Apertura de expediente' : '' }} {{this.action === 'edit-record' ? 'Editar Expediente' : ''}} {{this.action === 'view-record' ? 'Ver Expediente' : ''}}
-    </h1>
+  <h1 class="h3 mb-0 text-gray-800">
+    <a [routerLink]="['/home']">Panel de control</a> ->
+    <a [routerLink]="['/home/records']">Pacientes</a> ->
+    <a [routerLink]="['/home', 'record-summary', this.params.personId ]">{{ this.person.name }}
+      {{ this.person.lastName }} {{ this.person.secondLastName}} -> </a> {{ (this.action === 'existing-person-opening-record' || this.action === 'new-person-opening-record')?
+        'Apertura de expediente' : '' }} {{this.action === 'edit-record' ? 'Editar Expediente' : ''}}
+    {{this.action === 'view-record' ? 'Ver Expediente' : ''}}
+  </h1>
 </div>
 <div class="row">
-    <div class="col-md-12 pl-5 text border-left-primary">
-        <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" class="mb-lg-5">
-            <div class="col-md-12 text-right mb-3">
-                <button [disabled]="this.recordForm.invalid" type="submit" class="btn btn-success btn-lg btn-icon-split">
-                
-                        <!-- <button [disabled]="recordForm.invalid || recordForm.disabled || recordForm.pristine" type="submit " class="btn btn-success btn-lg btn-icon-split"> -->
-                            <span class="icon text-white-50">
-                                <i class="fas fa-save"></i>
-                            </span>
-                            <span class="text">Guardar</span>
-                        </button>
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" class="mb-lg-5">
+      <div class="col-md-12 text-right mb-3">
+        <button [disabled]="this.recordForm.invalid" type="submit" class="btn btn-success btn-lg btn-icon-split">
+
+          <!-- <button [disabled]="recordForm.invalid || recordForm.disabled || recordForm.pristine" type="submit " class="btn btn-success btn-lg btn-icon-split"> -->
+          <span class="icon text-white-50">
+            <i class="fas fa-save"></i>
+          </span>
+          <span class="text">Guardar</span>
+        </button>
+      </div>
+      <!-- <button (click)="onSubmit()">Test</button> -->
+      <mat-tab-group class="mt-2 form-tab-custom">
+        <mat-tab class="" label="Información personal">
+          <div formGroupName="person" class="mt-2">
+            <!-- Left side of the form -->
+            <div class="form-row">
+              <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.name') } ">
+                <label for="name">Nombre *</label>
+                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.name')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+              </div>
             </div>
-            <!-- <button (click)="onSubmit()">Test</button> -->
-            <mat-tab-group class="mt-2 form-tab-custom">
-                <mat-tab class="" label="Información personal">
-                    <div formGroupName="person" class="mt-2">
-                        <!-- Left side of the form -->
-                        <div class="form-row">
-                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.name') } ">
-                                <label for="name">Nombre *</label>
-                                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre">
-                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.name')">
-                                    <h6 class="feedback-field">Este campo es requerido</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.lastName') } ">
-                                <label for="lastName">Apellida Paterno *</label>
-                                <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Apellida Paterno">
-                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.lastName')">
-                                    <h6 class="feedback-field">Este campo es requerido</h6>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.secondLastName') } ">
-                                <label for="secondLastName">Apellido Materno *</label>
-                                <input type="text" class="form-control" formControlName="secondLastName" id="secondLastName" placeholder="Apellido Materno">
-                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.secondLastName')">
-                                    <h6 class="feedback-field">Este campo es requerido</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.phone') } ">
-                                <label for="phone">Número de teléfono</label>
-                                <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Número de teléfono">
-                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.phone')">
-                                    <h6 class="feedback-field">Este campo es requerido</h6>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.email') } ">
-                                <label for="email">Correo electronico</label>
-                                <input type="text" class="form-control" formControlName="email" id="email" placeholder="correo@ejemplo.com">
-                                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.email')">
-                                    <h6 class="feedback-field">Este campo es requerido</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('bornDate') } ">
-                            <label for="bornDate">Fecha de nacimiento *</label>
-                            <input (change)="calculateAge()" type="date" class="form-control" formControlName="bornDate" id="bornDate">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('bornDate')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                            <!-- <div class="form-control-feedback" *ngIf="requiredFormatPattern('bornDate')">
+            <div class="form-row">
+              <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.lastName') } ">
+                <label for="lastName">Apellida Paterno *</label>
+                <input type="text" class="form-control" formControlName="lastName" id="lastName"
+                  placeholder="Apellida Paterno">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.lastName')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+              </div>
+              <div class="form-group col-md-6"
+                [ngClass]="{'has-error': requiredFieldValidation('person.secondLastName') } ">
+                <label for="secondLastName">Apellido Materno *</label>
+                <input type="text" class="form-control" formControlName="secondLastName" id="secondLastName"
+                  placeholder="Apellido Materno">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.secondLastName')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.phone') } ">
+                <label for="phone">Número de teléfono</label>
+                <input type="text" class="form-control" formControlName="phone" id="phone"
+                  placeholder="Número de teléfono">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.phone')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+              </div>
+              <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('person.email') } ">
+                <label for="email">Correo electronico</label>
+                <input type="text" class="form-control" formControlName="email" id="email"
+                  placeholder="correo@ejemplo.com">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('person.email')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('bornDate') } ">
+              <label for="bornDate">Fecha de nacimiento *</label>
+              <input (change)="calculateAge()" type="date" class="form-control" formControlName="bornDate"
+                id="bornDate">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('bornDate')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+              <!-- <div class="form-control-feedback" *ngIf="requiredFormatPattern('bornDate')">
                                 <h6 class="feedback-field">El formato debe ser DD-MM-AAAA</h6>
                             </div> -->
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('age') } ">
-                            <label for="age">Edad</label>
-                            <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="age" id="age" placeholder="Edad">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('age')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <hr style="height:2px; border:none; color:#4e73df; background-color: #4e73df"> -->
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
-                            <label for="gender">Sexo *</label>
-                            <select type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
-                              <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
-                                {{ gender }}
-                              </option>
-                            </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('civilStatus') } ">
-                            <label for="civilStatus">Estado Civil *</label>
-                            <select type="option" class="form-control" formControlName="civilStatus" id="civilStatus" placeholder="DD-MM-AAAA">
-                              <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
-                                {{ civilStatus }}
-                              </option>
-                            </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('civilStatus')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('address') } ">
-                            <label for="address">Domicilio</label>
-                            <input type="text" class="form-control" formControlName="address" id="address" placeholder="Domicilio">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('address')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
-                            <label for="city">Municipio *</label>
-                            <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio" [matAutocomplete]="cityAutoComplete">
-                            <mat-autocomplete #cityAutoComplete="matAutocomplete">
-                                <mat-option *ngFor="let city of cities | async" [value]="city">
-                                    {{city}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('parish') } ">
-                            <label for="parish">Parroquia</label>
-                            <input type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('parish')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('colony') } ">
-                            <label for="colony">Colonia</label>
-                            <input type="text" class="form-control" formControlName="colony" id="colony" placeholder="Colonia">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('colony')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
-                            <label for="escolarity">Escolaridad *</label>
-                            <input type="text" class="form-control" formControlName="escolarity" id="escolarity" placeholder="Escolaridad" [matAutocomplete]="escolarityAutoComplete">
-                            <mat-autocomplete #escolarityAutoComplete="matAutocomplete">
-                                <mat-option *ngFor="let escolarity of escolarities | async" [value]="escolarity">
-                                    {{escolarity}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('religion') } ">
-                            <label for="religion">Religión</label>
-                            <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religion" [matAutocomplete]="religionAutoComplete">
-                            <mat-autocomplete #religionAutoComplete="matAutocomplete">
-                                <mat-option *ngFor="let religion of religions | async" [value]="religion">
-                                    {{religion}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('religion')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('ocupation') } ">
-                            <label for="ocupation">Ocupación</label>
-                            <input type="text" class="form-control" formControlName="ocupation" id="ocupation" placeholder="Ocupación">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('ocupation')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('firstTime') } ">
-                            <label for="firstTime"> ¿Primera vez? *</label>
-                            <select type="option" class="form-control" formControlName="firstTime" id="firstTime">
-                            <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
-                              {{ yesNoOption.text }}
-                            </option>
-                          </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('firstTime')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoDerived') } ">
-                            <label for="whoDerived">¿Quién derivó?</label>
-                            <input type="text" class="form-control" formControlName="whoDerived" id="whoDerived" placeholder="¿Quién derivó?" [matAutocomplete]="whoDerivedAutoComplete">
-                            <mat-autocomplete #whoDerivedAutoComplete="matAutocomplete">
-                                <mat-option *ngFor="let deriver of derivers | async" [value]="deriver">
-                                    {{deriver}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whoDerived')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whenWasFirstTime') } ">
-                            <label for="whenWasFirstTime">¿Cuándo?</label>
-                            <input type="text" class="form-control" formControlName="whenWasFirstTime" id="whenWasFirstTime" placeholder="¿Cuándo?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whenWasFirstTime')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('consultationDisposition') } ">
-                            <label for="consultationDisposition"> Disposición para consulta *</label>
-                            <select type="option" class="form-control" formControlName="consultationDisposition" id="consultationDisposition">
-                                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
-                                  {{ yesNoOption.text }}
-                                </option>
-                              </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('consultationDisposition')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Exploración Socioeconómica">
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('economicDependent') } ">
-                            <label for="economicDependent"> ¿Dependiente económico? *</label>
-                            <select type="option" class="form-control" formControlName="economicDependent" id="economicDependent">
-                                    <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
-                                      {{ yesNoOption.text }}
-                                    </option>
-                                  </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('economicDependent')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoWorks') } ">
-                            <label for="whoWorks">¿Quién labora?</label>
-                            <input type="text" class="form-control" formControlName="whoWorks" id="whoWorks" placeholder="¿Quién labora?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('whoWorks')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workPlace') } ">
-                            <label for="workPlace">¿Dónde labora?</label>
-                            <input type="text" class="form-control" formControlName="workPlace" id="workPlace" placeholder="¿Dónde labora?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('workPlace')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workOcupation') } ">
-                            <label for="workOcupation">Función en el trabajo</label>
-                            <input type="text" class="form-control" formControlName="workOcupation" id="workOcupation" placeholder="Función en el trabajo">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('workOcupation')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('senorityOfWork') } ">
-                            <label for="senorityOfWork">Tiempo laboralmente activo</label>
-                            <input type="text" class="form-control" formControlName="senorityOfWork" id="senorityOfWork" placeholder="Tiempo laboralmente activo">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('senorityOfWork')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('sinceWhenWorkOcupation') } ">
-                            <label for="sinceWhenWorkOcupation">Tiempo laborando en ese lugar</label>
-                            <input type="text" class="form-control" formControlName="sinceWhenWorkOcupation" id="sinceWhenWorkOcupation" placeholder="Tiempo laborando en ese lugar">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('sinceWhenWorkOcupation')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('monthlyIncome') } ">
-                            <label for="monthlyIncome">Ingreso al mes $</label>
-                            <input type="number" class="form-control" formControlName="monthlyIncome" id="monthlyIncome" placeholder="Ingreso al mes $">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('monthlyIncome')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workStatus') } ">
-                            <label for="workStatus"> Estatus laboral *</label>
-                            <select type="option" class="form-control" formControlName="workStatus" id="workStatus">
-                                    <option *ngFor="let workStatus of this.recordFormOptions.workStatus" [ngValue]="workStatus">
-                                      {{ workStatus }}
-                                    </option>
-                                  </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('workStatus')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('timeOnWorkStatus') } ">
-                            <label for="timeOnWorkStatus">Tiempo que lleva en siutación laboral</label>
-                            <input type="text" class="form-control" formControlName="timeOnWorkStatus" id="timeOnWorkStatus" placeholder="Tiempo que lleva en siutación laboral">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('timeOnWorkStatus')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('numberOfDependents') } ">
-                            <label for="numberOfDependents">¿Cúantos dependientes tiene?</label>
-                            <input type="number" class="form-control" formControlName="numberOfDependents" id="numberOfDependents" placeholder="¿Cúantos dependiente tiene?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('numberOfDependents')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('numberOfDependentsThatBringMoney') } ">
-                            <label for="numberOfDependentsThatBringMoney">¿Cúantas personas ingresan?</label>
-                            <input type="number" class="form-control" formControlName="numberOfDependentsThatBringMoney" id="numberOfDependentsThatBringMoney" placeholder="¿Cúantas personas ingresan?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('numberOfDependentsThatBringMoney')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('houseStatus') } ">
-                            <label for="houseStatus"> La casa que habita es: *</label>
-                            <select type="option" class="form-control" formControlName="houseStatus" id="houseStatus">
-                                        <option *ngFor="let houseStatus of this.recordFormOptions.houseStatus" [ngValue]="houseStatus">
-                                          {{ houseStatus }}
-                                        </option>
-                                      </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('houseStatus')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Exploración clínica / Sintomatología referida por el paciente">
-                    <div class="form-row">
-                        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('clinicExploration') } ">
-                            <label for="clinicExploration">Exploración clínica:</label>
-                            <textarea type="textarea" class="form-control" formControlName="clinicExploration" id="clinicExploration" placeholder="Exponga brevemente la problemática:"></textarea>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('clinicExploration')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('raatention') } ">
-                            <label for="raatention"> ¿Ha recibido atención? *</label>
-                            <select type="option" class="form-control" formControlName="raatention" id="raatention">
-                                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
-                                    {{ yesNoOption.text }}
-                                </option>
-                            </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('raatention')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('ratreatmentFinished') } ">
-                            <label for="ratreatmentFinished"> ¿Terminó tratamiento? *</label>
-                            <select type="option" class="form-control" formControlName="ratreatmentFinished" id="ratreatmentFinished">
-                                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
-                                    {{ yesNoOption.text }}
-                                </option>
-                            </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('ratreatmentFinished')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('ratimes') } ">
-                            <label for="ratimes">¿En cúantas ocasiones?</label>
-                            <input type="number" class="form-control" formControlName="ratimes" id="ratimes" placeholder="¿En cúantas ocasiones?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('ratimes')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('raplace') } ">
-                            <label for="raplace">¿Dónde recibió tratamiento?</label>
-                            <input type="text" class="form-control" formControlName="raplace" id="raplace" placeholder="¿Dónde recibió tratamiento?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('raplace')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('rareason') } ">
-                            <label for="rareason">¿Motivo por el cuál suspendió la atención?</label>
-                            <input type="text" class="form-control" formControlName="rareason" id="rareason" placeholder="¿Motivo por el cuál suspendió la atención?">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('rareason')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('underTreatment') } ">
-                            <label for="underTreatment"> ¿Actualmente está bajo tratamiento o toma algún medicamento? *</label>
-                            <select type="option" class="form-control" formControlName="underTreatment" id="underTreatment">
-                                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
-                                    {{ yesNoOption.text }}
-                                </option>
-                            </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('underTreatment')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('medicine') } ">
-                            <label for="medicine">Nombre de los medicamentos:</label>
-                            <textarea type="textarea" class="form-control" formControlName="medicine" id="medicine" placeholder="Nombre de los medicamentos:"></textarea>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('medicine')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="medicalServicesFormControl">Servicios que recibe:</label>
-                            <mat-select placeholder="Servicios médicos" class="form-control" [formControl]="medicalServicesFormControl" id="medicalServicesFormControl" multiple>
-                                <mat-select-trigger>
-                                    {{this.medicalServicesFormControl.value ? this.medicalServicesFormControl.value[0] : ''}}
-                                    <span *ngIf="this.medicalServicesFormControl.value?.length > 1" class="example-additional-selection">
-                                        (+{{this.medicalServicesFormControl.value.length - 1}} {{this.medicalServicesFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
-                                    </span>
-                                </mat-select-trigger>
-                                <mat-option *ngFor="let medicalService of this.recordFormOptions.medicalServices" [value]="medicalService">{{medicalService}}</mat-option>
-                            </mat-select>
-                            <!-- <div class="form-control-feedback" *ngIf="requiredFieldValidation('medicalServices')">
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('age') } ">
+              <label for="age">Edad</label>
+              <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="age"
+                id="age" placeholder="Edad">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('age')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <!-- <hr style="height:2px; border:none; color:#4e73df; background-color: #4e73df"> -->
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
+              <label for="gender">Sexo *</label>
+              <select type="option" class="form-control" formControlName="gender" id="gender" placeholder="DD-MM-AAAA">
+                <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
+                  {{ gender }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('civilStatus') } ">
+              <label for="civilStatus">Estado Civil *</label>
+              <select type="option" class="form-control" formControlName="civilStatus" id="civilStatus"
+                placeholder="DD-MM-AAAA">
+                <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
+                  {{ civilStatus }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('civilStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('familyContact') } ">
+              <label for="familyContact">Familiar de contacto</label>
+              <input type="text" class="form-control" formControlName="familyContact" id="familyContact"
+                placeholder="Familiar de contacto">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContact')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('address') } ">
+              <label for="address">Domicilio</label>
+              <input type="text" class="form-control" formControlName="address" id="address" placeholder="Domicilio">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('address')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('ocupation') } ">
+              <label for="ocupation">Ocupación</label>
+              <input type="text" class="form-control" formControlName="ocupation" id="ocupation"
+                placeholder="Ocupación">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('ocupation')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('parish') } ">
+              <label for="parish">Parroquias</label>
+              <input type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquias"
+                [matAutocomplete]="parishAutoComplete">
+              <mat-autocomplete #parishAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let parish of parishes | async" [value]="parish">
+                  {{parish}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('parish')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('colony') } ">
+              <label for="colony">Colonia</label>
+              <input type="text" class="form-control" formControlName="colony" id="colony" placeholder="Colonia">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('colony')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+              <label for="escolarity">Escolaridad *</label>
+              <input type="text" class="form-control" formControlName="escolarity" id="escolarity"
+                placeholder="Escolaridad" [matAutocomplete]="escolarityAutoComplete">
+              <mat-autocomplete #escolarityAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let escolarity of escolarities | async" [value]="escolarity">
+                  {{escolarity}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('religion') } ">
+              <label for="religion">Religión</label>
+              <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religion"
+                [matAutocomplete]="religionAutoComplete">
+              <mat-autocomplete #religionAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let religion of religions | async" [value]="religion">
+                  {{religion}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('religion')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
+              <label for="city">Municipio *</label>
+              <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio"
+                [matAutocomplete]="cityAutoComplete">
+              <mat-autocomplete #cityAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let city of cities | async" [value]="city">
+                  {{city}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('city')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+                        </div> -->
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('location') } ">
+              <label for="location">Localidad *</label>
+              <input type="text" class="form-control" formControlName="location" id="location" placeholder="Localidad"
+                [matAutocomplete]="locationAutoComplete">
+              <mat-autocomplete #locationAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let location of locations | async" [value]="location">
+                  {{location}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('location')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('firstTime') } ">
+              <label for="firstTime"> ¿Primera vez? *</label>
+              <select type="option" class="form-control" formControlName="firstTime" id="firstTime">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('firstTime')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoDerived') } ">
+              <label for="whoDerived">¿Quién derivó?</label>
+              <input type="text" class="form-control" formControlName="whoDerived" id="whoDerived"
+                placeholder="¿Quién derivó?" [matAutocomplete]="whoDerivedAutoComplete">
+              <mat-autocomplete #whoDerivedAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let deriver of derivers | async" [value]="deriver">
+                  {{deriver}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('whoDerived')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whenWasFirstTime') } ">
+              <label for="whenWasFirstTime">¿Cuándo?</label>
+              <input type="text" class="form-control" formControlName="whenWasFirstTime" id="whenWasFirstTime"
+                placeholder="¿Cuándo?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('whenWasFirstTime')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredFieldValidation('consultationDisposition') } ">
+              <label for="consultationDisposition"> Disposición para consulta *</label>
+              <select type="option" class="form-control" formControlName="consultationDisposition"
+                id="consultationDisposition">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('consultationDisposition')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Exploración Socioeconómica">
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('economicDependent') } ">
+              <label for="economicDependent"> ¿Dependiente económico? *</label>
+              <select type="option" class="form-control" formControlName="economicDependent" id="economicDependent">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('economicDependent')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoWorks') } ">
+              <label for="whoWorks">¿Quién labora?</label>
+              <input type="text" class="form-control" formControlName="whoWorks" id="whoWorks"
+                placeholder="¿Quién labora?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('whoWorks')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workPlace') } ">
+              <label for="workPlace">¿Dónde labora?</label>
+              <input type="text" class="form-control" formControlName="workPlace" id="workPlace"
+                placeholder="¿Dónde labora?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('workPlace')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workOcupation') } ">
+              <label for="workOcupation">Función en el trabajo</label>
+              <input type="text" class="form-control" formControlName="workOcupation" id="workOcupation"
+                placeholder="Función en el trabajo">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('workOcupation')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('senorityOfWork') } ">
+              <label for="senorityOfWork">Tiempo laboralmente activo</label>
+              <input type="text" class="form-control" formControlName="senorityOfWork" id="senorityOfWork"
+                placeholder="Tiempo laboralmente activo">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('senorityOfWork')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredFieldValidation('sinceWhenWorkOcupation') } ">
+              <label for="sinceWhenWorkOcupation">Tiempo laborando en ese lugar</label>
+              <input type="text" class="form-control" formControlName="sinceWhenWorkOcupation"
+                id="sinceWhenWorkOcupation" placeholder="Tiempo laborando en ese lugar">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('sinceWhenWorkOcupation')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('monthlyIncome') } ">
+              <label for="monthlyIncome">Ingreso al mes $</label>
+              <input type="number" class="form-control" formControlName="monthlyIncome" id="monthlyIncome"
+                placeholder="Ingreso al mes $">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('monthlyIncome')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('workStatus') } ">
+              <label for="workStatus"> Estatus laboral *</label>
+              <select type="option" class="form-control" formControlName="workStatus" id="workStatus">
+                <option *ngFor="let workStatus of this.recordFormOptions.workStatus" [ngValue]="workStatus">
+                  {{ workStatus }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('workStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('timeOnWorkStatus') } ">
+              <label for="timeOnWorkStatus">Tiempo que lleva en siutación laboral</label>
+              <input type="text" class="form-control" formControlName="timeOnWorkStatus" id="timeOnWorkStatus"
+                placeholder="Tiempo que lleva en siutación laboral">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('timeOnWorkStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('numberOfDependents') } ">
+              <label for="numberOfDependents">¿Cúantos dependientes tiene?</label>
+              <input type="number" class="form-control" formControlName="numberOfDependents" id="numberOfDependents"
+                placeholder="¿Cúantos dependiente tiene?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('numberOfDependents')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredFieldValidation('numberOfDependentsThatBringMoney') } ">
+              <label for="numberOfDependentsThatBringMoney">¿Cúantas personas ingresan?</label>
+              <input type="number" class="form-control" formControlName="numberOfDependentsThatBringMoney"
+                id="numberOfDependentsThatBringMoney" placeholder="¿Cúantas personas ingresan?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('numberOfDependentsThatBringMoney')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('houseStatus') } ">
+              <label for="houseStatus"> La casa que habita es: *</label>
+              <select type="option" class="form-control" formControlName="houseStatus" id="houseStatus">
+                <option *ngFor="let houseStatus of this.recordFormOptions.houseStatus" [ngValue]="houseStatus">
+                  {{ houseStatus }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('houseStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Exploración clínica / Sintomatología referida por el paciente">
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('clinicExploration') } ">
+              <label for="clinicExploration">Exploración clínica:</label>
+              <textarea type="textarea" class="form-control" formControlName="clinicExploration" id="clinicExploration"
+                placeholder="Exponga brevemente la problemática:"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('clinicExploration')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('raatention') } ">
+              <label for="raatention"> ¿Ha recibido atención? *</label>
+              <select type="option" class="form-control" formControlName="raatention" id="raatention">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('raatention')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-4"
+              [ngClass]="{'has-error': requiredFieldValidation('ratreatmentFinished') } ">
+              <label for="ratreatmentFinished"> ¿Terminó tratamiento? *</label>
+              <select type="option" class="form-control" formControlName="ratreatmentFinished" id="ratreatmentFinished">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('ratreatmentFinished')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('ratimes') } ">
+              <label for="ratimes">¿En cúantas ocasiones?</label>
+              <input type="number" class="form-control" formControlName="ratimes" id="ratimes"
+                placeholder="¿En cúantas ocasiones?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('ratimes')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('raplace') } ">
+              <label for="raplace">¿Dónde recibió tratamiento?</label>
+              <input type="text" class="form-control" formControlName="raplace" id="raplace"
+                placeholder="¿Dónde recibió tratamiento?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('raplace')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('rareason') } ">
+              <label for="rareason">¿Motivo por el cuál suspendió la atención?</label>
+              <input type="text" class="form-control" formControlName="rareason" id="rareason"
+                placeholder="¿Motivo por el cuál suspendió la atención?">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('rareason')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('underTreatment') } ">
+              <label for="underTreatment"> ¿Actualmente está bajo tratamiento o toma algún medicamento? *</label>
+              <select type="option" class="form-control" formControlName="underTreatment" id="underTreatment">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.value">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('underTreatment')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('medicine') } ">
+              <label for="medicine">Nombre de los medicamentos:</label>
+              <textarea type="textarea" class="form-control" formControlName="medicine" id="medicine"
+                placeholder="Nombre de los medicamentos:"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('medicine')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="medicalServicesFormControl">Servicios que recibe:</label>
+              <mat-select placeholder="Servicios médicos" class="form-control"
+                [formControl]="medicalServicesFormControl" id="medicalServicesFormControl" multiple>
+                <mat-select-trigger>
+                  {{this.medicalServicesFormControl.value ? this.medicalServicesFormControl.value[0] : ''}}
+                  <span *ngIf="this.medicalServicesFormControl.value?.length > 1" class="example-additional-selection">
+                    (+{{this.medicalServicesFormControl.value.length - 1}}
+                    {{this.medicalServicesFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let medicalService of this.recordFormOptions.medicalServices"
+                  [value]="medicalService">{{medicalService}}</mat-option>
+              </mat-select>
+              <!-- <div class="form-control-feedback" *ngIf="requiredFieldValidation('medicalServices')">
                                 <h6 class="feedback-field">Este campo es requerido</h6>
                             </div> -->
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('chronicDisease') } ">
-                            <label for="chronicDisease">Enfermedad crónica</label>
-                            <input type="text" class="form-control" formControlName="chronicDisease" id="chronicDisease" placeholder="Enfermedad crónica">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('chronicDisease')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Descripción impresionista del paciente / Habitus exterior">
-                    <div class="form-row">
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('weight') } ">
-                            <label for="weight">Peso kg *</label>
-                            <input type="number" (change)="calculateBMI()" class="form-control" formControlName="weight" id="weight" placeholder="Peso kg">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('weight')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('size') } ">
-                            <label for="size">Talla cm *</label>
-                            <input type="number" (change)="calculateBMI()" class="form-control" formControlName="size" id="size" placeholder="Talla cm">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('size')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('bmi') } ">
-                            <label for="bmi">IMC *</label>
-                            <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="bmi" id="bmi" placeholder="IMC">
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('bmi')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                            <div class="form-control-feedback" *ngIf="this.recordForm.get(['bmi']).value > 0">
-                                <h6 class="text-success">{{bmiText}}</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('hygiene') } ">
-                            <label for="hygiene"> Higiene *</label>
-                            <select type="option" class="form-control" formControlName="hygiene" id="hygiene">
-                                        <option *ngFor="let hygiene of this.recordFormOptions.hygiene" [ngValue]="hygiene">
-                                          {{ hygiene }}
-                                        </option>
-                                      </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('hygiene')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('walkingAlterations') } ">
-                            <label for="walkingAlterations"> Alteraciones en la marcha *</label>
-                            <select type="option" class="form-control" formControlName="walkingAlterations" id="walkingAlterations">
-                                    <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
-                                        {{ yesNoOption.text }}
-                                    </option>
-                                </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('walkingAlterations')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('speakingAlterations') } ">
-                            <label for="speakingAlterations"> Alteraciones en el habla *</label>
-                            <select type="option" class="form-control" formControlName="speakingAlterations" id="speakingAlterations">
-                                        <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
-                                            {{ yesNoOption.text }}
-                                        </option>
-                                    </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('speakingAlterations')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('notes') } ">
-                            <label for="notes">Anotaciones:</label>
-                            <textarea type="textarea" class="form-control" formControlName="notes" id="notes" placeholder="Anotaciones:"></textarea>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('notes')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('smoke') } ">
-                            <label for="smoke">Tabaco:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="smoke" type="radio" id="smoke" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('smoke')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value) } ">
-                            <label for="smokeFrecuency">Frecuencia *</label>
-                            <input type="text" class="form-control" formControlName="smokeFrecuency" id="smokeFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('drinkAlcohol') } ">
-                            <label for="drinkAlcohol">Alcohol:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="drinkAlcohol" type="radio" id="drinkAlcohol" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('drinkAlcohol')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value) } ">
-                            <label for="drinkAlcoholFrecuency">Frecuencia *</label>
-                            <input type="text" class="form-control" formControlName="drinkAlcoholFrecuency" id="drinkAlcoholFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('otherDrugs') } ">
-                            <label for="otherDrugs">Otras drogas:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="otherDrugs" type="radio" id="otherDrugs" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('otherDrugs')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value) } ">
-                            <label for="whichDrugs">¿Cuáles? *</label>
-                            <input type="text" class="form-control" formControlName="whichDrugs" id="whichDrugs" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value) } ">
-                            <label for="drugsFrecuency">Frecuencia *</label>
-                            <input type="text" class="form-control" formControlName="drugsFrecuency" id="drugsFrecuency" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('sleepingAlterations') } ">
-                            <label for="sleepingAlterations">Alteraciones en el sueño:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="sleepingAlterations" type="radio" id="sleepingAlterations" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('sleepingAlterations')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value) } ">
-                            <label for="whichSleepingAlterarions">¿Cuáles? *</label>
-                            <input type="text" class="form-control" formControlName="whichSleepingAlterarions" id="whichSleepingAlterarions" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value) } ">
-                            <label for="sinceWhenSleepingAlterarions">¿Desde cuándo? *</label>
-                            <input type="text" class="form-control" formControlName="sinceWhenSleepingAlterarions" id="sinceWhenSleepingAlterarions" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('alimentaryAlterations') } ">
-                            <label for="alimentaryAlterations">Alteraciones alimentarias:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="alimentaryAlterations" type="radio" id="alimentaryAlterations" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('alimentaryAlterations')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value) } ">
-                            <label for="whichAlimentaryAlterations">¿Cuáles? *</label>
-                            <input type="text" class="form-control" formControlName="whichAlimentaryAlterations" id="whichAlimentaryAlterations" placeholder="¿Cuáles?">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value) } ">
-                            <label for="sinceWhenAlimentaryAlterations">¿Desde cuándo? *</label>
-                            <input type="text" class="form-control" formControlName="sinceWhenAlimentaryAlterations" id="sinceWhenAlimentaryAlterations" placeholder="Frecuencia">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('moodChanges') } ">
-                            <label for="moodChanges">Cambios del estado de ánimo:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="moodChanges" type="radio" id="moodChanges" [value]="yesNoOption.text">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('moodChanges')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value) } ">
-                            <label for="sinceWhenMoodChanges">¿Cúales y desde cuándo? *</label>
-                            <input type="text" class="form-control" formControlName="sinceWhenMoodChanges" id="sinceWhenMoodChanges" placeholder="¿Desde cuándo?">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('ciminalRecords') } ">
-                            <label for="ciminalRecords">Antecedentes penales:</label>
-                            <br>
-                            <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
-                                <input class="form-check-input" formControlName="ciminalRecords" type="radio" id="ciminalRecords" [value]="yesNoOption.value">
-                                <span>{{ yesNoOption.text }}</span>
-                            </label>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('ciminalRecords')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value) } ">
-                            <label for="whichCriminalRecords">¿Cuáles antecedentes? *</label>
-                            <input type="text" class="form-control" formControlName="whichCriminalRecords" id="whichCriminalRecords" placeholder="¿Desde cuándo?">
-                            <div class="form-control-feedback" *ngIf="requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value)">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                </mat-tab>
-                <!-- <mat-tab label="Genograma">
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('chronicDisease') } ">
+              <label for="chronicDisease">Enfermedad crónica</label>
+              <input type="text" class="form-control" formControlName="chronicDisease" id="chronicDisease"
+                placeholder="Enfermedad crónica">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('chronicDisease')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Descripción impresionista del paciente / Habitus exterior">
+          <div class="form-row">
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('weight') } ">
+              <label for="weight">Peso kg *</label>
+              <input type="number" (change)="calculateBMI()" class="form-control" formControlName="weight" id="weight"
+                placeholder="Peso kg">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('weight')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('size') } ">
+              <label for="size">Talla cm *</label>
+              <input type="number" (change)="calculateBMI()" class="form-control" formControlName="size" id="size"
+                placeholder="Talla cm">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('size')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('bmi') } ">
+              <label for="bmi">IMC *</label>
+              <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="bmi"
+                id="bmi" placeholder="IMC">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('bmi')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+              <div class="form-control-feedback" *ngIf="this.recordForm.get(['bmi']).value > 0">
+                <h6 class="text-success">{{bmiText}}</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('hygiene') } ">
+              <label for="hygiene"> Higiene *</label>
+              <select type="option" class="form-control" formControlName="hygiene" id="hygiene">
+                <option *ngFor="let hygiene of this.recordFormOptions.hygiene" [ngValue]="hygiene">
+                  {{ hygiene }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('hygiene')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('walkingAlterations') } ">
+              <label for="walkingAlterations"> Alteraciones en la marcha *</label>
+              <select type="option" class="form-control" formControlName="walkingAlterations" id="walkingAlterations">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('walkingAlterations')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredFieldValidation('speakingAlterations') } ">
+              <label for="speakingAlterations"> Alteraciones en el habla *</label>
+              <select type="option" class="form-control" formControlName="speakingAlterations" id="speakingAlterations">
+                <option *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" [ngValue]="yesNoOption.text">
+                  {{ yesNoOption.text }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('speakingAlterations')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('notes') } ">
+              <label for="notes">Anotaciones:</label>
+              <textarea type="textarea" class="form-control" formControlName="notes" id="notes"
+                placeholder="Anotaciones:"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('notes')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('smoke') } ">
+              <label for="smoke">Tabaco:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="smoke" type="radio" id="smoke"
+                  [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('smoke')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value) } ">
+              <label for="smokeFrecuency">Frecuencia *</label>
+              <input type="text" class="form-control" formControlName="smokeFrecuency" id="smokeFrecuency"
+                placeholder="Frecuencia">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('smoke').value, this.recordForm.get('smokeFrecuency').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('drinkAlcohol') } ">
+              <label for="drinkAlcohol">Alcohol:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="drinkAlcohol" type="radio" id="drinkAlcohol"
+                  [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('drinkAlcohol')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value) } ">
+              <label for="drinkAlcoholFrecuency">Frecuencia *</label>
+              <input type="text" class="form-control" formControlName="drinkAlcoholFrecuency" id="drinkAlcoholFrecuency"
+                placeholder="Frecuencia">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('drinkAlcohol').value, this.recordForm.get('drinkAlcoholFrecuency').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('otherDrugs') } ">
+              <label for="otherDrugs">Otras drogas:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="otherDrugs" type="radio" id="otherDrugs"
+                  [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('otherDrugs')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value) } ">
+              <label for="whichDrugs">¿Cuáles? *</label>
+              <input type="text" class="form-control" formControlName="whichDrugs" id="whichDrugs"
+                placeholder="¿Cuáles?">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('whichDrugs').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value) } ">
+              <label for="drugsFrecuency">Frecuencia *</label>
+              <input type="text" class="form-control" formControlName="drugsFrecuency" id="drugsFrecuency"
+                placeholder="Frecuencia">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('otherDrugs').value, this.recordForm.get('drugsFrecuency').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2"
+              [ngClass]="{'has-error': requiredFieldValidation('sleepingAlterations') } ">
+              <label for="sleepingAlterations">Alteraciones en el sueño:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="sleepingAlterations" type="radio"
+                  id="sleepingAlterations" [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('sleepingAlterations')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value) } ">
+              <label for="whichSleepingAlterarions">¿Cuáles? *</label>
+              <input type="text" class="form-control" formControlName="whichSleepingAlterarions"
+                id="whichSleepingAlterarions" placeholder="¿Cuáles?">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('whichSleepingAlterarions').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value) } ">
+              <label for="sinceWhenSleepingAlterarions">¿Desde cuándo? *</label>
+              <input type="text" class="form-control" formControlName="sinceWhenSleepingAlterarions"
+                id="sinceWhenSleepingAlterarions" placeholder="Frecuencia">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('sleepingAlterations').value, this.recordForm.get('sinceWhenSleepingAlterarions').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2"
+              [ngClass]="{'has-error': requiredFieldValidation('alimentaryAlterations') } ">
+              <label for="alimentaryAlterations">Alteraciones alimentarias:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="alimentaryAlterations" type="radio"
+                  id="alimentaryAlterations" [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('alimentaryAlterations')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value) } ">
+              <label for="whichAlimentaryAlterations">¿Cuáles? *</label>
+              <input type="text" class="form-control" formControlName="whichAlimentaryAlterations"
+                id="whichAlimentaryAlterations" placeholder="¿Cuáles?">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('whichAlimentaryAlterations').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-5"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value) } ">
+              <label for="sinceWhenAlimentaryAlterations">¿Desde cuándo? *</label>
+              <input type="text" class="form-control" formControlName="sinceWhenAlimentaryAlterations"
+                id="sinceWhenAlimentaryAlterations" placeholder="Frecuencia">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('alimentaryAlterations').value, this.recordForm.get('sinceWhenAlimentaryAlterations').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('moodChanges') } ">
+              <label for="moodChanges">Cambios del estado de ánimo:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="moodChanges" type="radio" id="moodChanges"
+                  [value]="yesNoOption.text">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('moodChanges')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value) } ">
+              <label for="sinceWhenMoodChanges">¿Cúales y desde cuándo? *</label>
+              <input type="text" class="form-control" formControlName="sinceWhenMoodChanges" id="sinceWhenMoodChanges"
+                placeholder="¿Desde cuándo?">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('moodChanges').value, this.recordForm.get('sinceWhenMoodChanges').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" [ngClass]="{'has-error': requiredFieldValidation('ciminalRecords') } ">
+              <label for="ciminalRecords">Antecedentes penales:</label>
+              <br>
+              <label *ngFor="let yesNoOption of this.recordFormOptions.yesNoOptions" class="form-check-inline">
+                <input class="form-check-input" formControlName="ciminalRecords" type="radio" id="ciminalRecords"
+                  [value]="yesNoOption.value">
+                <span>{{ yesNoOption.text }}</span>
+              </label>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('ciminalRecords')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value) } ">
+              <label for="whichCriminalRecords">¿Cuáles antecedentes? *</label>
+              <input type="text" class="form-control" formControlName="whichCriminalRecords" id="whichCriminalRecords"
+                placeholder="¿Desde cuándo?">
+              <div class="form-control-feedback"
+                *ngIf="requiredRadioInputValidation(this.recordForm.get('ciminalRecords').value, this.recordForm.get('whichCriminalRecords').value)">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- <mat-tab label="Genograma">
                     <div class="image-upload">
                         <img *ngIf="genogramSrc" [src]="genogramSrc" style="max-width:800px;max-height:600px" />
                         <input name="imageUrl" type="file" accept="image/*" (change)="handleInputChange($event)" />
@@ -695,96 +808,152 @@
                         </button>
                     </div>
                 </mat-tab> -->
-                <mat-tab label="Impresión diagnóstica">
-                    <div class="form-row">
-                        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('presuntiveDiagnostic') } ">
-                            <label for="presuntiveDiagnostic">Diagnóstico presuntivo:</label>
-                            <textarea type="textarea" class="form-control" formControlName="presuntiveDiagnostic" id="presuntiveDiagnostic" placeholder="Diagnóstico presuntivo"></textarea>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('presuntiveDiagnostic')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
+        <mat-tab label="Impresión diagnóstica">
+          <div class="form-row">
+            <div class="form-group col-md-12"
+              [ngClass]="{'has-error': requiredFieldValidation('presuntiveDiagnostic') } ">
+              <label for="presuntiveDiagnostic">Diagnóstico presuntivo:</label>
+              <textarea type="textarea" class="form-control" formControlName="presuntiveDiagnostic"
+                id="presuntiveDiagnostic" placeholder="Diagnóstico presuntivo"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('presuntiveDiagnostic')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <!-- <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('derivationType') } ">
+              <label for="derivationType">Tipo de de derivacion *</label>
+              <select (change)='renderDerivationForm()' type="option" class="form-control"
+                formControlName="derivationType" id="derivationType">
+                <option *ngFor="let derivationType of this.recordFormOptions.derivationTypes"
+                  [ngValue]="derivationType">
+                  {{ derivationType }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('recordType')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div *ngIf="this.recordForm.get(['derivationType']).value === 'INTERNA'">
+            <div class="form-row">
+              <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('derivedTo') } ">
+                <label for="derivedTo">Derivado a:</label>
+                <mat-select (selectionChange)="getDerivedAreas();" placeholder="Areas" class="form-control"
+                  [formControl]="derivedAreasFormControl" id="derivedAreasFormControl" multiple>
+                  <mat-select-trigger>
+                    {{this.derivedAreasFormControl.value ? this.derivedAreasFormControl.value[0] : ''}}
+                    <span *ngIf="this.derivedAreasFormControl.value?.length > 1" class="example-additional-selection">
+                      (+{{this.derivedAreasFormControl.value.length - 1}}
+                      {{this.derivedAreasFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let deriveArea of this.recordFormOptions.derivedAreas" [value]="deriveArea">
+                    {{deriveArea}}</mat-option>
+                </mat-select>
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivedTo')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+                <br>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="otherDerivedAreaFormControl">Agregar otra area:</label>
+                <input type="text" class="form-control" [formControl]="otherDerivedAreaFormControl"
+                  id="otherDerivedAreaFormControl" placeholder="Escriba el nombre de otra area">
+                <button [disabled]="otherDerivedAreaFormControl.invalid" (click)="addDerivedArea()"
+                  class="btn btn-success btn-icon-split mt-3">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span class="text">Agregar</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div *ngIf="this.derivedQuantitesFormGroup" [formGroup]="derivedQuantitesFormGroup"
+                class="form-group col-md-6">
+                <label>Cuotas:</label>
+                <input *ngFor="let item of this.derivedAreasFormControl.value" type="text" class="form-control mt-2"
+                  formControlName="{{ 'formControl'+stringUtil.trim(item) }}"
+                  id="{{ 'formControl'+stringUtil.trim(item) }}" placeholder="{{'Cuota para: '+item}}">
+              </div>
+              <div *ngIf="this.otherDerivedQuantitesFormGroup" [formGroup]="otherDerivedQuantitesFormGroup"
+                class="form-group col-md-6">
+                <label>Cuotas:</label>
+                <input *ngFor="let item of otherDerivedAreas" type="text" class="form-control mt-2"
+                  formControlName="{{ 'formControl'+stringUtil.trim(item) }}"
+                  id="{{ 'formControl'+stringUtil.trim(item) }}" placeholder="{{'Cuota para: '+item}}">
+              </div>
+            </div>
+          </div>
+          <div *ngIf="this.recordForm.get(['derivationType']).value === 'EXTERNA'">
+            <div formGroupName="externalDerivationForm" class="mt-2">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="derivedArea">Estableciemiento receptor</label>
+                        <input type="text" class="form-control" formControlName="derivedArea" id="derivedArea" placeholder="Estableciemiento receptor"
+                          [matAutocomplete]="externalAreasAutoComplete">
+                        <mat-autocomplete #externalAreasAutoComplete="matAutocomplete">
+                          <mat-option *ngFor="let externalArea of externalAreas | async" [value]="externalArea">
+                            {{externalArea}}
+                          </mat-option>
+                        </mat-autocomplete>
                     </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('derivedTo') } ">
-                            <label for="derivedTo">Derivado a:</label>
-                            <mat-select (selectionChange)="getDerivedAreas();" placeholder="Servicios médicos" class="form-control" [formControl]="derivedAreasFormControl" id="derivedAreasFormControl" multiple>
-                                <mat-select-trigger>
-                                    {{this.derivedAreasFormControl.value ? this.derivedAreasFormControl.value[0] : ''}}
-                                    <span *ngIf="this.derivedAreasFormControl.value?.length > 1" class="example-additional-selection">
-                                        (+{{this.derivedAreasFormControl.value.length - 1}} {{this.derivedAreasFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
-                                    </span>
-                                </mat-select-trigger>
-                                <mat-option *ngFor="let deriveArea of this.recordFormOptions.derivedAreas" [value]="deriveArea">{{deriveArea}}</mat-option>
-                            </mat-select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivedTo')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="otherDerivedAreaFormControl">Agregar otra area:</label>
-                            <input type="text" class="form-control" [formControl]="otherDerivedAreaFormControl" id="otherDerivedAreaFormControl" placeholder="Escriba el nombre de otra area">
-                            <button [disabled]="otherDerivedAreaFormControl.invalid" (click)="addDerivedArea()" class="btn btn-success btn-icon-split mt-3">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                <span class="text">Agregar</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div *ngIf="this.derivedQuantitesFormGroup" [formGroup]="derivedQuantitesFormGroup" class="form-group col-md-6">
-                            <label>Cuotas:</label>
-                            <input *ngFor="let item of this.derivedAreasFormControl.value" type="text" class="form-control mt-2" formControlName="{{ 'formControl'+stringUtil.trim(item) }}" id="{{ 'formControl'+stringUtil.trim(item) }}" placeholder="{{'Cuota para: '+item}}">
-                        </div>
-                        <div *ngIf="this.otherDerivedQuantitesFormGroup" [formGroup]="otherDerivedQuantitesFormGroup" class="form-group col-md-6">
-                            <label>Cuotas:</label>
-                            <input *ngFor="let item of otherDerivedAreas" type="text" class="form-control mt-2" formControlName="{{ 'formControl'+stringUtil.trim(item) }}" id="{{ 'formControl'+stringUtil.trim(item) }}" placeholder="{{'Cuota para: '+item}}">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('recordType') } ">
-                            <label for="recordType">Tipo de expediente *</label>
-                            <select type="option" class="form-control" formControlName="recordType" id="recordType">
-                                        <option *ngFor="let recordType of this.recordFormOptions.recordTypes" [ngValue]="recordType">
-                                            {{ recordType }}
-                                        </option>
-                                    </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('recordType')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('patientStatus') } ">
-                            <label for="patientStatus"> Estado del expediente *</label>
-                            <select type="option" class="form-control" formControlName="patientStatus" id="patientStatus">
-                                            <option *ngFor="let patientStatus of this.recordFormOptions.patientStatus" [ngValue]="patientStatus">
-                                                {{ patientStatus }}
-                                            </option>
-                                        </select>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('patientStatus')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('professionalWhoAttended') } ">
-                            <label for="professionalWhoAttended">Profesional que atendió *</label>
-                            <input type="text" class="form-control" formControlName="professionalWhoAttended" id="professionalWhoAttended" placeholder="Profesional que atendió" [matAutocomplete]="professionalsAutoComplete">
-                            <mat-autocomplete #professionalsAutoComplete="matAutocomplete">
-                                <mat-option *ngFor="let professional of professionals | async" [value]="professional">
-                                    {{professional}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="form-control-feedback" *ngIf="requiredFieldValidation('professionalWhoAttended')">
-                                <h6 class="feedback-field">Este campo es requerido</h6>
-                            </div>
-                        </div>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </form>
-    </div>
+                  </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="reason">Motivo:</label>
+                  <textarea type="textarea" class="form-control" formControlName="reason"
+                    id="reason" placeholder="Motivo de derivacion"></textarea>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('recordType') } ">
+              <label for="recordType">Tipo de expediente *</label>
+              <select type="option" class="form-control" formControlName="recordType" id="recordType">
+                <option *ngFor="let recordType of this.recordFormOptions.recordTypes" [ngValue]="recordType">
+                  {{ recordType }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('recordType')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('patientStatus') } ">
+              <label for="patientStatus"> Estado del expediente *</label>
+              <select type="option" class="form-control" formControlName="patientStatus" id="patientStatus">
+                <option *ngFor="let patientStatus of this.recordFormOptions.patientStatus" [ngValue]="patientStatus">
+                  {{ patientStatus }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('patientStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6"
+              [ngClass]="{'has-error': requiredFieldValidation('professionalWhoAttended') } ">
+              <label for="professionalWhoAttended">Profesional que atendió *</label>
+              <input type="text" class="form-control" formControlName="professionalWhoAttended"
+                id="professionalWhoAttended" placeholder="Profesional que atendió"
+                [matAutocomplete]="professionalsAutoComplete">
+              <mat-autocomplete #professionalsAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let professional of professionals | async" [value]="professional">
+                  {{professional}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('professionalWhoAttended')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </div>
 </div>

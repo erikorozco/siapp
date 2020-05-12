@@ -1,0 +1,133 @@
+<app-navigation-tree [entityAction]="this.action" [personId]="this.personId"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="derivationForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('derivationType') } ">
+          <label for="derivationType">Tipo de de derivacion *</label>
+          <select type="option" class="form-control" formControlName="derivationType" id="derivationType">
+            <option *ngFor="let derivationType of this.formsConstants.derivationTypes" [ngValue]="derivationType">
+              {{ derivationType }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivationType')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('derivedArea') } ">
+          <label for="derivedArea">Area de derivación</label>
+          <input type="text" class="form-control" formControlName="derivedArea" id="derivedArea"
+            placeholder="Seleccione un area" [matAutocomplete]="derivedAreaAutoComplete">
+          <mat-autocomplete #derivedAreaAutoComplete="matAutocomplete">
+            <mat-option *ngFor="let derivedArea of derivedAreas | async" [value]="derivedArea">
+              {{derivedArea}}
+            </mat-option>
+          </mat-autocomplete>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivedArea')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <small id="derivedArea " class="form-text text-muted">Si el area no esta en la lista, escriba una
+            nueva</small>
+        </div>
+        <div *ngIf="this.derivationForm.get(['derivationType']).value === 'INTERNA'" class="form-group col-md-4"
+          [ngClass]="{'has-error': requiredFieldValidation('recoveryCost') } ">
+          <label for="recoveryCost">Cuota de recuperacion $</label>
+          <input type="number" class="form-control" formControlName="recoveryCost" id="recoveryCost"
+            placeholder="Cuota de recuperacion $">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('recoveryCost')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="therapist" class="mt-2">
+      </div>
+      <div class="form-row">
+        <div *ngIf="this.derivationForm.get(['derivationType']).value === 'EXTERNA'" class="form-group col-md-12"
+          [ngClass]="{'has-error': requiredFieldValidation('reason') } ">
+          <label for="reason">Motivo:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="reason" id="reason"
+            placeholder="Motivo"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('reason')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('status') } ">
+          <label for="status"> Estado de la derivacón *</label>
+          <select type="option" class="form-control" formControlName="status" id="status">
+            <option *ngFor="let status of this.formsConstants.patientStatus" [ngValue]="status">
+              {{ status }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('status')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-2 text-center mt-4">
+          <button [disabled]="this.action === 'view-derivation'" class="btn btn-info btn" type="button"
+            (click)="openTherapistsModal()">Terapeuta</button>
+        </div>
+        <div class="form-group col-md-6">
+          <div formGroupName="therapist" class="mt-2">
+            <label for="reason">Nombre del terapeuta:</label>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button [disabled]="derivationForm.invalid || derivationForm.disabled || derivationForm.pristine" type="submit "
+        class="btn btn-success btn-lg">Guardar</button>
+    </form>
+  </div>
+</div>
+<hr>
+<h4>Información relacionada</h4>
+<ng-container *ngIf="true">
+  <mat-accordion>
+    <mat-expansion-panel *ngIf="this.drop">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Fomulario de salida
+        </mat-panel-title>
+        <mat-panel-description>
+          Alta voluntaria o baja
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-drop [iPersonId]="this.personId" [iDropId]="this.drop.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-drop>
+    </mat-expansion-panel>
+    <!-- Extension panel for medical release starts -->
+    <mat-expansion-panel *ngIf="this.medicalRelase">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Fomulario de salida
+        </mat-panel-title>
+        <mat-panel-description>
+          Alta médica
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-medical-release [iPersonId]="this.personId" [iMedicalReleaseId]="this.medicalRelase.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-medical-release>
+    </mat-expansion-panel>
+    <!-- Extesion panel for survey starts -->
+    <mat-expansion-panel *ngIf="this.survey">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Encuesta de satisfacción
+        </mat-panel-title>
+        <mat-panel-description>
+          Encuesta de satisfacción realizada para calidad del servicio
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-survey [iPersonId]="this.personId" [iSurveyId]="this.survey.id" [iDerivationId]="this.derivationId"
+        [isChild]="true">
+      </app-form-survey>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>

@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <ng-container *ngIf="userDetails">
-
-    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul [ngClass]="{'toggled' : this.isSidebarToggled}" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="./">
@@ -43,10 +42,10 @@
                         <!-- <i class="fas fa-folder"></i> -->
                         <span>Expedientes</span>
                     </a>
-                    <a class="collapse-item" href="/home">
-                        <!-- <i class="fas fa-folder-plus"></i> -->
+                    <!-- <a class="collapse-item" routerLink="crisis-interventions">
+                        <i class="fas fa-folder-plus"></i>
                         <span>Urgencias</span>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </li>
@@ -110,6 +109,19 @@
             </div>
         </li>
 
+        <li *ngIf="isAdmin" class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#psychometrics" aria-expanded="true" aria-controls="psychometrics">
+                <i class="fas fa-list"></i>
+                <span>Pruebas psicométricas</span>
+            </a>
+            <div id="psychometrics" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" routerLink="psychometrics-managment">Pruebas psicométricas</a>
+                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
+
         <!-- Nav Item - Charts -->
         <li *ngIf="isAdmin" class="nav-item">
             <a class="nav-link" href="charts.html">
@@ -121,9 +133,9 @@
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
-        <!-- <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div> -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" (click)="toggleSidebar(this.isSidebarToggled)" id="sidebarToggle"></button>
+        </div>
 
     </ul>
     <!-- End of Sidebar -->

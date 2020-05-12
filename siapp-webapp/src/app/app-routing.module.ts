@@ -14,13 +14,23 @@ import { PrivacyAgreementComponent } from './modules/records/components/privacy-
 import { FormRecordComponent } from './modules/records/components/form-record/form-record.component';
 import { FormSessionComponent } from './modules/records/components/form-session/form-session.component';
 import { TherapistRecordsComponent } from './modules/records/components/therapist-records/therapist-records.component';
+import { RecordActionGuardService } from './shared/services/record-action-guard.service';
+import { FormMedicalReleaseComponent } from './modules/records/components/form-medical-release/form-medical-release.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
+import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
+import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
+import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
+import { ListCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
+import { FormCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
+import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
-  // { path: '**', component: LoginComponent },
   { path: 'test', component: TablePaginationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: DashboardComponent,
+  // https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3
     children: [
       { path: 'users', component: ListUserComponent },
       { path: 'add-user', component: FormUserComponent },
@@ -41,15 +51,94 @@ const ROUTES: Routes = [
       { path: 'record-summary/:personId', component: RecordSummaryComponent },
       { path: 'record-summary', redirectTo: 'records' },
       { path: 'existing-person-opening-record/:personId', component: FormRecordComponent },
-      { path: 'new-person-opening-record', component: FormRecordComponent },
+      { path: 'edit-record/:recordId/person/:personId', component: FormRecordComponent },
       { path: 'privacy-agreement/:personId', component: PrivacyAgreementComponent },
       { path: 'add-session/:recordId/person/:personId', component: FormSessionComponent },
-      { path: 'edit-session/:id/person/:personId', component: FormSessionComponent },
+      { 
+        path: 'edit-session/:id/person/:personId', 
+        component: FormSessionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'session'
+        }
+      },
       { path: 'edit-session', redirectTo: 'add-session' },
       { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
       { path: 'view-session', redirectTo: 'add-session' },
+      { path: 'add-nutrition-session/:recordId/person/:personId', component: FormNutritionSessionComponent },
+      { 
+        path: 'edit-nutrition-session/:id/person/:personId', 
+        component: FormNutritionSessionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'nutritionSession'
+        }
+      },
+      { path: 'edit-nutrition-session', redirectTo: 'add-nutrition-session' },
+      { path: 'view-nutrition-session/:id/person/:personId', component: FormNutritionSessionComponent },
+      { path: 'view-nutrition-session', redirectTo: 'add-nutrition-session' },
       { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
-    ] },
+      {
+        path: 'add-derivation/:recordId/person/:personId', 
+        component: FormDerivationComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'admin'
+        }
+      },
+      {
+        path: 'view-derivation/:derivationId/person/:personId',
+        component: FormDerivationComponent
+      },
+      {
+        path: 'edit-derivation/:derivationId/person/:personId',
+        component: FormDerivationComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-medical-release/:derivationId/person/:personId',
+        component: FormMedicalReleaseComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-drop/:derivationId/person/:personId',
+        component: FormDropComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-survey/:derivationId/person/:personId',
+        component: FormSurveyComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      { path: 'crisis-interventions', component: ListCrisisInterventionComponent },
+      { path: 'add-crisis-intervention/:personId', component: FormCrisisInterventionComponent },
+      { 
+        path: 'edit-crisis-intervention/:id/person/:personId', 
+        component: FormCrisisInterventionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'crisisIntervention'
+        }
+      },
+      { path: 'view-crisis-intervention/:id/person/:personId', component: FormCrisisInterventionComponent },
+      { path: 'psychometrics-managment', component: ListPsychometricsManagmentComponent },
+      // { path: '', component: NotFoundComponent },
+      // { path: '**', component: NotFoundComponent },
+    ]
+  },
+  { path: '**', component: LoginComponent },
 ];
 
 @NgModule({

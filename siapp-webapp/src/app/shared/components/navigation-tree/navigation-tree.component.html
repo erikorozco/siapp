@@ -1,5 +1,9 @@
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">
-        Hi
+<div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.personName">
+    <h1 class="navigation-tree h3 mb-0 text-gray-800">
+        <a [routerLink]="['/home']">Panel de control</a> >
+        <a [routerLink]="['/home/records']">Pacientes</a> >
+        <a [routerLink]="['/home', 'record-summary', this.personId ]">
+            {{ this.personName }}  
+        </a>> {{ this.translatedAction }}
     </h1>
 </div>

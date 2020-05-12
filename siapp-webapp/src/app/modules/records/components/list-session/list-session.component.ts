@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SessionService } from 'src/app/shared/services/session.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-list-session',
@@ -18,7 +19,8 @@ export class ListSessionComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -44,7 +46,7 @@ export class ListSessionComponent implements OnInit {
             text: 'Agregar sesión'
           }
         }
-    }];
+      }];
     }, error => {
       console.log(error);
     });
@@ -64,6 +66,7 @@ export class ListSessionComponent implements OnInit {
         this.viewSession(value);
         break;
       case 'edit':
+        this.authService.appendSession('session', value.id);
         this.editSession(value);
         break;
       default:
@@ -82,13 +85,12 @@ export class ListSessionComponent implements OnInit {
             || (`${element.therapist.name.toLowerCase()} ${element.therapist.last_name.toLowerCase()} ${element.therapist.second_last_name.toLowerCase()}`)
             .includes(searchText.toLowerCase())
             ) {
-              // const datePipe: DatePipe = new DatePipe('es-MX');
-              // var date = new Date(element.sessionDate);
-              // let a = datePipe.transform(date, 'dd-MM-yyyy', ,'es-MX');
-              // console.log(date)
+               const datePipe: DatePipe = new DatePipe('es-MX');
+               var date = new Date(element.sessionDate);
+               let a = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
               element.tableFields = [
                                     element.sessionNumber,
-                                    element.sessionDate,
+                                    a,
                                     element.sessionType,
                                     `${element.therapist.name} ${element.therapist.last_name} ${element.therapist.second_last_name}`
                                   ];

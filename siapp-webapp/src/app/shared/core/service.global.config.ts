@@ -22,7 +22,9 @@ export const API_URL_CONFIG = {
       name: 'therapists/',
       endpoints: {
         getAll : 'getAllTherapists',
-        getTherapist : 'getTherapist/'
+        getTherapist : 'getTherapist/',
+        getAssignedRecordsId: 'getAssignedRecordsId/',
+        isAllowedToRecord: 'isAllowedToRecord/'
       }
     },
     recordsAPI: {
@@ -77,7 +79,69 @@ export const API_URL_CONFIG = {
       endpoints: {
         getAll : 'getAllRoles/',
       }
-    }
+    },
+    derivationAPI: {
+      name: 'derivations/',
+      endpoints: {
+        getDerivation: 'getDerivation/',
+        getDerivationByRecordId : 'getDerivationByRecordId/',
+        updateDerivation: 'update/',
+        createDerivation: 'create',
+        createDerivations: 'createDerivations'
+      }
+    },
+    permissionAPI: {
+      name: 'permissions/',
+      endpoints: {
+        isAllowedToRecord: 'isAllowedTo'
+      }
+    },
+    medicalReleaseAPI: {
+      name: 'medicalReleases/',
+      endpoints: {
+        getByMedicalReleaseByDerivationId: 'getByMedicalReleaseByDerivationId/',
+        getMedicalRealease: 'getMedicalRealease/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
+    dropAPI: {
+      name: 'drops/',
+      endpoints: {
+        getByDropByDerivationId: 'getByDropByDerivationId/',
+        getDrop: 'getDrop/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
+    surveyAPI: {
+      name: 'surveys/',
+      endpoints: {
+        getBySurveyByDerivationId: 'getBySurveyByDerivationId/',
+        getSurvey: 'getSurvey/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
+    nutritionSessionAPI: {
+      name: 'nutritionSessions/',
+      endpoints: {
+        getByRecordId: 'getByRecordId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
+    crisisInterventionsAPI: {
+      name: 'crisisInterventions/',
+      endpoints: {
+        getByPersonId: 'getByPersonId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+        delete: 'delete/',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

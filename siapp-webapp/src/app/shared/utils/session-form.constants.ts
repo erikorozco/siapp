@@ -1,7 +1,6 @@
 export const SESSION_FORM_CONST = {
   sessionTypes: [
     'NEUROLOGÍA',
-    'NUTRICIÓN',
     'PSICOLOGÍA',
     'ASESORIA LEGAL',
     'ATENCIÓN ESPIRITUAL',

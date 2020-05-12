@@ -1,0 +1,177 @@
+<app-navigation-tree *ngIf="this.action !== 'view-drop'" [entityAction]="this.action" [personId]="this.personId">
+</app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="dropForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('dropType') } ">
+          <label for="dropType">Tipo de de derivacion *</label>
+          <select type="option" class="form-control" formControlName="dropType" id="dropType">
+            <option *ngFor="let dropType of this.formsConstants.dropTypes" [ngValue]="dropType">
+              {{ dropType }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('dropType')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-4 text-right" *ngIf="this.action === 'view-drop' && this.drop">
+          <label>Fecha *</label>
+          <h5>
+            {{ this.drop.createdAt | date }}
+          </h5>
+        </div>
+      </div>
+      <div formGroupName="requesterBuilder" class="form-row"
+        *ngIf="this.dropForm.get(['dropType']).value === 'ALTA VOLUNTARIA'">
+        <div class="form-group col-md-8" [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.name') } ">
+          <label for="name">Nombre completo de quien solicita</label>
+          <input type="text" class="form-control" formControlName="name" id="name"
+            placeholder="Nombre completo de quien solicita">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('requesterBuilder.name')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.age') } ">
+          <label for="age">Edad de quien solicita</label>
+          <input type="text" class="form-control" formControlName="age" id="age" placeholder="Edad de quien solicita">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('requesterBuilder.age')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-6"
+          [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.relation') } ">
+          <label for="relation">Parentezco de quien solicita</label>
+          <input type="text" class="form-control" formControlName="relation" id="relation"
+            placeholder="Parentezco de quien solicita">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('requesterBuilder.relation')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('requesterBuilder.sign') } ">
+          <label for="sign">Firma o INE de quien solicita</label>
+          <input type="text" class="form-control" formControlName="sign" id="sign"
+            placeholder="Firma o INE de quien solicita">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('requesterBuilder.sign')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('clinicSummary') } ">
+          <label for="clinicSummary">Resumen clínico:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="clinicSummary"
+            id="clinicSummary" placeholder="Resumen clínico"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('clinicSummary')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('recommendations') } ">
+          <label for="recommendations">Medidas recomendadas:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="recommendations"
+            id="recommendations" placeholder="Medidas recomendadas"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('recommendations')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <small id="derivedArea " class="form-text text-muted">Medidas recomendadas para la proteccion de las salud del
+            paciente y la atención de factores de riesgo</small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('comments') } ">
+          <label for="comments">Comentarios:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="comments"
+            id="comments" placeholder="Comentarios"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('comments')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div formGroupName="familyContactBuilder" class="form-row">
+        <div class="form-group col-md-6"
+          [ngClass]="{'has-error': requiredFieldValidation('familyContactBuilder.name') } ">
+          <label for="name">Nombre completo de quien dará acompañamiento</label>
+          <input type="text" class="form-control" formControlName="name" id="name"
+            placeholder="Nombre completo de quien dará acompañamiento">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactBuilder.name')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-3"
+          [ngClass]="{'has-error': requiredFieldValidation('familyContactBuilder.sign') } ">
+          <label for="sign">Firma o INE de quien dará acompañamiento</label>
+          <input type="text" class="form-control" formControlName="sign" id="sign" placeholder="Firma o INE">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactBuilder.sign')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-3"
+          [ngClass]="{'has-error': requiredFieldValidation('familyContactBuilder.phone') } ">
+          <label for="phone">Télefono de quien dará acompañamiento</label>
+          <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Télefono">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactBuilder.phone')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-row">
+        <label for="witness">Testigos</label>
+        <ul id="witness">
+          <li *ngFor="let item of this.witnessesArray">{{item}}</li>
+        </ul>
+        <small *ngIf="this.witnessesArray.length === 0" id="witness " class="form-text text-muted">No se ha agregado un
+          testigo</small>
+      </div>
+      <hr>
+      <div *ngIf="this.action !== 'view-drop'">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="witnessesFormControlName">Nombre del testigo:</label>
+            <input type="text" class="form-control" [formControl]="witnessesFormControlName"
+              id="witnessesFormControlName" placeholder="Escriba el nombre del testigo">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="witnessesFormControlSign"># INE testigo:</label>
+            <input type="text" class="form-control" [formControl]="witnessesFormControlSign"
+              id="witnessesFormControlSign" placeholder="Escriba el núnero de INE del testigo">
+          </div>
+        </div>
+        <div class="form-row">
+
+        </div>
+        <div class="form-group col-md-12 text-right">
+          <button type="button" [disabled]="witnessesFormControlName.invalid || witnessesFormControlSign.invalid"
+            (click)="addWitness()" class="btn btn-success btn-icon-split mt-3">
+            <span class="icon text-white-50">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Agregar</span>
+          </button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div *ngIf="this.action !== 'view-drop'" class="form-group col-md-2 text-center mt-4">
+          <button [disabled]="this.action === 'view-drop'" class="btn btn-info btn" type="button"
+            (click)="openTherapistsModal()">Terapeuta</button>
+        </div>
+        <div class="form-group col-md-6">
+          <div formGroupName="therapist" class="mt-2">
+            <label for="reason">Nombre del terapeuta:</label>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button [disabled]="dropForm.invalid || dropForm.disabled || dropForm.pristine" type="submit"
+        class="btn btn-success btn-lg">Guardar</button>
+    </form>
+  </div>
+</div>

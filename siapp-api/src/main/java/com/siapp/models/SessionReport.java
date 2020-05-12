@@ -63,6 +63,15 @@ public class SessionReport implements Serializable {
     @Column(name = "esta_activo")
     private boolean active;
     
+    @Column(name = "aperturasensible")
+    private boolean openingSensitiveData;
+    
+    @Column(name = "desarrollosensible")
+    private boolean developmentSensitiveData;
+    
+    @Column(name = "acuerdossensible")
+    private boolean agreementsSensitiveData;
+    
     //CreateAt is replaced with sessionDate
     
     @Column(name = "actualizado", nullable = true)
@@ -186,6 +195,30 @@ public class SessionReport implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public boolean isOpeningSensitiveData() {
+		return openingSensitiveData;
+	}
+
+	public void setOpeningSensitiveData(boolean openingSensitiveData) {
+		this.openingSensitiveData = openingSensitiveData;
+	}
+
+	public boolean isDevelopmentSensitiveData() {
+		return developmentSensitiveData;
+	}
+
+	public void setDevelopmentSensitiveData(boolean developmentSensitiveData) {
+		this.developmentSensitiveData = developmentSensitiveData;
+	}
+
+	public boolean isAgreementsSensitiveData() {
+		return agreementsSensitiveData;
+	}
+
+	public void setAgreementsSensitiveData(boolean agreementsSensitiveData) {
+		this.agreementsSensitiveData = agreementsSensitiveData;
 	}
     
 }

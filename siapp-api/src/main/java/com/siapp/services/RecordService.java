@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.siapp.constants.Model;
 import com.siapp.exceptions.ResourceNotFoundException;
+import com.siapp.models.Person;
 import com.siapp.models.Record;
 import com.siapp.models.TherapistRecordPermission;
 import com.siapp.repositories.RecordRepository;
@@ -22,6 +23,9 @@ public class RecordService {
 	
 	@Autowired
 	RecordRepository recordRepository;
+	
+	@Autowired
+	PersonService personService;
 	
 	public Record findRecordById(Integer id) {
 		return recordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Record", "id", id));		
@@ -41,15 +45,7 @@ public class RecordService {
 	} 
 	
 	public Record create(Record record) {
-//		try {
-//			record.setGenogram(
-//					FileUtil.convertFileToBinaryStream(record.getGenogramUpload())
-//					);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-
+		this.personService.update(record.getPerson().getId(), record.getPerson());
 		return recordRepository.save(record);
 	}
 	

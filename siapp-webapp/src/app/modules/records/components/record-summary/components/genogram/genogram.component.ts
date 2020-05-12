@@ -62,7 +62,7 @@ export class GenogramComponent implements OnInit {
     });
   }
 
-  isFileEmpty(){
+  isFileEmpty() {
     return typeof this.genogramFile === 'undefined' || this.genogramFile === null;
   }
 

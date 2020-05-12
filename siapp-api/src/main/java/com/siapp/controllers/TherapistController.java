@@ -1,5 +1,6 @@
 package com.siapp.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.lists.TherapistList;
 import com.siapp.models.Therapist;
+import com.siapp.models.TherapistRecordPermission;
 import com.siapp.services.TherapistService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,5 +57,5 @@ public class TherapistController {
     public ResponseEntity<?> deleteTherapist(@PathVariable(value = "id") Integer id) {
         return therapistService.delete(id);
     }
-	
+
 }

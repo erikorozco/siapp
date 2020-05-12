@@ -20,6 +20,7 @@ export class RecordSummaryComponent implements OnInit {
   photoFile: any;
   photoSrc: any;
   loading = false;
+  tab: string;
 
   constructor(
     private router: Router,
@@ -28,7 +29,9 @@ export class RecordSummaryComponent implements OnInit {
     private recordService: RecordService,
     private userService: UserService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.tab = 'home-tab';
+  }
 
   ngOnInit() {
     this.routes.params.subscribe(params => {
@@ -38,6 +41,10 @@ export class RecordSummaryComponent implements OnInit {
     this.getPersonInformation();
     this.getRecordInformation();
     this.getUserInformation();
+  }
+
+  render(tab) {
+    this.tab = tab;
   }
 
   getPersonInformation() {
@@ -51,6 +58,8 @@ export class RecordSummaryComponent implements OnInit {
   getRecordInformation() {
     this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
       this.record = data;
+      if(data !== null)
+        this.authService.appendSession('record', data.id);
     }, error => {
       console.log(error);
     });

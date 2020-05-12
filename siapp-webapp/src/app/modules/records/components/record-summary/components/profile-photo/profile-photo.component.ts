@@ -35,7 +35,7 @@ export class ProfilePhotoComponent implements OnInit {
         this.photoSrc = this.fileUtil.arrayBufferToSrc(res.body);
       }
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

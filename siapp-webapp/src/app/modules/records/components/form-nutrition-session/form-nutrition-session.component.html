@@ -1,0 +1,86 @@
+<app-navigation-tree [entityAction]="this.action" [personId]="this.personId"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="nutritionSessionForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('size') } ">
+          <label for="size">Talla en cm</label>
+          <input (change)="calculateBMI()" type="number" class="form-control" formControlName="size" id="size" placeholder="Talla">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('size')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('weight') } ">
+          <label for="weight">Peso en kg</label>
+          <input (change)="calculateBMI()" type="number" class="form-control" formControlName="weight" id="weight" placeholder="Peso">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('weight')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('bmi') } ">
+          <label for="bmi">Indice de masa corporal (IMC) *</label>
+          <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="bmi"
+            id="bmi" placeholder="IMC">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('bmi')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+          <div class="form-control-feedback" *ngIf="this.nutritionSessionForm.get(['bmi']).value > 0">
+            <h6 class="text-success">{{bmiText}}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('symptoms') } ">
+          <label for="symptoms">Signos y sintomas:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="symptoms"
+            id="symptoms" placeholder="Signos y sintomas"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('diagnostic') } ">
+          <label for="diagnostic">Diagnóstico nutricional:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="diagnostic"
+            id="diagnostic" placeholder="Diagnóstico nutricional"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('plan') } ">
+          <label for="plan">Plan de tratamiento:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="plan"
+            id="plan" placeholder="Plan de tratamiento"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('comments') } ">
+          <label for="comments">Comentarios:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="comments"
+            id="comments" placeholder="Comentarios"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('advance') } ">
+          <label for="advance">Avance:</label>
+          <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="advance"
+            id="advance" placeholder="Avance"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('diagnostic')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <button [disabled]="nutritionSessionForm.invalid || nutritionSessionForm.disabled || nutritionSessionForm.pristine" type="submit"
+      class="btn btn-success btn-lg">Guardar</button>
+    </form>
+  </div>
+</div>

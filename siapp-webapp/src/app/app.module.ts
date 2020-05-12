@@ -50,6 +50,20 @@ import { FormSessionComponent } from './modules/records/components/form-session/
 import localeEsMX from '@angular/common/locales/es-MX';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { TherapistRecordsComponent } from './modules/records/components/therapist-records/therapist-records.component';
+import { DerivationsComponent } from './modules/records/components/record-summary/components/derivations/derivations.component';
+import { FormMedicalReleaseComponent } from './modules/records/components/form-medical-release/form-medical-release.component';
+import { ReleaseTypesDialogComponent } from './modules/records/components/record-summary/components/derivations/components/release-types-dialog/release-types-dialog.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FormDerivationComponent } from './modules/records/components/form-derivation/form-derivation.component';
+import { ListUserDialogComponent } from './modules/users/components/list-user-dialog/list-user-dialog.component';
+import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
+import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
+import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
+import { ListNutritionSessionComponent } from './modules/records/components/list-nutrition-session/list-nutrition-session.component';
+import { SessionsSummaryComponent } from './modules/records/components/record-summary/components/sessions-summary/sessions-summary.component';
+import { ListCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
+import { FormCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
+import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -81,6 +95,20 @@ registerLocaleData(localeEsMX , 'es-MX');
     ListSessionComponent,
     FormSessionComponent,
     TherapistRecordsComponent,
+    DerivationsComponent,
+    FormMedicalReleaseComponent,
+    ReleaseTypesDialogComponent,
+    NotFoundComponent,
+    FormDerivationComponent,
+    ListUserDialogComponent,
+    FormDropComponent,
+    FormSurveyComponent,
+    FormNutritionSessionComponent,
+    ListNutritionSessionComponent,
+    SessionsSummaryComponent,
+    ListCrisisInterventionComponent,
+    FormCrisisInterventionComponent,
+    ListPsychometricsManagmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +127,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatAutocompleteModule,
     MatSelectModule,
     MatExpansionModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
     UserService,
@@ -115,7 +143,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     DatePipe
   ],
   entryComponents: [
-    ImageViewComponent
+    ImageViewComponent,
+    ReleaseTypesDialogComponent,
+    ListUserDialogComponent
  ],
   bootstrap: [AppComponent],
 })
