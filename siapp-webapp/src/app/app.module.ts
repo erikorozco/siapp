@@ -61,6 +61,8 @@ import { FormSurveyComponent } from './modules/records/components/form-survey/fo
 import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
 import { ListNutritionSessionComponent } from './modules/records/components/list-nutrition-session/list-nutrition-session.component';
 import { SessionsSummaryComponent } from './modules/records/components/record-summary/components/sessions-summary/sessions-summary.component';
+import { ListCrisisInterventionComponent } from './modules/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
+import { FormCrisisInterventionComponent } from './modules/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -102,7 +104,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormSurveyComponent,
     FormNutritionSessionComponent,
     ListNutritionSessionComponent,
-    SessionsSummaryComponent
+    SessionsSummaryComponent,
+    ListCrisisInterventionComponent,
+    FormCrisisInterventionComponent,
   ],
   imports: [
     BrowserModule,

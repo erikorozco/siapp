@@ -18,6 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "intervencioncrisis")
@@ -59,17 +60,11 @@ public class CrisisIntervention implements Serializable {
 	@Column(name = "compromisos")
     private String commitments;
 	
-	@Column(name = "nombre")
-    private String name;
-	
 	@Column(name = "sexo")
     private String gender;
 	
 	@Column(name = "domicilio")
     private String address;
-	
-	@Column(name = "telefono")
-    private String phone;
 	
 	@Column(name = "escolaridad")
     private String escolarity;
@@ -99,6 +94,10 @@ public class CrisisIntervention implements Serializable {
     @OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
+    
+	@OneToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+	private Person person;
 
     //Getters and setters
 	public Integer getId() {
@@ -181,14 +180,6 @@ public class CrisisIntervention implements Serializable {
 		this.commitments = commitments;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getGender() {
 		return gender;
 	}
@@ -203,14 +194,6 @@ public class CrisisIntervention implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public String getEscolarity() {
@@ -279,5 +262,13 @@ public class CrisisIntervention implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }

@@ -21,6 +21,8 @@ import { FormDerivationComponent } from './modules/records/components/form-deriv
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
 import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
+import { ListCrisisInterventionComponent } from './modules/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
+import { FormCrisisInterventionComponent } from './modules/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -118,7 +120,18 @@ const ROUTES: Routes = [
         data: {
           entity: 'derivation'
         }
-      }
+      },
+      { path: 'crisis-interventions', component: ListCrisisInterventionComponent },
+      { path: 'add-crisis-intervention/:personId', component: FormCrisisInterventionComponent },
+      { 
+        path: 'edit-crisis-intervention/:id/person/:personId', 
+        component: FormCrisisInterventionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'crisisIntervention'
+        }
+      },
+      { path: 'view-crisis-intervention/:id/person/:personId', component: FormCrisisInterventionComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

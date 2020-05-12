@@ -62,7 +62,9 @@ export class NavigationTreeComponent implements OnInit {
       case 'survey':
         return 'encuesta de satisfacción';
       case 'nutrition':
-        return 'reporte nutricional';  
+        return 'reporte nutricional';
+      case 'crisis':
+        return 'intervención en crisis';   
     }
   }
 

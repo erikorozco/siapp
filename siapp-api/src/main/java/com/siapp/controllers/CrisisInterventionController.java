@@ -1,5 +1,7 @@
 package com.siapp.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,26 +28,32 @@ public class CrisisInterventionController {
 	@Autowired
 	CrisisInterventionService crisisInterventionService;
 	
-	@ApiOperation(value = "Create new crisis intervention report")
+	@ApiOperation(value = "Create new crisis intervention")
     @PostMapping("/create")
     public CrisisIntervention createSessionReport(@Valid @RequestBody CrisisIntervention crisisIntervention) {
     	return crisisInterventionService.create(crisisIntervention);
     }
     
-    @ApiOperation(value = "Get crisis intervention report by ID")
+    @ApiOperation(value = "Get crisis intervention")
     @GetMapping("/get/{id}")
     public CrisisIntervention get(@PathVariable(value = "id") Integer id) {
         return crisisInterventionService.findById(id);
     }
     
-    @ApiOperation(value = "Update crisis intervention report by ID")
+    @ApiOperation(value = "Get crisis intervention all")
+    @GetMapping("/getByPersonId/{personId}")
+    public List<CrisisIntervention> getByPersonId(@PathVariable(value = "personId") Integer personId) {
+        return crisisInterventionService.getByPersonId(personId);
+    }
+    
+    @ApiOperation(value = "Update crisis intervention")
     @PutMapping("/update/{id}")
     public CrisisIntervention update(@PathVariable(value = "id") Integer id, @Valid @RequestBody CrisisIntervention crisisInterventionDetails) {
         return crisisInterventionService.update(id, crisisInterventionDetails);
     }
     
-    @ApiOperation(value = "Delete crisis intervention report by ID", notes = "Returns 200")
-    @DeleteMapping("/deleteSession/{id}")
+    @ApiOperation(value = "Delete crisis intervention", notes = "Returns 200")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Integer id) {
         return crisisInterventionService.delete(id);
     }

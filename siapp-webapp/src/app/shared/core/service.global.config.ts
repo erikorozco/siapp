@@ -132,6 +132,16 @@ export const API_URL_CONFIG = {
         create: 'create',
       }
     },
+    crisisInterventionsAPI: {
+      name: 'crisisInterventions/',
+      endpoints: {
+        getByPersonId: 'getByPersonId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+        delete: 'delete/',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

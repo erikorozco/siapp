@@ -37,6 +37,9 @@
                             <a class="nav-link" (click)="render('sessions-tab')" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" (click)="render('crisis-interventions-tab')" id="crisis-interventions-tab" data-toggle="tab" href="#crisis-interventions" role="tab" aria-controls="sessions" aria-selected="false">Urgencias</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" (click)="render('attachments-tab')" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
                         </li>
                         <li class="nav-item">
@@ -66,6 +69,11 @@
                         <div *ngSwitchCase="'sessions-tab'" class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                             <ng-container *ngIf="this.record !== null && this.record !== undefined">
                                 <app-sessions-summary  [recordId]="this.record.id" [personId]="this.person.id" [isAdmin]="this.isAdmin"></app-sessions-summary>
+                            </ng-container>
+                        </div>
+                        <div *ngSwitchCase="'crisis-interventions-tab'" class="tab-pane fade" id="crisis-interventions" role="tabpanel" aria-labelledby="crisis-interventions-tab">
+                            <ng-container *ngIf="this.person">
+                                <app-list-crisis-intervention [personId]="this.person.id"></app-list-crisis-intervention>
                             </ng-container>
                         </div>
                         <div *ngSwitchCase="'attachments-tab'" class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="attachments-tab">

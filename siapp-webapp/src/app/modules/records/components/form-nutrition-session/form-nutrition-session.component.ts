@@ -14,7 +14,7 @@ export class FormNutritionSessionComponent implements OnInit {
   @Input() iRecordId;
   @Input() iPersonId;
   @Input() iNutritionSessionId;
-  @Input() iAction = 'view-derivation';
+  @Input() iAction = 'view-nutrition-session';
   @Input() isChild = false;
 
   recordId;
@@ -45,11 +45,11 @@ export class FormNutritionSessionComponent implements OnInit {
     }, error => {console.log(error); });
     this.nutritionSessionForm.disable();
 
-  } else if (this.action === 'edit-nutrition-session') {
-    this.nutritionSessionService.get(this.nutritionSessionId).subscribe(data => {
-      this.nutritionSessionForm.setValue(data);
-    }, error => { console.log(error); });
-  }
+    } else if (this.action === 'edit-nutrition-session') {
+      this.nutritionSessionService.get(this.nutritionSessionId).subscribe(data => {
+        this.nutritionSessionForm.setValue(data);
+      }, error => { console.log(error); });
+    }
   }
 
   initFormProperties() {

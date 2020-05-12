@@ -1,0 +1,211 @@
+<app-navigation-tree [entityAction]="this.action" [personId]="this.personId"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="crisisInterventionForm" (ngSubmit)="onSubmit()" class="mb-lg-5">
+      <div class="col-md-12 text-right mb-3">
+        <button [disabled]="this.crisisInterventionForm.invalid" type="submit"
+          class="btn btn-success btn-lg btn-icon-split">
+          <span class="icon text-white-50">
+            <i class="fas fa-save"></i>
+          </span>
+          <span class="text">Guardar</span>
+        </button>
+      </div>
+      <!-- Here starts the form fields -->
+      <mat-tab-group class="mt-2 form-tab-custom">
+        <mat-tab class="" label="Información personal">
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('bornDate') } ">
+              <label for="bornDate">Fecha de nacimiento *</label>
+              <input (change)="calculateAge()" type="date" class="form-control" formControlName="bornDate"
+                id="bornDate">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('bornDate')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('age') } ">
+              <label for="age">Edad</label>
+              <input [attr.disabled]="true ? '' : null" type="number" class="form-control" formControlName="age"
+                id="age" placeholder="Edad">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('age')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
+              <label for="city">Municipio *</label>
+              <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio"
+                [matAutocomplete]="cityAutoComplete">
+              <mat-autocomplete #cityAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let city of cities | async" [value]="city">
+                  {{city}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('location') } ">
+              <label for="location">Localidad *</label>
+              <input type="text" class="form-control" formControlName="location" id="location" placeholder="Localidad"
+                [matAutocomplete]="locationAutoComplete">
+              <mat-autocomplete #locationAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let location of locations | async" [value]="location">
+                  {{location}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('address') } ">
+              <label for="address">Domicilio</label>
+              <input type="text" class="form-control" formControlName="address" id="address" placeholder="Domicilio">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('address')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('colony') } ">
+              <label for="colony">Ocupación</label>
+              <input type="text" class="form-control" formControlName="colony" id="colony" placeholder="Ocupación">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('colony')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
+              <label for="gender">Sexo *</label>
+              <select type="option" class="form-control" formControlName="gender" id="gender">
+                <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
+                  {{ gender }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('maritalStatus') } ">
+              <label for="maritalStatus">Estado Civil *</label>
+              <select type="option" class="form-control" formControlName="maritalStatus" id="maritalStatus">
+                <option *ngFor="let civilStatus of this.recordFormOptions.civilStatus" [ngValue]="civilStatus">
+                  {{ civilStatus }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('maritalStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
+              <label for="escolarity">Escolaridad *</label>
+              <input type="text" class="form-control" formControlName="escolarity" id="escolarity"
+                placeholder="Escolaridad" [matAutocomplete]="escolarityAutoComplete">
+              <mat-autocomplete #escolarityAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let escolarity of escolarities | async" [value]="escolarity">
+                  {{escolarity}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('escolarity')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </mat-tab>
+        <mat-tab class="" label="Detalles de la intervencón">
+          <div class="form-row">
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('derivationType') } ">
+              <label for="derivationType">Tipo de de derivacion *</label>
+              <select type="option" class="form-control" formControlName="derivationType" id="derivationType">
+                <option *ngFor="let derivationType of this.recordFormOptions.derivationTypes" [ngValue]="derivationType">
+                  {{ derivationType }}
+                </option>
+              </select>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivationType')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('derivedTo') } ">
+              <label for="derivedTo">Area de derivación</label>
+              <input type="text" class="form-control" formControlName="derivedTo" id="derivedTo"
+                placeholder="Seleccione un area" [matAutocomplete]="derivedToAutoComplete">
+              <mat-autocomplete #derivedToAutoComplete="matAutocomplete">
+                <mat-option *ngFor="let derivedArea of derivedAreas | async" [value]="derivedArea">
+                  {{derivedArea}}
+                </mat-option>
+              </mat-autocomplete>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('derivedTo')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+              <small id="derivedTo" class="form-text text-muted">Si el area no esta en la lista, escriba una
+                nueva</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('reason') } ">
+              <label for="reason">Motivo de la consulta:</label>
+              <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="reason"
+                id="reason" placeholder="Motivo de la consulta"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('reason')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('mentalStatus') } ">
+              <label for="mentalStatus">Estado mental del paciente:</label>
+              <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="mentalStatus"
+                id="mentalStatus" placeholder="Estado mental del paciente"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('mentalStatus')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('procedures') } ">
+              <label for="procedures">Procedimientos de la intervención:</label>
+              <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="procedures"
+                id="procedures" placeholder="Procedimientos de la intervención"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('procedures')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('commitments') } ">
+              <label for="commitments">Acuerdos del familiar:</label>
+              <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="commitments"
+                id="commitments" placeholder="Acuerdos del familiar"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('commitments')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('familyContactName') } ">
+              <label for="familyContactName">Nombre del familiar que dará acompañamiento:</label>
+              <input type="text" class="form-control" formControlName="familyContactName"
+                id="familyContactName" placeholder="Nombre del familiar que dará acompañamiento">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactName')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('familyContactPhone') } ">
+              <label for="familyContactPhone">Teléfono del familiar que dará acompañamiento:</label>
+              <input type="text" class="form-control" formControlName="familyContactPhone"
+                id="familyContactPhone" placeholder="Teléfono del familiar que dará acompañamiento">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactPhone')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </div>
+</div>

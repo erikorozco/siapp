@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 export class TopbarComponent implements OnInit {
 
   @Input() userDetails: any;
+  isAdmin;
+  isAdministrative;
   firstName: string;
   lastName: string;
 
@@ -27,6 +29,8 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit() {
     this.initializeUserInfo();
+    this.isAdministrative = this.authService.isAllowed(this.userDetails.roles, this.authService.RECEPTION_MODULE);
+    this.isAdmin = this.authService.isAllowed(this.userDetails.roles, this.authService.ADMIN_MODULES);
   }
 
   logout() {

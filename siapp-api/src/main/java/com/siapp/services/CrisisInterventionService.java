@@ -1,5 +1,7 @@
 package com.siapp.services;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +46,10 @@ public class CrisisInterventionService {
 		crisisInterventionRepository.delete(sessionReport);
 
         return ResponseEntity.ok().build();
+	}
+
+	public List<CrisisIntervention> getByPersonId(Integer personId) {
+		return crisisInterventionRepository.findByPersonId(personId);
 	}
 	
 }
