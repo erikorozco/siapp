@@ -315,6 +315,44 @@ ALTER TABLE public.sesionnutricion ADD CONSTRAINT sesionnutricion_fk FOREIGN KEY
 ALTER TABLE public.sesionnutricion ADD CONSTRAINT sesionnutricion_fk_exp FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente);
 
 
+-- public.intervencioncrisis definition
+
+-- Drop table
+
+-- DROP TABLE public.intervencioncrisis;
+
+CREATE TABLE public.intervencioncrisis (
+	estadomental varchar NULL,
+	derivacion varchar NULL,
+	procedimientos varchar NULL,
+	nombrefamiliar varchar NULL,
+	id_terapeuta int4 NOT NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id serial NOT NULL,
+	motivo varchar NULL,
+	compromisos varchar NULL,
+	telefonofamiliar varchar NULL,
+	fechanacimiento date NULL,
+	sexo varchar NULL,
+	domicilio varchar NULL,
+	escolaridad varchar NULL,
+	municipio varchar NULL,
+	colonia varchar NULL,
+	estadocivil varchar NULL,
+	tipoderivacion varchar NULL,
+	localidad varchar NULL,
+	id_persona int4 NOT NULL,
+	CONSTRAINT intervencioncrisis_pk PRIMARY KEY (id)
+);
+
+
+-- public.intervencioncrisis foreign keys
+
+ALTER TABLE public.intervencioncrisis ADD CONSTRAINT intervencioncrisis_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+ALTER TABLE public.intervencioncrisis ADD CONSTRAINT intervencioncrisis_fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
   --NO NECESSARY TABLES
   PCITA
   ATENCION

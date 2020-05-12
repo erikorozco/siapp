@@ -21,8 +21,9 @@ import { FormDerivationComponent } from './modules/records/components/form-deriv
 import { FormDropComponent } from './modules/records/components/form-drop/form-drop.component';
 import { FormSurveyComponent } from './modules/records/components/form-survey/form-survey.component';
 import { FormNutritionSessionComponent } from './modules/records/components/form-nutrition-session/form-nutrition-session.component';
-import { ListCrisisInterventionComponent } from './modules/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
-import { FormCrisisInterventionComponent } from './modules/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
+import { ListCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
+import { FormCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
+import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -132,6 +133,7 @@ const ROUTES: Routes = [
         }
       },
       { path: 'view-crisis-intervention/:id/person/:personId', component: FormCrisisInterventionComponent },
+      { path: 'psychometrics-managment', component: ListPsychometricsManagmentComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

@@ -28,7 +28,6 @@ export class ListCrisisInterventionComponent implements OnInit {
 
   getAllCrisisInterventions() {
     this.crisisInterventionService.getByPersonId(this.personId).subscribe(data => {
-      console.log(data)
       this.crisisInterventions = data;
       this.tableProperties = [{
           headElements: ['Profesional', 'Fecha', 'Acciones'],

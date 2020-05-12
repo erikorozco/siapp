@@ -172,7 +172,6 @@ export class FormCrisisInterventionComponent implements OnInit {
         this.crisisInterventionForm.get(['maritalStatus']).setValue(res.civilStatus);
         this.calculateAge();
       }
-      console.log(this.crisisInterventionForm.value);
     })
   }
   
