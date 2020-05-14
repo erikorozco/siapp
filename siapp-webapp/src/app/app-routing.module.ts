@@ -136,6 +136,7 @@ const ROUTES: Routes = [
       { path: 'view-crisis-intervention/:id/person/:personId', component: FormCrisisInterventionComponent },
       { path: 'psycometrics-managment', component: ListPsychometricsManagmentComponent },
       { path: 'add-psycometric-config', component: FormPsycometricCreatorComponent },
+      { path: 'view-psycometric-config/:id', component: FormPsycometricCreatorComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

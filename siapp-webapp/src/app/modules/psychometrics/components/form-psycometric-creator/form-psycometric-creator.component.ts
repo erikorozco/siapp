@@ -23,6 +23,7 @@ export class FormPsycometricCreatorComponent implements OnInit {
   options = [];
   previewRequest = false;
   isCodeGenerated = false;
+  code = '';
 
   //Creator formControls
   questionsFormGroup = this.formBuilder.group({
@@ -47,16 +48,18 @@ export class FormPsycometricCreatorComponent implements OnInit {
     this.formValidatorBuilder();
     this.initFormProperties();
     
-    if (this.action === 'view-derivation') {
+    if (this.action === 'view-psycometric-config') {
       this.formPsycometricManagementService.get(this.id).subscribe(data => {
         this.psycometricConfig = data;
+        this.psycometricConfig['payloadJson'] = JSON.parse(data.payload)
         this.psycometricConfigForm.setValue(data);
+        this.previewRequest = true;
       }, error => {console.log(error); });
       this.psycometricConfigForm.disable();
 
       //Get medicalRelease or drop and survey if exists on view mode
 
-    } else if (this.action === 'edit-derivation') {
+    } else if (this.action === 'edit-psycometric-config') {
       this.formPsycometricManagementService.get(this.id).subscribe(data => {
         this.psycometricConfigForm.setValue(data);
       }, error => { console.log(error); });
@@ -76,7 +79,10 @@ export class FormPsycometricCreatorComponent implements OnInit {
   onSubmit() {
     if (this.action === 'add-psycometric-config') {
       this.psycometricConfigForm.get(['payload']).setValue(JSON.stringify(this.psycometricConfigForm.get(['payloadJson']).value)); 
-      this.formPsycometricManagementService.create(this.psycometricConfigForm.value).subscribe(data => {
+      const data = this.psycometricConfigForm.value;
+      data['code'] = this.psycometricConfigForm.get(['code']).value
+
+      this.formPsycometricManagementService.create(data).subscribe(data => {
         this.toastr.success('La prueba ha isdo creada exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'psycometrics-managment']);
       }, error => {
@@ -99,7 +105,7 @@ export class FormPsycometricCreatorComponent implements OnInit {
       code: [{value: '', disabled: true}, Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
       name: ['', Validators.compose([Validators.required])],
-      payload: [[], ],
+      payload: ['', ],
       payloadJson: [[], ],
       active: ['', ],
       createdAt: ['', ],
@@ -147,7 +153,7 @@ export class FormPsycometricCreatorComponent implements OnInit {
     }
     this.options = [];
     this.questionsFormGroup.setValue(emptyForm);
-    this.psycometricConfigForm.get(['payload']).setValue(this.questions)
+    this.psycometricConfigForm.get(['payloadJson']).setValue(this.questions)
     this.previewRequest = true;
   }
 

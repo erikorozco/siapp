@@ -35,8 +35,8 @@ export class ListPsychometricsManagmentComponent implements OnInit {
           filterFunction : this.filterUsers,
           tableActions: {
             view: true,
-            edit: true,
-            delete: true,
+            //edit: true,
+            //delete: true,
             updateStatus: true,
             add: {
               route: ['/home', 'add-psycometric-config'],

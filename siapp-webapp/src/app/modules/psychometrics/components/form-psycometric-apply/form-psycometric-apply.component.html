@@ -14,7 +14,7 @@
               </tr>
             </thead>
             <tbody >
-              <ng-container *ngFor="let question of this.formConfigJson.payload">
+              <ng-container *ngFor="let question of this.formConfigJson.payloadJson">
                 <tr scope="row" app-form-question [question]="question" [form]="formPsycometric"></tr>
               </ng-container>
             </tbody>

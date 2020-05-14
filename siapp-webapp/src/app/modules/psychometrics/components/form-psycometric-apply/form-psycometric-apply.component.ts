@@ -25,7 +25,7 @@ export class FormPsycometricApplyComponent implements OnInit, OnChanges{
       console.log("changes")
       this.formPsycometric = null;
       this.formConfigJson = this.iFormConfigString;
-      this.formPsycometric = this.formPsycometricManagementService.formConfigToFormGroup(this.iFormConfigString.payload)
+      this.formPsycometric = this.formPsycometricManagementService.formConfigToFormGroup(this.iFormConfigString.payloadJson)
 
     }
 

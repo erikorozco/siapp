@@ -353,6 +353,34 @@ ALTER TABLE public.intervencioncrisis ADD CONSTRAINT intervencioncrisis_fk FOREI
 ALTER TABLE public.intervencioncrisis ADD CONSTRAINT intervencioncrisis_fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
 
 
+
+
+
+-- public.pruebapsicometrica definition
+
+-- Drop table
+
+-- DROP TABLE public.pruebapsicometrica;
+
+CREATE TABLE public.pruebapsicometrica (
+	id serial NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	payload varchar NULL,
+	nombre varchar NULL,
+	codigo varchar NOT NULL,
+	descripcion varchar NULL,
+	activo bool NULL DEFAULT false,
+	CONSTRAINT pruebapsicometrica_pk PRIMARY KEY (id)
+);
+
+
+-- public.pruebapsicometrica foreign keys
+
+ALTER TABLE public.pruebapsicometrica ADD CONSTRAINT pruebapsicometrica_fk_terapeuta FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+
+
   --NO NECESSARY TABLES
   PCITA
   ATENCION
