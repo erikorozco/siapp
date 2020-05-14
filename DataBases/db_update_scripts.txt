@@ -381,6 +381,37 @@ CREATE TABLE public.pruebapsicometrica (
 ALTER TABLE public.pruebapsicometrica ADD CONSTRAINT pruebapsicometrica_fk_terapeuta FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
 
 
+
+
+
+
+-- public.psicometricoaplicacion definition
+
+-- Drop table
+
+-- DROP TABLE public.psicometricoaplicacion;
+
+CREATE TABLE public.psicometricoaplicacion (
+	id serial NOT NULL,
+	id_persona int4 NOT NULL,
+	id_terapeuta serial NOT NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_pruebapsicometrica int4 NOT NULL,
+	resultado varchar NULL,
+	CONSTRAINT psicometricoaplicacion_pk PRIMARY KEY (id)
+);
+
+
+-- public.psicometricoaplicacion foreign keys
+
+ALTER TABLE public.psicometricoaplicacion ADD CONSTRAINT psicometricoaplicacion_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+ALTER TABLE public.psicometricoaplicacion ADD CONSTRAINT psicometricoaplicacion_fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+ALTER TABLE public.psicometricoaplicacion ADD CONSTRAINT psicometricoaplicacion_fk_psicometrico FOREIGN KEY (id) REFERENCES pruebapsicometrica(id);
+
+
+
+
   --NO NECESSARY TABLES
   PCITA
   ATENCION

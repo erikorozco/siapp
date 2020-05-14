@@ -67,6 +67,8 @@ import { ListPsychometricsManagmentComponent } from './modules/psychometrics/com
 import { FormPsycometricApplyComponent } from './modules/psychometrics/components/form-psycometric-apply/form-psycometric-apply.component';
 import { FormQuestionComponent } from './modules/psychometrics/components/form-psycometric-apply/components/form-question/form-question.component';
 import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
+import { ListPsycometricApplicationComponent } from './modules/records/components/list-psycometric-application/list-psycometric-application.component';
+import { ListPsycometricManagementDialogComponent } from './modules/psychometrics/components/list-psycometric-management-dialog/list-psycometric-management-dialog.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -116,6 +118,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormPsycometricApplyComponent,
     FormQuestionComponent,
     FormPsycometricCreatorComponent,
+    ListPsycometricApplicationComponent,
+    ListPsycometricManagementDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -152,7 +156,8 @@ registerLocaleData(localeEsMX , 'es-MX');
   entryComponents: [
     ImageViewComponent,
     ReleaseTypesDialogComponent,
-    ListUserDialogComponent
+    ListUserDialogComponent,
+    ListPsycometricManagementDialogComponent
  ],
   bootstrap: [AppComponent],
 })

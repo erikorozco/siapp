@@ -56,7 +56,7 @@ export class FormPsycometricManagementService {
   getPsycometricFormConfig(): any {
     return {
       id: 1,
-      payload: [
+      payloadJson: [
         {
           key: 'test-1',
           controlType: 'dropdown',

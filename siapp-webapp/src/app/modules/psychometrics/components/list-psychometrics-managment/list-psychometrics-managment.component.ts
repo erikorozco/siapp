@@ -26,7 +26,6 @@ export class ListPsychometricsManagmentComponent implements OnInit {
 
   getAllPsycometrics() {
     this.formPsycometricManagementService.getAll().subscribe(data => {
-      console.log(data)
       this.psycometricConfigs = data;
       this.tableProperties = [{
           headElements: ['Nombre', 'Usuario autor', 'Fecha de creación', 'Estado', 'Acciones'],
