@@ -140,7 +140,7 @@ ALTER TABLE archivo
 
 CREATE TABLE log
 (
-  id_log integer NOT NULL DEFAULT nextval('log_id_seq'::regclass),
+  id_log serial NOT NULL,
   usuario character varying,
   accion character varying,
   metodo character varying,
@@ -411,6 +411,25 @@ ALTER TABLE public.psicometricoaplicacion ADD CONSTRAINT psicometricoaplicacion_
 
 
 
+
+
+--INSERTS
+INSERT INTO public.rol (nombre) VALUES('ADMIN');
+INSERT INTO public.rol (nombre) VALUES('SUPERADMIN');
+INSERT INTO public.rol (nombre) VALUES('USER');
+
+
+
+INSERT INTO public.terapeuta
+(especialidad, nombret, apellidopt, apellidomt, telefono)
+VALUES('INGENIERIA', 'ERIK DE JESUS', 'OROZCO', 'CASTELLANOS', '3788857472');
+
+
+--INSERT INTO public.usuario
+--(nom_usuario, contraseña, esta_activo, id_terapeuta)
+--VALUES('root', 'root', true, id_terapeuta);
+
+--Insert role
 
   --NO NECESSARY TABLES
   PCITA
