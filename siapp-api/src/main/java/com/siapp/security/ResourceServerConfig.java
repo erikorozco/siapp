@@ -24,7 +24,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                     "/configuration/security",
                     "/swagger-ui.html",
                     "/webjars/**",
-                    "/users/tokenDetails"
+                    "/users/tokenDetails",
+                    "/users/apiTestUtil/encodePasswords"
                     ).permitAll()
 			//.antMatchers("/api/sessions").access("hasRole('USER')")
 			//.antMatchers("/api/users").access("hasRole('ADMIN')");
