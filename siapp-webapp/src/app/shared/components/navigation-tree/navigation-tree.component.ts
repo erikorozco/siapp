@@ -9,7 +9,10 @@ import { PersonService } from '../../services/person.service';
 export class NavigationTreeComponent implements OnInit {
 
   @Input() entityAction: string;
-  @Input() personId;
+  @Input() personId?;
+  @Input() root = false;
+
+  module
   personName;
   translatedAction: string;
 
@@ -18,8 +21,10 @@ export class NavigationTreeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.personId) {
+      this.getPersonInfo();
+    }
     this.getAction();
-    this.getPersonInfo();
   }
 
   getPersonInfo() {
@@ -64,7 +69,10 @@ export class NavigationTreeComponent implements OnInit {
       case 'nutrition':
         return 'reporte nutricional';
       case 'crisis':
-        return 'intervención en crisis';   
+        return 'intervención en crisis'; 
+      case 'psycometric':
+        this.module = 'Pruebas psicometricas'
+        return 'prueba'  
     }
   }
 

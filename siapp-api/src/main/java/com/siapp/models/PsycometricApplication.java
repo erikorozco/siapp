@@ -23,10 +23,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "pruebapsicometrica")
+@Table(name = "psicometricoaplicacion")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt"}, allowGetters = true)
-public class Psycometric implements Serializable {
+public class PsycometricApplication implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -35,20 +35,8 @@ public class Psycometric implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "payload")
+	@Column(name = "resultado")
 	private String payload;
-	
-	@Column(name = "nombre")
-	private String name;
-	
-	@Column(name = "codigo")
-	private String code;
-	
-	@Column(name = "descripcion")
-	private String description;
-	
-	@Column(name = "activo")
-	private boolean active;
 	
     @Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -63,8 +51,15 @@ public class Psycometric implements Serializable {
     @OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+    private Person person;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "id_pruebapsicometrica", referencedColumnName = "id")
+    private Psycometric psycometric;
 
-    //Getters and setters
 	public Integer getId() {
 		return id;
 	}
@@ -79,30 +74,6 @@ public class Psycometric implements Serializable {
 
 	public void setPayload(String payload) {
 		this.payload = payload;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public Date getCreatedAt() {
@@ -129,16 +100,24 @@ public class Psycometric implements Serializable {
 		this.therapist = therapist;
 	}
 
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Psycometric getPsycometric() {
+		return psycometric;
+	}
+
+	public void setPsycometric(Psycometric psycometric) {
+		this.psycometric = psycometric;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
     
 }

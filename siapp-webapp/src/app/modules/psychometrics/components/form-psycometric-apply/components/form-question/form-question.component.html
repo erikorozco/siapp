@@ -1,0 +1,24 @@
+<ng-container [formGroup]="form">
+
+  <td>
+    <label [attr.for]="question.key">{{question.order}}-{{question.label}}</label>
+  </td>
+  <td>
+    <div class="form-group" [ngSwitch]="question.controlType">
+
+      <input class="form-control" *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
+        [type]="question.controlType">
+
+      <select class="form-control" [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+        <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+      </select>
+
+      <textarea class="form-control" *ngSwitchCase="'textarea'" [formControlName]="question.key"
+        [id]="question.key"></textarea>
+
+    </div>
+  </td>
+  <td>
+    {{this.form.get([question.key]).value}}
+  </td>
+</ng-container>

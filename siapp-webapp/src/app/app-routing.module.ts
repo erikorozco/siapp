@@ -24,6 +24,7 @@ import { FormNutritionSessionComponent } from './modules/records/components/form
 import { ListCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
 import { FormCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
 import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
+import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -133,7 +134,8 @@ const ROUTES: Routes = [
         }
       },
       { path: 'view-crisis-intervention/:id/person/:personId', component: FormCrisisInterventionComponent },
-      { path: 'psychometrics-managment', component: ListPsychometricsManagmentComponent },
+      { path: 'psycometrics-managment', component: ListPsychometricsManagmentComponent },
+      { path: 'add-psycometric-config', component: FormPsycometricCreatorComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

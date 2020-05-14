@@ -64,6 +64,10 @@ import { SessionsSummaryComponent } from './modules/records/components/record-su
 import { ListCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/list-crisis-intervention/list-crisis-intervention.component';
 import { FormCrisisInterventionComponent } from './modules/records/components/crisis-interventions/components/form-crisis-intervention/form-crisis-intervention.component';
 import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
+import { FormPsycometricApplyComponent } from './modules/psychometrics/components/form-psycometric-apply/form-psycometric-apply.component';
+import { FormQuestionComponent } from './modules/psychometrics/components/form-psycometric-apply/components/form-question/form-question.component';
+import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
+// import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
 
@@ -109,6 +113,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     ListCrisisInterventionComponent,
     FormCrisisInterventionComponent,
     ListPsychometricsManagmentComponent,
+    FormPsycometricApplyComponent,
+    FormQuestionComponent,
+    FormPsycometricCreatorComponent,
   ],
   imports: [
     BrowserModule,

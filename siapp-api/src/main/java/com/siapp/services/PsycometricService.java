@@ -1,5 +1,6 @@
 package com.siapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -27,6 +28,10 @@ public class PsycometricService {
 		return psycometricRepository.findAll();
 	}
 	
+	public List<Psycometric> findAllActive(){
+		return this.filterActive(psycometricRepository.findAll());
+	}
+	
 	public Psycometric findById(Integer id){
 		return psycometricRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Psycometric", "id", id));
 	}
@@ -37,11 +42,11 @@ public class PsycometricService {
 	}
 	
 	public Psycometric update(Integer id, Psycometric psycometricDetails) {
-		Psycometric sessionReport = psycometricRepository.findById(id)
+		Psycometric psycometric = psycometricRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Psycometric", "id", id));
         
-        BeanUtils.copyProperties(psycometricDetails, sessionReport, IgnoredProperties.getIgnoredProperties(Model.SESSION_REPORT));
-        return psycometricRepository.save(sessionReport);
+        BeanUtils.copyProperties(psycometricDetails, psycometric, IgnoredProperties.getIgnoredProperties(Model.SESSION_REPORT));
+        return psycometricRepository.save(psycometric);
 	}
 	
 	public ResponseEntity<?> delete(Integer id) {
@@ -51,6 +56,25 @@ public class PsycometricService {
 		psycometricRepository.delete(psycometric);
 
         return ResponseEntity.ok().build();
+	}
+
+	public Psycometric updateStatus(Integer id) {
+		Psycometric psycometric = psycometricRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Psycometric", "id", id));
+		psycometric.setActive(!psycometric.isActive());
+		
+		return psycometricRepository.save(psycometric);
+	}
+	
+	private List<Psycometric> filterActive(List<Psycometric> psycometricList) {
+		List<Psycometric> result = new ArrayList<Psycometric>();
+		
+		for (Psycometric psycometric : psycometricList) {
+			if (psycometric.isActive()) {
+				result.add(psycometric);
+			}
+		}
+		return result;
 	}
 
 }
