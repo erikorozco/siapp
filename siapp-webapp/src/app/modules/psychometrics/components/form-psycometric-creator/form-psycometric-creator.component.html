@@ -1,0 +1,150 @@
+<app-navigation-tree [entityAction]="'add-psycometric'" [root]="true"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="psycometricConfigForm" (ngSubmit)="onSubmit()">
+      <div class="col-md-12 text-right mb-3">
+        <button [disabled]="this.psycometricConfigForm.invalid || this.action === 'view-psycometric-config'" type="submit"
+          class="btn btn-success btn-lg btn-icon-split">
+          <span class="icon text-white-50">
+            <i class="fas fa-save"></i>
+          </span>
+          <span class="text">Guardar</span>
+        </button>
+      </div>
+      <!-- here start the form fields -->
+      <mat-tab-group class="mt-2 form-tab-custom">
+        <mat-tab class="" label="Información general">
+          <div class="form-row mt-2">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('name') } ">
+              <label for="name">Nombre de la prueba *</label>
+              <input type="text" class="form-control" formControlName="name" id="name"
+                placeholder="Nombre de la prueba">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('name')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+              <small id="name" class="form-text text-muted ">Se recomiendo utilizar un nombre corto que identifique la
+                prueba rapidamente. Utiliza caracteres de A-Z y de 0-9</small>
+            </div>
+            <div *ngIf="!this.isCodeGenerated" class="form-group col-md-2">
+              <div *ngIf="this.action !== 'view-psycometric-config'" class="mt-4 ml-2">
+                <button [disabled]="this.psycometricConfigForm.get(['name']).invalid" type="button" class="btn btn-info " (click)="generateCode()">
+                  <span class="text">Generar código</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('code') } ">
+              <label for="code">Código de la prueba *</label>
+              <input type="text" class="form-control" formControlName="code" id="code"
+                placeholder="Código de la prueba">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('code')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('description') } ">
+              <label for="description">Descripción de la prueba:</label>
+              <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="description"
+                id="description" placeholder="Descripción de la prueba"></textarea>
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('description')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+              <small id="name" class="form-text text-muted ">Se describen todos los pasos a seguir en la prueba, así
+                como la manera o sicnificado de las respues por ejemplo ... "Del 1 al 5, cuando 1=poco 2=algo 3=regular
+                4=mucho 5=demasido"</small>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="this.psycometricConfigForm.get(['name']).valid" label="Preguntas">
+          <div [formGroup]="questionsFormGroup">
+            <div class="form-row mt-2">
+              <div class="form-group col-md-8" [ngClass]="{'has-error': false} ">
+                <label for="questionName">Texto de la pregunta *</label>
+                <input type="text" class="form-control" formControlName="questionName" id="questionName"
+                  placeholder="Texto de la pregunta">
+              </div>
+              <div class="form-group col-md-4 " [ngClass]="{'has-error': false } ">
+                <label for="questionType"> Tipo de pregunta*</label>
+                <select type="option" class="form-control" formControlName="questionType" id="questionType">
+                  <option [ngValue]="'textarea'">Area de texto</option>
+                  <option [ngValue]="'textbox'">Campo de texto</option>
+                  <option [ngValue]="'dropdown'">Opción multiple</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4 " [ngClass]="{'has-error': false } ">
+                <label for="questionRequired"> Pregunta requerida *</label>
+                <select type="option" class="form-control" formControlName="questionRequired" id="questionRequired">
+                  <option [ngValue]="'true'">Si</option>
+                  <option [ngValue]="'false'">No</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4" *ngIf="this.options.length > 0">
+                <ul *ngFor="let item of this.options">
+                  <li>{{item.value}} -> {{item.key}}</li>
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="form-row" *ngIf="this.questionsFormGroup.get(['questionType']).value === 'dropdown'">
+              <div class="form-group col-md-6" [ngClass]="{'has-error': false} ">
+                <label for="questionOptionString">Opciones *</label>
+                <input type="text" class="form-control" formControlName="questionOptionString"
+                  id="questionOptionString" placeholder="Ejemplo: Ninguno:0,Raramente:1,Leve:2,Moderado:3,Severo:4">
+                <div class="form-control-feedback" *ngIf="requiredFieldValidation('description')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+                </div>
+                <small id="name" class="form-text text-muted ">El formato debe ser el siguiente: Primero el texto de la respuestas despue dos puntos ':' y al final un coma, ejemplo -> Poco Interesado:0,Algo Interesado:1  '</small>
+              </div>
+            </div> -->
+            <div class="form-row" *ngIf="this.questionsFormGroup.get(['questionType']).value !== 'dropdown'">
+              <button type="button" [disabled]="questionsFormGroup.invalid" (click)="addQuestionForm()"
+                class="btn btn-success btn-icon-split mt-3">
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Agregar Pregunta</span>
+              </button>
+            </div>
+            <hr>
+            <h5 *ngIf="this.questionsFormGroup.get(['questionType']).value === 'dropdown'">Agregar opciones</h5>
+            <div *ngIf="this.questionsFormGroup.get(['questionType']).value === 'dropdown'" class="form-row mt-2">
+              <div class="form-group col-md-4" [ngClass]="{'has-error': false} ">
+                <label for="optionValue">Texto del opción *</label>
+                <input type="text" class="form-control" formControlName="optionValue" id="optionValue"
+                  placeholder="Texto del opción">
+              </div>
+              <div class="form-group col-md-4" [ngClass]="{'has-error': false} ">
+                <label for="optionKey">Valor de la opcion *</label>
+                <input type="text" class="form-control" formControlName="optionKey" id="optionKey"
+                  placeholder="Valor de la opcion">
+              </div>
+              <div class="form-group col-md-4" [ngClass]="{'has-error': false} ">
+                <button type="button" (click)="addOption()" class="btn btn-success btn-icon-split mt-3">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span class="text">Agregar opción</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-row" *ngIf="this.questionsFormGroup.get(['questionType']).value === 'dropdown'">
+              <button type="button" [disabled]="this.options.length <= 0" (click)="addQuestionForm(true)"
+                class="btn btn-success btn-icon-split mt-3">
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Agregar Pregunta</span>
+              </button>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="this.previewRequest" class="" label="Vista previa">
+          <app-form-psycometric-apply [iFormConfigString]="this.psycometricConfigForm.value" [isPreview]="true">
+          </app-form-psycometric-apply>
+        </mat-tab>
+      </mat-tab-group>
+
+    </form>
+  </div>
+</div>

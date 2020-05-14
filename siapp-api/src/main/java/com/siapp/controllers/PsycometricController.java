@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.siapp.models.CrisisIntervention;
 import com.siapp.models.Psycometric;
+import com.siapp.models.User;
 import com.siapp.services.CrisisInterventionService;
 import com.siapp.services.PsycometricService;
 
@@ -43,6 +44,12 @@ public class PsycometricController {
         return psycometricService.findAll();
     }
     
+    @ApiOperation(value = "Get all active Psycometric")
+    @GetMapping("/getAllActive")
+    public List<Psycometric> getAllActive() {
+        return psycometricService.findAllActive();
+    }
+    
     @ApiOperation(value = "Get Psycometric")
     @GetMapping("/get/{id}")
     public Psycometric get(@PathVariable(value = "id") Integer id) {
@@ -60,6 +67,12 @@ public class PsycometricController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Integer id) {
         return psycometricService.delete(id);
+    }
+    
+    @ApiOperation(value = "Update Psycometric by ID", notes = "Returns a Psycometric.class", response = Psycometric.class)
+    @PutMapping("/updateStatus/{id}")
+    public Psycometric updateStatus(@PathVariable(value = "id") Integer id) {
+        return psycometricService.updateStatus(id);
     }
 
 }

@@ -1,0 +1,8 @@
+<div *ngIf="psycometricApplications">
+  <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="col-md-2" *ngIf="!psycometricApplications">
+      <mat-spinner></mat-spinner>
+  </div>
+</div>

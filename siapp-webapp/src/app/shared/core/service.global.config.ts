@@ -142,6 +142,28 @@ export const API_URL_CONFIG = {
         delete: 'delete/',
       }
     },
+    psycometricsManagementAPI: {
+      name: 'psycometricsManagement/',
+      endpoints: {
+        getAll: 'getAll',
+        getAllActive: 'getAllActive',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+        delete: 'delete/',
+        updateStatus: 'updateStatus/'
+      }
+    },
+    psycometricsApplicationAPI: {
+      name: 'psycometricsApplication/',
+      endpoints: {
+        getByPersonId: 'getByPersonId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+        delete: 'delete/',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {
