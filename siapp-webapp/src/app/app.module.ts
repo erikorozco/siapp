@@ -13,6 +13,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -139,6 +141,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatSelectModule,
     MatExpansionModule,
     MatInputModule,
+    MatStepperModule,
+    MatCheckboxModule
   ],
   providers: [
     UserService,

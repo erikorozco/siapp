@@ -838,16 +838,16 @@ public class Record implements Serializable {
 		this.genogram = genogram;
 	}
 	
-	@Column(insertable = false, updatable = false)
-	@Transient
-	private MultipartFile genogramUpload;
-	
-	public void setGenogramUpload(MultipartFile genogramFile) {
-		this.genogramUpload = genogramFile;
-	}
-	public MultipartFile getGenogramUpload() {
-		return genogramUpload;
-	}
+//	@Column(insertable = false, updatable = false)
+//	@Transient
+//	private MultipartFile genogramUpload;
+//	
+//	public void setGenogramUpload(MultipartFile genogramFile) {
+//		this.genogramUpload = genogramFile;
+//	}
+//	public MultipartFile getGenogramUpload() {
+//		return genogramUpload;
+//	}
 
 	public Date getCreatedAt() {
 		return createdAt;

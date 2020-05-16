@@ -251,7 +251,7 @@ export class FormRecordComponent implements OnInit, OnDestroy {
       creation: ['', ],
       derivedTo: [' ', ],
       genogram: ['', ],
-      genogramUpload: ['', ],
+      // genogramUpload: ['', ],
       //derivationType: ['', ],
       drinkAlcohol: ['', Validators.compose([Validators.required])],
       drinkAlcoholFrecuency: ['', ],

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PrivacyAgreement } from '../../../../shared/models/privacy-agreement.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '../../../../shared/services/person.service';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-privacy-agreement',
@@ -12,8 +13,14 @@ import { PersonService } from '../../../../shared/services/person.service';
 })
 export class PrivacyAgreementComponent implements OnInit {
 
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  readTermsFormControl = new FormControl(false, )
+
   params: any;
   person: any;
+  privacyAccepted = false;
 
   constructor(
     private privacyAgreementService: PrivacyAgreementService,
@@ -21,15 +28,23 @@ export class PrivacyAgreementComponent implements OnInit {
     private toastr: ToastrService,
     private routes: ActivatedRoute,
     private router: Router,
+    private _formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
 
+    
     this.routes.params.subscribe(params => {
       this.params = params;
     });
-
+    
     this.getPersonInformation();
+      this.firstFormGroup = this._formBuilder.group({
+        firstCtrl: ['', Validators.required]
+      });
+      this.secondFormGroup = this._formBuilder.group({
+        secondCtrl: ['', Validators.required]
+      });
 
   }
 
@@ -39,6 +54,10 @@ export class PrivacyAgreementComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  agreeTerms() {
+    console.log(this.readTermsFormControl)
   }
 
   captureSign({value}) {
