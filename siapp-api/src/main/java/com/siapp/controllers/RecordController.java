@@ -54,6 +54,12 @@ public class RecordController {
         return recordService.getAllRecords();
     }
 	
+	@ApiOperation(value = "Filter the records")
+    @GetMapping("/filter")
+    public List<HashMap<String, Object>> findTherapistRecords(@RequestParam("searchText") String searchText) {
+        return recordService.filter(searchText);
+    }
+	
 	@ApiOperation(value = "Create new Record", notes = "Returns a Record.class", response = Record.class)
     @PostMapping("/createRecord")
     public Record createRecord(@Valid @RequestBody Record Record) {

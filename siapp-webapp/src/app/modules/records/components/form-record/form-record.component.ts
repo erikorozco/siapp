@@ -135,7 +135,10 @@ export class FormRecordComponent implements OnInit, OnDestroy {
   calculateAge() {
     const bornDate = new Date(this.recordForm.get(['bornDate']).value);
     const currentDate = new Date();
-    this.recordForm.get(['age']).setValue(currentDate.getFullYear() - bornDate.getFullYear());
+    const a = currentDate.getFullYear() - bornDate.getFullYear()
+    let months = (a * 12) + (currentDate.getMonth() - bornDate.getMonth()) ;
+
+    this.recordForm.get(['age']).setValue( Math.floor(months/12));
   }
 
   calculateBMI() {
@@ -185,7 +188,11 @@ export class FormRecordComponent implements OnInit, OnDestroy {
         window.localStorage.removeItem('recordFormFillProgress');
         window.localStorage.clear();
       }, error => {
-        this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+        if (error.status === 409) {
+          this.toastr.warning('Ya existe un expediente dado de alta para este paciente', 'Operacion invalida');
+        } else {
+          this.toastr.error('Hubo un error guardar el expediente', 'Operacion fallida');
+        }
         console.log(error);
       });
     } else {

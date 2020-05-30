@@ -14,6 +14,7 @@ import com.siapp.models.Person;
 import com.siapp.repositories.PersonRepository;
 import com.siapp.utilities.IgnoredProperties;
 import com.siapp.utilities.PersonUtil;
+import com.siapp.utilities.RecordUtil;
 
 @Service
 public class PersonService {
@@ -52,6 +53,10 @@ public class PersonService {
 	
 	public  List<HashMap<String, Object>> getAllPersonsQuery(){
 		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.getAllPersonsQuery());
+	}
+
+	public List<HashMap<String, Object>> filterPersons(String searchText) {
+		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.filterPersons(searchText.toUpperCase(), RecordUtil.isNumeric(searchText)));
 	}
 
 }

@@ -21,5 +21,21 @@ public class RecordUtil {
 		}
 		return finalResult;
 	}
+	
+	public static Double isNumeric(String strNum) {
+		if(strNum == null) {
+			return (double) 0;
+		}
+		
+		double d;
+		
+		try {
+			d = Double.parseDouble(strNum);
+		} catch (NumberFormatException nfe) {
+			return (double) 0;
+		}
+		
+		return d;
+	}
 
 }

@@ -1,11 +1,20 @@
 <div class="card shadow mb-4 container-fluid">
     <div class="card-header row" style="overflow-x: scroll;">
-        <div class="col-md-6 text-left">
+        <div *ngIf="!tableActions.formSearch" class="col-md-6 text-left">
             <div class="md-form">
                 <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" placeholder="Buscar..." mdbInput>
-                <!-- <label for="search-input">Search</label> -->
             </div>
         </div>
+        <form *ngIf="tableActions.formSearch" (ngSubmit)="onSubmit()" class="col-md-6 text-left">
+            <div class="input-group">
+                <input style="background-color: #ffffff !important" [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="searchFromText" class="form-control bg-light border-0 small" placeholder="Buscar ..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
         <!-- <div class="col-md-3 text-left" style="color:aliceblue;">
             <button (click)="searchItems()" type="button" class="btn btn-info btn-icon-split">
                 <span class="icon text-white-50">
@@ -39,6 +48,9 @@
                 </tr>
             </thead>
             <tbody #row>
+                <tr *ngIf="tableActions.formSearch && elements.length === 0">
+                    <td colspan="5">Utilice el filtro para obtener datos</td>
+                </tr>
                 <tr mdbTableCol *ngFor="let item of elements; let i = index">
                     <ng-container *ngFor="let value of item.tableFields; let j = index">
                         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row"> {{ value }}</td>

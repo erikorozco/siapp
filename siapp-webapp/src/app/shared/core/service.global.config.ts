@@ -32,6 +32,7 @@ export const API_URL_CONFIG = {
       endpoints: {
         assignRecord : 'assignRecord',
         getAll : 'getAll',
+        filter : 'filter',
         findRecordById : 'findRecordById/',
         findRecordsByTherapistId : 'findRecordsByTherapistId/',
         findRecordByPersonId : 'findRecordByPersonId/',
@@ -45,6 +46,7 @@ export const API_URL_CONFIG = {
       name: 'persons/',
       endpoints: {
         getAll : 'getAllPersons',
+        filter : 'filter',
         getPerson : 'getPerson/',
         createPerson: 'createPerson',
         updatePerson : 'updatePerson/',

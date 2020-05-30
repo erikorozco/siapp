@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.siapp.constants.Model;
+import com.siapp.exceptions.ResourceAlreadyExistsException;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Person;
 import com.siapp.models.Record;
@@ -45,6 +46,13 @@ public class RecordService {
 	} 
 	
 	public Record create(Record record) {
+		
+		Record existingRecord = recordRepository.findByPersonId(record.getPerson().getId()).orElse(null);
+		
+		if (existingRecord != null) {
+			throw new ResourceAlreadyExistsException("Record", "id", record.getId());
+		}
+		
 		this.personService.update(record.getPerson().getId(), record.getPerson());
 		return recordRepository.save(record);
 	}
@@ -65,6 +73,11 @@ public class RecordService {
 	}
 	
 	public Integer assignRecord(TherapistRecordPermission therapistRecordPermission) {
+		
+		if(recordRepository.checkIfPermissionExists(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId()) > 0) {
+			throw new ResourceAlreadyExistsException("Record permission", "record ID and therapist ID", therapistRecordPermission.getRecordId()+therapistRecordPermission.getTherapistId());
+		}
+		
 		return recordRepository.assignRecord(therapistRecordPermission.getRecordId(), therapistRecordPermission.getTherapistId());
 	}
 	
@@ -84,6 +97,10 @@ public class RecordService {
 			throw new RuntimeException("FAIL!");
 		}
 		
+	}
+
+	public List<HashMap<String, Object>> filter(String searchText) {
+		return RecordUtil.convertFindRecordsByTherapistArrayToObject(recordRepository.filter(searchText.toUpperCase(), RecordUtil.isNumeric(searchText)));
 	}
 	
 	

@@ -7,6 +7,7 @@
 <div *ngIf="persons">
     <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
 </div>
+
 <div class="row d-flex justify-content-center">
     <div class="col-md-2" *ngIf="!persons">
         <mat-spinner></mat-spinner>

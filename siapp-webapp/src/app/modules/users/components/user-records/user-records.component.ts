@@ -109,6 +109,11 @@ export class UserRecordsComponent implements OnInit {
           this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
           this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
         }, error => {
+          if (error.status === 409) {
+            this.toastr.warning('El expediente ya esta asignado a este usuario', 'Operacion invalida');
+          } else {
+            this.toastr.error('Hubo un error guardar', 'Operacion fallida');
+          }
           console.log(error);
         });
       }

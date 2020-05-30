@@ -50,6 +50,14 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 			nativeQuery = true)
 	Integer assignRecord(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
 	
+	@Query(
+			value = "SELECT count(*) "
+					+ "FROM expediente_terapeuta et "
+					+ "WHERE et.id_expediente = :recordId \n" + 
+					"AND et.id_terapeuta = :therapistId ;",
+			nativeQuery = true)
+	Integer checkIfPermissionExists(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
+	
 	
 	@Modifying
     @Transactional
@@ -59,5 +67,23 @@ public interface RecordRepository extends JpaRepository<Record, Integer>  {
 	Integer removeRecordPermission(@Param("recordId") Integer recordId, @Param("therapistId") Integer therapistId);
 	
 	public Optional<Record> findByPersonId(Integer personId);
+
+
+	@Query(
+			value = "SELECT DISTINCT \n" + 
+					"	e.id_expediente,\n" + 
+					"	e.\"estadoPaciente\",\n" + 
+					"	p.nombre,\n" + 
+					"   p.apellidop,\n" +
+					"	p.apellidom,\n" + 
+					"	p.id_persona\n" + 
+					"FROM expediente e \n" + 
+					"INNER JOIN persona p\n" + 
+					"ON e.id_persona = p.id_persona\n" + 
+					"WHERE upper(concat_ws(' ',p.nombre, p.apellidop, p.apellidom)) LIKE %:searchText% \n" + 
+					"OR e.id_expediente = :recordId \n" + 
+					"ORDER BY p.nombre ASC; \n",
+			nativeQuery = true)
+	List<Object[]> filter(String searchText, Double recordId);
 	
 }

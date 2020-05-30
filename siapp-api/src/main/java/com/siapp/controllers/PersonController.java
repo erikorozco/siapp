@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.siapp.lists.PersonList;
 import com.siapp.models.Person;
@@ -26,10 +27,11 @@ public class PersonController {
 	
 	@Autowired
 	PersonService personService;
-
-    @GetMapping("/getAllPersonQuery")
-    public List<Person> getAllPersons() {
-        return personService.getAllPersons();
+	
+	@ApiOperation(value = "Filter persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")
+	@GetMapping("/filter")
+	public List<HashMap<String, Object>> filterPersons(@RequestParam("searchText") String searchText) {
+	    return personService.filterPersons(searchText);
     }
     
     @ApiOperation(value = "Get all Persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")

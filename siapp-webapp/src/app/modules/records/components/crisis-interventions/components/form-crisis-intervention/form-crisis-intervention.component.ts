@@ -178,8 +178,10 @@ export class FormCrisisInterventionComponent implements OnInit {
   calculateAge() {
     const bornDate = new Date(this.crisisInterventionForm.get(['bornDate']).value);
     const currentDate = new Date();
-    this.crisisInterventionForm.get(['age']).setValue(currentDate.getFullYear() - bornDate.getFullYear());
-    return currentDate.getFullYear() - bornDate.getFullYear();
+    const a = currentDate.getFullYear() - bornDate.getFullYear()
+    let months = (a * 12) + (currentDate.getMonth() - bornDate.getMonth()) ;
+    this.crisisInterventionForm.get(['age']).setValue(Math.floor(months/12));
+    return Math.floor(months/12);
   }
 
   setDate(date) {

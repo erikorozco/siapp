@@ -26,11 +26,14 @@ export class ListRecordsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllRecords();
+    this.initTable();
   }
 
   executeAction({value, action}) {
     switch (action) {
+      case 'search':
+        this.filterRecords(value);
+        break;
       default:
         console.log(`${action} is not a valid option`);
         break;
@@ -38,27 +41,39 @@ export class ListRecordsDialogComponent implements OnInit {
 
   }
 
-  getAllRecords() {
-    this.recordService.getAllRecords().subscribe( data => {
+  filterRecords(searchText) {
+    this.recordService.filterRecords(searchText).subscribe( data => {
       this.records = data;
       this.tableProperties = [{
         headElements: ['No. Expediente', 'Nombre', 'Apellidos', 'Estado', 'Acciones'],
         datasource: data,
         maxVisibleItems: 10,
-        filterFunction : this.filterRecords,
+        filterFunction : this.filter,
         tableActions: {
-          view: false,
-          edit: false,
-          delete: false,
-          print: false,
-          updateStatus: false,
+          formSearch : true,
           assign: true
         }
       }];
     }, error => {});
   }
 
-  filterRecords(previousElements, searchText) {
+  initTable() {
+    // this.recordService.getAllRecords().subscribe( data => {
+      this.records = {};
+      this.tableProperties = [{
+        headElements: ['No. Expediente', 'Nombre', 'Apellidos', 'Estado', 'Acciones'],
+        datasource: [],
+        maxVisibleItems: 10,
+        filterFunction : this.filter,
+        tableActions: {
+          formSearch : true,
+          assign: true
+        }
+      }];
+    // }, error => {});
+  }
+
+  filter(previousElements, searchText) {
     return previousElements.filter(
       element => {
         if (element.recordPatientName.toLowerCase().includes(searchText.toLowerCase())

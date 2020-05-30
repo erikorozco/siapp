@@ -31,6 +31,11 @@ export class RecordService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.getAll);
   }
 
+  filterRecords(searchText): Observable<any> {
+    const params = `?searchText=${searchText}`;
+    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.filter + params);
+  }
+
   assignRecord(recordTherapistPermission: any): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.recordsAPI.endpoints.assignRecord, recordTherapistPermission);
   }

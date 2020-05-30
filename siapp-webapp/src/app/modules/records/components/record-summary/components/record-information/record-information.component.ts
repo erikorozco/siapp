@@ -47,7 +47,9 @@ export class RecordInformationComponent implements OnInit {
   calculateAge(recordBornDate) {
     const bornDate = new Date(recordBornDate);
     const currentDate = new Date();
-    return currentDate.getFullYear() - bornDate.getFullYear();
+    const a = currentDate.getFullYear() - bornDate.getFullYear()
+    let months = (a * 12) + (currentDate.getMonth() - bornDate.getMonth()) ;
+    return Math.floor(months/12)
   }
 
   getBMIStatus(bmi) {

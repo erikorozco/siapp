@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef, HostListener, AfterViewInit,
-  ViewChild, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit,
+  ViewChild, ChangeDetectorRef, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { filter } from 'rxjs/operators';
 import { element } from 'protractor';
@@ -9,7 +9,7 @@ import { element } from 'protractor';
   templateUrl: './table-pagination.component.html',
   styleUrls: ['./table-pagination.component.css']
 })
-export class TablePaginationComponent implements OnInit, AfterViewInit {
+export class TablePaginationComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() tableProperties: any;
   @Output() actionsHandler = new EventEmitter();
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
@@ -21,15 +21,16 @@ export class TablePaginationComponent implements OnInit, AfterViewInit {
   maxVisibleItems = 8;
 
   searchText: string;
+  searchFromText: string; //This is used for heavy searches. It will hit the API to serach instead of filter on browser.
   previous: any;
   tableActions: any = {};
   orderedElements: any = [];
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
-  @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
-  }
+  // @HostListener('input') oninput() {
+  //   this.mdbTablePagination.searchText = this.searchText;
+  // }
 
   ngOnInit() {
     this.maxVisibleItems = this.tableProperties[0].maxVisibleItems;
@@ -40,6 +41,10 @@ export class TablePaginationComponent implements OnInit, AfterViewInit {
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ngOnInit();
   }
 
   ngAfterViewInit() {
@@ -76,6 +81,10 @@ export class TablePaginationComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
     });
+  }
+
+  onSubmit() {
+    this.action(this.searchFromText, 'search');
   }
 
   action = (item, action) => {

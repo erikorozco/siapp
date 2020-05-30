@@ -19,23 +19,22 @@ export class ListPersonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllPersons();
+    this.initTable();
   }
 
-  getAllPersons() {
-    this.personService.getAllPersons().subscribe(data => {
-      this.persons = data;
+  initTable() {
+    // this.personService.getAllPersons().subscribe(data => {
+      // this.persons = data;
+      this.persons = {};
       this.tableProperties = [{
           headElements: ['Nombre', 'Apellidos', 'Teléfono', '# Expediente', 'Acciones'],
-          datasource: data,
+          datasource: [],
           maxVisibleItems: 10,
           filterFunction : this.filterUsers,
           tableActions: {
             view: true,
             edit: true,
-            delete: false,
-            print: false,
-            updateStatus: false,
+            formSearch : true,
             viewRecords: {
               toolTip: 'Ver Expediente',
             },
@@ -45,9 +44,9 @@ export class ListPersonComponent implements OnInit {
             }
           }
       }];
-    }, error => {
-      console.log(error);
-    });
+    // }, error => {
+    //   console.log(error);
+    // });
   }
 
   viewPerson(person: Person) {
@@ -73,6 +72,9 @@ export class ListPersonComponent implements OnInit {
       case 'viewRecords':
         this.viewRecordSummary(value);
         break;
+      case 'search':
+        this.filterPersons(value);
+        break;
       default:
         console.log(`${action} is not a valid option`);
         break;
@@ -80,6 +82,35 @@ export class ListPersonComponent implements OnInit {
 
   }
 
+  filterPersons(searchText) {
+    this.personService.filterPersons(searchText).subscribe((data) => {
+
+      this.persons = data;
+      this.tableProperties = [{
+          headElements: ['Nombre', 'Apellidos', 'Teléfono', '# Expediente', 'Acciones'],
+          datasource: this.persons,
+          maxVisibleItems: 10,
+          filterFunction : this.filterUsers,
+          tableActions: {
+            view: true,
+            edit: true,
+            formSearch : true,
+            viewRecords: {
+              toolTip: 'Ver Expediente',
+            },
+            add: {
+              route: ['/home', 'add-person'],
+              text: 'Agregar Paciente'
+            }
+          }
+      }];
+
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  // Deprecated. Persons search is directly through the API
   filterUsers(previousElements, searchText) {
     return previousElements.filter(
       element => {
