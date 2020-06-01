@@ -48,7 +48,7 @@
                         <li class="nav-item">
                             <a class="nav-link" (click)="render('dates-tab')" id="dates-tab" data-toggle="tab" href="#dates" role="tab" aria-controls="dates" aria-selected="false">Citas</a>
                         </li>
-                        <li *ngIf="false" class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" (click)="render('privacy-agreement-tab')" id="privacy-agreement-tab" data-toggle="tab" href="#privacy-agreement" role="tab" aria-controls="privacy-agreement" aria-selected="false">Acuerdo de privacidad</a>
                         </li>
                     </ul>
@@ -88,13 +88,16 @@
                             <p>Citas</p>
                         </div>
                         <div *ngSwitchCase="'privacy-agreement-tab'" class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
-                            <div class="col-md-6">
+                            <div *ngIf="!this.privacyAgreement" class="col-md-6">
                                 <button (click)="viewPrivacyAgreement()" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                          </span>
                                      <span class="text">Acuerdo de privacidad</span>
                                 </button>
+                            </div>
+                            <div *ngIf="this.privacyAgreement">
+                                <app-privacy-agreement [iPersonId]="this.person.id" [isViewOnly]="true"></app-privacy-agreement>
                             </div>
                         </div>
                     </div>

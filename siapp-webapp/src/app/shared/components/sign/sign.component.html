@@ -1,10 +1,10 @@
 <div class="row">
-    <h2 class="col-md-12 text-center">Firma</h2>
-    <div class="col-md-4 text-center"></div>
-    <div class="sign  text-center">
+    <h2 class="col-md-12">Firma</h2>
+    <!-- <div class="col-md-4"></div> -->
+    <div class="sign ">
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
     </div>
-    <div class="col-md-12 text-center mt-4">
+    <div class="col-md-12 mt-4">
         <button [disabled]="this.signaturePad.isEmpty()" class="btn btn-success btn-icon-split mr-4">
             <span class="icon text-white-50">
         <i class="fas fa-check"></i>
@@ -15,7 +15,7 @@
                 <span class="icon text-white-50">
             <i class="fas fa-trash"></i>
             </span>
-                <span (click)="captureSign('clean')" class="text">Limpiar</span>
+            <span (click)="captureSign('clean')" class="text">Limpiar</span>
         </button>
     </div>
 </div>

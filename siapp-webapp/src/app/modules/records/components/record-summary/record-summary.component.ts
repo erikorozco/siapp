@@ -4,6 +4,7 @@ import { PersonService } from 'src/app/shared/services/person.service';
 import { RecordService } from '../../../../shared/services/record-service';
 import { UserService } from '../../../../shared/services/user.service';
 import { AuthService } from '../../../../shared/services/auth.service';
+import { PrivacyAgreementService } from 'src/app/shared/services/privacy-agreement.service';
 
 @Component({
   selector: 'app-record-summary',
@@ -17,6 +18,7 @@ export class RecordSummaryComponent implements OnInit {
   params: any;
   person: any;
   record: any;
+  privacyAgreement: any;
   photoFile: any;
   photoSrc: any;
   loading = false;
@@ -28,7 +30,8 @@ export class RecordSummaryComponent implements OnInit {
     private personService: PersonService,
     private recordService: RecordService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private privacyAgreementService: PrivacyAgreementService,
   ) {
     this.tab = 'home-tab';
   }
@@ -41,6 +44,7 @@ export class RecordSummaryComponent implements OnInit {
     this.getPersonInformation();
     this.getRecordInformation();
     this.getUserInformation();
+    this.getPrivacyAgreement();
   }
 
   render(tab) {
@@ -71,6 +75,14 @@ export class RecordSummaryComponent implements OnInit {
         this.userDetails = data;
       });
   }
+
+  getPrivacyAgreement() {
+    this.privacyAgreementService.getPrivacyAgreement(this.params.personId).subscribe((data) => {
+      this.privacyAgreement = data;
+    }, error => {
+      console.log(error)
+    });
+  };
 
   viewPrivacyAgreement() {
     this.router.navigate(['home', 'privacy-agreement', this.params.personId]);

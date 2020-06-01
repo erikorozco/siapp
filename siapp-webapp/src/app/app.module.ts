@@ -71,6 +71,8 @@ import { FormQuestionComponent } from './modules/psychometrics/components/form-p
 import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
 import { ListPsycometricApplicationComponent } from './modules/records/components/list-psycometric-application/list-psycometric-application.component';
 import { ListPsycometricManagementDialogComponent } from './modules/psychometrics/components/list-psycometric-management-dialog/list-psycometric-management-dialog.component';
+import { PrivacyPolicyComponent } from './modules/records/components/privacy-agreement/components/privacy-policy/privacy-policy.component';
+import { CommitmetLetterComponent } from './modules/records/components/privacy-agreement/components/commitmet-letter/commitmet-letter.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -122,6 +124,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormPsycometricCreatorComponent,
     ListPsycometricApplicationComponent,
     ListPsycometricManagementDialogComponent,
+    PrivacyPolicyComponent,
+    CommitmetLetterComponent,
   ],
   imports: [
     BrowserModule,

@@ -37,6 +37,9 @@ public class PrivacyAgreement implements Serializable  {
 	@Column(name = "firma")
 	private String sign;
 	
+	@Column(name = "firmacoordiador")
+	private String coordinatorSign;
+	
 	@JsonManagedReference(value = "personPrivacyReference")
 	@OneToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
@@ -91,7 +94,14 @@ public class PrivacyAgreement implements Serializable  {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-    
+
+	public String getCoordinatorSign() {
+		return coordinatorSign;
+	}
+
+	public void setCoordinatorSign(String coordinatorSign) {
+		this.coordinatorSign = coordinatorSign;
+	}
     
 
 }
