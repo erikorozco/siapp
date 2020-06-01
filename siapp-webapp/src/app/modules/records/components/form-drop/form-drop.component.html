@@ -5,7 +5,7 @@
     <form [formGroup]="dropForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('dropType') } ">
-          <label for="dropType">Tipo de de derivacion *</label>
+          <label for="dropType">Tipo de de baja *</label>
           <select type="option" class="form-control" formControlName="dropType" id="dropType">
             <option *ngFor="let dropType of this.formsConstants.dropTypes" [ngValue]="dropType">
               {{ dropType }}

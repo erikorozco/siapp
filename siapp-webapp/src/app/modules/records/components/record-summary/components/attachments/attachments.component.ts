@@ -17,6 +17,7 @@ export class AttachmentsComponent implements OnInit {
   @Input() personId;
   images: [];
   fileInput: any;
+  description: string;
   fileSrc = '';
   fileLabel = 'Seleccione un archivo..';
   loading = false;
@@ -49,7 +50,7 @@ export class AttachmentsComponent implements OnInit {
     const payload = {
       personId: this.personId,
       therapistId: '', // Values is being set on the service layer
-      description: ''
+      description: this.description
     };
     this.fileService.uploadFile(this.fileInput, payload).subscribe((res) => {
       if (res.status === 200) {

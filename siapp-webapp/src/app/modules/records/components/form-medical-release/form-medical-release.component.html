@@ -47,9 +47,9 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('bahaviorDuringStay') } ">
-          <label for="bahaviorDuringStay">Manejo durante la estancia:</label>
+          <label for="bahaviorDuringStay">Manejo durante la intervención:</label>
           <textarea style="min-height: 50px;" type="textarea" class="form-control" formControlName="bahaviorDuringStay"
-            id="bahaviorDuringStay" placeholder="Manejo durante la estancia"></textarea>
+            id="bahaviorDuringStay" placeholder="Manejo durante la intervención"></textarea>
           <div class="form-control-feedback" *ngIf="requiredFieldValidation('bahaviorDuringStay')">
             <h6 class="feedback-field">Este campo es requerido</h6>
           </div>

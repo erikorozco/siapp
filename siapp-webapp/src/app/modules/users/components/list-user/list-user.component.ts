@@ -105,7 +105,7 @@ export class ListUserComponent implements OnInit {
                                     element.therapist.name,
                                     element.therapist.last_name + ' ' + element.therapist.second_last_name,
                                     element.therapist.speciality,
-                                    element.active ? 'Acitvo' : 'Inactivo'
+                                    element.active ? 'Activo' : 'Inactivo'
                                   ];
               return element;
             }
