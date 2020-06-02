@@ -1,5 +1,7 @@
 package com.siapp.controllers;
 
+import java.util.HashMap;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,18 @@ public class PrivacyAgreementController {
 	
 	@ApiOperation(value = "Get a privacy agreement by person id", notes = "PrivacyAgreement.class", response = PrivacyAgreement.class)
     @GetMapping("/get/{personId}")
-    public PrivacyAgreement getPrivacyAgreement(@PathVariable(value = "personId") Integer personId) {
-        return privacyAgreementService.getByPrivacyAgreementPersonId(personId);
+    public Object getPrivacyAgreement(@PathVariable(value = "personId") Integer personId) {
+		Object response;
+		try {
+			response = privacyAgreementService.getByPrivacyAgreementPersonId(personId);
+		} catch (Exception e) {
+			HashMap<String, Object> error = new HashMap<String, Object>();
+			error.put("status", 204);
+			error.put("message", e.getMessage());
+			
+			response = error;
+		}
+		return response;
 	}
 
 }

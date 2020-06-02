@@ -101,7 +101,7 @@ export class ListPsychometricsManagmentComponent implements OnInit {
                                     element.name,
                                     `${element.therapist.name} ${element.therapist.last_name} ${element.therapist.second_last_name}`,
                                     formatedDate,
-                                    element.active ? 'Acitvo' : 'Inactivo'
+                                    element.active ? 'Activo' : 'Inactivo'
                                   ];
               return element;
             }

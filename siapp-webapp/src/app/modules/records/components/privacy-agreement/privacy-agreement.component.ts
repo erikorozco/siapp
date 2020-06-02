@@ -43,17 +43,17 @@ export class PrivacyAgreementComponent implements OnInit {
 
   ngOnInit() {
 
-    this.date = new Date();
     
-    if (!this.isViewOnly) {
+    if (this.isViewOnly) {
+      this.personId = this.iPersonId;
+      this.getPrivacyAgreement();
+    } else {
+      this.date = new Date();
       this.routes.params.subscribe(params => {
         this.personId = params.personId;
       });
-    } else {
-      this.personId = this.iPersonId;
     }
     
-    this.getPrivacyAgreement();
     this.getPersonInformation();
 
     this.firstFormGroup = this._formBuilder.group({
@@ -81,6 +81,7 @@ export class PrivacyAgreementComponent implements OnInit {
   getPrivacyAgreement() {
     this.privacyAgreementService.getPrivacyAgreement(this.personId).subscribe((data) => {
       this.privacyAgreement = data;
+      this.date = new Date(data.createdAt);
     }, error => {
       console.log(error)
     });
