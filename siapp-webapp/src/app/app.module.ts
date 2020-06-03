@@ -73,6 +73,7 @@ import { ListPsycometricApplicationComponent } from './modules/records/component
 import { ListPsycometricManagementDialogComponent } from './modules/psychometrics/components/list-psycometric-management-dialog/list-psycometric-management-dialog.component';
 import { PrivacyPolicyComponent } from './modules/records/components/privacy-agreement/components/privacy-policy/privacy-policy.component';
 import { CommitmetLetterComponent } from './modules/records/components/privacy-agreement/components/commitmet-letter/commitmet-letter.component';
+import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -126,6 +127,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     ListPsycometricManagementDialogComponent,
     PrivacyPolicyComponent,
     CommitmetLetterComponent,
+    FormSatisfactionSurveyComponent,
   ],
   imports: [
     BrowserModule,

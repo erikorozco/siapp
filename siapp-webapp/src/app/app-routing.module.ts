@@ -26,6 +26,7 @@ import { FormCrisisInterventionComponent } from './modules/records/components/cr
 import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
 import { FormPsycometricApplyComponent } from './modules/psychometrics/components/form-psycometric-apply/form-psycometric-apply.component';
+import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -119,6 +120,14 @@ const ROUTES: Routes = [
       {
         path: 'add-survey/:derivationId/person/:personId',
         component: FormSurveyComponent,
+        canActivate:  [RecordActionGuardService],
+        data: {
+          entity: 'derivation'
+        }
+      },
+      {
+        path: 'add-satisfaction-survey/:derivationId/person/:personId',
+        component: FormSatisfactionSurveyComponent,
         canActivate:  [RecordActionGuardService],
         data: {
           entity: 'derivation'

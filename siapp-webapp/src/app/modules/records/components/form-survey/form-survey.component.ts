@@ -57,7 +57,7 @@ export class FormSurveyComponent implements OnInit {
     }, error => {console.log(error); });
     this.surveyForm.disable();
 
-  } else if (this.action === 'edit-drop') {
+  } else if (this.action === 'edit-survey') {
     this.surveyService.getSurvey(this.derivationId).subscribe(data => {
       this.surveyForm.setValue(data);
       this.setTherapistName(data.therapist);
@@ -70,7 +70,7 @@ export class FormSurveyComponent implements OnInit {
   initFormProperties() {
     if(this.isChild) {
       this.action = this.iAction;
-      this.surveyId = this.iPersonId;
+      this.surveyId = this.iSurveyId;
       this.personId = this.iPersonId;
       this.derivationId = this.iDerivationId;
     } else {
@@ -79,7 +79,7 @@ export class FormSurveyComponent implements OnInit {
       });
       
       this.routes.params.subscribe(params => {
-        this.surveyId = params.dropId;
+        this.surveyId = params.suveyId;
         this.personId = params.personId;
         this.derivationId = params.derivationId;
       });

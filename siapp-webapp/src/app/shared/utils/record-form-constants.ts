@@ -265,5 +265,126 @@ export const RECORD_FORM_CONST = {
         'INASISTENCIAS DEL PROFESIONAL QUE LE ATIENDE',
         'CAMBIOS CONSTANTES EN LAS SESIONES POR PARTE DEL PROFESIONAL QUE LE ATIENDE',
         'NO HAY PROFESIONAL DISPONIBLE PARA LAS NECESIDADES ESPECÍFICAS DEL USUARIO',
-      ]
+      ],
+      problemTreats: [
+        {
+          value: '0',
+          text: '0-COMPLETAMENTE INSATISFECHO (A)'
+        },
+        {
+          value: '1',
+          text: '1-MUY SATISFECHO (A)'
+        },
+        {
+          value: '2',
+          text: '2-ALGO INSATISFECHO (A)'
+        },
+        {
+          value: '3',
+          text: '3-BASTANTE SATISFECHO (A)'
+        },
+        {
+          value: '4',
+          text: '4-COMPLETAMENTE SATISFECHO (A)'
+        },
+      ],
+      helpTreats : [
+        {
+          value: '0',
+          text: '0-NO ESTOY SEGURO (A)'
+        },
+        {
+          value: '1',
+          text: '1-HIZO QUE LAS COSAS EMPEORARAN BASTANTE'
+        },
+        {
+          value: '2',
+          text: '2-HIZO QUE LAS COSAS EMPEORARAN UN POCO'
+        },
+        {
+          value: '3',
+          text: '3-NO HA HABIDO CAMBIOS'
+        },
+        {
+          value: '4',
+          text: '4-HIZO QUE LAS COSAS MEJORARAN ALGO'
+        },
+        {
+          value: '5',
+          text: '5-HIZO QUE LAS COSAS MEJORARAN MUCHO'
+        },
+      ],
+      initialEmotionalStates: [
+        {
+          value: '0',
+          text: '0-ESTABA MUY MAL APENAS LOGRABA HACER FRENTE A LAS COSAS'
+        },
+        {
+          value: '1',
+          text: '1-ESTABA BASICAMENTE MAL, LA VIDA ME RESULTABA A MENUDO MUY DURA'
+        },
+        {
+          value: '2',
+          text: '2-REGULAR, TENIA MIS ALTIBAJOS'
+        },
+        {
+          value: '3',
+          text: '3-ESTABA BASTANTE BIEN, NO TENIA PROBLEMAS GRAVES'
+        },
+        {
+          value: '4',
+          text: '4-ESTABA MUY BIEN, ME GUSTABA LA VIDA DE LLEVABA'
+        },
+      ],
+      finalEmotionalStates:[
+        {
+          value: '0',
+          text: '0-ESTOY MUY MAL, APENAS LOGRO HACER FRENTE A LAS COSAS'
+        },
+        {
+          value: '1',
+          text: '1-ESTOY BASTANTE MAL, LA VIDA ES POR LO GENERAL MUY DURA PARA MI'
+        },
+        {
+          value: '2',
+          text: '2-REGULAR, TENGO MIS ALTIBAJOS'
+        },
+        {
+          value: '3',
+          text: '3-ESTOY BASTANTE BIEN, NO TENGO PROBLEMAS GRAVES'
+        },
+        {
+          value: '4',
+          text: '4-ESTOY BASTANTE BIEN, ME GUSTA LA VIDA QUE LLEVO'
+        },
+      ],
+      therapistPuntualities:[
+        {
+          value: '0',
+          text: '0-TODAS LAS OCASIONES'
+        },
+        {
+          value: '1',
+          text: '1-ALGUNAS OCASIONES'
+        },
+        {
+          value: '2',
+          text: '2-POCAS OCASIONES'
+        },
+      ],
+      therapistCompliances:[
+        {
+          value: '0',
+          text: '0-TODAS LAS OCASIONES'
+        },
+        {
+          value: '1',
+          text: '1-ALGUNAS OCASIONES'
+        },
+        {
+          value: '2',
+          text: '2-POCAS OCASIONES'
+        },
+      ],
+
 };

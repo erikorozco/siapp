@@ -166,6 +166,15 @@ export const API_URL_CONFIG = {
         delete: 'delete/',
       }
     },
+    satisfactionSurveyAPI: {
+      name: 'satisfactionSurveys/',
+      endpoints: {
+        getBySurveyByDerivationId: 'getByDerivationId/',
+        get: 'get/',
+        update: 'update/',
+        create: 'create',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

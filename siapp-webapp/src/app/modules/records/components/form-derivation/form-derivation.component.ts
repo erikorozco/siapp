@@ -13,6 +13,7 @@ import { ListUserDialogComponent } from 'src/app/modules/users/components/list-u
 import { MedicalReleaseService } from 'src/app/shared/services/medical-release.service';
 import { DropService } from 'src/app/shared/services/drop.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
+import { SatisfactionSurveyService } from 'src/app/shared/services/satisfaction-survey.service';
 
 @Component({
   selector: 'app-form-derivation',
@@ -42,7 +43,8 @@ export class FormDerivationComponent implements OnInit {
 
   medicalRelase: any;
   drop: any;
-  survey: any
+  survey: any // this is for drop only
+  satisfactionSurvey: any; // This is for medical release only
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +54,7 @@ export class FormDerivationComponent implements OnInit {
     private medicalReleaseSevice: MedicalReleaseService,
     private dropService: DropService,
     private surveyService: SurveyService,
+    private satisfactionSurveyService: SatisfactionSurveyService,
     private routes: ActivatedRoute,
     public dialog: MatDialog
   ) { }
@@ -79,6 +82,11 @@ export class FormDerivationComponent implements OnInit {
 
       this.surveyService.getBySurveyByDerivationId(this.derivationId).subscribe((data) => {
         this.survey = data;
+      });
+
+      this.satisfactionSurveyService.getByDerivationId(this.derivationId).subscribe((data) => {
+        console.log(data)
+        this.satisfactionSurvey = data;
       });
 
 

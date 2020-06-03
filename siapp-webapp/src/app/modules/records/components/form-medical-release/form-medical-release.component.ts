@@ -82,7 +82,8 @@ export class FormMedicalReleaseComponent implements OnInit {
       this.medicalReleaseForm.get(['derivation', 'id']).setValue(this.derivationId); 
       this.medicalReleaseService.createMedicalRelease(this.medicalReleaseForm.value).subscribe(data => {
         this.toastr.success('El alta ha sido creada exitosamente', 'Operacion exitosa');
-        this.router.navigate(['home', 'record-summary', this.personId]);
+        this.toastr.info('Ahora es necesario llenar la encuesta de satisfacción', 'Operacion exitosa');
+        this.router.navigate(['home', 'add-satisfaction-survey', this.derivationId ,'person', this.personId]);// Redirigira encuesta de satisfaccion
       }, error => {
         this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
       });

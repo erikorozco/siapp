@@ -111,8 +111,8 @@
           Alta médica
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <app-form-medical-release [iPersonId]="this.personId" [iMedicalReleaseId]="this.medicalRelase.id" [iDerivationId]="this.derivationId"
-        [isChild]="true">
+      <app-form-medical-release [iPersonId]="this.personId" [iMedicalReleaseId]="this.medicalRelase.id"
+        [iDerivationId]="this.derivationId" [isChild]="true">
       </app-form-medical-release>
     </mat-expansion-panel>
     <!-- Extesion panel for survey starts -->
@@ -128,6 +128,29 @@
       <app-form-survey [iPersonId]="this.personId" [iSurveyId]="this.survey.id" [iDerivationId]="this.derivationId"
         [isChild]="true">
       </app-form-survey>
+    </mat-expansion-panel>
+    <!-- Extesion panel for satisfaction survey starts -->
+    <mat-expansion-panel *ngIf="this.medicalRelase">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Encuesta de satisfacción
+        </mat-panel-title>
+        <mat-panel-description>
+          Encuesta de satisfacción realizada para calidad del servicio
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-form-satisfaction-survey *ngIf="this.satisfactionSurvey" [iPersonId]="this.personId"
+        [iSatisfactionSurveyId]="this.satisfactionSurvey.id" [iDerivationId]="this.derivationId" [isChild]="true">
+      </app-form-satisfaction-survey>
+      <!-- Validate if survey has been submitted, if not render to button to do it -->
+      <ng-container *ngIf="!this.satisfactionSurvey">
+        <a [routerLink]="['/home', 'add-satisfaction-survey', this.derivationId, 'person', this.personId]" class="btn btn-success btn-icon-split">
+          <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span class="text">Agregar</span>
+        </a>
+      </ng-container>
     </mat-expansion-panel>
   </mat-accordion>
 </ng-container>

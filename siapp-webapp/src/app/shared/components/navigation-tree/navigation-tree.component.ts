@@ -64,6 +64,7 @@ export class NavigationTreeComponent implements OnInit {
         return 'alta médica';
       case 'drop':
         return 'baja médica';  
+      case 'satisfaction':  
       case 'survey':
         return 'encuesta de satisfacción';
       case 'nutrition':

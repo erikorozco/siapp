@@ -1,0 +1,118 @@
+<app-navigation-tree *ngIf="this.action !== 'view-satisfaction-survey'" [entityAction]="this.action" [personId]="this.personId">
+</app-navigation-tree>
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="satisfactionSurveyForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div formGroupName="therapist" class="mt-2">
+            <label for="reason">Nombre del terapeuta:</label>
+            <input type="text" class="form-control" readonly placeholder="Nombre del Terapeuta"
+              value="{{this.therapistName}}">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapist.id')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="this.action !== 'view-satisfaction-survey'" class="form-group col-md-2 text-left mt-5">
+          <!-- <label for="reason">Nombre del terapeuta:</label> -->
+          <button [disabled]="this.action === 'view-satisfaction-survey'" class="btn btn-info btn" type="button"
+            (click)="openTherapistsModal()">Terapeuta</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('problemTreat') } ">
+          <label for="problemTreat">1- En general ¿Qué tan satisfecho (a) está con la forma que su psicológo (a) ha tratado el problema por el que consultó?</label>
+          <select type="option" class="form-control" formControlName="problemTreat" id="problemTreat">
+            <option *ngFor="let problemTreat of this.formsConstants.problemTreats" [ngValue]="problemTreat.value">
+              {{ problemTreat.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('problemTreat')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('helpTreat') } ">
+          <label for="helpTreat">2- ¿En qué medida le ha ayudado el tratamiento en relación al problema especifíco que le llevó a consultar?</label>
+          <select type="option" class="form-control" formControlName="helpTreat" id="helpTreat">
+            <option *ngFor="let helpTreat of this.formsConstants.helpTreats" [ngValue]="helpTreat.value">
+              {{ helpTreat.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('helpTreat')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('initialEmotionalState') } ">
+          <label for="initialEmotionalState">3- ¿Cuál era su estado emocional cuando empezó el tratamiento?</label>
+          <select type="option" class="form-control" formControlName="initialEmotionalState" id="initialEmotionalState">
+            <option *ngFor="let initialEmotionalState of this.formsConstants.initialEmotionalStates" [ngValue]="initialEmotionalState.value">
+              {{ initialEmotionalState.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('initialEmotionalState')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('finalEmotionalState') } ">
+          <label for="finalEmotionalState">4- ¿Cuál es tu estado emocional en este momento?</label>
+          <select type="option" class="form-control" formControlName="finalEmotionalState" id="finalEmotionalState">
+            <option *ngFor="let finalEmotionalState of this.formsConstants.finalEmotionalStates" [ngValue]="finalEmotionalState.value">
+              {{ finalEmotionalState.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('finalEmotionalState')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('therapistPuntuality') } ">
+          <label for="therapistPuntuality">5- ¿El psicólogo que le atendió fue puntual en sus citas?</label>
+          <select type="option" class="form-control" formControlName="therapistPuntuality" id="therapistPuntuality">
+            <option *ngFor="let therapistPuntuality of this.formsConstants.therapistPuntualities" [ngValue]="therapistPuntuality.value">
+              {{ therapistPuntuality.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapistPuntuality')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('therapistCompliance') } ">
+          <label for="therapistCompliance">6- ¿El psicólogo cumplió con todas las citas que le fueron agendadas?</label>
+          <select type="option" class="form-control" formControlName="therapistCompliance" id="therapistCompliance">
+            <option *ngFor="let therapistCompliance of this.formsConstants.therapistCompliances" [ngValue]="therapistCompliance.value">
+              {{ therapistCompliance.text }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('therapistCompliance')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-row">
+        <div class="form-group col-md-4" [ngClass]="{'has-error': requiredFieldValidation('result') } ">
+          <div class="mt-2">
+            <label for="reason">Resultado:</label>
+            <input formControlName="result"  type="text" readonly id="result" class="form-control" placeholder="Resultado">
+            <div class="form-control-feedback" *ngIf="requiredFieldValidation('result')">
+              <h6 class="feedback-field">Este campo es requerido</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <button [disabled]="satisfactionSurveyForm.invalid || satisfactionSurveyForm.disabled || satisfactionSurveyForm.pristine" type="submit"
+        class="btn btn-success btn-lg">Guardar</button>
+    </form>
+  </div>
+</div>
