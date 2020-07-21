@@ -85,7 +85,6 @@ export class FormDerivationComponent implements OnInit {
       });
 
       this.satisfactionSurveyService.getByDerivationId(this.derivationId).subscribe((data) => {
-        console.log(data)
         this.satisfactionSurvey = data;
       });
 

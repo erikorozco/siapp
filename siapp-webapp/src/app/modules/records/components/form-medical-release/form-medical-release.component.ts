@@ -4,6 +4,7 @@ import { MedicalReleaseService } from 'src/app/shared/services/medical-release.s
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-medical-release',
@@ -55,7 +56,16 @@ export class FormMedicalReleaseComponent implements OnInit {
         this.medicalReleaseForm.setValue(data);
         //this.setTherapistName(data.therapist);
       }, error => { console.log(error); });
+    } else {
+      this.medicalReleaseForm.get(['releaseDate']).setValue(this.setDate(new Date())); 
     }
+  }
+
+  setDate(date) {
+    const datePipe: DatePipe = new DatePipe('es-MX');
+    const a = new Date(date);
+    let formattedDate =  datePipe.transform(date, 'yyyy-MM-dd' ,'es-MX')
+    return formattedDate
   }
 
   initFormProperties() {

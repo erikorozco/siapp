@@ -1,0 +1,26 @@
+--Check if this is already run on SI
+--ALTER TABLE public.acuerdoprivacidad ADD firmacoordiador varchar NULL;
+
+
+
+-- public.encuestasatisfaccion definition
+
+-- Drop table
+
+-- DROP TABLE public.encuestasatisfaccion;
+
+CREATE TABLE public.encuestasatisfaccion (
+	id serial NOT NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_derivacion int4 NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	tratoproblema varchar NULL,
+	tratamientoayuda varchar NULL,
+	estadoemocionalinicio varchar NULL,
+	estadoemocionalfinal varchar NULL,
+	puntualidadterapeuta varchar NULL,
+	cumplimientoterapeuta varchar NULL,
+	resultado varchar NULL,
+	CONSTRAINT encuestasatisfaccion_pk PRIMARY KEY (id)
+);
