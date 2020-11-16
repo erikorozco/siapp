@@ -1,6 +1,8 @@
 package com.siapp.controllers;
 
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.siapp.lists.PersonList;
 import com.siapp.models.Person;
 import com.siapp.services.PermissionService;
 import io.swagger.annotations.Api;
@@ -30,6 +33,12 @@ public class PermissionController {
     	Boolean isAllowed = permissionService.isAllowedTo((String)permissionRequest.get("entity"), (Integer)permissionRequest.get("entityId"));
     	permission.put("isAllowed", isAllowed);
     	return permission;
+    }
+    
+    @ApiOperation(value = "Get permissions for signed user", notes = "Returns a list with tall the valid permission for the signed user")
+	@GetMapping("/getAllPermissions")
+	public HashMap<String, Boolean> getAllPermissions() {
+	    return permissionService.getAllPermissions();
     }
 
 }

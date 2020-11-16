@@ -95,7 +95,8 @@ export const API_URL_CONFIG = {
     permissionAPI: {
       name: 'permissions/',
       endpoints: {
-        isAllowedToRecord: 'isAllowedTo'
+        isAllowedToRecord: 'isAllowedTo',
+        getAllPermissions: 'getAllPermissions'
       }
     },
     medicalReleaseAPI: {

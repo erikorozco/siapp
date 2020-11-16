@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ng-container *ngIf="userDetails">
+<ng-container *ngIf="(this.permissionService.permissions | async)">
     <ul [ngClass]="{'toggled' : this.isSidebarToggled}" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li *ngIf="this.isAdmin" class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewPersonsModule" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-folder"></i>
                 <span>Pacientes</span>
@@ -50,7 +50,7 @@
             </div>
         </li>
 
-        <li *ngIf="isAdministrative" class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewAgendaModule || (this.permissionService.permissions | async)?.canViewTicketsModule" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReception" aria-expanded="true" aria-controls="collapseReception">
                 <i class="fas fa-calendar"></i>
                 <span>Recepción</span>
@@ -58,11 +58,11 @@
             <div id="collapseReception" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Acciones:</h6>
-                    <a class="collapse-item" href="buttons.html">
+                    <a *ngIf="(this.permissionService.permissions | async)?.canViewAgendaModule" class="collapse-item" href="buttons.html">
                         <i class="fas fa-calendar-alt"></i>
                         <span> Agenda</span>
                     </a>
-                    <a class="collapse-item" href="cards.html">
+                    <a *ngIf="(this.permissionService.permissions | async)?.canViewTicketsModule" class="collapse-item" href="cards.html">
                         <i class="fas fa-ticket-alt"></i>
                         <span> Recibos</span>
                     </a>
@@ -70,7 +70,7 @@
             </div>
         </li>
 
-        <li class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewConsultoryModule" class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConsultorio" aria-expanded="true" aria-controls="collapseReception">
                 <i class="fas fa-desktop"></i>
                 <span>Consultorio</span>
@@ -78,7 +78,7 @@
             <div id="collapseConsultorio" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Acciones:</h6>
-                    <a class="collapse-item" href="/home/therapist-records/{{this.userDetails.therapistId}}/{{this.userDetails.therapistId}}">
+                    <a class="collapse-item" href="/home/therapist-records/{{(this.userService.signedUserInfo | async)?.therapistId}}/{{(this.userService.signedUserInfo | async)?.therapistId}}">
                         <i class="fas fa-user-friends"></i>
                         <span>Mis Pacientes</span>
                     </a>
@@ -89,12 +89,16 @@
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div *ngIf="isAdmin" class="sidebar-heading">
+        <div *ngIf="
+            (this.permissionService.permissions | async)?.canViewUsersModule ||
+            (this.permissionService.permissions | async)?.canViewTestsModule ||
+            (this.permissionService.permissions | async)?.canViewReportsModule" 
+        class="sidebar-heading">
             Administración
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li *ngIf="isAdmin" class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewUsersModule" class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-user-md"></i>
                 <span>Terapeutas</span>
@@ -109,7 +113,7 @@
             </div>
         </li>
 
-        <li *ngIf="isAdmin" class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewTestsModule" class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" data-target="#psycometrics" aria-expanded="true" aria-controls="psycometrics">
                 <i class="fas fa-list"></i>
                 <span>Pruebas psicométricas</span>
@@ -123,14 +127,18 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <li *ngIf="isAdmin" class="nav-item">
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewReportsModule" class="nav-item">
             <a class="nav-link" href="charts.html">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Reportes estadisticos</span></a>
         </li>
 
         <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+        <hr *ngIf="
+            (this.permissionService.permissions | async)?.canViewUsersModule ||
+            (this.permissionService.permissions | async)?.canViewTestsModule ||
+            (this.permissionService.permissions | async)?.canViewReportsModule"  
+            class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

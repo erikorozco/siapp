@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/shared/services/user.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,20 +9,17 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input() userDetails: any;
-  isAdmin;
-  isAdministrative;
+  userDetails;
   isSidebarToggled;
 
   constructor(
-    private authService: AuthService
+    private permissionService: PermissionService,
+    private userService: UserService,
   ) {
     this.isSidebarToggled = false;
   }
 
   ngOnInit() {
-    this.isAdministrative = this.authService.isAllowed(this.userDetails.roles, this.authService.RECEPTION_MODULE);
-    this.isAdmin = this.authService.isAllowed(this.userDetails.roles, this.authService.ADMIN_MODULES);
   }
 
   toggleSidebar(isSidebarToggled) {

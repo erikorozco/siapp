@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReleaseTypesDialogComponent } from './components/release-types-dialog/release-types-dialog.component';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-derivations',
@@ -22,7 +23,8 @@ export class DerivationsComponent implements OnInit {
     private derivationService: DerivationService,
     public dialog: MatDialog,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -59,10 +61,11 @@ export class DerivationsComponent implements OnInit {
         maxVisibleItems: 10,
         filterFunction : this.filterDerivations,
         tableActions: {
-          add: {
-            route: ['/home', 'add-derivation', this.recordId, 'person', this.personId],
-            text: 'Agregar derivación'
-          },
+          add: this.permissionService.permissions.value.canAddDerivation ? 
+            {
+              route: ['/home', 'add-derivation', this.recordId, 'person', this.personId],
+              text: 'Agregar derivación'
+            } : null,
           view: true,
           customActions: [
             {

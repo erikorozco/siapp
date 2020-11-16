@@ -75,4 +75,10 @@ public interface PermissionRepository extends JpaRepository<Therapist, Integer> 
 			nativeQuery = true)
 	Integer getCrisisInterventionPermission(Integer therapistId, Integer id);
 	
+	
+	@Query(
+			value = "select p.\"key\", p.roles from permiso p",
+			nativeQuery = true)
+	List<Object[]> getAllPermissions();
+	
 }

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { HttpParams } from '@angular/common/http';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private permissionService: PermissionService,
+    private userService: UserService,
   ) { }
 
   onSubmit() {
@@ -31,6 +35,8 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(loginPayload.toString()).subscribe(data => {
         window.sessionStorage.setItem('token', JSON.stringify(data));
+        this.permissionService.initializeUIPermissions();
+        this.userService.initializeUserInfo();
         this.router.navigate(['home']);
     }, error => {
       console.log(error);

@@ -88,12 +88,12 @@
                             <p>Citas</p>
                         </div>
                         <div *ngSwitchCase="'privacy-agreement-tab'" class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
-                            <div *ngIf="this.privacyAgreement.status === 204" class="col-md-6">
+                            <div *ngIf="(this.permissionService.permissions | async)?.canSignPrivacyAgreement && this.privacyAgreement.status === 204" class="col-md-6">
                                 <button (click)="viewPrivacyAgreement()" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                          </span>
-                                     <span class="text">Acuerdo de privacidad</span>
+                                     <span class="text">Firmar acuerdo de privacidad</span>
                                 </button>
                             </div>
                             <div *ngIf="this.privacyAgreement.status !== 204">

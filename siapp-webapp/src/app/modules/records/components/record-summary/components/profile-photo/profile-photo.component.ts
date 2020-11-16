@@ -5,6 +5,7 @@ import { RecordService } from 'src/app/shared/services/record-service';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from 'src/app/shared/services/file.service';
 import { FileUtil } from 'src/app/shared/utils/file.util';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-profile-photo',
@@ -22,7 +23,8 @@ export class ProfilePhotoComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private fileService: FileService,
-    private fileUtil: FileUtil
+    private fileUtil: FileUtil,
+    private permissionService: PermissionService,
   ) { }
 
   ngOnInit() {

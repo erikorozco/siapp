@@ -74,6 +74,7 @@ import { ListPsycometricManagementDialogComponent } from './modules/psychometric
 import { PrivacyPolicyComponent } from './modules/records/components/privacy-agreement/components/privacy-policy/privacy-policy.component';
 import { CommitmetLetterComponent } from './modules/records/components/privacy-agreement/components/commitmet-letter/commitmet-letter.component';
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
+import { PermissionService } from './shared/services/permission.service';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -153,6 +154,7 @@ registerLocaleData(localeEsMX , 'es-MX');
   providers: [
     UserService,
     RecordService,
+    PermissionService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

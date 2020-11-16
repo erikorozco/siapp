@@ -5,14 +5,28 @@ import { ApiResponse } from '../models/api.response';
 import { Observable } from 'rxjs/index';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 import { host } from '../core/service.global.config';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable()
 export class UserService {
 
-  // baseUrl: string = URL_CONF.baseURL + URL_CONF.usersAPI.name;
   baseUrl: string = host() + URL_CONF.usersAPI.name;
   response = null;
-  constructor(private http: HttpClient) {}
+  signedUserInfo = new BehaviorSubject(undefined);
+  constructor(private http: HttpClient) {
+    // Load user info for signed user If has not been initialized
+    if (!this.signedUserInfo.value) {
+      this.initializeUserInfo();
+    }
+  }
+
+  initializeUserInfo () {
+    this.getTokenDetails().toPromise().then((res) => {
+      if (res) {
+        this.signedUserInfo.next(res);
+      }
+    });
+  }
 
   getAllUsers(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );

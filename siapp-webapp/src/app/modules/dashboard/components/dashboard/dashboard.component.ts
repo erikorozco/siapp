@@ -17,8 +17,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {
     this.isSigned =  false;
     this.controlPanelModule = 'Inicio';
@@ -26,18 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDetails();
   }
 
-  // TO-DO: re implement this loigc with a service
-  getUserDetails() {
-    this.userService.getTokenDetails().subscribe((data) => {
-      this.userDetails = data;
-      //this.authService.appendSession('user', data.therapistId);
-      // if (data.roles.length === 1 && data.roles[0].name === 'USER') {
-      //   this.router.navigate(['home', 'therapist-records', data.therapistId, data.userId]);
-      // }
-    });
-  }
 
 }

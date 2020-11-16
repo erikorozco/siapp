@@ -62,12 +62,19 @@ const ROUTES: Routes = [
         component: FormSessionComponent,
         canActivate:  [RecordActionGuardService],
         data : {
-          entity: 'session'
+          entity: 'session' // Therapist who create the session is the only that can edit
         }
       },
-      { path: 'edit-session', redirectTo: 'add-session' },
-      { path: 'view-session/:id/person/:personId', component: FormSessionComponent },
-      { path: 'view-session', redirectTo: 'add-session' },
+      { path: 'session', redirectTo: 'add-session' },
+      { 
+        path: 'view-session/:id/person/:personId',
+        component: FormSessionComponent,
+        canActivate:  [RecordActionGuardService],
+        data : {
+          entity: 'record' // Therapists that have a speficied record can view any others sessions content
+        }
+      },
+      { path: 'session', redirectTo: 'add-session' },
       { path: 'add-nutrition-session/:recordId/person/:personId', component: FormNutritionSessionComponent },
       { 
         path: 'edit-nutrition-session/:id/person/:personId', 
@@ -81,14 +88,7 @@ const ROUTES: Routes = [
       { path: 'view-nutrition-session/:id/person/:personId', component: FormNutritionSessionComponent },
       { path: 'view-nutrition-session', redirectTo: 'add-nutrition-session' },
       { path: 'therapist-records/:therapistId/:userId', component: UserRecordsComponent },
-      {
-        path: 'add-derivation/:recordId/person/:personId', 
-        component: FormDerivationComponent,
-        canActivate:  [RecordActionGuardService],
-        data : {
-          entity: 'admin'
-        }
-      },
+      { path: 'add-derivation/:recordId/person/:personId', component: FormDerivationComponent},
       {
         path: 'view-derivation/:derivationId/person/:personId',
         component: FormDerivationComponent

@@ -24,3 +24,45 @@ CREATE TABLE public.encuestasatisfaccion (
 	resultado varchar NULL,
 	CONSTRAINT encuestasatisfaccion_pk PRIMARY KEY (id)
 );
+
+
+-- Crear campo date time con la concatenación de fecha y hora de la tabla agenda
+select to_timestamp(concat_ws(' ',a.fecha, a.hora), 'YYYY-MM-DD HH24:MI AM' ), a.fecha, a.hora, a.fecha_hora from agenda a;
+
+alter table agenda add column fecha_hora timestamp;
+
+update agenda a1 set fecha_hora = to_timestamp(concat_ws(' ',a1.fecha, a1.hora), 'YYYY-MM-DD HH24:MI AM' ) from agenda a2 where a2.id_cita = a1.id_cita;
+
+-- AÑADIR CAMPO DE DESCRICION A LOS ROLES
+alter table rol add column descripcion varchar;
+update rol set descripcion = 'ADMINISTRADOR' where nombre = 'ADMIN';
+update rol set descripcion = 'TERAPEUTA -> USUARIO NORMAL' where nombre = 'USER';
+
+-- añadir nuevo ROLES
+INSERT INTO public.rol
+(nombre, descripcion)
+VALUES('SUBADMIN', 'AUXILIAR CLINICO');
+
+INSERT INTO public.rol
+(nombre, descripcion)
+VALUES('ADMINISTRATIVE', 'GESTOR DE SERVICIOS');
+
+
+-- public.permiso definition
+
+-- Drop table
+
+-- DROP TABLE public.permiso;
+
+CREATE TABLE public.permiso (
+	id serial NOT NULL,
+	valor varchar NULL,
+	roles varchar NULL,
+	tipo varchar NULL,
+	descripcion varchar NULL,
+	CONSTRAINT permiso_pk PRIMARY KEY (id)
+);
+a,b,g,h
+
+
+-- INSERT datos a permiso

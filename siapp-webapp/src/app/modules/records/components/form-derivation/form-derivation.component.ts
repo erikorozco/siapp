@@ -14,6 +14,7 @@ import { MedicalReleaseService } from 'src/app/shared/services/medical-release.s
 import { DropService } from 'src/app/shared/services/drop.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { SatisfactionSurveyService } from 'src/app/shared/services/satisfaction-survey.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-form-derivation',
@@ -56,7 +57,8 @@ export class FormDerivationComponent implements OnInit {
     private surveyService: SurveyService,
     private satisfactionSurveyService: SatisfactionSurveyService,
     private routes: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {

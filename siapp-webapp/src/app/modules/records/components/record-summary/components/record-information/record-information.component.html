@@ -152,7 +152,7 @@
                 <input matInput value="{{recordInfo.numberOfDependentsThatBringMoney}}" readonly>
             </mat-form-field>
         </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel *ngIf="(this.permissionService.permissions | async)?.canViewClinicExplorationAccordion" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Exploración clínica/sintomatológica referida por el paciente
@@ -199,7 +199,7 @@
                 <input matInput value="{{recordInfo.medicalServices}}" readonly>
             </mat-form-field>
         </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel *ngIf="(this.permissionService.permissions | async)?.canViewPersonDescriptionHabitusAccordion" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Descripción impresionista del paciente / habitus exterior
@@ -368,7 +368,7 @@
     </mat-accordion>
 </ng-container>
 <ng-container *ngIf="!this.recordInfo">
-    <div *ngIf="this.isAdmin" class="text-left">
+    <div *ngIf="(this.permissionService.permissions | async)?.canEditRecord" class="text-left">
         <a [routerLink]="['/home', 'existing-person-opening-record', this.personId ]" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                   <i class="fas fa-plus"></i>
@@ -379,7 +379,7 @@
 </ng-container>
 <hr>
 <ng-container *ngIf="this.recordInfo">
-    <div *ngIf="this.isAdmin" class="text-left">
+    <div *ngIf="(this.permissionService.permissions | async)?.canEditRecord" class="text-left">
         <a [routerLink]="['/home', 'edit-record', this.recordInfo.id, 'person', this.personId ]" class="btn btn-warning btn-icon-split">
             <span class="icon text-white-50">
                   <i class="fas fa-pencil-alt"></i>

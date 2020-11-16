@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Record } from 'src/app/shared/models/record.model';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { DerivationService } from 'src/app/shared/services/derivation.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-record-information',
@@ -19,7 +20,8 @@ export class RecordInformationComponent implements OnInit {
 
   constructor(
     private recordService: RecordService,
-    private derivationService: DerivationService
+    private derivationService: DerivationService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {

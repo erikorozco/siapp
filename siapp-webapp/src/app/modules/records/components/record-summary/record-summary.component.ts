@@ -5,6 +5,7 @@ import { RecordService } from '../../../../shared/services/record-service';
 import { UserService } from '../../../../shared/services/user.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { PrivacyAgreementService } from 'src/app/shared/services/privacy-agreement.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-record-summary',
@@ -31,6 +32,7 @@ export class RecordSummaryComponent implements OnInit {
     private recordService: RecordService,
     private userService: UserService,
     private authService: AuthService,
+    private permissionService: PermissionService,
     private privacyAgreementService: PrivacyAgreementService,
   ) {
     this.tab = 'home-tab';
@@ -71,7 +73,7 @@ export class RecordSummaryComponent implements OnInit {
 
   getUserInformation() {
       this.userService.getTokenDetails().subscribe((data) => {
-        this.isAdmin = this.authService.isAllowed(data.roles, this.authService.ADMIN_MODULES);
+        this.isAdmin = this.permissionService.isAllowed(data.roles, this.authService.ADMIN_MODULES);
         this.userDetails = data;
       });
   }

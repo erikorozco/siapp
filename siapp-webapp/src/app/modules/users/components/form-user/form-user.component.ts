@@ -106,14 +106,20 @@ export class FormUserComponent implements OnInit {
       case 'ADMIN':
         translatedName = 'ADMINISTRADOR';
         break;
-      case 'SUPERADMIN':
-        translatedName = 'SUPERADMINISTRADOR';
+      case 'SUBADMIN':
+        translatedName = 'AUXILIAR CLÍNICO';
+        break;
+      case 'ADMINISTRATIVE':
+        translatedName = 'GESTOR DE SERVICIOS';
         break;
       case 'USER':
         translatedName = 'TERAPEUTA';
         break;
-      default:
+      case 'SUPERADMIN':
         translatedName = 'ROL NO REGISTRADO - NO USAR';
+        break;
+      default:
+        translatedName = rolName;
     }
     return translatedName;
   }

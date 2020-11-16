@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from '../../../../shared/services/user.service';
 import { RecordService } from 'src/app/shared/services/record-service';
 import { ToastrService } from 'ngx-toastr';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-topbar',
@@ -12,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TopbarComponent implements OnInit {
 
-  @Input() userDetails: any;
+  userDetails;
   isAdmin;
   isAdministrative;
   firstName: string;
@@ -24,22 +25,16 @@ export class TopbarComponent implements OnInit {
     private authService: AuthService,
     private recordService: RecordService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
-    this.initializeUserInfo();
-    this.isAdministrative = this.authService.isAllowed(this.userDetails.roles, this.authService.RECEPTION_MODULE);
-    this.isAdmin = this.authService.isAllowed(this.userDetails.roles, this.authService.ADMIN_MODULES);
   }
 
   logout() {
     this.authService.logout();
-  }
-
-  initializeUserInfo() {
-    this.firstName = this.userDetails.name;
-    this.lastName = this.userDetails.lastName;
   }
 
   search() {

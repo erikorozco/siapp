@@ -5,8 +5,6 @@ import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 import { TOKEN_CONFIG as TOKEN } from '../core/service.global.config';
 import { host } from '../core/service.global.config';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
-import { Observable } from 'rxjs/index';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +18,6 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private userService: UserService
   ) { }
 
   login(loginPayload) {
@@ -68,51 +65,14 @@ export class AuthService {
     }
   }
 
-  /**
-   * Returns true if entity is assigned to user OR
-   * return true if user is admin
-   * 
-   * 
-   * Note: Whoever calls this funcions must to be ASYNC
-   * 
-   * @param entity record, session, derivation, admin, superadmin
-   * @param entityId use 0 if check a role only
-   */
-  async isAllowedToPerformAction(entity: string, entityId) {
-    const permission = await this.getPermission(entity, entityId).toPromise().
-      catch(error => {
-        console.log(error);
-      });
-    return permission.isAllowed;
-  }
-
-  private getPermission(entity, entityId) {
-    const payload = {
-      entity : entity,
-      entityId : entityId
-    }
-    const url = `${this.baseUrl }${URL_CONF.permissionAPI.name}${URL_CONF.permissionAPI.endpoints.isAllowedToRecord}`;
-    return this.http.post<any>(url, payload );
-  }
-
   private isAdministrative(roles: any[]) {
-    let isAdministrative = false;
-    roles.forEach((role) => {
-      if (role.name === 'ADMINISTRATIVE') {
-        isAdministrative = true;
-      }
-    });
-    return isAdministrative;
+    const isAdminRoleFound = roles.find(role => role.name === 'ADMINISTRATIVE');
+    return isAdminRoleFound ? true : false;
   }
 
   private isAdmin(roles: any[]) {
-    let isAdmin = false;
-    roles.forEach((role) => {
-      if (role.name === 'ADMIN') {
-        isAdmin = true;
-      }
-    });
-    return isAdmin;
+    const isAdminRoleFound = roles.find(role => role.name === 'ADMIN');
+    return isAdminRoleFound ? true : false;
   }
 
   // TODO: Encode Session
