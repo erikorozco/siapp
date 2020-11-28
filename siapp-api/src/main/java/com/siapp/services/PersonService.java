@@ -46,8 +46,10 @@ public class PersonService {
 		Person person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Person", "id", id));
 
-		personRepository.delete(person);
-
+//		personRepository.delete(person);
+		person.setActive(false);
+		this.update(id, person);
+		
         return ResponseEntity.ok().build();
 	}
 	
@@ -55,8 +57,8 @@ public class PersonService {
 		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.getAllPersonsQuery());
 	}
 
-	public List<HashMap<String, Object>> filterPersons(String searchText) {
-		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.filterPersons(searchText.toUpperCase(), RecordUtil.isNumeric(searchText)));
+	public List<HashMap<String, Object>> filterPersons(String searchText, Boolean getActives) {
+		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.filterPersons(searchText.toUpperCase(), RecordUtil.isNumeric(searchText), getActives));
 	}
 
 }

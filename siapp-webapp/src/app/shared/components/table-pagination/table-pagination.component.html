@@ -65,7 +65,7 @@
                         <button mdbBtn mdbTooltip="Eliminar" placement="top" mdbWavesEffect *ngIf="tableActions.delete" class="btn btn-danger btn-circle" title="Eliminar" (click)="action(item, 'delete')">
                             <i class="fas fa-trash"></i>
                         </button>
-                        <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-danger btn-circle" title="Imprimir" (click)="action(item, 'print')">
+                        <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-info btn-circle" title="Imprimir" (click)="action(item, 'print')">
                             <i class="fas fa-trash"></i>
                         </button>
                         <button mdbBtn mdbTooltip="{{tableActions.viewRecords.toolTip}}" placement="top" mdbWavesEffect *ngIf="tableActions.viewRecords" class="btn btn-warning btn-circle" title="Expedientes" (click)="action(item, 'viewRecords')">

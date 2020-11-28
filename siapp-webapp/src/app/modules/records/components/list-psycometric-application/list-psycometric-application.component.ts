@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ListPsycometricManagementDialogComponent } from 'src/app/modules/psychometrics/components/list-psycometric-management-dialog/list-psycometric-management-dialog.component';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-list-psycometric-application',
@@ -23,6 +24,7 @@ export class ListPsycometricApplicationComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     public dialog: MatDialog,
+    private permissionService: PermissionService,
   ) { }
 
 
@@ -40,11 +42,12 @@ export class ListPsycometricApplicationComponent implements OnInit {
           filterFunction : this.filter,
           tableActions: {
             view: true,
-            addEnabled: true,
-            addModal: {
+            addEnabled: this.permissionService.permissions.value.canAddTest,
+            addModal: this.permissionService.permissions.value.canAddTest ? 
+            {
               text: 'Aplicar prueba',
               value: this.personId,
-            }
+            } : null
           }
       }];
     }, error => {

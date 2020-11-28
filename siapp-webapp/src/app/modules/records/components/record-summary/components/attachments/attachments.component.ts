@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImageViewComponent } from '../../../../../../shared/components/image-view/image-view.component';
 import { AuthService } from '../../../../../../shared/services/auth.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class AttachmentsComponent implements OnInit {
     private fileService: FileService,
     private toastr: ToastrService,
     public dialog: MatDialog,
+    private permissionService: PermissionService,
   ) { }
 
   ngOnInit() {

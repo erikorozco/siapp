@@ -65,8 +65,7 @@ public class RecordService {
 		BeanUtils.copyProperties(recordDetails, record, IgnoredProperties.getIgnoredProperties(Model.RECORD));
 		
 	    if(recordDetails.getPerson() != null) {
-	    	//therapistService.update(user.getTherapist().getId(), userDetails.getTherapist());
-	    	//ADD LOIG HERE TO UPDATE ALL THE PROPERTIES
+	    	this.personService.update(recordDetails.getPerson().getId(), recordDetails.getPerson());
 	    }
 		
 		return recordRepository.save(record);

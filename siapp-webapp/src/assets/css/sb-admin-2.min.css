@@ -12345,6 +12345,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 .columnActions {
     text-align: center;
+    display: flex;
 }
 
 .columnActions button {

@@ -28,10 +28,13 @@ public class PersonController {
 	@Autowired
 	PersonService personService;
 	
-	@ApiOperation(value = "Filter persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")
+	@ApiOperation(value = "Filter persons using query params", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")
 	@GetMapping("/filter")
-	public List<HashMap<String, Object>> filterPersons(@RequestParam("searchText") String searchText) {
-	    return personService.filterPersons(searchText);
+	public List<HashMap<String, Object>> filterPersons(
+			@RequestParam("searchText") String searchText, 
+			@RequestParam(defaultValue = "true") Boolean getActives) {
+		
+	    return personService.filterPersons(searchText, getActives);
     }
     
     @ApiOperation(value = "Get all Persons", notes = "Returns a list of Person.class", response = PersonList.class, responseContainer="List")

@@ -16,7 +16,7 @@
                 placeholder="Ecribe una descripción para esta foto"></textarea>
             </div>
         </form>
-        <div class="text-right">
+        <div *ngIf="(this.permissionService.permissions | async)?.canAddFiles" class="text-right">
             <button [disabled]="isFileEmpty()" type="button" (click)="uploadFile()" class="btn btn-success btn-md btn-icon-split mb-1 mt-1">
                 <span class="icon text-white-50">
                     <i class="fas fa-upload"></i>

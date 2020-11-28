@@ -62,7 +62,35 @@ CREATE TABLE public.permiso (
 	descripcion varchar NULL,
 	CONSTRAINT permiso_pk PRIMARY KEY (id)
 );
-a,b,g,h
+
+
 
 
 -- INSERT datos a permiso
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede editar o agregar un expediente.','canEditRecord','ADMIN:SUBADMIN:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede cargar cargar la foto de perfil del paciente','canUploadRecordProfilePhoto','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de "Exploración clinica/ sintomatologica referida por el paciente"','canViewClinicExplorationAccordion','ADMIN:SUBADMIN:USER:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de "Descripción impresionista del paciente / habitus exterior"','canViewPersonDescriptionHabitusAccordion','ADMIN:SUBADMIN:USER:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede firmar el aviso de privacidad','canSignPrivacyAgreement','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver las encuestas de satisifacción que se llenan para alta definitiva,  y baja','canViewSatisfactionSurveys','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede crear la encuesta de satisfacción','canAddSatisfactionSurvey','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede agregar una derivación','canAddDerivation','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede cargar archivos a un expediente','canAddFiles','ADMIN:SUBADMIN:USER:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede eliminar pacientes que no tengan un expediente','canDeletePerson','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede agrgar resultados pruebas psicometricas','canAddTest','ADMIN:SUBADMIN:USER:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de pacientes','canViewPersonsModule','ADMIN:SUBADMIN:ADMINISTRATIVE:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de consultorio','canViewConsultoryModule','ADMIN:SUBADMIN:USER:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de terapeutas','canViewUsersModule','ADMIN:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de pruebas psicometricas','canViewTestsModule','ADMIN:SUBADMIN:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de reportes','canViewReportsModule','ADMIN:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de agenda','canViewAgendaModule','ADMIN:SUBADMIN:ADMINISTRATIVE:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de tickets','canViewTicketsModule','ADMIN:SUBADMIN:ADMINISTRATIVE:','module');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el modulo de logs','canViewLogsModule','ADMIN:','');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de expediente','canViewRecordTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de derivaciones, (Solo valida accesso a la lista, no al contenida, el contenido esta validandose de la misma manera que el permiso de canViewReportSessionContent)','canViewDerivationsTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de reportes de sesión, (Solo valida accesso a la lista, no al contenido, el contenido esta validandose de la misma manera que el permiso de "canViewReportSessionContent" )','canViewSessionReportTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el tab de urgencias, (Solo valida accesso a la lista, no al contenido, el contenido esta validandose de la misma manera que el permiso de "canViewReportSessionContent" )','canViewUrgenciesTab','ADMIN:SUBADMIN:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la lista the archivos adjuntos','canViewAttachedFilesTab','ADMIN:SUBADMIN:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la lista de pruebas psicometricas aplciadas','canViewTestsTab','ADMIN:SUBADMIN:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la agenda del paciente','canViewAgendaTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el archivo de privacidad','canViewPrivacyAgreementTab','ADMIN:SUBADMIN:USER:','record-tab');

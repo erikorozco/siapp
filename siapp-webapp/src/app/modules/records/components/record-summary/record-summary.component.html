@@ -27,28 +27,28 @@
             <div class="col-md-9">
                 <div class="profile-head" *ngIf="this.person">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewRecordTab" class="nav-item">
                             <a class="nav-link active" (click)="render('home-tab')" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
                         </li>
-                        <li *ngIf="this.record" class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewDerivationsTab && this.record" class="nav-item">
                             <a class="nav-link" (click)="render('derivations-tab')" id="derivations-tab" data-toggle="tab" href="#derivations" role="tab" aria-controls="derivations" aria-selected="false">Derivaciones</a>
                         </li>
-                        <li *ngIf="this.record" class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewSessionReportTab && this.record" class="nav-item">
                             <a class="nav-link" (click)="render('sessions-tab')" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">Reportes de sesión</a>
                         </li>
-                        <li class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewUrgenciesTab" class="nav-item">
                             <a class="nav-link" (click)="render('crisis-interventions-tab')" id="crisis-interventions-tab" data-toggle="tab" href="#crisis-interventions" role="tab" aria-controls="sessions" aria-selected="false">Urgencias</a>
                         </li>
-                        <li class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewAttachedFilesTab" class="nav-item">
                             <a class="nav-link" (click)="render('attachments-tab')" id="attachments-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="attachments" aria-selected="false">Archivos adjuntos</a>
                         </li>
-                        <li class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewTestsTab" class="nav-item">
                             <a class="nav-link" (click)="render('tests-tab')" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="false">Pruebas</a>
                         </li>
-                        <li class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewAgendaTab" class="nav-item">
                             <a class="nav-link" (click)="render('dates-tab')" id="dates-tab" data-toggle="tab" href="#dates" role="tab" aria-controls="dates" aria-selected="false">Citas</a>
                         </li>
-                        <li *ngIf="this.record" class="nav-item">
+                        <li *ngIf="(this.permissionService.permissions | async)?.canViewPrivacyAgreementTab && this.record" class="nav-item">
                             <a class="nav-link" (click)="render('privacy-agreement-tab')" id="privacy-agreement-tab" data-toggle="tab" href="#privacy-agreement" role="tab" aria-controls="privacy-agreement" aria-selected="false">Acuerdo de privacidad</a>
                         </li>
                     </ul>

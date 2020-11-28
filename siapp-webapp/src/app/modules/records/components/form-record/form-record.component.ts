@@ -41,6 +41,7 @@ import {
 import {
   DerivationService
 } from 'src/app/shared/services/derivation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-record',
@@ -141,6 +142,13 @@ export class FormRecordComponent implements OnInit, OnDestroy {
     this.recordForm.get(['age']).setValue( Math.floor(months/12));
   }
 
+  setDate(date) {
+    const datePipe: DatePipe = new DatePipe('es-MX');
+    const a = new Date(date);
+    let formattedDate =  datePipe.transform(date, 'yyyy-MM-dd' ,'es-MX')
+    return formattedDate
+  }
+
   calculateBMI() {
     const weight = this.recordForm.get(['weight']).value;
     const size = this.recordForm.get(['size']).value / 100;
@@ -218,6 +226,7 @@ export class FormRecordComponent implements OnInit, OnDestroy {
 
     } else if (this.action === 'edit-record') {
       this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
+        data.bornDate = this.setDate(data.bornDate);
         data.therapists  = [];
         this.recordForm.setValue(data);
       }, error => { console.log(error); });

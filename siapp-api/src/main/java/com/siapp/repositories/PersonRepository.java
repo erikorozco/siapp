@@ -43,11 +43,12 @@ public interface PersonRepository extends JpaRepository<Person, Integer>  {
 					"left join expediente e \n" + 
 					"on p.id_persona = e.id_persona\n" + 
 					"where\n" + 
-					"	upper(concat_ws(' ',p.nombre, p.apellidop, p.apellidom)) like %:searchText%\n" + 
+					"	(upper(concat_ws(' ',p.nombre, p.apellidop, p.apellidom)) like %:searchText%\n" + 
 					" 	or upper(p.telefono) like %:searchText% \n" +
-					"	or e.id_expediente = :recordId \n" + 
+					"	or e.id_expediente = :recordId ) \n" + 
+					"   and (p.esta_activo = :getActives ) \n" + 
 					"order by p.nombre asc; ",
 			nativeQuery = true)
-	List<Object[]> filterPersons(String searchText, Double recordId);
+	List<Object[]> filterPersons(String searchText, Double recordId, Boolean getActives);
 
 }

@@ -75,6 +75,7 @@ import { PrivacyPolicyComponent } from './modules/records/components/privacy-agr
 import { CommitmetLetterComponent } from './modules/records/components/privacy-agreement/components/commitmet-letter/commitmet-letter.component';
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 import { PermissionService } from './shared/services/permission.service';
+import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -129,6 +130,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     PrivacyPolicyComponent,
     CommitmetLetterComponent,
     FormSatisfactionSurveyComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -169,7 +171,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     ImageViewComponent,
     ReleaseTypesDialogComponent,
     ListUserDialogComponent,
-    ListPsycometricManagementDialogComponent
+    ListPsycometricManagementDialogComponent,
+    ConfirmModalComponent
  ],
   bootstrap: [AppComponent],
 })

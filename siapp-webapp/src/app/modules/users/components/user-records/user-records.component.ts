@@ -6,6 +6,7 @@ import { RecordService } from '../../../../shared/services/record-service';
 import { ListRecordsDialogComponent } from '../../../records/components/list-records-dialog/list-records-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -78,16 +79,32 @@ export class UserRecordsComponent implements OnInit {
 
   deleteRecordPermission(value) {
 
-    const payload = {
-      recordId: value.recordId,
-      therapistId: this.params.therapistId
-    };
+    const dialogRef = this.dialog.open(
+      ConfirmModalComponent, 
+      { 
+        width: '400px', 
+        height: '350px',
+        data: {
+          title: "Confirmación",
+          body: `¿Estás seguro de desasignar el permiso a expediente [${value.recordId}] para este terapeuta?`
+        }
+      }
+    );
 
-    this.recordService.removeRecordPermission(payload).subscribe( data => {
-      this.toastr.success('El paciente ha isdo desasignado exitosamente', 'Operacion exitosa');
-      this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
-      this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
-    }, error => {});
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        const payload = {
+          recordId: value.recordId,
+          therapistId: this.params.therapistId
+        };
+    
+        this.recordService.removeRecordPermission(payload).subscribe( data => {
+          this.toastr.success('El paciente ha sido desasignado exitosamente', 'Operacion exitosa');
+          this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
+          this.router.navigate(['home', 'user-records', this.params.therapistId, this.params.userId]));
+        }, error => {});
+      }
+    });
 
   }
 

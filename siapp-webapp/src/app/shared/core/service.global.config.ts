@@ -50,6 +50,7 @@ export const API_URL_CONFIG = {
         getPerson : 'getPerson/',
         createPerson: 'createPerson',
         updatePerson : 'updatePerson/',
+        deletePerson : 'deletePerson/',
       }
     },
     privacyAgreementAPI: {
