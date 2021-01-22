@@ -26,6 +26,7 @@ public class SwaggerConfig {
           .build();
     }
     
+	// http://localhost:8080/api/swagger-ui.html
  // Describe your apis
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

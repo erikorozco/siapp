@@ -21,3 +21,4 @@
 <div *ngIf="records">
     <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
 </div>
+<app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>

@@ -14,6 +14,7 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 })
 export class RecordSummaryComponent implements OnInit {
 
+  isLoading = false;
   isAdmin;
   userDetails;
   params: any;
@@ -54,8 +55,10 @@ export class RecordSummaryComponent implements OnInit {
   }
 
   getPersonInformation() {
+    this.isLoading = true;
     this.personService.getPerson(this.params.personId).subscribe(data => {
       this.person = data;
+      this.isLoading = false;
     }, error => {
       console.log(error);
     });

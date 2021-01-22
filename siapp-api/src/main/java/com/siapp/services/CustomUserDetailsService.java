@@ -53,6 +53,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 	
 	public UserTokenDetails getUserTokenDetails() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof String) {
+			return null;
+		}
 		return (UserTokenDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
     

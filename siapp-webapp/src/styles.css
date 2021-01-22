@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import '~@fullcalendar/list/main.css';
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~ngx-toastr/toastr.css';
@@ -15,3 +19,64 @@ body {
 h1.h3 {
     font-size: 20px;
 }
+
+/** Tooltip CSS starts here */
+.fc-content {
+    cursor: pointer;
+    position: relative;
+    overflow: visible!important;
+  }
+  .fc-content::before {
+    position: absolute;
+    top: -64px;
+    left: -4px;
+    background-color: #000;
+    border-radius: 5px;
+    color: #fff;
+    content: attr(data-tooltip);
+    padding: 1rem;
+    text-transform: none;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    width: 500px;
+  }
+  .fc-content::after {
+    position: absolute;
+    top: -13px;
+    right: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+    margin-left: -5px;
+    width: 0;
+  }
+  .fc-content::before,
+  .fc-content::after {
+    color: #efefef;
+    font-family: monospace;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    text-align: left;
+  }
+  .fc-content:hover::before,
+  .fc-content:hover::after {
+    opacity: 1;
+    -webkit-transition: all 0.75s ease;
+    transition: all 0.75s ease;
+  }
+
+  .fc-day-grid-event .fc-content {
+        white-space: normal;
+        overflow: hidden;
+   }
+
+   .fc-time-grid-event .fc-content {
+        white-space: normal;
+        overflow: hidden;
+    }
+
+/** Tooltip CSS finishes here */

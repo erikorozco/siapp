@@ -4,7 +4,13 @@
     "description": "A basic boilterplate for testing in SIAPP.",
     "main": "",
     "scripts": {
-        "test": "protractor conf.js"
+        "test": "node_modules/protractor/bin/protractor conf.js",
+        "setup": "npm run driver:setup",
+        "driver:setup": "webdriver-manager clean && webdriver-manager update && npm run driver:setup:chrome:87",
+        "driver:clean": "webdriver-manager clean",
+        "driver:setup:chrome:87": "webdriver-manager update --versions.chrome 87.0.4280.141",
+        "driver:start": "webdriver-manager start && echo \"Selenium server is listening...\"",
+        "driver:stop": "webdriver-manager shutdown && echo \"Selenium server shutdown\""
     },
     "author": "Erik Orozco Team",
     "dependencies": {

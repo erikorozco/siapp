@@ -94,3 +94,37 @@ INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver l
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la lista de pruebas psicometricas aplciadas','canViewTestsTab','ADMIN:SUBADMIN:USER:','record-tab');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la agenda del paciente','canViewAgendaTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el archivo de privacidad','canViewPrivacyAgreementTab','ADMIN:SUBADMIN:USER:','record-tab');
+
+-- Alter agenda table
+ALTER TABLE public.agenda ADD creado timestamp NULL;
+ALTER TABLE public.agenda ADD actualizado timestamp NULL;
+ALTER TABLE public.agenda ADD asistio bool NULL;
+ALTER TABLE public.agenda ADD duracion varchar NULL;
+ALTER TABLE public.agenda ADD "version" varchar NULL;
+
+-- Avoid nulls on autocomplete
+update agenda set version = '1';
+
+-- public.evento definition
+
+-- Drop table
+
+-- DROP TABLE public.evento;
+
+CREATE TABLE public.evento (
+	id serial NOT NULL,
+	notas varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	id_terapeuta serial NOT NULL,
+	fecha_incial timestamp NULL,
+	fecha_final timestamp NULL,
+	duracion varchar NULL,
+	fondo bool NOT NULL DEFAULT false,
+	CONSTRAINT evento_pk PRIMARY KEY (id)
+);
+
+
+-- public.evento foreign keys
+
+ALTER TABLE public.evento ADD CONSTRAINT evento_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!;
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -76,6 +77,7 @@ import { CommitmetLetterComponent } from './modules/records/components/privacy-a
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 import { PermissionService } from './shared/services/permission.service';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
+import { AgendaComponent } from './modules/agenda/agenda.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -131,10 +133,12 @@ registerLocaleData(localeEsMX , 'es-MX');
     CommitmetLetterComponent,
     FormSatisfactionSurveyComponent,
     ConfirmModalComponent,
+    AgendaComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FullCalendarModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -172,6 +176,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     ReleaseTypesDialogComponent,
     ListUserDialogComponent,
     ListPsycometricManagementDialogComponent,
+    AgendaComponent,
     ConfirmModalComponent
  ],
   bootstrap: [AppComponent],
