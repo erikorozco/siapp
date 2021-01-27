@@ -32,7 +32,7 @@ public class AgendaController {
 	AgendaService agendaService;
     
     // https://github.com/tkaczmarzyk/specification-arg-resolver
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/filter")
     public List<Agenda> filter(  
     		@And({
     			@Spec(path = "notes", params = "notes", spec = Like.class),

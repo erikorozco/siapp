@@ -50,13 +50,18 @@ public class Agenda implements Serializable {
 	@Column(name = "duracion")
 	private String duration;
 	
+	// Use this field to filter agendas instead of startDate, because need to match the old
 	@Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date date;
 	
 	@Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateTime;
+    private Date startDate;
+	
+	@Column(name = "fecha_final")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
 	
 	@Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -133,12 +138,20 @@ public class Agenda implements Serializable {
 		this.date = date;
 	}
 
-	public Date getDateTime() {
-		return dateTime;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public Date getCreatedAt() {

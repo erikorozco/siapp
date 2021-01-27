@@ -9,6 +9,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 import { ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { ToastrService } from 'ngx-toastr';
+import { CalendarService } from 'src/app/shared/services/calendar.service';
 
 @Component({
   selector: 'app-agenda',
@@ -19,7 +20,8 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
 
   constructor(
     public toastr: ToastrService,
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+    private calendarService: CalendarService
   ) { }
 
   ngOnInit() {}
@@ -30,6 +32,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
 
   isLoading = false;
 
+  // Calendar Setttings
   fullCallendarSettings = {
     dragScroll: true,
     droppable: true,
@@ -79,61 +82,10 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
       bootstrapPlugin
     ],
     locales: [esLocale],
-    eventSources: [
-      {
-        url: 'http://localhost:8080/api/agenda/getAll',
-        method: 'GET',
-        extraParams: {
-          access_token: '3e4ba65c-b791-4a9d-acb6-281845716243'
-        },
-        failure: () => {
-          this.toastr.error('Ocurrio un error obteniendo las citas.', 'Operacion invalida');
-        },
-        eventDataTransform: (data) => {
-          let event: EventInput = {
-            title: `${data.person.name} ${data.person.lastName} - ${data.notes}`,
-            date: data.dateTime,
-            extendedProps: data,
-            color: data.assisted ? 'green' : 'blue'
-          };
-          return event;
-        }
-      },
-      {
-        url: 'http://localhost:8080/api/events/getAll',
-        method: 'GET',
-        extraParams: {
-          access_token: '3e4ba65c-b791-4a9d-acb6-281845716243'
-        },
-        failure: () => {
-          this.toastr.error('Ocurrio un error obteniendo los eventos.', 'Operacion invalida');
-        },
-        eventDataTransform: (data) => {
-          let event: EventInput = {
-            title: `${data.notes}`,
-            date: data.dateStart,
-            end: data.dateEnd,
-            extendedProps: data,
-            allDay: data.duration === "allDay" ?  true : false,
-            color: 'red'
-          };
-          return event;
-        }
-      }
-    ]
+    eventSources: this.calendarService.eventSources
   };
 
-  // Stample event
-  // { 
-  //   title: 'This is a all day event event',
-  //   start: new Date().setHours(0,0,0,0),
-  //   end: new Date().setHours(0,0,0,0),
-  //   allDay: true,
-  //   color: 'yellow',
-  //   textColor: "black"
-  // }
-  
-
+  // Events
   eventLoader(value: any) {
     this.isLoading = value;
     console.log("loading", value);
@@ -172,9 +124,6 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
   executeAPI () {
     let calendarApi = this.calendarComponent.getApi();
     console.log(calendarApi.getEvents());
-    // this.sourceEvents3.extraParams.therapistId = 1;
-    // this.sourceEvents3.extraParams.personId = 717;
-    debugger;
     calendarApi.refetchEvents();
   }
 }

@@ -98,6 +98,7 @@ INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver e
 -- Alter agenda table
 ALTER TABLE public.agenda ADD creado timestamp NULL;
 ALTER TABLE public.agenda ADD actualizado timestamp NULL;
+ALTER TABLE public.agenda ADD fecha_final timestamp NULL;
 ALTER TABLE public.agenda ADD asistio bool NULL;
 ALTER TABLE public.agenda ADD duracion varchar NULL;
 ALTER TABLE public.agenda ADD "version" varchar NULL;

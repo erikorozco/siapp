@@ -44,11 +44,11 @@ private static final long serialVersionUID = 1L;
 	
 	@Column(name = "fecha_incial")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateStart;
+    private Date startDate;
 	
 	@Column(name = "fecha_final")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateEnd;
+    private Date endDate;
 	
 	@Column(name = "creado", nullable = true, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -96,20 +96,20 @@ private static final long serialVersionUID = 1L;
 		this.isBackground = isBackground;
 	}
 
-	public Date getDateStart() {
-		return dateStart;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public Date getDateEnd() {
-		return dateEnd;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = dateEnd;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public Date getCreatedAt() {

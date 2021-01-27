@@ -32,11 +32,11 @@ public class EventController {
 	EventService eventService;
 	
 	// https://github.com/tkaczmarzyk/specification-arg-resolver
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/filter")
     public List<Event> filter(  
     		@And({
     			@Spec(path = "notes", params = "notes", spec = Like.class),
-    			@Spec(path = "dateStart", params = {"start", "end"}, spec = Between.class),
+    			@Spec(path = "startDate", params = {"start", "end"}, spec = Between.class),
     			@Spec(path = "therapist.id", params = "therapistId", spec = Equal.class),
     			@Spec(path = "isBackground", params = "isBackground", spec = Equal.class)
     		}) Specification<Event> spec

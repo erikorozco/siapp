@@ -31,7 +31,7 @@
         "@fullcalendar/list": "^4.4.2",
         "@fullcalendar/timegrid": "^4.4.2",
         "angular-bootstrap-md": "^7.5.2",
-        "angular2-signaturepad": "^2.8.0",
+        "angular2-signaturepad": "~2.8.0",
         "bootstrap4-toggle": "^3.4.0",
         "core-js": "^2.5.4",
         "ngx-toastr": "^10.0.4",
