@@ -78,6 +78,8 @@ import { FormSatisfactionSurveyComponent } from './modules/records/components/fo
 import { PermissionService } from './shared/services/permission.service';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
 import { AgendaComponent } from './modules/agenda/agenda.component';
+import { InputTypeaheadComponent } from './shared/components/input-typeahead/input-typeahead.component';
+import { InputSearchComponent } from './shared/components/input-serach/input-search.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -134,6 +136,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormSatisfactionSurveyComponent,
     ConfirmModalComponent,
     AgendaComponent,
+    InputTypeaheadComponent,
+    InputSearchComponent,
   ],
   imports: [
     BrowserModule,

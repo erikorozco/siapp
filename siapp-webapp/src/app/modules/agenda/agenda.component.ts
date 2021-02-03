@@ -1,5 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { EventInput } from '@fullcalendar/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listGridPlugin from '@fullcalendar/list';
@@ -10,6 +9,13 @@ import { ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { ToastrService } from 'ngx-toastr';
 import { CalendarService } from 'src/app/shared/services/calendar.service';
+import { UserDataService } from 'src/app/shared/services/data/user-data.service';
+import {
+  AGENDA_CONST as AgendaConstants
+} from 'src/app/shared/utils/agenda.constants';
+import { PersonDataService } from 'src/app/shared/services/data/person-data.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agenda',
@@ -18,19 +24,21 @@ import { CalendarService } from 'src/app/shared/services/calendar.service';
 })
 export class AgendaComponent implements OnInit, AfterViewChecked {
 
-  constructor(
-    public toastr: ToastrService,
-    private changeRef: ChangeDetectorRef,
-    private calendarService: CalendarService
-  ) { }
+    //This variables are used when component is called inside other component and url data does no exist
+  // i = instance
+  @Input() iTherapistId;
+  @Input() iPersonId;
+  @Input() iAction = 'view-agenda';
+  @Input() isChild = false;
 
-  ngOnInit() {}
-
-  ngAfterViewChecked(): void { this.changeRef.detectChanges(); }
-
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  therapistLabel = '';
+  therapistId;
+  personId;
+  action;
 
   isLoading = false;
+  isFilterHidden = true;
+  agendaConstants = AgendaConstants;
 
   // Calendar Setttings
   fullCallendarSettings = {
@@ -82,10 +90,71 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
       bootstrapPlugin
     ],
     locales: [esLocale],
-    eventSources: this.calendarService.eventSources
+    eventSources: this.calendarService.eventSources,
   };
 
-  // Events
+  constructor(
+    public toastr: ToastrService,
+    private routes: ActivatedRoute,
+    private changeRef: ChangeDetectorRef,
+    private calendarService: CalendarService,
+    private userDataService: UserDataService,
+    private permissionService: PermissionService,
+  ) {}
+
+  ngOnInit() {
+    this.initAgendaInstance();
+  }
+
+  // Run only we agenda component was instanced instead of accessed by route
+  initAgendaInstance() {
+    if(this.isChild) {
+      this.therapistId = this.iTherapistId;
+      this.personId = this.iPersonId;
+    } else {
+      this.routes.url.subscribe(url => {
+        this.action = url[0].path;
+      });
+      this.routes.params.subscribe(params => {
+        if (params) {
+          this.therapistId = params.therapistId;
+          this.personId = params.personId;
+        }
+      });
+    }
+
+    // Update state
+    if (this.therapistId) {
+      const filterValue = {
+        therapist: {
+          id: this.therapistId
+        }
+      };
+      this.calendarService.updateFilters('therapist', filterValue);
+    } 
+
+    if (this.personId) {
+      const filterValue = {
+        id: this.personId
+      };
+      this.calendarService.updateFilters('person', filterValue);
+    }
+  }
+
+  ngAfterViewChecked(): void { this.changeRef.detectChanges(); }
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+
+  // Filters
+  updateState(value, filterKey) {
+    if (filterKey === 'therapist') {
+      this.therapistLabel = value ? value.label : '';
+    }
+    this.calendarService.updateFilters(filterKey, value);
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.refetchEvents();
+  }
+
+  // Fullcalendar Events
   eventLoader(value: any) {
     this.isLoading = value;
     console.log("loading", value);
@@ -123,7 +192,6 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
 
   executeAPI () {
     let calendarApi = this.calendarComponent.getApi();
-    console.log(calendarApi.getEvents());
     calendarApi.refetchEvents();
   }
 }

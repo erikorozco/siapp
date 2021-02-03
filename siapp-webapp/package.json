@@ -34,6 +34,7 @@
         "angular2-signaturepad": "~2.8.0",
         "bootstrap4-toggle": "^3.4.0",
         "core-js": "^2.5.4",
+        "lodash": "^4.17.20",
         "ngx-toastr": "^10.0.4",
         "rxjs": "~6.3.3",
         "rxjs-compat": "^6.5.1",

@@ -150,7 +150,8 @@ const ROUTES: Routes = [
       { path: 'view-psycometric-config/:id', component: FormPsycometricCreatorComponent },
       { path: 'add-psycometric-application/:psycometricId/person/:personId', component: FormPsycometricApplyComponent },
       { path: 'view-psycometric-application/:psycometricApplicationId/person/:personId', component: FormPsycometricApplyComponent },
-      { path: 'therapist-agenda', component: AgendaComponent },
+      { path: 'agendas', component: AgendaComponent },
+      { path: 'therapist-agenda/:therapistId', component: AgendaComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

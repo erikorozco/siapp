@@ -94,6 +94,10 @@ INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver l
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la lista de pruebas psicometricas aplciadas','canViewTestsTab','ADMIN:SUBADMIN:USER:','record-tab');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver la agenda del paciente','canViewAgendaTab','ADMIN:SUBADMIN:ADMINISTRATIVE:USER:','record-tab');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver el archivo de privacidad','canViewPrivacyAgreementTab','ADMIN:SUBADMIN:USER:','record-tab');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede añadir evento/cita a la agenda','canAddAgendaEvent','ADMIN:SUBADMIN:ADMINISTRATIVE:','agenda');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede utilzar los filtros de agenda','canFilterOnAgenda','ADMIN:SUBADMIN:ADMINISTRATIVE:','agenda');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede editar vento en la agenda','canEditAgendaEvent','ADMIN:SUBADMIN:ADMINISTRATIVE:','agenda');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede borrar evento en la agenda','canDeleteAgendaEvent','ADMIN:SUBADMIN:ADMINISTRATIVE:','agenda');
 
 -- Alter agenda table
 ALTER TABLE public.agenda ADD creado timestamp NULL;

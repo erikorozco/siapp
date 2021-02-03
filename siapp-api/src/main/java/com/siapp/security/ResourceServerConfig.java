@@ -30,7 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 			//.antMatchers("/api/users").access("hasRole('ADMIN')");
 			//.antMatchers("/apiTestUtil/**").access("hasRole('SUPERADMIN')")
 //			.antMatchers("/**").authenticated()
-			.antMatchers("/users/getAllUsers").access("hasRole('ADMIN') or hasRole('ADMINISTRATIVE') OR hasRole('SUBADMIN')")
+			.antMatchers("/users/getAllUsers").access("hasRole('ADMIN') or hasRole('ADMINISTRATIVE') OR hasRole('SUBADMIN') OR hasRole('USER')")
 			.antMatchers("/users/**").access("hasRole('ADMIN') or hasRole('ADMINISTRATIVE')");
 	}
 	

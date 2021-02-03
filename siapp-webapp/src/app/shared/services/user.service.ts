@@ -28,8 +28,8 @@ export class UserService {
     });
   }
 
-  getAllUsers(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );
   }
 
   getUser(id: number): Observable<any> {

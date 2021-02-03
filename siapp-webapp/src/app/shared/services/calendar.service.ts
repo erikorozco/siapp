@@ -1,8 +1,9 @@
-import { HttpParams } from '@angular/common/http';
+import { isEqual } from 'lodash';
 import { Injectable } from '@angular/core';
 import { EventInput } from '@fullcalendar/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { FilterApiParams, FulcallendarFiltersFactory } from '../factories/FulcallendarFiltersFactory';
 import { FullCalendarEventFactory, ApiEventType } from '../factories/FullCalendarEventFactory';
 import { DateTimeHelper } from '../utils/DateTimeHelper';
 import { AgendaService } from './agenda.service';
@@ -15,21 +16,23 @@ import { EventService } from './event.service';
 export class CalendarService {
 
   eventSources;
-  filterApiParams = new BehaviorSubject<FilterApiParams>(this.getInitialFiltersState());
+  filters = this.getInitialFiltersState();
 
   constructor(
     private dateTimeHelper: DateTimeHelper,
     private authService: AuthService,
     private agendaService: AgendaService,
     private eventService: EventService,
-    public toastr: ToastrService,
+    public toastr: ToastrService
   )
   {
     this.eventSources = [
       {
         url: this.agendaService.agendasFilterUrl,
         method: 'GET',
-        extraParams: this.buildExtraParams({}, ApiEventType.Agenda),
+        extraParams: () => {
+          return this.buildExtraParams(ApiEventType.Agenda)
+        },
         failure: () => {
           this.toastr.error('Ocurrio un error obteniendo las citas.', 'Operacion invalida');
         },
@@ -38,43 +41,49 @@ export class CalendarService {
       {
         url: this.eventService.eventsFilterUrl,
         method: 'GET',
-        extraParams: this.buildExtraParams({}, ApiEventType.Event),
+        extraParams: () => {
+          return this.buildExtraParams(ApiEventType.Event)
+        },
         failure: () => {
           this.toastr.error('Ocurrio un error obteniendo los eventos.', 'Operacion invalida');
         },
         eventDataTransform: this.eventDataTransform
       }
-    ]
-    console.log(this.filterApiParams.value);
+    ];
   }
 
-  getInitialFiltersState(): FilterApiParams {
+  getInitialFiltersState(): FiltersType {
     return {
-      access_token: this.authService.getAuthorizationToken(),
-      therapistId: undefined,
-      personId: undefined,
+      therapist: undefined,
+      person: undefined,
       version: undefined,
       assisted: undefined,
+      notes: undefined,
     };
   }
 
-  buildExtraParams = (params: FilterApiParams, apiEventType: ApiEventType) : FilterApiParams => {
-    let result: FilterApiParams = {
-      access_token: this.authService.getAuthorizationToken(),
-    };
-    for (const key in params) {
-      const paramValue = params[key];
-      if (params[key]) {
-        result[key] = paramValue;
+  buildExtraParams = (apiEventType: ApiEventType) : FilterApiParams => {
+    const fullcalendarFilterParams = new FulcallendarFiltersFactory(this.filters, apiEventType, this.authService.getAuthorizationToken());
+    const serilizedFilter = fullcalendarFilterParams.decode();
+    let params = {};
+    Object.keys(serilizedFilter).map((key) => {
+      const paramValue = serilizedFilter[key]
+      if (paramValue) {
+        params[key] = paramValue;
       }
+    });
+    return params;
+  }
 
+  updateFilters(key: string, newValue: any) {
+    const curr = this.filters[key];
+    if (!isEqual(curr, newValue)) {
+      let newFilters = {
+        ...this.filters,
+        [key]: newValue,
+      };
+      this.filters = newFilters;
     }
-    if (apiEventType === "event") {
-      delete result.assisted;
-      delete result.version;
-      delete result.personId;
-    }
-    return result;
   }
 
   /**
@@ -97,10 +106,10 @@ export class CalendarService {
   
 }
 
-interface FilterApiParams {
-  access_token?: String;
-  therapistId?: String | Number;
-  personId?: String | Number;
-  version?: String | Number;
-  assisted?: Boolean;
+type FiltersType = {
+  therapist?: any;
+  person?: any;
+  version?: any;
+  assisted?: any;
+  notes?: any;
 }
