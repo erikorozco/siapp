@@ -80,6 +80,8 @@ import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm
 import { AgendaComponent } from './modules/agenda/agenda.component';
 import { InputTypeaheadComponent } from './shared/components/input-typeahead/input-typeahead.component';
 import { InputSearchComponent } from './shared/components/input-serach/input-search.component';
+import { InputSelectComponent } from './shared/components/input-select/input-select.component';
+import { InputMultiSelectComponent } from './shared/components/input-multi-select/input-multi-select.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -138,6 +140,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     AgendaComponent,
     InputTypeaheadComponent,
     InputSearchComponent,
+    InputSelectComponent,
+    InputMultiSelectComponent,
   ],
   imports: [
     BrowserModule,

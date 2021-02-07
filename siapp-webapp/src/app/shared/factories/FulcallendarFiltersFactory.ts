@@ -10,8 +10,8 @@ export class FulcallendarFiltersFactory {
     therapist?: any;
     person?: any;
     version?: String | Number;
-    assisted?: Boolean;
-    notes?: Boolean;
+    assisted?: any;
+    notes?: any;
 
     constructor(data: any,  apiEventType: ApiEventType, accessToken) {
         this.accessToken = accessToken;

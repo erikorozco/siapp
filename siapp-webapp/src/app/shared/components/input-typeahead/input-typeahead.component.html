@@ -1,5 +1,8 @@
 <div class="form-group">
   <label for="{{this.id}}">{{this.label}}</label>
+  <i *ngIf="this.info" mdbTooltip="{{this.info}}"
+    class="ml-1 fas fa-info-circle">
+  </i>
   <div class="input-group mb-1">
     <input [attr.disabled]="isDisabled ? '' : null"  [formControl]="typeAheadFormControl" id="{{this.id}}" [matAutocomplete]="inputAutoComplete" type="text" class="form-control" placeholder="{{this.placeholder}}" aria-label="this.label" aria-describedby="button-addon2">
     <div class="input-group-append">

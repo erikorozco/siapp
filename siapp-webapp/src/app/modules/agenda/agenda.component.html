@@ -33,16 +33,22 @@
 
       <!-- Status -->
       <div class="col-md-3">
-        <label for="eventStatus">Estado de la cita</label>
-        <i mdbTooltip="Este filtro solo aplica para pacientes con cita. No afecta los resultados de eventos"
-            class="ml-1 fas fa-info-circle">
-        </i>
-        <select type="option" class="form-control" id="eventStatus" (change)="updateState($event.target.value, 'assisted')">
-          <option *ngFor="let eventStatus of this.agendaConstants.eventStatuses" [value]="eventStatus.value">
-            {{ eventStatus.text }}
-          </option>
-        </select>
+        <app-input-select
+          [label]="'Estado de la cita'"
+          [info]="'Este filtro solo aplica para pacientes con cita. No afecta los resultados de eventos'"
+          [options]="this.agendaConstants.eventStatuses"
+          (modelChange)="updateState($event, 'assisted')"
+        ></app-input-select>
       </div>
+
+      <!-- test -->
+      <!-- <div class="col-md-3">
+        <app-input-multi-select
+          [label]="'test'"
+          [info]="'test'"
+          [options]="[{value: 'option1', label: 'option 1 label'}, {value: 'option2', label: 'option 2 label'}]"
+        ></app-input-multi-select>
+      </div> -->
       
       <!-- Notes -->
       <div class="col-md-3">

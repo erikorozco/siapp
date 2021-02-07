@@ -10,29 +10,13 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class InputTypeaheadComponent implements OnInit, OnChanges {
   @Input() label = '';
+  @Input() info = '';
   @Input() placeholder;
   @Input() id;
   @Input() isDisabled = false;
   @Input() isRequired = false;
   @Input() model: any;
-  @Input() optionsSource: Array<TypeAheadOptionList> = [
-    {
-      value: {
-        id: 1,
-        user: "test"
-      },
-      label: "value1",
-      searchValue: "value1"
-    },
-    {
-      value: {
-        id: 2,
-        user: "policarpo"
-      },
-      label: "value2",
-      searchValue: "value2"
-    }
-  ];
+  @Input() optionsSource: Array<TypeAheadOptionList> = [];
 
   @Output() modelChange = new EventEmitter();
 

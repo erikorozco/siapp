@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label for="multiSelectFormControl">{{this.label}}</label>
+  <i *ngIf="this.info" mdbTooltip="{{this.info}}"
+    class="ml-1 fas fa-info-circle">
+  </i>
+  <mat-select [disabled]="isDisabled" placeholder="{{this.label}}"
+    [formControl]="multiSelectFormControl" id="multiSelectFormControl" multiple (selectionChange)="modelChangeEmiter($event)">
+    <mat-select-trigger>
+      {{this.multiSelectFormControl.value ? this.multiSelectFormControl.value[0] : ''}}
+      <span *ngIf="this.multiSelectFormControl.value?.length > 1" class="example-additional-selection">
+        (+{{this.multiSelectFormControl.value.length - 1}}
+        {{this.multiSelectFormControl.value?.length === 2 ? 'Otro' : 'Otros'}})
+      </span>
+    </mat-select-trigger>
+    <mat-option *ngFor="let option of this.options"
+      [value]="option[keyValue]">{{ option[keyLabel]}}</mat-option>
+  </mat-select>
+</div>

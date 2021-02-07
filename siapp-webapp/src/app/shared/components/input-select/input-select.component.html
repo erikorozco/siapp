@@ -1,0 +1,11 @@
+<div class="form-group">
+  <mat-label>{{this.label}}</mat-label>
+  <i *ngIf="this.info" mdbTooltip="{{this.info}}"
+    class="ml-1 fas fa-info-circle">
+  </i>
+  <mat-select [(value)]="selectedValue" [disabled]="isDisabled" (selectionChange)="modelChangeEmiter($event.value)">
+    <mat-option *ngFor="let option of options" [value]="option[keyValue]"> 
+      {{ option[keyLabel]}}
+    </mat-option>
+  </mat-select>
+</div>

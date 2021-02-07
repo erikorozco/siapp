@@ -1,15 +1,15 @@
 export const AGENDA_CONST = {
   eventStatuses: [
     {
-      text: 'Todas',
+      label: 'Todas',
       value: '',
     },
     {
-      text: 'Pendiente',
+      label: 'Pendiente',
       value: "false",
     },
     {
-      text: 'Atendida',
+      label: 'Atendida',
       value: "true",
     },
   ],

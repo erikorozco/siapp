@@ -8,6 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class InputSearchComponent implements OnInit {
   @Input() label = '';
+  @Input() info = '';
   @Input() placeholder;
   @Input() id;
   @Input() isDisabled = false;
