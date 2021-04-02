@@ -38,7 +38,6 @@ export class ListRecordsDialogComponent implements OnInit {
         console.log(`${action} is not a valid option`);
         break;
     }
-
   }
 
   filterRecords(searchText) {

@@ -26,16 +26,6 @@ public class AgendaService {
 	}
 	
 	public Agenda create(Agenda agenda) throws ResourceAlreadyExistsException {
-		// Set defaults
-		agenda.setAssisted(false);
-		agenda.setVersion("2");
-		
-		// If not person is specified, create person
-		if (agenda.getPerson().getId() == 0) {
-			Person person = personService.create(agenda.getPerson());
-			agenda.setPerson(person);
-		}
-		
 		return agendaRepository.save(agenda);
 	}
 	

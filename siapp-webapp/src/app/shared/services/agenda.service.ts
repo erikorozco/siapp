@@ -23,7 +23,7 @@ export class AgendaService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.agendaAPI.endpoints.getAgenda + id);
   }
 
-  createAgenda(agenda: any): Observable<ApiResponse> {
+  createAgenda(agenda: IAppointmentApiDataModel): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.agendaAPI.endpoints.createAgenda, agenda);
   }
 
@@ -34,4 +34,21 @@ export class AgendaService {
   deleteAgenda(id: number): Observable<any> {
     return this.http.delete<any>(this.baseUrl + URL_CONF.agendaAPI.endpoints.deleteAgenda + id);
   }
+}
+
+export interface IAppointmentApiDataModel {
+  date: string | Date;
+  startDate: string | Date;
+  endDate: string | Date;
+  notes?: string;
+  person: {
+    id: string;
+  };
+  therapist: {
+    id: string;
+  };
+  time?: string;
+  duration?: string; // Userd to specify if it is an all_day event
+  version?: string;
+  assisted?: boolean;
 }

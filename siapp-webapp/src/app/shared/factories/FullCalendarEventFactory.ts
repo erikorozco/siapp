@@ -8,6 +8,7 @@ export class FullCalendarEventFactory {
         this.event.date = data.startDate;
         this.event.extendedProps = data;
         this.event.allDay = data.duration === "allDay" ?  true : false;
+        this.event.type = apiEventType;
         
         if (data.endDate) {
             this.event.end = data.endDate
@@ -43,5 +44,5 @@ interface ApiEvent {
     startDate: string | Date;
     endDate?: string | Date;
     assisted?: boolean;
-    duration: string;
+    duration: string; // Used only to check if it is all day event. The real duration is calculated by the start date and end date time info
 }

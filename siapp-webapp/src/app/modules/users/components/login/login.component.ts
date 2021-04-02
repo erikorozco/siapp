@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   invalidLogin = false;
+  invalidLoginMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['home']);
     }, error => {
       console.log(error);
+      this.invalidLoginMessage = this.translateErrorMessage(error.error.error_description);
       this.invalidLogin = true;
     });
   }
@@ -50,6 +52,19 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.compose([Validators.required])],
       password: ['', Validators.required]
     });
+  }
+
+  translateErrorMessage(mesage: string): string {
+    let result = 'Algo inesperado ocurrio, intente de nuevo o contacte al administrador'
+    switch (mesage) {
+      case 'User account is locked': 
+        result = 'Esta cuenta ha sido deshabilitada por el administrador';
+        break;
+      case 'Bad credentials': 
+        result = 'Credenciales invalidas. Intente de nuevo';
+        break;
+    }
+    return result;
   }
 
 }

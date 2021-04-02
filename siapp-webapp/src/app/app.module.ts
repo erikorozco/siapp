@@ -16,6 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -82,6 +84,10 @@ import { InputTypeaheadComponent } from './shared/components/input-typeahead/inp
 import { InputSearchComponent } from './shared/components/input-serach/input-search.component';
 import { InputSelectComponent } from './shared/components/input-select/input-select.component';
 import { InputMultiSelectComponent } from './shared/components/input-multi-select/input-multi-select.component';
+import { ListPersonsDialogComponent } from './modules/records/components/list-persons-dialog/list-persons-dialog.component';
+import { FormAppointmentComponent } from './modules/agenda/form-appointment/form-appointment.component';
+import { FormEventComponent } from './modules/agenda/form-event/form-event.component';
+import { ModalCalendarEventComponent } from './modules/agenda/modal-calendar-event/modal-calendar-event.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -142,6 +148,10 @@ registerLocaleData(localeEsMX , 'es-MX');
     InputSearchComponent,
     InputSelectComponent,
     InputMultiSelectComponent,
+    ListPersonsDialogComponent,
+    FormAppointmentComponent,
+    FormEventComponent,
+    ModalCalendarEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -163,7 +173,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatExpansionModule,
     MatInputModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule
   ],
   providers: [
     UserService,
@@ -185,7 +197,9 @@ registerLocaleData(localeEsMX , 'es-MX');
     ListUserDialogComponent,
     ListPsycometricManagementDialogComponent,
     AgendaComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ListPersonsDialogComponent,
+    ModalCalendarEventComponent
  ],
   bootstrap: [AppComponent],
 })

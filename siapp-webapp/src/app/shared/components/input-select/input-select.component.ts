@@ -16,7 +16,7 @@ export class InputSelectComponent implements OnInit {
   @Input() isDisabled = false;
 
   @Output() modelChange = new EventEmitter();
-  selectedValue = ''
+  @Input() selectedValue = ''
 
   constructor() { }
 

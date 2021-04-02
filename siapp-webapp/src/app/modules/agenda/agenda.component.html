@@ -21,7 +21,7 @@
     <div class="card-body row">
 
       <!-- Therapist -->
-      <div class="col-md-3">
+      <div class="col-md-6">
         <app-input-typeahead
           [label]="'Terapeuta'"
           [placeholder]="'Nombre del terapeuta'"
@@ -93,9 +93,9 @@
   (eventClick)="eventClick($event)"
   (dateClick)="dateClick($event)"
   (navLinkDayClick)="navLinkDayClick($event)"
-  (eventMouseEnter)="eventMouseEnter($event)"
   (eventRender)="eventRender($event)"
   (eventDragStart)="eventDragStart($event)"
   (eventDragStop)="eventDragStop($event)"
+  (select)="select($event)"
 ></full-calendar>
 <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>

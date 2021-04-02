@@ -14,7 +14,6 @@ public class UserTokenDetails implements UserDetails {
 
 	public UserTokenDetails(User user) {
 		this.user = user;
-
 	}
 
 	@Override
@@ -41,22 +40,22 @@ public class UserTokenDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+    	return this.user.isActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+    	return this.user.isActive();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+    	return this.user.isActive();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+    	return this.user.isActive();
     }
 
     public User getAppUser() {

@@ -1,6 +1,8 @@
 package com.siapp.services;
 
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 //https://stackoverflow.com/questions/35056169/how-to-get-custom-user-info-from-oauth2-authorization-server-user-endpoint
 //https://howtodoinjava.com/spring-boot2/oauth2-auth-server/ 
 //https://www.baeldung.com/spring-security-authentication-with-a-database    
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+//    @Override
+//	public UserDetails loadUserByUsername2(String username) throws UsernameNotFoundException {
 //		UserDetails ud = userRepository
 //                .findByUsername(username)
 //                .map(u -> new org.springframework.security.core.userdetails.User(

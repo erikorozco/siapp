@@ -33,7 +33,7 @@
                                         <button [disabled]="loginForm.invalid" class="btn btn-primary btn-user btn-block">Entrar</button>
                                         <div *ngIf="invalidLogin" class="text-center p-5">
                                             <div>
-                                                <h3 style="color: crimson">Credenciales invalidas. Intente de nuevo</h3>
+                                                 <h3 style="color: crimson">{{this.invalidLoginMessage}}</h3>
                                             </div>
                                         </div>
                                     </form>

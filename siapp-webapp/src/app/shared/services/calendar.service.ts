@@ -86,6 +86,12 @@ export class CalendarService {
     }
   }
 
+  resetFilters () {
+    for (const key in this.filters) {
+      this.filters[key] = undefined;
+    }
+  }
+
   /**
    * Parse data from a table 'agenda' to fullcalencar event object
    * @param data 

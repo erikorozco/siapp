@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listGridPlugin from '@fullcalendar/list';
@@ -16,13 +16,18 @@ import {
 import { PersonDataService } from 'src/app/shared/services/data/person-data.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { ActivatedRoute } from '@angular/router';
+import Calendar from '@fullcalendar/core/Calendar';
+import { ListPersonsDialogComponent } from '../records/components/list-persons-dialog/list-persons-dialog.component';
+import { MatDialog } from '@angular/material';
+import { ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
+import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.css']
 })
-export class AgendaComponent implements OnInit, AfterViewChecked {
+export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     //This variables are used when component is called inside other component and url data does no exist
   // i = instance
@@ -39,6 +44,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
   isLoading = false;
   isFilterHidden = true;
   agendaConstants = AgendaConstants;
+  calendarApi: Calendar;
 
   // Calendar Setttings
   fullCallendarSettings = {
@@ -63,18 +69,10 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
       meridiem: 'short',
       hour12: true
     },
-    customButtons: {
-      myCustomButton: {
-        text: 'API!',
-        click: () => {
-          this.executeAPI();
-        }
-      }
-    },
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek myCustomButton'
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     eventTimeFormat: {
       hour: 'numeric',
@@ -100,13 +98,19 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
     private calendarService: CalendarService,
     private userDataService: UserDataService,
     private permissionService: PermissionService,
+    public dialog: MatDialog,
+    private fullcalendarApiService: FullcalendarApiService
   ) {}
+
+  ngOnDestroy(): void {
+    this.calendarService.resetFilters();
+  }
 
   ngOnInit() {
     this.initAgendaInstance();
   }
 
-  // Run only we agenda component was instanced instead of accessed by route
+  // Run only when agenda component was instanced instead of accessed by route
   initAgendaInstance() {
     if(this.isChild) {
       this.therapistId = this.iTherapistId;
@@ -141,7 +145,11 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  ngAfterViewChecked(): void { this.changeRef.detectChanges(); }
+  ngAfterViewChecked(): void { 
+    this.changeRef.detectChanges();
+    this.calendarApi = this.calendarComponent.getApi();
+    this.fullcalendarApiService.fullcalendarAPI.next(this.calendarComponent.getApi());
+  }
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   // Filters
@@ -150,26 +158,39 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
       this.therapistLabel = value ? value.label : '';
     }
     this.calendarService.updateFilters(filterKey, value);
-    let calendarApi = this.calendarComponent.getApi();
-    calendarApi.refetchEvents();
+    this.calendarApi.refetchEvents();
   }
 
   // Fullcalendar Events
   eventLoader(value: any) {
     this.isLoading = value;
-    console.log("loading", value);
   }
 
+  // when date click ocurs it means that user is trying to add a new event
   dateClick(value: any) {
-    console.log("dateClick", value);
+    if (this.permissionService.permissions.value.canAddAgendaAppointment ||
+      this.permissionService.permissions.value.canAddAgendaEvent) 
+    {
+        const dialogRef = this.dialog.open(
+          ModalCalendarEventComponent, 
+          { 
+            width: '900px', 
+            height: '600px',
+          }
+        );
+        const props = {
+          startDate: value.dateStr,
+          endDate: value.dateStr,
+        }
+        dialogRef.componentInstance.props = props;
+        dialogRef.componentInstance.action = 'add'
+
+    }
   }
 
   navLinkDayClick(value: Date) {
-    console.log("navlinkdayClick",value);
-  }
-
-  eventMouseEnter(value: any) {
-    console.log("eventMouseEnter", value);
+    const date = new Date(value);
+    this.calendarApi.changeView("timeGridDay", date);
   }
 
   eventClick(value: any) {
@@ -178,20 +199,20 @@ export class AgendaComponent implements OnInit, AfterViewChecked {
 
   eventRender(value: any) {
     let element: Element = value.el;
-    console.log("eventRender", value);
     element.querySelectorAll(".fc-content")[0].setAttribute('data-tooltip', value.event.title);
   }
 
   eventDragStart(value: any) {
     console.log("dragStart", value);
   }
-
+  
   eventDragStop(value: any) {
     console.log("dragStop", value);
   }
-
-  executeAPI () {
-    let calendarApi = this.calendarComponent.getApi();
-    calendarApi.refetchEvents();
+  
+  select(value: any) {
+    if (this.calendarApi.view.type !== "dayGridMonth") {
+      console.log("select", value);
+    }
   }
 }
