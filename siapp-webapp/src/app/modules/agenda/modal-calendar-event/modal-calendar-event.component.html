@@ -4,8 +4,8 @@
     <div class="card-header">
       <div class="btn-group" role="group" aria-label="Basic example">
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-          <mat-button-toggle (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
-          <mat-button-toggle (click)="render('event-form')"  value="italic">Eventos generales</mat-button-toggle>
+          <mat-button-toggle *ngIf="action === 'add' || (action !== 'add' && eventType === 'appointment-form')" (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
+          <mat-button-toggle *ngIf="action === 'add' || (action !== 'add' && eventType === 'event-form')" (click)="render('event-form')"  value="italic">Eventos generales</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
@@ -16,9 +16,7 @@
           <app-form-appointment [action]="action" [props]="props"></app-form-appointment>
         </div>
         <div *ngSwitchCase="'event-form'">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <app-form-event [action]="action" [props]="props"></app-form-event>
         </div>
       </ng-container>
     </div>

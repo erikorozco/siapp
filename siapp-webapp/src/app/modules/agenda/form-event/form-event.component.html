@@ -1,3 +1,83 @@
-<p>
-  form-event works!
-</p>
+
+<div class="row">
+
+  <!-- Therapist -->
+  <div class="col-md-6">
+    <app-input-typeahead
+      [label]="'Terapeuta'"
+      [placeholder]="'Nombre del terapeuta'"
+      [id]="'therapistId'"
+      [optionsSource]="userDataService.users | async"
+      [model]="eventData.therapist"
+      (modelChange)="updateEventDataState($event, 'therapist')"
+      [isDisabled]="action === 'view'"
+    ></app-input-typeahead>
+  </div>
+
+</div>
+<hr>
+
+<div class="row">
+
+  <!-- Start date -->
+  <div class="col-md-3">
+    <label for="start-date">Fecha de inicio</label>
+    <input [disabled]="action === 'view' || eventData.duration" type="date" (change)="updateEventDataState($event.target.value, 'startDate')" [value]="eventData.startDate" class="form-control" id="start-date">
+  </div>
+
+  <!-- Start time -->
+  <div class="col-md-3">
+    <app-input-select
+      [label]="'Hora de comienzo'"
+      [options]="this.agendaConstants.hours"
+      (modelChange)="updateEventDateTime({time: $event, date: eventData.startDate}, 'startTime')"
+      [selectedValue]="eventData.startTime"
+      [isDisabled]="action === 'view'  || eventData.duration"
+    ></app-input-select>
+  </div>
+
+  <!-- End time -->
+  <div class="col-md-3">
+    <app-input-select
+      [label]="'Hora de fin'"
+      [options]="this.agendaConstants.hours"
+      (modelChange)="updateEventDateTime({time: $event, date: eventData.endDate}, 'endTime')"
+      [selectedValue]="eventData.endTime"
+      [isDisabled]="action === 'view' || eventData.duration"
+    ></app-input-select>
+  </div>
+
+  <!-- End date -->
+  <div class="col-md-3">
+    <label for="end-date">Fecha de fin</label>
+    <input [disabled]="action === 'view' || eventData.duration" (change)="updateEventDataState($event.target.value, 'endDate')" [value]="eventData.endDate" type="date" class="form-control" id="end-date">
+  </div>
+
+</div>
+<div class="actions col-md-6 text-left">
+  <mat-slide-toggle [disabled]="action === 'view'" (change)="allDayEventHandler()"  [checked]="eventData.duration" [color]="'primary'">Todo el día</mat-slide-toggle>
+</div>
+  <h5 *ngIf="areDatesInvalid && (eventData.startTime && eventData.endTime)" style="color: crimson">La fecha/hora de inicio no puede ser menor o igual a la fecha/hora de fin</h5>
+<hr>
+
+<div class="row">
+
+  <!-- notes -->
+  <div class="form-group col-md-12">
+    <label for="notes">Observaciones</label>
+    <input [disabled]="action === 'view'" [(ngModel)]="eventData.notes" [value]="eventData.notes" maxlength="100" type="text" class="form-control" id="notes" placeholder="Observaciones">
+  </div>
+
+</div>
+<br>
+<div class="row">
+  <!-- notes -->
+  <!-- <div class="actions col-md-6 text-left">
+    <mat-slide-toggle [disabled]="action === 'view'" (change)="eventData.isBackground = !eventData.isBackground"  [checked]="eventData.isBackground" [color]="'primary'">Evento de fondo</mat-slide-toggle>
+  </div> -->
+  <div class="actions col-md-12 text-right">
+    <button *ngIf="(this.permissionService.permissions | async)?.canDeleteAgendaEvent && action !== 'add'" (click)="delete()" type="button" class="btn btn-danger">Eliminar</button>
+    <button *ngIf="(this.permissionService.permissions | async)?.canEditAgendaEvent || (this.permissionService.permissions | async)?.canAddAgendaEvent" [disabled]="isEventFormInvalid" (click)="submit()" type="button" class="btn btn-success">Guardar</button>
+  </div>
+</div>
+<pre class="text-left">{{eventData | json}}</pre>

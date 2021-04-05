@@ -1,9 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { EventService } from 'src/app/shared/services/event.service';
+import { EventService, IEventApiDataModel } from 'src/app/shared/services/event.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
-
+import { IEvent } from '../modal-calendar-event/modal-calendar-event.component';
+import {
+  AGENDA_CONST as AgendaConstants
+} from 'src/app/shared/utils/agenda.constants';
+import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
+import { MatDialog } from '@angular/material';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
+import { UserDataService } from 'src/app/shared/services/data/user-data.service';
 @Component({
   selector: 'app-form-event',
   templateUrl: './form-event.component.html',
@@ -11,58 +18,172 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 })
 export class FormEventComponent implements OnInit {
 
-  @Input() props: EventType;
-  @Input() action = 'view-appointment';
+  @Input() props: IEvent;
+  @Input() action = 'view';
 
-  eventForm: FormGroup;
+  agendaConstants = AgendaConstants;
+  eventData = {
+      id: null,
+      startDate: null,
+      endDate: null,
+      startTime: null,
+      endTime: null,
+      notes: null,
+      therapist: null,
+      duration: null,
+      isBackground: null
+  };
+  areDatesInvalid = false;
+  isEventFormInvalid = true;
 
   constructor(
-    private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private eventService: EventService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private dateTimeHelper: DateTimeHelper,
+    public dialog: MatDialog,
+    private fullcalendarApiService: FullcalendarApiService,
+    private userDataService: UserDataService,
   ) { }
 
   ngOnInit() {
-    this.formValidatorBuilder();
+    this.seteventData(this.props);
+    this.updateEventFormInvalidState();
   }
 
-  // onSubmit() {}
+  submit() {
+    const data = this.buildEventApiDataModel();
+    
+    if (this.action === 'add') {
+      this.eventService.createEvent(data).subscribe((res) => {
+        this.fullcalendarApiService.refetchEvents();
+        // TODO: Fix this
+        // this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
+        this.toastr.success('El evento ha sido creado exitosamente', 'Operacion exitosa');
+        this.dialog.closeAll();
+      }, (error) => {
+        console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
+    } else if (this.action === 'edit') {
+      const eventId = this.eventData.id;
+      this.eventService.updateEvent(eventId, data).subscribe((res) => {
+        this.fullcalendarApiService.refetchEvents();
+        // TODO: Fix this
+        // this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
+        this.toastr.success('El evento ha sido actualizado exitosamente', 'Operacion exitosa');
+        this.dialog.closeAll();
+      }, (error) => {
+        console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
+    }
+  }
 
-  formValidatorBuilder(): void {
-    this.eventForm = this.formBuilder.group({
-      id: ['', ],
-      startDate: ['', Validators.compose([Validators.required])],
-      endDate: ['', Validators.compose([Validators.required])],
-      isBackground: [false, ],
-      notes: ['', ],
-      duration: ['', ],
-      createdAt: ['', ],
-      updatedAt: ['', ],
-      therapist: this.formBuilder.group({
-        id: ['', Validators.compose([Validators.required])],
-        name: ['', ],
-        last_name: ['', ],
-        second_last_name: ['', ],
-        phone: ['', ],
-        speciality: ['', ],
-        createdAt: ['', ],
-        updatedAt: ['', ]
-      })
+  seteventData(props) {
+    for (const key in props) {
+      this.eventData[key] = props[key];
+    }
+  }
+
+  updateEventDataState(value, key) {
+    this.eventData[key] = value;
+    this.updateEventFormInvalidState();
+  }
+
+  updateEventDateTime(value: IDateTimeInfo, key: string) {
+
+    this.updateEventDataState(value.time, key);
+
+    if (this.eventData.startTime && this.eventData.endTime) {
+      const startDate = this.dateTimeHelper.buildDateTimeForUI(this.eventData.startDate, this.eventData.startTime);
+      const endDate = this.dateTimeHelper.buildDateTimeForUI(this.eventData.endDate, this.eventData.endTime);
+
+      const areDatesValid = this.dateTimeHelper.isDateGreaterThan(endDate, startDate);
+
+      if (!areDatesValid) {
+        this.areDatesInvalid = true;
+      } else {
+        this.areDatesInvalid = false;
+      }
+    }
+    this.updateEventFormInvalidState();
+  }
+
+  updateEventFormInvalidState(): void {
+    if (this.areDatesInvalid || !this.eventData.therapist) {
+      this.isEventFormInvalid = true;
+    } else {
+      this.isEventFormInvalid = false;
+    }
+  }
+
+  buildEventApiDataModel(): IEventApiDataModel {
+    const {
+      id,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      notes,
+      therapist,
+      duration,
+      isBackground
+    } = this.eventData;
+    return {
+      id,
+      startDate: this.dateTimeHelper.buildDateTimeForUI(startDate, startTime),
+      endDate: this.dateTimeHelper.buildDateTimeForUI(endDate, endTime),
+      notes,
+      therapist: {
+        id: therapist.therapist.id
+      },
+      duration: duration ? 'allDay' : null,
+      isBackground
+    }
+  }
+
+  allDayEventHandler() {
+    this.eventData.duration = !this.eventData.duration;
+    if (this.eventData.duration) {
+      this.eventData.startTime = 800;
+      this.eventData.endTime = 2000;
+    }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(
+      ConfirmModalComponent, 
+      { 
+        width: '400px', 
+        height: '350px',
+        data: {
+          title: "Confirmación",
+          body: `¿Estás seguro de borrar este evento?`,
+          note: 'Esta acción no podrá ser revertida'
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        const eventId = this.eventData.id;
+        this.eventService.deleteEvent(eventId).toPromise().then((res) => {
+          this.toastr.success('El evento ha sido eliminado exitosamente', 'Operacion exitosa');
+          this.fullcalendarApiService.refetchEvents();
+          this.dialog.closeAll();
+          // TODO: Fix this
+          //  this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(this.appointmentData.startDate));
+        }, error => {
+          this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+        });
+      }
     });
-  }
-
-  requiredFieldValidation(field) {
-    return this.eventForm.get(field).invalid && this.eventForm.get(field).touched;
   }
 
 }
 
-type EventType = {
-  endDate?: string;
-  startDate?: string;
-  duration?: string;
-  isBackground?: boolean;
-  notes?: string;
-  therapist?: string;
+interface IDateTimeInfo {
+  date: string;
+  time: number;
 }

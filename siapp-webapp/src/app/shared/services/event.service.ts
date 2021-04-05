@@ -23,15 +23,27 @@ export class EventService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.eventsAPI.endpoints.getEvent + id);
   }
 
-  createEvent(event: any): Observable<ApiResponse> {
+  createEvent(event: IEventApiDataModel): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.eventsAPI.endpoints.createEvent, event);
   }
 
-  updateEvent(id: number, event: any): Observable<ApiResponse> {
+  updateEvent(id: string, event: IEventApiDataModel): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.eventsAPI.endpoints.updateEvent + id, event);
   }
 
-  deleteEvent(id: number): Observable<any> {
+  deleteEvent(id: string): Observable<any> {
     return this.http.delete<any>(this.baseUrl + URL_CONF.eventsAPI.endpoints.deleteEvent + id);
   }
+}
+
+export interface IEventApiDataModel {
+  id?: string;
+  startDate: string | Date;
+  endDate: string | Date;
+  notes?: string;
+  therapist: {
+    id: string;
+  };
+  duration?: string; // Userd to specify if it is an all_day event
+  isBackground?: boolean;
 }

@@ -129,7 +129,7 @@ CREATE TABLE public.evento (
 	fecha_incial timestamp NULL,
 	fecha_final timestamp NULL,
 	duracion varchar NULL,
-	fondo bool NOT NULL DEFAULT false,
+	fondo bool NULL DEFAULT false,
 	CONSTRAINT evento_pk PRIMARY KEY (id)
 );
 

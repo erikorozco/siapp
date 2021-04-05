@@ -276,7 +276,8 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
         person: null,
         time: null,
         version: null,
-        assisted: null
+        assisted: null,
+        isBackground: null
     };
 
     if (isEdit) {
@@ -294,11 +295,15 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
 
       // Parse therapist info to match typeahead required properties
       props.therapist = this.userDataService.parseTherapist(extendedProps.therapist);
-
-      props.person = extendedProps.person;
       props.notes = extendedProps.notes;
-      props.assisted = extendedProps.assisted;
       props.duration = extendedProps.duration === 'allDay' ? true : false;
+
+      if (extendedProps.type === 'agenda') {
+        props.person = extendedProps.person;
+        props.assisted = extendedProps.assisted;
+      } else {
+        props.isBackground = extendedProps.isBackground;
+      }
 
     } else {
       props.startDate = this.getStartDate(value);

@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { EventEmitter } from 'events';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { AgendaService, IAppointmentApiDataModel } from 'src/app/shared/services/agenda.service';
@@ -25,7 +23,6 @@ export class FormAppointmentComponent implements OnInit {
   @Input() props: IAppointment;
   @Input() action = 'view';
 
-  appointmentForm: FormGroup;
   agendaConstants = AgendaConstants;
   appointmentData = {
       id: null,
