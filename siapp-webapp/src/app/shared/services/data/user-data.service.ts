@@ -36,4 +36,23 @@ export class UserDataService {
     };
     return result;
   }
+
+  /**
+   * Parse therapist object to match typeahead component
+   *
+   * @param {*} therapist
+   * @returns
+   * @memberof UserDataService
+   */
+  parseTherapist(therapist): any {
+    let name = `${therapist.name} ${therapist.last_name}`.trim();
+    let speciality = therapist.speciality.trim();
+    const result = {
+      therapist,
+      label: `[${speciality}] - ${name}`,
+      searchValue: `${speciality.toLowerCase()} ${name.toLowerCase()}`
+    };
+    return result;
+  }
+
 }

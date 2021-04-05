@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { EventEmitter } from 'events';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { AgendaService, IAppointmentApiDataModel } from 'src/app/shared/services/agenda.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
@@ -23,13 +23,12 @@ import { IAppointment } from '../modal-calendar-event/modal-calendar-event.compo
 export class FormAppointmentComponent implements OnInit {
 
   @Input() props: IAppointment;
-  @Input() action = 'add';
-
-  @Output() eventReload = new EventEmitter();
+  @Input() action = 'view';
 
   appointmentForm: FormGroup;
   agendaConstants = AgendaConstants;
   appointmentData = {
+      id: null,
       date: null,
       startDate: null,
       endDate: null,
@@ -43,7 +42,7 @@ export class FormAppointmentComponent implements OnInit {
       version: null,
       assisted: false
   };
-  areDatesInvalid = true;
+  areDatesInvalid = false;
   isAppointmentFormInvalid = true;
 
   constructor(
@@ -59,22 +58,35 @@ export class FormAppointmentComponent implements OnInit {
 
   ngOnInit() {
     this.setAppointmentData(this.props);
+    this.updateAppointmentFormInvalidState();
   }
 
   submit() {
     const data = this.buildAppointmentApiDataModel();
+    
     if (this.action === 'add') {
       this.agendaService.createAgenda(data).subscribe((res) => {
+        this.fullcalendarApiService.refetchEvents();
+        // TODO: Fix this
+        this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
         this.toastr.success('La cita ha sido creada exitosamente', 'Operacion exitosa');
         this.dialog.closeAll();
-        this.fullcalendarApiService.refetchEvents();
       }, (error) => {
         console.log(error);
         this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
       });
-
-    } else {
-
+    } else if (this.action === 'edit') {
+      const appointmentId = this.appointmentData.id;
+      this.agendaService.updateAgenda(appointmentId, data).subscribe((res) => {
+        this.fullcalendarApiService.refetchEvents();
+        // TODO: Fix this
+        this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
+        this.toastr.success('La cita ha sido actualizada exitosamente', 'Operacion exitosa');
+        this.dialog.closeAll();
+      }, (error) => {
+        console.log(error);
+        this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+      });
     }
   }
 
@@ -134,6 +146,7 @@ export class FormAppointmentComponent implements OnInit {
 
   buildAppointmentApiDataModel(): IAppointmentApiDataModel {
     const {
+      id,
       startDate,
       endDate,
       startTime,
@@ -146,6 +159,7 @@ export class FormAppointmentComponent implements OnInit {
       assisted,
     } = this.appointmentData;
     return {
+      id,
       date: this.appointmentData.startDate,
       startDate: this.dateTimeHelper.buildDateTimeForUI(startDate, startTime),
       endDate: this.dateTimeHelper.buildDateTimeForUI(endDate, endTime),
@@ -156,13 +170,42 @@ export class FormAppointmentComponent implements OnInit {
       therapist: {
         id: therapist.therapist.id
       },
-      time: this.action === 'add'? '12:00AM' : time, // 12:00AM IS ONLY TO AVOID ERROS WITH THE OLD SYSTEM
+      time: this.action === 'add' ? '12:00AM' : time, // 12:00AM IS ONLY TO AVOID ERROS WITH THE OLD SYSTEM
       duration,
       version: '2',
       assisted
     }
   }
 
+  delete() {
+    const dialogRef = this.dialog.open(
+      ConfirmModalComponent, 
+      { 
+        width: '400px', 
+        height: '350px',
+        data: {
+          title: "Confirmación",
+          body: `¿Estás seguro de borrar esta cita?`,
+          note: 'Esta acción no podrá ser revertida'
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        const appointmentId = this.appointmentData.id;
+        this.agendaService.deleteAgenda(appointmentId).toPromise().then((res) => {
+          this.toastr.success('La cita ha sido eliminado exitosamente', 'Operacion exitosa');
+          this.fullcalendarApiService.refetchEvents();
+          this.dialog.closeAll();
+          // TODO: Fix this
+         this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(this.appointmentData.startDate));
+        }, error => {
+          this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+        });
+      }
+    });
+}
 
 }
 interface IDateTimeInfo {

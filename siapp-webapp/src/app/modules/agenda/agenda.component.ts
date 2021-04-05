@@ -19,8 +19,9 @@ import { ActivatedRoute } from '@angular/router';
 import Calendar from '@fullcalendar/core/Calendar';
 import { ListPersonsDialogComponent } from '../records/components/list-persons-dialog/list-persons-dialog.component';
 import { MatDialog } from '@angular/material';
-import { ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
+import { IAppointment, IBaseEventAppointmentData, IEvent, ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
+import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 
 @Component({
   selector: 'app-agenda',
@@ -50,7 +51,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
   fullCallendarSettings = {
     dragScroll: true,
     droppable: true,
-    editable: true,
+    editable: false, // Enable to set drag and drop and extend or reduce event
     selectable: true,
     nowIndicator: true,
     navLinks: true,
@@ -99,7 +100,8 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
     private userDataService: UserDataService,
     private permissionService: PermissionService,
     public dialog: MatDialog,
-    private fullcalendarApiService: FullcalendarApiService
+    private fullcalendarApiService: FullcalendarApiService,
+    private dateTimeHelper: DateTimeHelper,
   ) {}
 
   ngOnDestroy(): void {
@@ -168,6 +170,61 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   // when date click ocurs it means that user is trying to add a new event
   dateClick(value: any) {
+    if (value.view.type === 'dayGridMonth') {
+      this.openModal(value, 'add');
+    }
+  }
+
+  // when select ocurs it means that user is trying to add a new event
+  select(value: any) {
+    if (this.calendarApi.view.type !== "dayGridMonth") {
+      this.openModal(value, 'add');
+    }
+  }
+
+  navLinkDayClick(value: Date) {
+    const date = new Date(value);
+    this.calendarApi.changeView("timeGridDay", date);
+  }
+
+   // when eventClick ocurs it means that user is trying to edit an existing event
+  eventClick(value: any) {
+    this.openModal(value, 'edit');
+  }
+
+  eventRender(value: any) {
+    // Error to set atribute on list week
+    if (value.view.type !== 'listWeek') {
+      let element: Element = value.el;
+      element.querySelectorAll(".fc-content")[0].setAttribute('data-tooltip', value.event.title);
+    }
+  }
+
+  /**
+   * Only available if editable is set to true
+   * NO BEING USED
+   * @param {*} value
+   * @memberof AgendaComponent
+   */
+  eventDragStart(value: any) {
+    console.log("dragStart", value);
+  }
+  
+  /**
+   * Only available if editable is set to true
+   * NO BEING USED
+   * @param {*} value
+   * @memberof AgendaComponent
+   */
+  eventDragStop(value: any) {
+    console.log("dragStop", value);
+  }
+
+  /**
+   * Modal Handler
+   * @param eventData 
+   */
+  openModal(eventData, action) {
     if (this.permissionService.permissions.value.canAddAgendaAppointment ||
       this.permissionService.permissions.value.canAddAgendaEvent) 
     {
@@ -178,41 +235,173 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
             height: '600px',
           }
         );
-        const props = {
-          startDate: value.dateStr,
-          endDate: value.dateStr,
+
+        if (action === 'add') {
+          dialogRef.componentInstance.props = this.buildCalendarEventProps(eventData);
+        } else {
+          dialogRef.componentInstance.props = this.buildCalendarEventProps(eventData, true);
+          // Detect which event type is being edited
+          dialogRef.componentInstance.eventType = eventData.event.extendedProps.type === 'agenda' ? 'appointment-form' : 'event-form';
         }
-        dialogRef.componentInstance.props = props;
-        dialogRef.componentInstance.action = 'add'
+        dialogRef.componentInstance.action = action;
 
     }
   }
 
-  navLinkDayClick(value: Date) {
-    const date = new Date(value);
-    this.calendarApi.changeView("timeGridDay", date);
-  }
+  /****************************************************************************
+   * PRIVATE FUNCTIONS                                                        *
+   ****************************************************************************/
 
-  eventClick(value: any) {
-    console.log("eventClick", value);
-  }
+  /**
+   * Build the props that ModalCalendarEventComponent receives
+   * based on the mode ADD - EDIT
+   *
+   * @private
+   * @param {*} value
+   * @param {boolean} [isEdit=false]
+   * @returns {(IAppointment | IEvent)}
+   * @memberof AgendaComponent
+   */
+  private buildCalendarEventProps(value: any, isEdit = false): IAppointment | IEvent {
+    let props = {
+        id: null,
+        startDate: null,
+        endDate: null,
+        startTime: null,
+        endTime: null,
+        notes: null,
+        therapist: this.calendarService.filters.therapist,
+        duration: null,
+        date: null,
+        person: null,
+        time: null,
+        version: null,
+        assisted: null
+    };
 
-  eventRender(value: any) {
-    let element: Element = value.el;
-    element.querySelectorAll(".fc-content")[0].setAttribute('data-tooltip', value.event.title);
-  }
+    if (isEdit) {
+      // Event metadata comming from API
+      const extendedProps = value.event.extendedProps;
+      props.id = extendedProps.id;
 
-  eventDragStart(value: any) {
-    console.log("dragStart", value);
-  }
-  
-  eventDragStop(value: any) {
-    console.log("dragStop", value);
-  }
-  
-  select(value: any) {
-    if (this.calendarApi.view.type !== "dayGridMonth") {
-      console.log("select", value);
+      props.startDate = this.dateTimeHelper.parseStringDateToStringMXDate(extendedProps.startDate);
+      props.endDate = this.dateTimeHelper.parseStringDateToStringMXDate(extendedProps.endDate);
+
+      const startDate = this.dateTimeHelper.parseStringToDate(extendedProps.startDate);
+      const endDate = this.dateTimeHelper.parseStringToDate(extendedProps.endDate);
+      props.startTime = this.dateTimeHelper.buildTimeForUI(startDate);
+      props.endTime = this.dateTimeHelper.buildTimeForUI(endDate);
+
+      // Parse therapist info to match typeahead required properties
+      props.therapist = this.userDataService.parseTherapist(extendedProps.therapist);
+
+      props.person = extendedProps.person;
+      props.notes = extendedProps.notes;
+      props.assisted = extendedProps.assisted;
+
+    } else {
+      props.startDate = this.getStartDate(value);
+      props.endDate = this.getEndDate(value);
+      props.startTime = this.getStartTime(value);
+      props.endTime = this.getEndTime(value);
     }
+    return props;
   }
+
+  /**
+   * Get start date based on view type
+   * NOTE: This is only for ADD mode
+   *
+   * @private
+   * @param {*} eventData
+   * @returns {string}
+   * @memberof AgendaComponent
+   */
+  private getStartDate(eventData: any): string {
+    const viewType = eventData.view.type;
+    let result = '';
+    switch(viewType) {
+      case 'dayGridMonth':
+        result = eventData.dateStr;
+        break;
+      case 'timeGridWeek':
+      case 'timeGridDay':
+        result = this.dateTimeHelper.parseStringDateToStringMXDate(eventData.startStr);
+        break;
+      default:
+        result = this.dateTimeHelper.getTodayDateString();
+    }
+    return result;
+  }
+
+  /**
+   * Get end date based on view type
+   * NOTE: This is only for ADD mode
+   *
+   * @private
+   * @param {*} eventData
+   * @returns {string}
+   * @memberof AgendaComponent
+   */
+  private getEndDate(eventData: any): string {
+    const viewType = eventData.view.type;
+    let result = '';
+    switch(viewType) {
+      case 'dayGridMonth':
+        result = eventData.dateStr;
+        break;
+      case 'timeGridWeek':
+      case 'timeGridDay':
+        result = this.dateTimeHelper.parseStringDateToStringMXDate(eventData.endStr);
+        break;
+      default:
+        result = this.dateTimeHelper.getTodayDateString();
+    }
+    return result;
+  }
+
+  /**
+   * Get start time based on view type
+   * NOTE: This is only for ADD mode
+   *
+   * @private
+   * @param {*} eventData
+   * @returns {string}
+   * @memberof AgendaComponent
+   */
+  private getStartTime(eventData: any): number | null {
+    const viewType = eventData.view.type;
+    let result = null;
+    switch(viewType) {
+      case 'timeGridWeek':
+      case 'timeGridDay':
+         // 'start' info only exists on week and day view, otherwise just send the date that comes on month view
+        result = this.dateTimeHelper.buildTimeForUI(eventData.start ? eventData.start : eventData.date);
+        break;
+    }
+    return result;
+  }
+
+  /**
+   * Get end time based on view type
+   * NOTE: This is only for ADD mode
+   *
+   * @private
+   * @param {*} eventData
+   * @returns {string}
+   * @memberof AgendaComponent
+   */
+  private getEndTime(eventData: any): number | null {
+    const viewType = eventData.view.type;
+    let result = null;
+    switch(viewType) {
+      case 'timeGridWeek':
+      case 'timeGridDay':
+        // 'end' info only exists on week and day view, otherwise just send the date that comes on month view
+        result = this.dateTimeHelper.buildTimeForUI(eventData.end ? eventData.end : eventData.date);
+        break;
+    }
+    return result;
+  }
+
 }

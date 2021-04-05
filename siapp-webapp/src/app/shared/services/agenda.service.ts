@@ -27,7 +27,7 @@ export class AgendaService {
     return this.http.post<ApiResponse>(this.baseUrl + URL_CONF.agendaAPI.endpoints.createAgenda, agenda);
   }
 
-  updateAgenda(id: number, agenda: any): Observable<ApiResponse> {
+  updateAgenda(id: number, agenda: IAppointmentApiDataModel): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(this.baseUrl + URL_CONF.agendaAPI.endpoints.updateAgenda + id, agenda);
   }
 
@@ -37,6 +37,7 @@ export class AgendaService {
 }
 
 export interface IAppointmentApiDataModel {
+  id?: string;
   date: string | Date;
   startDate: string | Date;
   endDate: string | Date;

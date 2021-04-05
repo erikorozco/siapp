@@ -4,16 +4,16 @@
     <div class="card-header">
       <div class="btn-group" role="group" aria-label="Basic example">
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-          <mat-button-toggle *ngIf="(this.permissionService.permissions | async)?.canAddAgendaAppointment" (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
+          <mat-button-toggle (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
           <mat-button-toggle (click)="render('event-form')"  value="italic">Eventos generales</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
 
     <div class="card-body">
-      <ng-container [ngSwitch]="this.formType">
+      <ng-container [ngSwitch]="eventType">
         <div *ngSwitchCase="'appointment-form'">
-          <app-form-appointment *ngIf="(this.permissionService.permissions | async)?.canAddAgendaAppointment" [props]="this.props"></app-form-appointment>
+          <app-form-appointment [action]="action" [props]="props"></app-form-appointment>
         </div>
         <div *ngSwitchCase="'event-form'">
           <h5 class="card-title">Special title treatment</h5>
@@ -25,3 +25,4 @@
 
   </div>
 </div>
+<!-- *ngIf="(this.permissionService.permissions | async)?.canAddAgendaAppointment" -->

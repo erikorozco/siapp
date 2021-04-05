@@ -109,6 +109,7 @@ ALTER TABLE public.agenda ADD fecha_final timestamp NULL;
 ALTER TABLE public.agenda ADD asistio bool NULL;
 ALTER TABLE public.agenda ADD duracion varchar NULL;
 ALTER TABLE public.agenda ADD "version" varchar NULL;
+ALTER TABLE public.agenda ALTER COLUMN hora DROP NOT NULL;
 
 -- Avoid nulls on autocomplete
 update agenda set version = '1';

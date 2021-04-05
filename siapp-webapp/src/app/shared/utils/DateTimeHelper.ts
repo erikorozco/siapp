@@ -10,7 +10,13 @@ export class DateTimeHelper {
     constructor() {}
 
     getTodayDate(): Date {
-        return new Date();
+        return moment().toDate();
+    }
+
+    getTodayDateString(): string {
+        let todayDate = this.getTodayDate().toString();
+        todayDate = this.parseStringDateToStringMXDate(todayDate);
+        return todayDate;
     }
 
     buildDateTime(startDate: Date, duration: number) : Date {
@@ -29,10 +35,6 @@ export class DateTimeHelper {
         return startDate;
     }
 
-    // appendTimeToDate(date: Date, minutes: number): Date {
-
-    // }
-
     /**
      * Parse hour time from UI format to hours
      * @param hour Example (815 | 915 | 900)
@@ -41,14 +43,32 @@ export class DateTimeHelper {
         return  Math.floor(time / 100);
     }
 
+    /**
+     * Parse hour time from UI format to minutes
+     * @param hour Example (815 | 930 | 900)
+     * @returns  Example (815 -> 15 | 930 -> 30 | 900 -> 0)
+     */
     getMinutesFromUIFormat(time: number) {
         return time % 100;
+    }
+
+    getHoursFromDate(date: Date): number {
+        return date.getHours();
+    }
+
+    getMinutesFromDate(date: Date): number {
+        return date.getMinutes();
     }
 
     parseStringToDate(date) {
         return moment(date).toDate();
     }
 
+    /**
+     * Parse date string to MX date 
+     * @param hour Example (2021-02-02-10:30:00)
+     * @returns  Example '2021-02-02'
+     */
     parseStringDateToStringMXDate(date: string): string {
         const newDate = moment(date).format('YYYY-MM-DD');
         return newDate.toString();
@@ -59,6 +79,12 @@ export class DateTimeHelper {
         date.setHours(this.getHoursFromUIFormat(time));
         date.setMinutes(this.getMinutesFromUIFormat(time));
         return date;
+    }
+
+    buildTimeForUI(date: Date) {
+        const hour = this.getHoursFromDate(date);
+        const minutes = this.getMinutesFromDate(date);
+        return (hour * 100) + minutes;
     }
 
     isDateGreaterThan(endDate: Date, startDate: Date): boolean {
