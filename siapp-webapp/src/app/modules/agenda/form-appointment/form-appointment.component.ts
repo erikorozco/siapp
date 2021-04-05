@@ -68,7 +68,7 @@ export class FormAppointmentComponent implements OnInit {
       this.agendaService.createAgenda(data).subscribe((res) => {
         this.fullcalendarApiService.refetchEvents();
         // TODO: Fix this
-        this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
+        // this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
         this.toastr.success('La cita ha sido creada exitosamente', 'Operacion exitosa');
         this.dialog.closeAll();
       }, (error) => {
@@ -80,7 +80,7 @@ export class FormAppointmentComponent implements OnInit {
       this.agendaService.updateAgenda(appointmentId, data).subscribe((res) => {
         this.fullcalendarApiService.refetchEvents();
         // TODO: Fix this
-        this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
+        // this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(data.startDate));
         this.toastr.success('La cita ha sido actualizada exitosamente', 'Operacion exitosa');
         this.dialog.closeAll();
       }, (error) => {
@@ -170,10 +170,19 @@ export class FormAppointmentComponent implements OnInit {
       therapist: {
         id: therapist.therapist.id
       },
-      time: this.action === 'add' ? '12:00AM' : time, // 12:00AM IS ONLY TO AVOID ERROS WITH THE OLD SYSTEM
-      duration,
+      time: time,
+      duration: duration ? 'allDay' : null,
       version: '2',
       assisted
+    }
+  }
+
+  allDayEventHandler() {
+    this.appointmentData.duration = !this.appointmentData.duration;
+    if (this.appointmentData.duration) {
+      this.appointmentData.startTime = 800;
+      this.appointmentData.endTime = 2000;
+      this.appointmentData.endDate = this.appointmentData.startDate;
     }
   }
 
@@ -199,13 +208,13 @@ export class FormAppointmentComponent implements OnInit {
           this.fullcalendarApiService.refetchEvents();
           this.dialog.closeAll();
           // TODO: Fix this
-         this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(this.appointmentData.startDate));
+        //  this.fullcalendarApiService.navigateToView('timeGridWeek', this.dateTimeHelper.parseStringToDate(this.appointmentData.startDate));
         }, error => {
           this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
         });
       }
     });
-}
+  }
 
 }
 interface IDateTimeInfo {

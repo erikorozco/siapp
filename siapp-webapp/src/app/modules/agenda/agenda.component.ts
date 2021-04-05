@@ -298,6 +298,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
       props.person = extendedProps.person;
       props.notes = extendedProps.notes;
       props.assisted = extendedProps.assisted;
+      props.duration = extendedProps.duration === 'allDay' ? true : false;
 
     } else {
       props.startDate = this.getStartDate(value);

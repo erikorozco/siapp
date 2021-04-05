@@ -15,21 +15,22 @@
   </div>
 
   <!-- Person -->
-  <div class="col-md-6 person-field">
-    <div class="input-group">
-      <input id="person-input" class="form-control" [attr.disabled]="true" aria-describedby="button-addon2" 
-        value="{{appointmentData.person?.name}} {{appointmentData.person?.lastName}} {{appointmentData.person?.secondLastName}}">
-      <div class="input-group-append">
-        <button [disabled]="action === 'view'" (click)="openPersonsModal('appointment-form')" class="type-ahead-button btn btn-outline-primary" type="button" id="button-addon2">
-          Buscar paciente
-        </button>
-        <button [disabled]="action === 'view'" *ngIf="appointmentData.person" (click)="updateAppointmentDataState(null, 'person')" class="search-button btn btn-outline-secondary" type="button" id="button-addon2">
-          <span class="icon text-blue-50">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
+  <div class="col-md-6">
+    <label>Paciente</label>
+      <div class="input-group">
+        <input id="person-input" class="form-control" [attr.disabled]="true" aria-describedby="button-addon2" 
+          value="{{appointmentData.person?.name}} {{appointmentData.person?.lastName}} {{appointmentData.person?.secondLastName}}">
+        <div class="input-group-append">
+          <button [disabled]="action === 'view'" (click)="openPersonsModal('appointment-form')" class="type-ahead-button btn btn-outline-primary" type="button" id="button-addon2">
+            Buscar paciente
+          </button>
+          <button [disabled]="action === 'view'" *ngIf="appointmentData.person" (click)="updateAppointmentDataState(null, 'person')" class="search-button btn btn-outline-secondary" type="button" id="button-addon2">
+            <span class="icon text-blue-50">
+              <i class="fas fa-times"></i>
+            </span>
+          </button>
+        </div>
       </div>
-    </div>
   </div>
 
 </div>
@@ -40,7 +41,7 @@
   <!-- Start date -->
   <div class="col-md-3">
     <label for="start-date">Fecha de inicio</label>
-    <input [disabled]="action === 'view'" type="date" (change)="updateAppointmentDataState($event.target.value, 'startDate')" [value]="appointmentData.startDate" class="form-control" id="start-date">
+    <input [disabled]="action === 'view' || appointmentData.duration" type="date" (change)="updateAppointmentDataState($event.target.value, 'startDate')" [value]="appointmentData.startDate" class="form-control" id="start-date">
   </div>
 
   <!-- Start time -->
@@ -50,7 +51,7 @@
       [options]="this.agendaConstants.hours"
       (modelChange)="updateAppointmentDateTime({time: $event, date: appointmentData.startDate}, 'startTime')"
       [selectedValue]="appointmentData.startTime"
-      [isDisabled]="action === 'view'"
+      [isDisabled]="action === 'view'  || appointmentData.duration"
     ></app-input-select>
   </div>
 
@@ -61,16 +62,19 @@
       [options]="this.agendaConstants.hours"
       (modelChange)="updateAppointmentDateTime({time: $event, date: appointmentData.endDate}, 'endTime')"
       [selectedValue]="appointmentData.endTime"
-      [isDisabled]="action === 'view'"
+      [isDisabled]="action === 'view' || appointmentData.duration"
     ></app-input-select>
   </div>
 
   <!-- End date -->
   <div class="col-md-3">
     <label for="end-date">Fecha de fin</label>
-    <input [disabled]="action === 'view'" (change)="updateAppointmentDataState($event.target.value, 'endDate')" [value]="appointmentData.endDate" type="date" class="form-control" id="end-date">
+    <input [disabled]="action === 'view' || appointmentData.duration" (change)="updateAppointmentDataState($event.target.value, 'endDate')" [value]="appointmentData.endDate" type="date" class="form-control" id="end-date">
   </div>
 
+</div>
+<div class="actions col-md-6 text-left">
+  <mat-slide-toggle [disabled]="action === 'view'" (change)="allDayEventHandler()"  [checked]="appointmentData.duration" [color]="'primary'">Todo el día</mat-slide-toggle>
 </div>
   <h5 *ngIf="areDatesInvalid && (appointmentData.startTime && appointmentData.endTime)" style="color: crimson">La fecha/hora de inicio no puede ser menor o igual a la fecha/hora de fin</h5>
 <hr>

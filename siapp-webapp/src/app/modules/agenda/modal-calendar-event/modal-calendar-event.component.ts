@@ -17,8 +17,6 @@ export class ModalCalendarEventComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.props);
-
     if (this.action === 'add') {
       this.eventType = this.permissionService.permissions.value.canAddAgendaAppointment ?  'appointment-form' : 'event-form';
     } else {
