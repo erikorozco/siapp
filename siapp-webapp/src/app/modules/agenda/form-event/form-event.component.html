@@ -10,7 +10,7 @@
       [optionsSource]="userDataService.users | async"
       [model]="eventData.therapist"
       (modelChange)="updateEventDataState($event, 'therapist')"
-      [isDisabled]="action === 'view'"
+      [isDisabled]="!(this.permissionService.permissions | async)?.canEditAgendaAppointment || action === 'view'"
     ></app-input-typeahead>
   </div>
 
@@ -80,4 +80,4 @@
     <button *ngIf="(this.permissionService.permissions | async)?.canEditAgendaEvent || (this.permissionService.permissions | async)?.canAddAgendaEvent" [disabled]="isEventFormInvalid" (click)="submit()" type="button" class="btn btn-success">Guardar</button>
   </div>
 </div>
-<pre class="text-left">{{eventData | json}}</pre>
+<!-- <pre class="text-left">{{eventData | json}}</pre> -->

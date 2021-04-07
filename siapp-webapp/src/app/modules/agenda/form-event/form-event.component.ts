@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
+import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-form-event',
   templateUrl: './form-event.component.html',
@@ -44,10 +45,11 @@ export class FormEventComponent implements OnInit {
     public dialog: MatDialog,
     private fullcalendarApiService: FullcalendarApiService,
     private userDataService: UserDataService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.seteventData(this.props);
+    this.setEventData(this.props);
     this.updateEventFormInvalidState();
   }
 
@@ -80,9 +82,17 @@ export class FormEventComponent implements OnInit {
     }
   }
 
-  seteventData(props) {
+  setEventData(props) {
     for (const key in props) {
       this.eventData[key] = props[key];
+    }
+    
+    // If User cant edit Agendas it means that only has access to add its own events.
+    if (!this.permissionService.permissions.value.canEditAgendaAppointment) {
+      let user = this.userService.signedUserInfo.value;
+      let users = this.userDataService.users.value;
+      user = users.find((u: any) => u.therapist.id == user.therapistId);
+      this.eventData.therapist = this.userDataService.parseUser(user);
     }
   }
 

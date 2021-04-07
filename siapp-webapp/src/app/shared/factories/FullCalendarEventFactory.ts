@@ -15,11 +15,11 @@ export class FullCalendarEventFactory {
         }
 
         if (apiEventType === "agenda") {
-            this.event.title = `${data.person.name} ${data.person.lastName} - ${data.notes}`;
+            this.event.title = `${data.person.name} ${data.person.lastName} - ${data.notes ? data.notes : 'Sin asunto'}`;
             this.event.color = data.assisted ? '#1cc88a' : '#007bff';
         } else {
-            this.event.title = `${data.notes}`;
-            this.event.color = '#17a2b8';
+            this.event.title = `${data.notes ? data.notes : 'Sin asunto'}`;
+            this.event.color = '#BE33FF';
             // this.event.rendering = 'background';
         }
 

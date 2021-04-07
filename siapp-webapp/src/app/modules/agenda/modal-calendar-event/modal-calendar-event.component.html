@@ -4,8 +4,8 @@
     <div class="card-header">
       <div class="btn-group" role="group" aria-label="Basic example">
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-          <mat-button-toggle *ngIf="action === 'add' || (action !== 'add' && eventType === 'appointment-form')" (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
-          <mat-button-toggle *ngIf="action === 'add' || (action !== 'add' && eventType === 'event-form')" (click)="render('event-form')"  value="italic">Eventos generales</mat-button-toggle>
+          <mat-button-toggle *ngIf="(this.permissionService.permissions | async)?.canAddAgendaAppointment && (action === 'add' || (action !== 'add' && eventType === 'appointment-form'))" (click)="render('appointment-form')" value="bold">Citas pacientes existentes</mat-button-toggle>
+          <mat-button-toggle *ngIf="(this.permissionService.permissions | async)?.canAddAgendaEvent && (action === 'add' || (action !== 'add' && eventType === 'event-form'))" (click)="render('event-form')"  value="italic">Eventos generales</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>

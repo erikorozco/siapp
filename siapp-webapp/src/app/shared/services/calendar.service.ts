@@ -2,7 +2,6 @@ import { isEqual } from 'lodash';
 import { Injectable } from '@angular/core';
 import { EventInput } from '@fullcalendar/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
 import { FilterApiParams, FulcallendarFiltersFactory } from '../factories/FulcallendarFiltersFactory';
 import { FullCalendarEventFactory, ApiEventType } from '../factories/FullCalendarEventFactory';
 import { DateTimeHelper } from '../utils/DateTimeHelper';
@@ -15,7 +14,10 @@ import { EventService } from './event.service';
 })
 export class CalendarService {
 
-  eventSources;
+  eventSources ={
+    agendas: null,
+    events: null
+  }
   filters = this.getInitialFiltersState();
 
   constructor(
@@ -26,8 +28,8 @@ export class CalendarService {
     public toastr: ToastrService
   )
   {
-    this.eventSources = [
-      {
+    this.eventSources = {
+      agendas: {
         url: this.agendaService.agendasFilterUrl,
         method: 'GET',
         extraParams: () => {
@@ -38,7 +40,7 @@ export class CalendarService {
         },
         eventDataTransform: this.agendaDataTransform
       },
-      {
+      events: {
         url: this.eventService.eventsFilterUrl,
         method: 'GET',
         extraParams: () => {
@@ -49,7 +51,27 @@ export class CalendarService {
         },
         eventDataTransform: this.eventDataTransform
       }
-    ];
+    };
+  }
+
+  /**
+   * Return the desired sources that feeds the full calendar Agendas AND/OR Events
+   * 
+   * @returns Array
+   * @memberof CalendarService
+   */
+  getFullCalendarEventSources(agendas = true, events = true): Array<any> {
+    const eventSources = [];
+     
+    if (agendas) {
+        eventSources.push(this.eventSources.agendas);
+    }
+
+    if (events) {
+        eventSources.push(this.eventSources.events);
+    }
+
+    return eventSources;
   }
 
   getInitialFiltersState(): FiltersType {

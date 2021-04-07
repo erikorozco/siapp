@@ -17,9 +17,8 @@ import { PersonDataService } from 'src/app/shared/services/data/person-data.serv
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { ActivatedRoute } from '@angular/router';
 import Calendar from '@fullcalendar/core/Calendar';
-import { ListPersonsDialogComponent } from '../records/components/list-persons-dialog/list-persons-dialog.component';
 import { MatDialog } from '@angular/material';
-import { IAppointment, IBaseEventAppointmentData, IEvent, ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
+import { IAppointment, IEvent, ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 
@@ -36,6 +35,8 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
   @Input() iPersonId;
   @Input() iAction = 'view-agenda';
   @Input() isChild = false;
+  @Input() renderEvents = true;
+  @Input() renderAgendas = true;
 
   therapistLabel = '';
   therapistId;
@@ -89,7 +90,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
       bootstrapPlugin
     ],
     locales: [esLocale],
-    eventSources: this.calendarService.eventSources,
+    eventSources: [],
   };
 
   constructor(
@@ -109,7 +110,12 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngOnInit() {
+    this.initFullCalendarEventSources();
     this.initAgendaInstance();
+  }
+
+  initFullCalendarEventSources() {
+    this.fullCallendarSettings.eventSources = this.calendarService.getFullCalendarEventSources(this.renderAgendas, this.renderEvents);
   }
 
   // Run only when agenda component was instanced instead of accessed by route
