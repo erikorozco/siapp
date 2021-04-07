@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material';
 import { IAppointment, IEvent, ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
+declare var $:any;
 
 @Component({
   selector: 'app-agenda',
@@ -199,11 +200,12 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   eventRender(value: any) {
-    // Error to set atribute on list week
-    if (value.view.type !== 'listWeek') {
-      let element: Element = value.el;
-      element.querySelectorAll(".fc-content")[0].setAttribute('data-tooltip', value.event.title);
-    }
+    $(value.el).tooltip({
+      title: value.event.title,
+      placement: "top",
+      trigger: "hover",
+      container: "body"
+    });
   }
 
   /**
