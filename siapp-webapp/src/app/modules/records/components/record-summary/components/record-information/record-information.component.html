@@ -100,6 +100,14 @@
                 <mat-label>Familiar de contácto</mat-label>
                 <input matInput value="{{ recordInfo.familyContact }}" readonly>
             </mat-form-field>
+            <mat-form-field class="col-md-5">
+                <mat-label>Teléfono de familiar de contácto</mat-label>
+                <input matInput value="{{ recordInfo.familyContactPhone }}" readonly>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+                <mat-label>Parentezco de familiar de contácto</mat-label>
+                <input matInput value="{{ recordInfo.familyContactRelation }}" readonly>
+            </mat-form-field>
         </mat-expansion-panel>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>

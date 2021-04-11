@@ -249,6 +249,12 @@ public class Record implements Serializable {
 	@Column(name = "familiar")
 	private String familyContact;
 	
+	@Column(name = "telefonofamiliar")
+	private String familyContactPhone;
+	
+	@Column(name = "parentezcofamiliar")
+	private String familyContactRelation;
+	
 	@Column(name = "localidad")
 	private String location;
 	
@@ -887,6 +893,22 @@ public class Record implements Serializable {
 
 	public void setFamilyContact(String familyContact) {
 		this.familyContact = familyContact;
+	}
+
+	public String getFamilyContactPhone() {
+		return familyContactPhone;
+	}
+
+	public void setFamilyContactPhone(String familyContactPhone) {
+		this.familyContactPhone = familyContactPhone;
+	}
+
+	public String getFamilyContactRelation() {
+		return familyContactRelation;
+	}
+
+	public void setFamilyContactRelation(String familyContactRelation) {
+		this.familyContactRelation = familyContactRelation;
 	}
 
 	public String getLocation() {

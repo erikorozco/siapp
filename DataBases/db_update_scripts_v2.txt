@@ -137,3 +137,7 @@ CREATE TABLE public.evento (
 -- public.evento foreign keys
 
 ALTER TABLE public.evento ADD CONSTRAINT evento_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+
+ALTER TABLE public.expediente ADD telefonofamiliar varchar NULL;
+ALTER TABLE public.expediente ADD parentezcofamiliar varchar NULL;
+

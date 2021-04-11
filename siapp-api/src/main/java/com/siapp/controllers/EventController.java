@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 
@@ -35,7 +35,7 @@ public class EventController {
     @GetMapping(value = "/filter")
     public List<Event> filter(  
     		@And({
-    			@Spec(path = "notes", params = "notes", spec = Like.class),
+    			@Spec(path = "notes", params = "notes", spec = LikeIgnoreCase.class),
     			@Spec(path = "startDate", params = {"start", "end"}, spec = Between.class),
     			@Spec(path = "therapist.id", params = "therapistId", spec = Equal.class),
     			@Spec(path = "isBackground", params = "isBackground", spec = Equal.class)

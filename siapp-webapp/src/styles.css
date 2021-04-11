@@ -20,4 +20,7 @@ h1.h3 {
     font-size: 20px;
 }
 
+.fc-event-container:hover {
+    cursor: pointer;
+}
 /* https://stackoverflow.com/questions/56866108/tooltips-not-working-in-fullcalendar-when-i-use-bootstrap-css */
