@@ -21,9 +21,11 @@ export class PermissionService {
   ) {
     // Load permissions If permissions have not been initialized
     // NOTE: This is used for reload page commonly
-    if (!this.permissions.value) {
-      this.initializeUIPermissions();
-    }
+    this.permissions.subscribe((value) => {
+      if(!value) {
+        this.initializeUIPermissions();
+      }
+    });
   }
 
   initializeUIPermissions() {

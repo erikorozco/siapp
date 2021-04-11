@@ -177,6 +177,26 @@ export const API_URL_CONFIG = {
         create: 'create',
       }
     },
+    agendaAPI: {
+      name: 'agenda/',
+      endpoints: {
+        filter : 'filter',
+        getAgenda : 'getAppointment/',
+        createAgenda: 'create',
+        updateAgenda : 'update/',
+        deleteAgenda : 'delete/',
+      }
+    },
+    eventsAPI: {
+      name: 'events/',
+      endpoints: {
+        filter : 'filter',
+        getEvent : 'getEvent/',
+        createEvent: 'create',
+        updateEvent : 'update/',
+        deleteEvent : 'delete/',
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {

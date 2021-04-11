@@ -20,9 +20,9 @@ export class PersonService {
     return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.personsAPI.endpoints.getAll );
   }
 
-  filterPersons(searchText): Observable<ApiResponse> {
+  filterPersons(searchText): Observable<any> {
     const params = `?searchText=${searchText}`;
-    return this.http.get<ApiResponse>(this.baseUrl + URL_CONF.personsAPI.endpoints.filter + params );
+    return this.http.get<any>(this.baseUrl + URL_CONF.personsAPI.endpoints.filter + params );
   }
 
   getPerson(id: number): Observable<any> {

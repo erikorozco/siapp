@@ -1,0 +1,101 @@
+<!-- Breadcrumbs -->
+<ng-container *ngIf="!isChild">
+    <h1 *ngIf="this.action === 'therapist-agenda'" class="h3 mb-0 text-gray-800">
+      <a [routerLink]="['/home']">Panel de control</a> -> Mi agenda 
+    </h1>
+    <h1 *ngIf="this.action === 'agendas'" class="h3 mb-0 text-gray-800">
+      <a [routerLink]="['/home']">Panel de control</a> -> Agendas -> {{this.therapistLabel ? this.therapistLabel : 'Todas'}}
+  </h1>
+</ng-container>
+<br>
+
+<!-- Filters -->
+<div *ngIf="(this.permissionService.permissions | async)?.canFilterOnAgenda && action === 'agendas'" class="card row mb-3">
+  <div class="card-header">
+    <a class="btn btn-success" (click)="isFilterHidden = !isFilterHidden" data-toggle="collapse" href="#filters-container" role="button" aria-expanded="false" aria-controls="filters-container">
+     {{isFilterHidden ? 'Mostrar' : 'Ocultar'}} Filtros
+    </a>
+  </div>
+  <div class="collapse" id="filters-container">
+    
+    <div class="card-body row">
+
+      <!-- Therapist -->
+      <div class="col-md-6">
+        <app-input-typeahead
+          [label]="'Terapeuta'"
+          [placeholder]="'Nombre del terapeuta'"
+          [id]="'therapistId'"
+          [optionsSource]="userDataService.users | async"
+          (modelChange)="updateState($event, 'therapist')"
+        ></app-input-typeahead>
+      </div>
+
+      <!-- Status -->
+      <div class="col-md-3">
+        <app-input-select
+          [label]="'Estado de la cita'"
+          [info]="'Este filtro solo aplica para pacientes con cita. No afecta los resultados de eventos'"
+          [options]="this.agendaConstants.eventStatuses"
+          (modelChange)="updateState($event, 'assisted')"
+        ></app-input-select>
+      </div>
+
+      <!-- test -->
+      <!-- <div class="col-md-3">
+        <app-input-multi-select
+          [label]="'test'"
+          [info]="'test'"
+          [options]="[{value: 'option1', label: 'option 1 label'}, {value: 'option2', label: 'option 2 label'}]"
+        ></app-input-multi-select>
+      </div> -->
+      
+      <!-- Notes -->
+      <div class="col-md-3">
+        <app-input-search
+          [label]="'Notas u observaciones'"
+          [placeholder]="'Notas'"
+          [id]="'notes'"
+          (modelChange)="updateState($event, 'notes')"
+        ></app-input-search>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Calendar -->
+<full-calendar 
+  #calendar
+  [dragScroll]="fullCallendarSettings.dragScroll"
+  [droppable]="fullCallendarSettings.droppable"
+  [editable]="fullCallendarSettings.editable"
+  [selectable]="fullCallendarSettings.selectable"
+  [nowIndicator]="fullCallendarSettings.nowIndicator"
+  [navLinks]="fullCallendarSettings.navLinks"
+  [lazyFetching]="fullCallendarSettings.lazyFetching"
+  [defaultView]="fullCallendarSettings.defaultView"
+  [eventLimit]="fullCallendarSettings.eventLimit"
+  [slotDuration]="fullCallendarSettings.slotDuration"
+  [defaultTimedEventDuration]="fullCallendarSettings.defaultTimedEventDuration"
+  [slotLabelFormat]="fullCallendarSettings.slotLabelFormat"
+  [customButtons]="fullCallendarSettings.customButtons"
+  [minTime]="fullCallendarSettings.minTime"
+  [maxTime]="fullCallendarSettings.maxTime"
+  [header]="fullCallendarSettings.header" 
+  [plugins]="fullCallendarSettings.plugins"
+  [locales]="fullCallendarSettings.locales"
+  [locale]="fullCallendarSettings.locale"
+  [themeSystem]="fullCallendarSettings.themeSystem"
+  [eventTimeFormat]="fullCallendarSettings.eventTimeFormat"
+  [eventSources]="fullCallendarSettings.eventSources"
+  (loading)="eventLoader($event)"
+  (eventClick)="eventClick($event)"
+  (dateClick)="dateClick($event)"
+  (navLinkDayClick)="navLinkDayClick($event)"
+  (eventRender)="eventRender($event)"
+  (eventDragStart)="eventDragStart($event)"
+  (eventDragStop)="eventDragStop($event)"
+  (select)="select($event)"
+></full-calendar>
+<app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>

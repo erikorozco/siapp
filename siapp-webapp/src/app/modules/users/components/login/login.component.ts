@@ -5,6 +5,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { HttpParams } from '@angular/common/http';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { UserDataService } from 'src/app/shared/services/data/user-data.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   invalidLogin = false;
+  invalidLoginMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private permissionService: PermissionService,
     private userService: UserService,
+    private userDataService: UserDataService,
   ) { }
 
   onSubmit() {
@@ -37,9 +40,11 @@ export class LoginComponent implements OnInit {
         window.sessionStorage.setItem('token', JSON.stringify(data));
         this.permissionService.initializeUIPermissions();
         this.userService.initializeUserInfo();
+        this.userDataService.initializeUsers();
         this.router.navigate(['home']);
     }, error => {
       console.log(error);
+      this.invalidLoginMessage = this.translateErrorMessage(error.error.error_description);
       this.invalidLogin = true;
     });
   }
@@ -50,6 +55,19 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.compose([Validators.required])],
       password: ['', Validators.required]
     });
+  }
+
+  translateErrorMessage(mesage: string): string {
+    let result = 'Algo inesperado ocurrio, intente de nuevo o contacte al administrador'
+    switch (mesage) {
+      case 'User account is locked': 
+        result = 'Esta cuenta ha sido deshabilitada por el administrador';
+        break;
+      case 'Bad credentials': 
+        result = 'Credenciales invalidas. Intente de nuevo';
+        break;
+    }
+    return result;
   }
 
 }

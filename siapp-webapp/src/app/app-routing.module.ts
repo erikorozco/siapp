@@ -27,6 +27,7 @@ import { ListPsychometricsManagmentComponent } from './modules/psychometrics/com
 import { FormPsycometricCreatorComponent } from './modules/psychometrics/components/form-psycometric-creator/form-psycometric-creator.component';
 import { FormPsycometricApplyComponent } from './modules/psychometrics/components/form-psycometric-apply/form-psycometric-apply.component';
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
+import { AgendaComponent } from './modules/agenda/agenda.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -149,6 +150,8 @@ const ROUTES: Routes = [
       { path: 'view-psycometric-config/:id', component: FormPsycometricCreatorComponent },
       { path: 'add-psycometric-application/:psycometricId/person/:personId', component: FormPsycometricApplyComponent },
       { path: 'view-psycometric-application/:psycometricApplicationId/person/:personId', component: FormPsycometricApplyComponent },
+      { path: 'agendas', component: AgendaComponent },
+      { path: 'therapist-agenda/:therapistId', component: AgendaComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

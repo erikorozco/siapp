@@ -324,7 +324,9 @@ export class FormRecordComponent implements OnInit, OnDestroy {
       whoWorks: ['', Validators.compose([Validators.required])],
       workOcupation: ['', Validators.compose([Validators.required])],
       workPlace: ['', Validators.compose([Validators.required])],
-      workStatus: ['', Validators.compose([Validators.required])]
+      workStatus: ['', Validators.compose([Validators.required])],
+      familyContactPhone: ['', ],
+      familyContactRelation: ['', ]
     });
   }
 

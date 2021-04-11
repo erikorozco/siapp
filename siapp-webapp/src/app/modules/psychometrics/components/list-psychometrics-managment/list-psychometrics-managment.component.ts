@@ -61,7 +61,7 @@ export class ListPsychometricsManagmentComponent implements OnInit {
     this.formPsycometricManagementService.updateStatus(psycometricConfig.id).subscribe(response => {
       this.router.navigateByUrl('/home', {skipLocationChange: true}).then( () =>
       this.router.navigate(['home', 'psycometrics-managment']));
-      this.toastr.success('El estado ls prueba ha sido actualizado exitosamente', 'Operacion exitosa');
+      this.toastr.success('El estado de la prueba ha sido actualizado exitosamente', 'Operacion exitosa');
     });
   }
 

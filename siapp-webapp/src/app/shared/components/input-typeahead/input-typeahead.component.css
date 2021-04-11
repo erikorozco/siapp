@@ -1,0 +1,33 @@
+
+.mat-option {
+    border-radius: 5px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.mat-option:hover {
+    background-color: #e0ffff;
+    border: 1px solid black;
+}
+
+.type-ahead-button {
+    border-radius: 3px!important;
+    background-color: white;
+}
+
+.type-ahead-button:hover {
+    background-color: gray;
+    color: white;
+}
+
+.option-header {
+    border-bottom: 1px dashed black;
+    background-color: #f8f9fc;
+}
+
+.option-header p {
+    font-size: 12px;
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+}

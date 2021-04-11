@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!;
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -76,6 +79,16 @@ import { CommitmetLetterComponent } from './modules/records/components/privacy-a
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 import { PermissionService } from './shared/services/permission.service';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
+import { AgendaComponent } from './modules/agenda/agenda.component';
+import { InputTypeaheadComponent } from './shared/components/input-typeahead/input-typeahead.component';
+import { InputSearchComponent } from './shared/components/input-serach/input-search.component';
+import { InputSelectComponent } from './shared/components/input-select/input-select.component';
+import { InputMultiSelectComponent } from './shared/components/input-multi-select/input-multi-select.component';
+import { ListPersonsDialogComponent } from './modules/records/components/list-persons-dialog/list-persons-dialog.component';
+import { FormAppointmentComponent } from './modules/agenda/form-appointment/form-appointment.component';
+import { FormEventComponent } from './modules/agenda/form-event/form-event.component';
+import { ModalCalendarEventComponent } from './modules/agenda/modal-calendar-event/modal-calendar-event.component';
+import { UserDataService } from './shared/services/data/user-data.service';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -131,10 +144,20 @@ registerLocaleData(localeEsMX , 'es-MX');
     CommitmetLetterComponent,
     FormSatisfactionSurveyComponent,
     ConfirmModalComponent,
+    AgendaComponent,
+    InputTypeaheadComponent,
+    InputSearchComponent,
+    InputSelectComponent,
+    InputMultiSelectComponent,
+    ListPersonsDialogComponent,
+    FormAppointmentComponent,
+    FormEventComponent,
+    ModalCalendarEventComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FullCalendarModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -151,12 +174,15 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatExpansionModule,
     MatInputModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule
   ],
   providers: [
     UserService,
     RecordService,
     PermissionService,
+    UserDataService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
@@ -172,7 +198,10 @@ registerLocaleData(localeEsMX , 'es-MX');
     ReleaseTypesDialogComponent,
     ListUserDialogComponent,
     ListPsycometricManagementDialogComponent,
-    ConfirmModalComponent
+    AgendaComponent,
+    ConfirmModalComponent,
+    ListPersonsDialogComponent,
+    ModalCalendarEventComponent
  ],
   bootstrap: [AppComponent],
 })

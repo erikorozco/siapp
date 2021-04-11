@@ -1,0 +1,21 @@
+<div class="form-group">
+  <label for="{{this.id}}">{{this.label}}</label>
+  <i *ngIf="this.info" mdbTooltip="{{this.info}}"
+    class="ml-1 fas fa-info-circle">
+  </i>
+  <div class="input-group mb-1">
+    <input (keyup.enter)="search()" #thing  [attr.disabled]="isDisabled ? '' : null"  id="{{this.id}}" type="text" class="form-control" [formControl]="searchFormControl" placeholder="{{this.placeholder}}" aria-label="this.label" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button class="search-button btn btn-outline-secondary" type="submit" (click)="search()"  id="button-addon2">
+        <span class="icon text-blue-50">
+          <i class="fas fa-search fa-sm"></i>
+        </span>
+      </button>
+      <button *ngIf="searchFormControl.value" (click)="clear()" class="search-button btn btn-outline-secondary" type="button" id="button-addon2">
+        <span class="icon text-blue-50">
+          <i class="fas fa-times"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

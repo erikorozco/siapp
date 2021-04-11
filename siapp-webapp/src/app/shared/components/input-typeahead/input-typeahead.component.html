@@ -1,0 +1,29 @@
+<div class="form-group">
+  <label for="{{this.id}}">{{this.label}}</label>
+  <i *ngIf="this.info" mdbTooltip="{{this.info}}"
+    class="ml-1 fas fa-info-circle">
+  </i>
+  <div class="input-group mb-1">
+    <input [attr.disabled]="isDisabled ? '' : null"  [formControl]="typeAheadFormControl" id="{{this.id}}" [matAutocomplete]="inputAutoComplete" type="text" class="form-control" placeholder="{{this.placeholder}}" aria-label="this.label" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button [attr.disabled]="isDisabled ? '' : null" (click)="clear()" class="type-ahead-button btn btn-outline-secondary" type="button" id="button-addon2">
+        <span class="icon text-blue-50">
+          <i class="fas fa-times"></i>
+        </span>
+      </button>
+    </div>
+    <mat-autocomplete #inputAutoComplete="matAutocomplete">
+      <div class="option-header text-center">
+        <p><b>{{ (this.options | async)?.length }} opciones</b></p>
+        <p>Escribe para encontrar opciones</p>
+      </div>
+      <mat-option *ngFor="let option of options | async" [value]="option.searchValue" (onSelectionChange)="modelChangeEmiter(option)"> 
+        {{option.label}}
+      </mat-option>
+    </mat-autocomplete>
+    <br>
+  </div>
+  <div class="form-control-feedback" *ngIf="checkValidations()">
+    <h6 class="feedback-field">Este campo es requerido</h6>
+  </div>
+</div>

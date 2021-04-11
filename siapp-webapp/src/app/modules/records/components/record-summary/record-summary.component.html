@@ -85,7 +85,7 @@
                             <app-list-psycometric-application [personId]="this.person.id"></app-list-psycometric-application>
                         </div>
                         <div *ngSwitchCase="'dates-tab'" class="tab-pane fade" id="dates" role="tabpanel" aria-labelledby="dates-tab">
-                            <p>Citas</p>
+                            <app-agenda [isChild]="'true'" [iPersonId]="this.person.id" [renderEvents]="false"></app-agenda>
                         </div>
                         <div *ngSwitchCase="'privacy-agreement-tab'" class="tab-pane fade" id="privacy-agreement" role="tabpanel" aria-labelledby="privacy-agreement-tab">
                             <div *ngIf="(this.permissionService.permissions | async)?.canSignPrivacyAgreement && this.privacyAgreement.status === 204" class="col-md-6">
@@ -114,3 +114,4 @@
         </div>
     </form>
 </div>
+<app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>

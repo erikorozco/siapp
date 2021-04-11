@@ -129,6 +129,24 @@
                 <h6 class="feedback-field">Este campo es requerido</h6>
               </div>
             </div>
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('familyContactPhone') } ">
+              <label for="familyContactPhone">Teléfono de familiar de contacto</label>
+              <input type="text" class="form-control" formControlName="familyContactPhone" id="familyContactPhone"
+                placeholder="Teléfono de familiar de contacto">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactPhone')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('familyContactRelation') } ">
+              <label for="familyContactRelation">Parentezco de familiar de contacto</label>
+              <input type="text" class="form-control" formControlName="familyContactRelation" id="familyContactRelation"
+                placeholder="Parentezco de familiar de contacto">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('familyContactRelation')">
+                <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+            </div>
           </div>
           <hr>
           <div class="form-row">
@@ -152,7 +170,7 @@
           <div class="form-row">
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('parish') } ">
               <label for="parish">Parroquias</label>
-              <input type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquias"
+              <input autocomplete="off" type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquias"
                 [matAutocomplete]="parishAutoComplete">
               <mat-autocomplete #parishAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let parish of parishes | async" [value]="parish">
@@ -174,7 +192,7 @@
           <div class="form-row">
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
               <label for="escolarity">Escolaridad *</label>
-              <input type="text" class="form-control" formControlName="escolarity" id="escolarity"
+              <input autocomplete="off" type="text" class="form-control" formControlName="escolarity" id="escolarity"
                 placeholder="Escolaridad" [matAutocomplete]="escolarityAutoComplete">
               <mat-autocomplete #escolarityAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let escolarity of escolarities | async" [value]="escolarity">
@@ -187,7 +205,7 @@
             </div>
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('religion') } ">
               <label for="religion">Religión</label>
-              <input type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religion"
+              <input autocomplete="off" type="text" class="form-control" formControlName="religion" id="religion" placeholder="Religion"
                 [matAutocomplete]="religionAutoComplete">
               <mat-autocomplete #religionAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let religion of religions | async" [value]="religion">
@@ -202,7 +220,7 @@
           <div class="form-row">
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
               <label for="city">Municipio *</label>
-              <input type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio"
+              <input autocomplete="off" type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio"
                 [matAutocomplete]="cityAutoComplete">
               <mat-autocomplete #cityAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let city of cities | async" [value]="city">
@@ -213,11 +231,12 @@
                 <h6 class="feedback-field">Este campo es requerido</h6>
               </div>
             </div>
+
             <!-- <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('escolarity') } ">
                         </div> -->
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('location') } ">
               <label for="location">Localidad *</label>
-              <input type="text" class="form-control" formControlName="location" id="location" placeholder="Localidad"
+              <input autocomplete="off" type="text" class="form-control" formControlName="location" id="location" placeholder="Localidad"
                 [matAutocomplete]="locationAutoComplete">
               <mat-autocomplete #locationAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let location of locations | async" [value]="location">
@@ -244,7 +263,7 @@
             </div>
             <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('whoDerived') } ">
               <label for="whoDerived">¿Quién derivó?</label>
-              <input type="text" class="form-control" formControlName="whoDerived" id="whoDerived"
+              <input autocomplete="off" type="text" class="form-control" formControlName="whoDerived" id="whoDerived"
                 placeholder="¿Quién derivó?" [matAutocomplete]="whoDerivedAutoComplete">
               <mat-autocomplete #whoDerivedAutoComplete="matAutocomplete">
                 <mat-option *ngFor="let deriver of derivers | async" [value]="deriver">
@@ -939,7 +958,7 @@
             <div class="form-group col-md-6"
               [ngClass]="{'has-error': requiredFieldValidation('professionalWhoAttended') } ">
               <label for="professionalWhoAttended">Profesional que atendió *</label>
-              <input type="text" class="form-control" formControlName="professionalWhoAttended"
+              <input autocomplete="off" type="text" class="form-control" formControlName="professionalWhoAttended"
                 id="professionalWhoAttended" placeholder="Profesional que atendió"
                 [matAutocomplete]="professionalsAutoComplete">
               <mat-autocomplete #professionalsAutoComplete="matAutocomplete">

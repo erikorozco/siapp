@@ -16,6 +16,7 @@ import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/c
 })
 export class UserRecordsComponent implements OnInit {
 
+  isLoading = false;
   params: any;
   urlAction: string;
   therapist: Therapist;
@@ -54,6 +55,7 @@ export class UserRecordsComponent implements OnInit {
   }
 
   getRecords() {
+    this.isLoading = true;
     this.recordService.getRecordsByTherapistId(this.params.therapistId).subscribe(data => {
       this.records = data;
       this.tableProperties = [{
@@ -74,6 +76,7 @@ export class UserRecordsComponent implements OnInit {
           }
         }
       }];
+      this.isLoading = false;
     }, error => {});
   }
 
