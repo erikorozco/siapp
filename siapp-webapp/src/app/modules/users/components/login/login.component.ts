@@ -5,6 +5,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { HttpParams } from '@angular/common/http';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { UserDataService } from 'src/app/shared/services/data/user-data.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private permissionService: PermissionService,
     private userService: UserService,
+    private userDataService: UserDataService,
   ) { }
 
   onSubmit() {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
         window.sessionStorage.setItem('token', JSON.stringify(data));
         this.permissionService.initializeUIPermissions();
         this.userService.initializeUserInfo();
+        this.userDataService.initializeUsers();
         this.router.navigate(['home']);
     }, error => {
       console.log(error);

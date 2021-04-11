@@ -11,7 +11,17 @@ export class UserDataService {
   constructor(
     private httpUserService: UserService
   ) {
-    this.fetchTherapists();
+    this.initializeUsers();
+   }
+
+   // Load users If users have not been initialized
+   // NOTE: This is used for reload page commonly
+  initializeUsers() {
+    this.users.subscribe((value) => {
+      if(value.length === 0) {
+        this.fetchTherapists();
+      }
+    });
   }
 
   fetchTherapists() {

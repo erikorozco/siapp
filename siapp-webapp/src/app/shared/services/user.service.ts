@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getAllUsers(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll );
+    return this.http.get<any>(this.baseUrl + URL_CONF.usersAPI.endpoints.getAll);
   }
 
   getUser(id: number): Observable<any> {
