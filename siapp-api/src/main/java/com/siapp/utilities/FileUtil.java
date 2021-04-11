@@ -10,6 +10,10 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.siapp.models.PersonFile;
+import com.siapp.models.TherapistFile;
+
 import org.apache.commons.io.FilenameUtils;
 
 public class FileUtil {
@@ -37,7 +41,7 @@ public class FileUtil {
 	}
 	
 	
-	public static List<HashMap<String, String>> getFolderFilesOnBase64(List<com.siapp.models.File> fileList, String folderPath){
+	public static List<HashMap<String, String>> getPersonFilesOnBase64(List<PersonFile> fileList, String folderPath){
 		
 		List<HashMap<String, String>> encodedFiles = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> fileMap = null;
@@ -67,7 +71,42 @@ public class FileUtil {
 //		}
 		encodedFiles = new ArrayList<HashMap<String, String>>();
 		//TO CHANGE THIS
-		for(com.siapp.models.File file: fileList) {
+		for(PersonFile file: fileList) {
+			File image = new File(folderPath+"/"+file.getPath());
+			if(image.exists()) {
+				String encodeBase64 = null;
+				try {
+					String extension =  FilenameUtils.getExtension(image.getName().toLowerCase());
+					if(extension.equals("jpg") || extension.equals("png") || extension.equals("jpeg")) {
+						FileInputStream fileInputStream = new FileInputStream(image);
+						byte[] bytes = new byte[(int) image.length()];
+						fileInputStream.read(bytes);
+						encodeBase64 = Base64.getEncoder().encodeToString(bytes);
+						fileMap = new HashMap<>();
+						fileMap.put("description", file.getDescription());
+						fileMap.put("therapist", file.getTherapist().getName());
+						fileMap.put("createdAt", file.getCreatedAt().toString());
+						fileMap.put("path", file.getPath());
+						fileMap.put("src", "data:image/"+extension+";base64,"+encodeBase64);
+						encodedFiles.add(fileMap);
+						fileInputStream.close();
+					}
+				} catch (Exception e) {
+					throw new RuntimeException("An error ocurred while encoding the files");
+				}
+			}
+		}
+		
+		return encodedFiles;
+	}
+	
+	
+	public static List<HashMap<String, String>> getTherapistFilesOnBase64(List<TherapistFile> fileList, String folderPath){
+		
+		List<HashMap<String, String>> encodedFiles = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> fileMap = null;
+		encodedFiles = new ArrayList<HashMap<String, String>>();
+		for(TherapistFile file: fileList) {
 			File image = new File(folderPath+"/"+file.getPath());
 			if(image.exists()) {
 				String encodeBase64 = null;

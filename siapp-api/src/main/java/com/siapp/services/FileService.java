@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 import com.siapp.constants.Model;
-import com.siapp.models.File;
-import com.siapp.repositories.FileRepository;
+import com.siapp.models.PersonFile;
+import com.siapp.models.TherapistFile;
+import com.siapp.repositories.PersonFileRepository;
+import com.siapp.repositories.TherapistFileRepository;
 import com.siapp.utilities.FileUtil;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,10 @@ public class FileService {
 	private final Path personFilesLocation = Paths.get("storage-dir/person-dir");
 	
 	@Autowired
-	FileRepository fileRepository;
+	PersonFileRepository personFileRepository;
+	
+	@Autowired
+	TherapistFileRepository therapistFileRepository;
 	
 	@Autowired
 	TherapistService fileService;
@@ -38,8 +43,13 @@ public class FileService {
 	CustomUserDetailsService tokenService;
 	
 	public List<HashMap<String, String>>  getPathFilesByPersonIdFromDB(Integer personId) {
-		List<File> fileList = fileRepository.findByPersonId(personId);
-		return FileUtil.getFolderFilesOnBase64(fileList, folderInitialize(String.valueOf(personId), Model.PERSON).toString());
+		List<PersonFile> fileList = personFileRepository.findByPersonId(personId);
+		return FileUtil.getPersonFilesOnBase64(fileList, folderInitialize(String.valueOf(personId), Model.PERSON).toString());
+    }
+	
+	public List<HashMap<String, String>>  getPathFilesByTherapistIdFromDB(Integer therapistId) {
+		List<TherapistFile> fileList = therapistFileRepository.findByTherapistId(therapistId);
+		return FileUtil.getTherapistFilesOnBase64(fileList, folderInitialize(String.valueOf(therapistId), Model.THERPIST).toString());
     }
 	
 	public void init() {
@@ -54,19 +64,30 @@ public class FileService {
 		}
 	}
 	
-	public void store(MultipartFile file, String personId, String description) throws IOException {
+	public void store(MultipartFile file, String modelId, String description, Model model) throws IOException {
 	    try {
-	    	Path folderPath = this.folderInitialize(personId, Model.PERSON);
+	    	Path folderPath = this.folderInitialize(modelId, model);
 	    	Path filePath = Paths.get(folderPath.toString().concat("/" + file.getOriginalFilename()));
 	    	if(Files.notExists(filePath)) {
 		    	Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()));
-			    File fileRow = new File(
-			    		file.getOriginalFilename(), 
-			    		description, 
-			    		Integer.parseInt(personId), 
-			    		this.tokenService.getUserTokenDetails().getAppUser().getTherapist().getId()
-			    		);
-			    fileRepository.save(fileRow);
+		    	
+		    	if (model.equals(Model.PERSON)) {
+				    PersonFile fileRow = new PersonFile(
+					    		file.getOriginalFilename(), 
+					    		description, 
+					    		Integer.parseInt(modelId), 
+					    		this.tokenService.getUserTokenDetails().getAppUser().getTherapist().getId()
+				    		);
+				    personFileRepository.save(fileRow);
+		    	} else {
+		    		TherapistFile fileRow = new TherapistFile(
+			    				file.getOriginalFilename(),
+			    				description,
+			    				Integer.parseInt(modelId)
+		    				);
+		    		therapistFileRepository.save(fileRow);
+		    	}
+		    	
 	    	} else if(file.getOriginalFilename().equals("profilePhoto.png")) {
 	    		Files.copy(file.getInputStream(), folderPath.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 	    	}

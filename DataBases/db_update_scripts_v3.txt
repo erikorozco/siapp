@@ -1,0 +1,23 @@
+-- public.archivoterapeuta definition
+
+-- Drop table
+
+-- DROP TABLE public.archivoterapeuta;
+
+CREATE TABLE public.archivoterapeuta (
+	id serial NOT NULL,
+	id_terapeuta int4 NOT NULL,
+	ruta varchar NULL,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	activo bool NOT NULL,
+	descripcion varchar NULL,
+	CONSTRAINT archivoterapeuta_pk PRIMARY KEY (id)
+);
+
+
+-- public.archivoterapeuta foreign keys
+
+ALTER TABLE public.archivoterapeuta ADD CONSTRAINT archivoterapeuta_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
+
+ALTER TABLE public.archivo RENAME TO archivopersona;
