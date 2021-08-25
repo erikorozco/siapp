@@ -21,6 +21,16 @@ export class FormEventComponent implements OnInit {
 
   @Input() props: IEvent;
   @Input() action = 'view';
+  eventTypes = [
+    {
+      value: 'APERTURA',
+      label: 'APERTURA DE EXPEDIENTE',
+    },
+    {
+      value: 'OTRO',
+      label: 'OTRO',
+    }
+  ]
 
   agendaConstants = AgendaConstants;
   eventData = {
@@ -32,7 +42,9 @@ export class FormEventComponent implements OnInit {
       notes: null,
       therapist: null,
       duration: null,
-      isBackground: null
+      isBackground: null,
+      assisted: false,
+      type: null
   };
   areDatesInvalid = false;
   isEventFormInvalid = true;
@@ -121,7 +133,7 @@ export class FormEventComponent implements OnInit {
   }
 
   updateEventFormInvalidState(): void {
-    if (this.areDatesInvalid || !this.eventData.therapist) {
+    if (this.areDatesInvalid || !this.eventData.therapist || !this.eventData.type) {
       this.isEventFormInvalid = true;
     } else {
       this.isEventFormInvalid = false;
@@ -138,7 +150,9 @@ export class FormEventComponent implements OnInit {
       notes,
       therapist,
       duration,
-      isBackground
+      isBackground,
+      assisted,
+      type,
     } = this.eventData;
     return {
       id,
@@ -149,7 +163,9 @@ export class FormEventComponent implements OnInit {
         id: therapist.therapist.id
       },
       duration: duration ? 'allDay' : null,
-      isBackground
+      isBackground,
+      assisted,
+      type,
     }
   }
 

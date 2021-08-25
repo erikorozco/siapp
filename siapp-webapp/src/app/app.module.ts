@@ -89,6 +89,7 @@ import { FormAppointmentComponent } from './modules/agenda/form-appointment/form
 import { FormEventComponent } from './modules/agenda/form-event/form-event.component';
 import { ModalCalendarEventComponent } from './modules/agenda/modal-calendar-event/modal-calendar-event.component';
 import { UserDataService } from './shared/services/data/user-data.service';
+import { UserSummaryComponent } from './modules/users/components/user-summary/user-summary.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -153,6 +154,7 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormAppointmentComponent,
     FormEventComponent,
     ModalCalendarEventComponent,
+    UserSummaryComponent,
   ],
   imports: [
     BrowserModule,

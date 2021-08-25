@@ -3,6 +3,7 @@ import { UserService } from '../../../../shared/services/user.service';
 import { User } from '../../../../shared/models/user.model';
 import { Router, NavigationEnd } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'app-list-user',
@@ -18,6 +19,7 @@ export class ListUserComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private toastr: ToastrService,
+    private permissionService: PermissionService
   ) {}
 
   ngOnInit() {
@@ -32,18 +34,29 @@ export class ListUserComponent implements OnInit {
           maxVisibleItems: 10,
           filterFunction : this.filterUsers,
           tableActions: {
-            view: true,
-            edit: true,
-            delete: false,
-            print: false,
-            updateStatus: true,
-            viewRecords: {
+            view: this.permissionService.permissions.value.canViewTherapist,
+            edit: this.permissionService.permissions.value.canEditTherapist,
+            updateStatus: this.permissionService.permissions.value.canEditTherapist,
+            viewRecords: this.permissionService.permissions.value.canAssignRecordToTherapist ? {
               toolTip: 'Ver Expedientes',
-            },
-            add: {
+            } : false,
+            add: this.permissionService.permissions.value.canAddTherapist? {
               route: ['/home', 'add-user'],
               text: 'Agregar Terapeuta'
-            }
+            } : null,
+            // customActions: [
+            //   {
+            //     display: (user) => {return  true; },  
+            //     text: 'Ver perfil',
+            //     action: 'profile',
+            //     iconClass: {
+            //       'fa-user': true
+            //     },
+            //     buttonClass: {
+            //       'btn-info': true
+            //     }
+            //   }
+            // ]
           }
       }];
     }, error => {});
@@ -51,6 +64,10 @@ export class ListUserComponent implements OnInit {
 
   viewUser(user: User) {
     this.router.navigate(['home/view-user', user.id]);
+  }
+
+  viewUserProfile(user: User) {
+    this.router.navigate(['home/user-summary', user.therapist.id]);
   }
 
   editUser(user: User) {
@@ -74,6 +91,9 @@ export class ListUserComponent implements OnInit {
     switch (action) {
       case 'view':
         this.viewUser(value);
+        break;
+      case 'profile':
+        this.viewUserProfile(value);
         break;
       case 'edit':
         this.editUser(value);

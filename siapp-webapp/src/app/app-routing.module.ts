@@ -28,6 +28,7 @@ import { FormPsycometricCreatorComponent } from './modules/psychometrics/compone
 import { FormPsycometricApplyComponent } from './modules/psychometrics/components/form-psycometric-apply/form-psycometric-apply.component';
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 import { AgendaComponent } from './modules/agenda/agenda.component';
+import { UserSummaryComponent } from './modules/users/components/user-summary/user-summary.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -42,6 +43,7 @@ const ROUTES: Routes = [
       { path: 'edit-user', redirectTo: 'add-user' },
       { path: 'view-user/:id', component: FormUserComponent },
       { path: 'view-user', redirectTo: 'add-user' },
+      { path: 'user-summary/:therapistId', component: UserSummaryComponent },
       { path: 'user-records/:therapistId/:userId', component: UserRecordsComponent },
       { path: 'user-records', component: ListUserComponent },
       { path: 'assign-record', redirectTo: 'users' },

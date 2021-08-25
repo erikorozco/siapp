@@ -285,7 +285,8 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
         time: null,
         version: null,
         assisted: null,
-        isBackground: null
+        isBackground: null,
+        type: null,
     };
 
     if (isEdit) {
@@ -311,6 +312,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
         props.assisted = extendedProps.assisted;
       } else {
         props.isBackground = extendedProps.isBackground;
+        props.type = extendedProps.type;
       }
 
     } else {

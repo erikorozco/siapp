@@ -21,3 +21,27 @@ CREATE TABLE public.archivoterapeuta (
 ALTER TABLE public.archivoterapeuta ADD CONSTRAINT archivoterapeuta_fk FOREIGN KEY (id_terapeuta) REFERENCES terapeuta(id_terapeuta);
 
 ALTER TABLE public.archivo RENAME TO archivopersona;
+
+
+ALTER TABLE public.terapeuta ADD tipoprofesional varchar NULL;
+ALTER TABLE public.terapeuta ADD gradoacademico varchar NULL;
+ALTER TABLE public.terapeuta ADD estadocivil varchar NULL;
+ALTER TABLE public.terapeuta ADD direccion varchar NULL;
+ALTER TABLE public.terapeuta ADD email varchar NULL;
+ALTER TABLE public.terapeuta ADD facebook varchar NULL;
+ALTER TABLE public.terapeuta ADD fechanacimiento varchar NULL;
+ALTER TABLE public.terapeuta ADD fechainicio timestamp NULL;
+ALTER TABLE public.terapeuta ADD tiposangre varchar NULL;
+ALTER TABLE public.terapeuta ADD nss varchar NULL;
+ALTER TABLE public.terapeuta ADD contactoemergencia varchar NULL;
+
+ALTER TABLE public.evento ADD asistio bool NULL DEFAULT FALSE;
+ALTER TABLE public.evento ADD tipo varchar NULL;
+update evento set tipo = 'APERTURA';
+
+-- Insert permissions for user module
+update permiso set roles = 'ADMIN:SUBADMIN:ADMINISTRATIVE:' where "key" = 'canViewUsersModule';
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede editar usuario','canEditTherapist','ADMIN:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver usuario','canViewTherapist','ADMIN:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede agregar usuario','canAddTherapist','ADMIN:','action');
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede asignar expedientes','canAssignRecordToTherapist','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');

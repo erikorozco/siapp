@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IEventType } from 'src/app/shared/factories/FullCalendarEventFactory';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
@@ -40,11 +41,11 @@ export interface IAppointment extends IBaseEventAppointmentData {
   person?: any;
   time?: string;
   version?: string;
-  assisted?: boolean;
 };
 
 export interface IEvent extends IBaseEventAppointmentData {
   isBackground?: boolean;
+  type: IEventType
 };
 
 export interface IBaseEventAppointmentData {
@@ -56,4 +57,5 @@ export interface IBaseEventAppointmentData {
   notes?: number;
   therapist?: any;
   duration?: string; // Used to specify if it is an all_day event.
+  assisted: boolean;
 };

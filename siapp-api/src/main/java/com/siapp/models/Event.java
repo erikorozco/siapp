@@ -2,7 +2,6 @@ package com.siapp.models;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -41,6 +39,12 @@ private static final long serialVersionUID = 1L;
 	
 	@Column(name = "fondo")
     private Boolean isBackground;
+	
+	@Column(name = "asistio")
+	private Boolean assisted;
+	
+	@Column(name = "tipo")
+	private String type;
 	
 	@Column(name = "fecha_incial")
     @Temporal(TemporalType.TIMESTAMP)
@@ -94,6 +98,22 @@ private static final long serialVersionUID = 1L;
 
 	public void setIsBackground(Boolean isBackground) {
 		this.isBackground = isBackground;
+	}
+	
+	public Boolean getAssisted() {
+		return assisted;
+	}
+
+	public void setAssisted(Boolean assisted) {
+		this.assisted = assisted;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Date getStartDate() {
