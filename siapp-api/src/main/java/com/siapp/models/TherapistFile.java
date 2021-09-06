@@ -21,10 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "archivo")
+@Table(name = "archivoterapeuta")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class File implements Serializable {
+public class TherapistFile implements Serializable {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -53,29 +53,21 @@ public class File implements Serializable {
     @Column(name = "activo")
 	private boolean active;
     
-    /*
-     * TO-DO create a one to many reference if need the person data on Front-end, now it is used only for searching
-     */
-    @Column(name = "id_persona")
-    private Integer personId;
-    
     @JsonManagedReference(value="therapistReference")
     @OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_terapeuta", referencedColumnName = "id_terapeuta")
     private Therapist therapist;
 
     //CONSTRUCTORS
-    public File() {}
+    public TherapistFile() {}
     
-    public File(String path, String description, Integer personId, Integer therapistId) {
+    public TherapistFile(String path, String description, Integer therapistId) {
     	this.therapist = new Therapist();
     	this.path = path;
-    	this.personId = personId;
     	this.therapist.setId(therapistId);
     	this.description = description;
     	this.active = true;
     }
-    
     
     //GETTERS AND SETTERS
 	public Integer getId() {
@@ -133,14 +125,9 @@ public class File implements Serializable {
 	public void setTherapist(Therapist therapist) {
 		this.therapist = therapist;
 	}
-	
-	public Integer getPersonId() {
-		return personId;
-	}
 
-	public void Person(Integer personId) {
-		this.personId = personId;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	
     
 }

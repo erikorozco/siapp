@@ -1,0 +1,103 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> <a [routerLink]="['/home']">Panel de control</a> -> Recibos</h1>
+  <!-- <a *ngIf="expression" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a> -->
+</div>
+<!-- Filters -->
+<div class="card row mb-3">
+  <div class="card-header">
+    <a class="btn btn-success" (click)="isFilterHidden = !isFilterHidden" data-toggle="collapse" href="#filters-container" role="button" aria-expanded="true" aria-controls="filters-container">
+     {{isFilterHidden ? 'Mostrar' : 'Ocultar'}} Filtros
+    </a>
+  </div>
+  <div class="collapse show" id="filters-container">
+    
+    <div class="card-body row">
+
+      <!-- Start date -->
+      <div class="col-md-4">
+        <label for="end-date">Desde</label>
+        <input (change)="updateFilters($event.target.value, 'startDate')" [value]="filters.startDate" type="date" class="form-control" id="start-date">
+      </div>
+
+      <!-- End date -->
+      <div class="col-md-4">
+        <label for="end-date">Hasta</label>
+        <input (change)="updateFilters($event.target.value, 'endDate')" [value]="filters.endDate" type="date" class="form-control" id="end-date">
+      </div>
+
+      <!-- Therapist -->
+        <div class="col-md-4">
+          <app-input-typeahead
+            [label]="'Terapeuta'"
+            [placeholder]="'Nombre del terapeuta'"
+            [id]="'therapistId'"
+            [optionsSource]="userDataService.users | async"
+            (modelChange)="updateFilters($event, 'therapist')"
+          ></app-input-typeahead>
+        </div>
+
+      <!-- Status -->
+      <div class="col-md-4">
+        <app-input-select
+          [label]="'Estado'"
+          [info]="'Estatus de los Recibos'"
+          [options]="this.ticketConstants.statuses"
+          (modelChange)="updateFilters($event, 'status')"
+        ></app-input-select>
+      </div>
+
+      <!-- Tipo de servicio -->
+      <div class="col-md-4">
+        <app-input-multi-select
+          [label]="'Tipo de servicio'"
+          [info]="'Filtra por todos los servicios cuando no se especifica ningún servicio'"
+          [options]="this.ticketConstants.services"
+          (modelChange)="updateFilters($event, 'serviceType')"
+        ></app-input-multi-select>
+      </div>
+      
+      <!-- Numero de ticket -->
+      <div class="col-md-4">
+        <app-input-search
+          [label]="'No. Recibo'"
+          [info]="'Si se especifica este filtro, se anulan todo los demás filtros seleccionados'"
+          [placeholder]="'No. Recibo'"
+          [id]="'ticketId'"
+          (modelChange)="updateFilters($event, 'ticketId')"
+        ></app-input-search>
+      </div>
+
+      <!-- Numero de expedinte -->
+      <div class="col-md-4">
+        <app-input-search
+          [label]="'No. de expediente'"
+          [placeholder]="'No. de expediente'"
+          [id]="'recordId'"
+          (modelChange)="updateFilters($event, 'recordId')"
+        ></app-input-search>
+      </div>
+
+      <!-- Notas -->
+      <div class="col-md-4">
+        <app-input-search
+          [label]="'Notas'"
+          [placeholder]="'Notas'"
+          [id]="'Notas'"
+          (modelChange)="updateFilters($event, 'notes')"
+        ></app-input-search>
+      </div>
+
+      <div class="col-md-4 text-center">
+        <h3 class="total">Total {{this.total | currency:'MXN'}}</h3>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<pre>
+  <!-- {{this.filters | json}} -->
+</pre>
+<!-- Table -->
+<div *ngIf="tickets">
+  <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
+</div>

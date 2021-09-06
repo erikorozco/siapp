@@ -1,0 +1,113 @@
+<!-- BREADCURMBS -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    <a [routerLink]="['/home']">Panel de control</a> -> 
+    <a [routerLink]="['/home/tickets']">Recibos</a> -> 
+    {{this.action === 'add-ticket' ? 'Agregar': this.action === 'edit-ticket' ? 'Editar' : 'Ver'}} Recibo</h1> 
+</div>
+
+<!-- FORM -->
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+
+        <!-- Numero de expediente -->
+        <div class="col-md-6">
+          <app-input-search
+            [label]="'No. de expediente'"
+            [placeholder]="'No. de expediente'"
+            [id]="'recordId'"
+            [buttonType]="'button'"
+            [initalValue]="this.record ? this.record.id : '' "
+            (modelChange)="updateFormState($event, 'record')"
+            [isDisabled]="action === 'view-ticket' || this.isDisabled"
+          ></app-input-search>
+        </div>
+
+        <!-- Therapist -->
+        <div class="col-md-6">
+          <app-input-typeahead
+            [label]="'Terapeuta'"
+            [placeholder]="'Nombre del terapeuta'"
+            [id]="'therapistId'"
+            [model]="this.therapist"
+            [optionsSource]="userDataService.users | async"
+            (modelChange)="updateFormState($event, 'therapist')"
+            [isDisabled]="action === 'view-ticket' || this.isDisabled"
+          ></app-input-typeahead>
+        </div>
+
+        <!-- Person information -->
+        <ng-container *ngIf="this.record">
+          <div class="col-md-6">
+            <ul>
+              <li><h4>Infomación del paciente</h4></li>
+              <li><b>Nombre: </b>{{this.record.person.name}} {{this.record.person.lastName}} {{this.record.person.secondLastName}}</li>
+              <li><b>Edad: </b>{{ this.dateTimeHelper.calculateAge(this.record.bornDate) }}</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul>
+              <li><h4>Infomación de cuotas</h4></li>
+              <ng-container *ngIf="this.record.version  !== '2'">
+                <ng-container *ngFor="let cuota of this.record.moneyShare.split(',')">
+                  <li>{{cuota}}</li>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="this.record.version  === '2'">
+                <ul *ngFor="let derivation of this.derivations">
+                  <li>{{derivation.derivedArea}} - ${{derivation.recoveryCost}}</li>
+                </ul>
+              </ng-container>
+              <!-- <li><b>Edad: </b>{{ this.dateTimeHelper.calculateAge(this.record.bornDate) }}</li> -->
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+
+      <hr>
+
+      <div class="form-row">
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('serviceType') } ">
+          <label for="serviceType">Tipo de servicio</label>
+          <select type="option" class="form-control" formControlName="serviceType" id="serviceType">
+            <option disabled value="">Seleccione un tipo de servicio</option>
+            <option *ngFor="let serviceType of this.ticketConstants.services" [ngValue]="serviceType.value">
+              {{ serviceType.label }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('serviceType')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('total') } ">
+          <label for="total">$ Total</label>
+          <input type="number" class="form-control" formControlName="total" id="total" placeholder="Total">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('total')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('concept') } ">
+          <label for="concept">Notas</label>
+          <textarea type="textarea" class="form-control" formControlName="concept" id="concept"
+          placeholder="Notas/Observaciones"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('concept')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <button [disabled]="ticketForm.invalid || ticketForm.disabled || ticketForm.pristine" type="submit"
+          class="btn btn-success btn-lg">Guardar</button>
+        </div>
+        <div class="col-md-6 text-right">
+          <button *ngIf="this.action === 'edit-ticket' && ticket && this.ticket.status === 'NORMAL'" type="button"
+          class="btn btn-danger btn-lg" (click)="cancelTicket()">Cancelar Ticket</button>
+          <h1 *ngIf="ticket && this.ticket.status === 'CANCELADO'">{{this.ticket.status}}</h1>
+        </div >
+      </div>
+    </form>
+  </div>
+</div>

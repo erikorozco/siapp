@@ -204,8 +204,9 @@ export class FormRecordComponent implements OnInit, OnDestroy {
         console.log(error);
       });
     } else {
+      this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
       this.recordService.updateRecord(this.params.recordId, this.recordForm.value).subscribe(data => {
-        this.toastr.success('El expediente ha isdo actualizado exitosamente', 'Operacion exitosa');
+        this.toastr.success('El expediente ha sido actualizado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'record-summary', this.params.personId]);
         window.localStorage.removeItem('recordFormFillProgress');
         window.localStorage.clear();
@@ -228,7 +229,9 @@ export class FormRecordComponent implements OnInit, OnDestroy {
       this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
         data.bornDate = this.setDate(data.bornDate);
         data.therapists  = [];
+        debugger;
         this.recordForm.setValue(data);
+        this.medicalServicesFormControl.setValue(this.recordForm.get(['medicalServices']).value.split(','));
       }, error => { console.log(error); });
 
     }

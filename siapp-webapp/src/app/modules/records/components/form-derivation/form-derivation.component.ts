@@ -144,7 +144,8 @@ export class FormDerivationComponent implements OnInit {
     const dialogRef = this.dialog.open(ListUserDialogComponent, { width: '800px', height: '700px'});
     dialogRef.afterClosed().subscribe((res) => {
       this.setTherapistName(res.therapist)
-      this.derivationForm.get(['therapist', 'id']).setValue(res.therapist.id); 
+      this.derivationForm.get(['therapist', 'id']).setValue(res.therapist.id);
+      this.derivationForm.markAsDirty();
     });
   }
 

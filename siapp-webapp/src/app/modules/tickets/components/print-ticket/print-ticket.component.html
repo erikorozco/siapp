@@ -1,0 +1,73 @@
+<div *ngIf="ticket" class="ticket">
+  <img src="../../../../../assets/vendor/images/textLogoSI.png" alt="Logo">
+  <b>
+    <p class="centered" *ngIf="ticket.status === 'CANCELADO'">CANCELADO</p>
+  </b>
+  <p class="centered">
+      <br>Teléfono: 378 782 7929
+      <br>Domicilio:
+      <br>José Clemente Orozco 460, Hacienda La Gloria, 
+      <br>47600 Tepatitlán de Morelos, Jal.
+      <br>Fecha: {{ date | date:'fullDate' }}
+    </p>
+    <p class="centered"><b>Folio: </b>{{this.ticket.id}}</p>
+  
+    <!-- Paciente -->
+    <div>
+      <b><p class="centered">Paciente</p></b>
+      <p class="text-left"><b>Nombre: </b>{{ticket.record.person.name}} {{ticket.record.person.lastName}} {{ticket.record.person.secondLastName}}</p>
+      <p class="text-left"><b>Edad: </b>{{this.dateTimeHelper.calculateAge(ticket.record.bornDate)}}</p>
+      <p class="text-left"><b>Expediente: </b>{{ticket.record.id}}</p>
+    </div><br>
+
+    <!-- Therapist -->
+    <div>
+      <b><p class="centered">Colaborador que atendío</p></b>
+      <p class="text-center">{{ticket.therapist.name}} {{ticket.therapist.last_name}} {{ticket.therapist.second_last_name}}</p>
+    </div><br><br>
+
+    <!-- Servicio -->
+    <div>
+      <b><p class="centered">Concepto / Tipo de servicio</p></b>
+      <p class="text-center">{{ticket.serviceType}}</p>
+    </div><br>
+
+    <!-- Cuota -->
+    <div>
+      <p class="text-center"><b>Total: </b>{{ticket.total  |  currency:'MXN'}}</p>
+    </div><br>
+  <!-- <table>
+      <thead>
+          <tr>
+              <th class="quantity">Q.</th>
+              <th class="description">Description</th>
+              <th class="price">$$</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td class="quantity">1.00</td>
+              <td class="description">ARDUINO UNO R3</td>
+              <td class="price">$25.00</td>
+          </tr>
+          <tr>
+              <td class="quantity">2.00</td>
+              <td class="description">JAVASCRIPT BOOK</td>
+              <td class="price">$10.00</td>
+          </tr>
+          <tr>
+              <td class="quantity">1.00</td>
+              <td class="description">STICKER PACK</td>
+              <td class="price">$10.00</td>
+          </tr>
+          <tr>
+              <td class="quantity"></td>
+              <td class="description">TOTAL</td>
+              <td class="price">$55.00</td>
+          </tr>
+      </tbody>
+  </table> -->
+  <p class="centered">Gracias
+      <br>http://saludintegralaltos.com/</p>
+</div>
+<button id="btnPrint" (click)="print()" class="hidden-print">Imprimir</button>

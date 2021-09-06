@@ -19,7 +19,7 @@ export class FullCalendarEventFactory {
             this.event.color = data.assisted ? '#1cc88a' : '#007bff';
         } else {
             this.event.title = `${data.notes ? data.notes : 'Sin asunto'}`;
-            this.event.color = '#BE33FF';
+            this.event.color = data.assisted ? '#1cc88a' : (data.type === IEventType.OPENNING ? '#BE33FF' : '#FFC300');
             // this.event.rendering = 'background';
         }
 
@@ -45,5 +45,11 @@ interface ApiEvent {
     startDate: string | Date;
     endDate?: string | Date;
     assisted?: boolean;
+    type?: IEventType; // It is used for differenciate between openings of regular events. Only used for event, not for appointments.
     duration: string; // Used only to check if it is all day event. The real duration is calculated by the start date and end date time info
+}
+
+export enum IEventType {
+    OPENNING  = 'APERTURA',
+    OTRO = 'OTRO',
 }

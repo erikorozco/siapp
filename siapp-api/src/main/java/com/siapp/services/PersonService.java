@@ -22,6 +22,10 @@ public class PersonService {
 	@Autowired
 	PersonRepository personRepository;
 	
+	/**
+	 *  Not used because takes to much time.
+	 * @deprecated
+	 */
 	public List<Person> getAllPersons() {
         return personRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
     }
@@ -53,10 +57,16 @@ public class PersonService {
         return ResponseEntity.ok().build();
 	}
 	
+	/**
+	 * Used for get persons on for initial table
+	 */
 	public  List<HashMap<String, Object>> getAllPersonsQuery(){
 		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.getAllPersonsQuery());
 	}
 
+	/**
+	 * Filter persons, by any of the following, name, phone, record id
+	 */
 	public List<HashMap<String, Object>> filterPersons(String searchText, Boolean getActives) {
 		return PersonUtil.convertFindAllPersonsArrayToObject(personRepository.filterPersons(searchText.toUpperCase(), RecordUtil.isNumeric(searchText), getActives));
 	}

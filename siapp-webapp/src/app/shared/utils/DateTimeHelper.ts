@@ -13,6 +13,7 @@ export class DateTimeHelper {
         return moment().toDate();
     }
 
+    // input type date uses this format
     getTodayDateString(): string {
         let todayDate = this.getTodayDate().toString();
         todayDate = this.parseStringDateToStringMXDate(todayDate);
@@ -89,6 +90,20 @@ export class DateTimeHelper {
 
     isDateGreaterThan(endDate: Date, startDate: Date): boolean {
         return endDate > startDate;
+    }
+
+    convertStringDateToMxText(stringDate) {
+        const datePipe: DatePipe = new DatePipe('es-MX');
+        let date = new Date(stringDate);
+        let a = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
+    }
+
+    calculateAge(recordBornDate): number {
+        const bornDate = new Date(recordBornDate);
+        const currentDate = new Date();
+        const a = currentDate.getFullYear() - bornDate.getFullYear()
+        let months = (a * 12) + (currentDate.getMonth() - bornDate.getMonth()) ;
+        return Math.floor(months/12)
     }
 
 };

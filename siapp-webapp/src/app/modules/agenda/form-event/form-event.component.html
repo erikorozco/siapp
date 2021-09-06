@@ -14,6 +14,16 @@
     ></app-input-typeahead>
   </div>
 
+    <!-- Event tipy -->
+    <div class="col-md-6">
+      <app-input-select
+        [label]="'Tipo de cita'"
+        [options]="this.eventTypes"
+        [selectedValue]="eventData.type"
+        (modelChange)="eventData.type=$event"
+        [isDisabled]="action === 'view'  || eventData.duration"
+      ></app-input-select>
+    </div>
 </div>
 <hr>
 
@@ -71,7 +81,10 @@
 </div>
 <br>
 <div class="row">
-  <!-- notes -->
+  <!-- assited -->
+  <div *ngIf="eventData.type === 'APERTURA'" class="actions col-md-6 text-left">
+    <mat-slide-toggle [disabled]="action === 'view'" (change)="eventData.assisted=!eventData.assisted"  [checked]="eventData.assisted" [color]="'primary'">El paciente asistío a la apertura</mat-slide-toggle>
+  </div>
   <!-- <div class="actions col-md-6 text-left">
     <mat-slide-toggle [disabled]="action === 'view'" (change)="eventData.isBackground = !eventData.isBackground"  [checked]="eventData.isBackground" [color]="'primary'">Evento de fondo</mat-slide-toggle>
   </div> -->

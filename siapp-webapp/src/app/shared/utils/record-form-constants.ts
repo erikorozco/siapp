@@ -8,8 +8,8 @@ export const RECORD_FORM_CONST = {
         'OTRO',
       ],
       genders : [
-        'HOMBRE',
-        'MUJER',
+        'MASCULINO',
+        'FEMENINO',
         'PREFIERE NO ESPECIFICAR'
       ],
       yesNoOptions : [
@@ -27,6 +27,7 @@ export const RECORD_FORM_CONST = {
         'CASADO',
         'VIUDO',
         'DIVORCIADO',
+        'SEPARADO',
         'UNION LIBRE',
       ],
       workStatus : [
@@ -127,8 +128,7 @@ export const RECORD_FORM_CONST = {
         'BAJA',
       ],
       professionalWhoAttended: [
-        'JAYDI CARREÑO ÁVALOS',
-        'ISELA LEÓN LÓPEZ',
+        'IRMA ANAITÉ DEL CARMEN RAMÍREZ GÁLVEZ',
         'MARTHA RUTH IÑIGUEZ PULIDO'
       ],
       cities : [

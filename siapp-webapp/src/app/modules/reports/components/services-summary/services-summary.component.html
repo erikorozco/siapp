@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Reporte de servicios</h5>
+    <p class="card-text">Exporta reporte de todos los servicios ofrecidos en el rango de fechas especificado en formato excel</p>
+    <div style="display: flex;">
+      <!-- Start date -->
+      <div class="col-md-4">
+        <label for="end-date">Desde</label>
+        <input (change)="updateFilters($event.target.value, 'startDate')" [value]="filters.startDate" type="date" class="form-control" id="start-date">
+      </div>
+            
+      <!-- End date -->
+      <div class="col-md-4">
+        <label for="end-date">Hasta</label>
+        <input (change)="updateFilters($event.target.value, 'endDate')" [value]="filters.endDate" type="date" class="form-control" id="end-date">
+      </div>
+
+      <!-- Generar -->
+      <div class="col-md-4">
+        <button style="margin-top: 20px;" (click)="generate()" type="button" class="btn btn-success btn-lg">Generar</button>
+      </div>
+    </div>
+  </div>
+</div>

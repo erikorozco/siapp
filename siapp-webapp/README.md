@@ -1,5 +1,8 @@
 # SiappWebapp
 
+# Swagger
+Navigate to `http://localhost:8080/api/swagger-ui.html`
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
 
 ## Development server

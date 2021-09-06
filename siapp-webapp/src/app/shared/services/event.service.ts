@@ -4,6 +4,7 @@ import { ApiResponse } from '../models/api.response';
 import { Observable } from 'rxjs/index';
 import { API_URL_CONFIG as URL_CONF } from '../core/service.global.config';
 import { host } from '../core/service.global.config';
+import { IEventType } from '../factories/FullCalendarEventFactory';
 
 @Injectable({
   providedIn: 'root'
@@ -46,4 +47,6 @@ export interface IEventApiDataModel {
   };
   duration?: string; // Userd to specify if it is an all_day event
   isBackground?: boolean;
+  assisted: boolean;
+  type: IEventType
 }

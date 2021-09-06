@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StreamUtils;
+import com.siapp.constants.Model;
 import com.siapp.services.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +46,7 @@ public class PersonAttachmentController {
 			  										@RequestParam("description") String description) {
 	    String message = "";
 	    try {
-	    	fileService.store(file, personId, description);	 
+	    	fileService.store(file, personId, description, Model.PERSON);	 
 	    	message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 	    	return ResponseEntity.status(HttpStatus.OK).body(message);
 	    } catch (FileAlreadyExistsException e) {

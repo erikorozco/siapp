@@ -1,8 +1,6 @@
 import { Component, OnInit, ElementRef, AfterViewInit,
   ViewChild, ChangeDetectorRef, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-import { filter } from 'rxjs/operators';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-table-pagination',
