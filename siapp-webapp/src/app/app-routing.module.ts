@@ -29,11 +29,16 @@ import { FormPsycometricApplyComponent } from './modules/psychometrics/component
 import { FormSatisfactionSurveyComponent } from './modules/records/components/form-satisfaction-survey/form-satisfaction-survey.component';
 import { AgendaComponent } from './modules/agenda/agenda.component';
 import { UserSummaryComponent } from './modules/users/components/user-summary/user-summary.component';
+import { ListTicketComponent } from './modules/tickets/components/list-ticket/list-ticket.component';
+import { FormTicketComponent } from './modules/tickets/components/form-ticket/form-ticket.component';
+import { ReportListComponent } from './modules/reports/report-list.component';
+import { PrintTicketComponent } from './modules/tickets/components/print-ticket/print-ticket.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
   { path: 'test', component: TablePaginationComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'print-ticket/:id', component: PrintTicketComponent },
   { path: 'home', component: DashboardComponent,
   // https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3
     children: [
@@ -153,7 +158,14 @@ const ROUTES: Routes = [
       { path: 'add-psycometric-application/:psycometricId/person/:personId', component: FormPsycometricApplyComponent },
       { path: 'view-psycometric-application/:psycometricApplicationId/person/:personId', component: FormPsycometricApplyComponent },
       { path: 'agendas', component: AgendaComponent },
+      { path: 'tickets', component: ListTicketComponent },
+      { path: 'add-ticket', component: FormTicketComponent },
+      { path: 'edit-ticket/:id', component: FormTicketComponent },
+      { path: 'edit-ticket', redirectTo: 'add-ticket' },
+      { path: 'view-ticket/:id', component: FormTicketComponent },
+      { path: 'view-ticket', redirectTo: 'add-ticket' },
       { path: 'therapist-agenda/:therapistId', component: AgendaComponent },
+      { path: 'reports', component: ReportListComponent },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

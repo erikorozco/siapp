@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -6,13 +7,15 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './input-search.component.html',
   styleUrls: ['./input-search.component.css']
 })
-export class InputSearchComponent implements OnInit {
+export class InputSearchComponent implements OnChanges {
   @Input() label = '';
   @Input() info = '';
   @Input() placeholder;
   @Input() id;
   @Input() isDisabled = false;
   @Input() isRequired = false;
+  @Input() buttonType = 'submit';
+  @Input() initalValue = '';
 
   @Output() modelChange = new EventEmitter();
 
@@ -23,10 +26,11 @@ export class InputSearchComponent implements OnInit {
     if (this.isRequired) {
       validators.push(Validators.required);
     }
-    this.searchFormControl = new FormControl('', Validators.compose(validators));
+    this.searchFormControl = new FormControl(this.initalValue, Validators.compose(validators));
   }
-
-  ngOnInit() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.searchFormControl.setValue(this.initalValue);
+  }
 
   search = () => {
     this.modelChange.emit(this.searchFormControl.value);

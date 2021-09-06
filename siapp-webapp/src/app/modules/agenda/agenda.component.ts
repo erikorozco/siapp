@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material';
 import { IAppointment, IEvent, ModalCalendarEventComponent } from './modal-calendar-event/modal-calendar-event.component';
 import { FullcalendarApiService } from 'src/app/shared/services/fullcalendar-api.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
+import { Title } from '@angular/platform-browser';
 declare var $:any;
 
 @Component({
@@ -104,6 +105,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
     public dialog: MatDialog,
     private fullcalendarApiService: FullcalendarApiService,
     private dateTimeHelper: DateTimeHelper,
+    private titleService: Title,
   ) {}
 
   ngOnDestroy(): void {
@@ -165,6 +167,7 @@ export class AgendaComponent implements OnInit, AfterViewChecked, OnDestroy {
   updateState(value, filterKey) {
     if (filterKey === 'therapist') {
       this.therapistLabel = value ? value.label : '';
+      this.titleService.setTitle('Agenda - ' + value ? value.label : 'General');
     }
     this.calendarService.updateFilters(filterKey, value);
     this.calendarApi.refetchEvents();

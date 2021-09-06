@@ -1,29 +1,23 @@
 <div class="card shadow mb-4 container-fluid">
     <div class="card-header row" style="overflow-x: scroll;">
-        <div *ngIf="!tableActions.formSearch" class="col-md-6 text-left">
-            <div class="md-form">
-                <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" placeholder="Buscar..." mdbInput>
-            </div>
-        </div>
-        <form *ngIf="tableActions.formSearch" (ngSubmit)="onSubmit()" class="col-md-6 text-left">
-            <div class="input-group">
-                <input style="background-color: #ffffff !important" [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="searchFromText" class="form-control bg-light border-0 small" placeholder="Buscar ..." aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
-                            <i class="fas fa-search fa-sm"></i>
-                    </button>
+        <ng-container *ngIf="!tableActions.hideSearchBox">
+            <div *ngIf="!tableActions.formSearch" class="col-md-6 text-left">
+                <div class="md-form">
+                    <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" placeholder="Buscar..." mdbInput>
                 </div>
             </div>
-        </form>
-        <!-- <div class="col-md-3 text-left" style="color:aliceblue;">
-            <button (click)="searchItems()" type="button" class="btn btn-info btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-search"></i>
-                    </span>
-                <span class="text">Buscar</span>
-            </button>
-        </div> -->
-        <div *ngIf="tableActions.add" class="col-md-6 text-right">
+            <form *ngIf="tableActions.formSearch" (ngSubmit)="onSubmit()" class="col-md-6 text-left">
+                <div class="input-group">
+                    <input style="background-color: #ffffff !important" [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="searchFromText" class="form-control bg-light border-0 small" placeholder="Buscar ..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+        <div *ngIf="tableActions.add" class="col-md-6" [ngClass]="tableActions.hideSearchBox ? 'text-left': 'text-right'">
             <a [routerLink]="tableActions.add.route" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
@@ -65,8 +59,8 @@
                         <button mdbBtn mdbTooltip="Eliminar" placement="top" mdbWavesEffect *ngIf="tableActions.delete" class="btn btn-danger btn-circle" title="Eliminar" (click)="action(item, 'delete')">
                             <i class="fas fa-trash"></i>
                         </button>
-                        <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-info btn-circle" title="Imprimir" (click)="action(item, 'print')">
-                            <i class="fas fa-trash"></i>
+                        <button mdbBtn mdbTooltip="Imprimir" placement="top" mdbWavesEffect *ngIf="tableActions.print" class="btn btn-secondary btn-circle" title="Imprimir" (click)="action(item, 'print')">
+                            <i class="fas fa-print"></i>
                         </button>
                         <button mdbBtn mdbTooltip="{{tableActions.viewRecords.toolTip}}" placement="top" mdbWavesEffect *ngIf="tableActions.viewRecords" class="btn btn-warning btn-circle" title="Expedientes" (click)="action(item, 'viewRecords')">
                             <i class="fas fa-folder"></i>

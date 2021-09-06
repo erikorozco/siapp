@@ -45,3 +45,12 @@ INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede edita
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede ver usuario','canViewTherapist','ADMIN:','action');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede agregar usuario','canAddTherapist','ADMIN:','action');
 INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Puede asignar expedientes','canAssignRecordToTherapist','ADMIN:SUBADMIN:ADMINISTRATIVE:','action');
+
+ALTER TABLE public.aportacion ADD id_terapeuta int NULL DEFAULT 0;
+ALTER TABLE public.aportacion ADD estado varchar NULL;
+ALTER TABLE public.aportacion ADD tipo_servicio varchar NULL;
+ALTER TABLE public.aportacion ADD actualizado timestamp NULL;
+update expediente set sexo = 'MASCULINO' where sexo = 'hombre';
+update expediente set sexo = 'FEMENINO' where sexo = 'mujer';
+
+UPDATE aportacion set id_terapeuta = 44; 

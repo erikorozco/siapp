@@ -18,6 +18,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './modules/dashboard/components/sidebar/sidebar.component';
@@ -90,6 +91,11 @@ import { FormEventComponent } from './modules/agenda/form-event/form-event.compo
 import { ModalCalendarEventComponent } from './modules/agenda/modal-calendar-event/modal-calendar-event.component';
 import { UserDataService } from './shared/services/data/user-data.service';
 import { UserSummaryComponent } from './modules/users/components/user-summary/user-summary.component';
+import { ListTicketComponent } from './modules/tickets/components/list-ticket/list-ticket.component';
+import { FormTicketComponent } from './modules/tickets/components/form-ticket/form-ticket.component';
+import { ReportListComponent } from './modules/reports/report-list.component';
+import { PrintTicketComponent } from './modules/tickets/components/print-ticket/print-ticket.component';
+import { ServicesSummaryComponent } from './modules/reports/components/services-summary/services-summary.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -155,6 +161,11 @@ registerLocaleData(localeEsMX , 'es-MX');
     FormEventComponent,
     ModalCalendarEventComponent,
     UserSummaryComponent,
+    ListTicketComponent,
+    FormTicketComponent,
+    ReportListComponent,
+    PrintTicketComponent,
+    ServicesSummaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -178,7 +189,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     MatStepperModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgxChartsModule
   ],
   providers: [
     UserService,

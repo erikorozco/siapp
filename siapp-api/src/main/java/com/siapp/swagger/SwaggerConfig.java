@@ -30,8 +30,8 @@ public class SwaggerConfig {
  // Describe your apis
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-        .title("Clinic Managment Rest API's")
-        .description("This page lists all the rest apis for Clinic App.")
+        .title("SIAPP Managment Rest API's")
+        .description("This page lists all the rest apis for SIAPP.")
         .version("1.0-SNAPSHOT")
         .build();
     }

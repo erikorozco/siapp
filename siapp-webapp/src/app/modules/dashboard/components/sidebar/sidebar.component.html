@@ -62,7 +62,7 @@
                         <i class="fas fa-calendar-alt"></i>
                         <span> Agendas</span>
                     </a>
-                    <a *ngIf="(this.permissionService.permissions | async)?.canViewTicketsModule" class="collapse-item" href="cards.html">
+                    <a *ngIf="(this.permissionService.permissions | async)?.canViewTicketsModule" class="collapse-item" routerLink="tickets">
                         <i class="fas fa-ticket-alt"></i>
                         <span> Recibos</span>
                     </a>
@@ -144,9 +144,9 @@
 
         <!-- Nav Item - Charts -->
         <li *ngIf="(this.permissionService.permissions | async)?.canViewReportsModule" class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" routerLink="reports">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Reportes estadisticos</span></a>
+                <span>Reportes</span></a>
         </li>
 
         <!-- Divider -->

@@ -197,6 +197,22 @@ export const API_URL_CONFIG = {
         deleteEvent : 'delete/',
       }
     },
+    ticketsAPI: {
+      name: 'tickets/',
+      endpoints: {
+        filter : 'filter?',
+        getTicket : 'getTicket/',
+        createTicket: 'create',
+        updateTicket : 'update/',
+        deleteTicket : 'delete/',
+      }
+    },
+    reportsAPI: {
+      name: 'reports/',
+      endpoints: {
+        ticketsAll : 'ticketsAll?' // startDate & endDate & exportFile
+      }
+    },
 };
 
 export const TOKEN_CONFIG = {
