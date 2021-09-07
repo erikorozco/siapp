@@ -161,7 +161,7 @@ export class ListTicketComponent implements OnInit {
   parseFunction(tickets) {
     return tickets.map((ticket) => {
       const datePipe: DatePipe = new DatePipe('es-MX');
-      let date = new Date(ticket.createdAt);
+      let date = new Date(ticket.createdAt.replace('-', '/'));
       let transformedDate = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
       return {
         ...ticket,

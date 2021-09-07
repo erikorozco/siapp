@@ -27,11 +27,10 @@ export class ServicesSummaryComponent {
   }
 
   generate() {
-    const startDate = new Date(this.filters.startDate).toISOString();
-    const endDate = new Date(this.filters.endDate).toISOString();
+    // Date format is yyyy-MM-dd
     let params = new HttpParams();
-    params = params.set('startDate', startDate);
-    params = params.set('endDate', endDate);
+    params = params.set('startDate', this.filters.startDate);
+    params = params.set('endDate', this.filters.endDate);
     this.reportService.getAllTicketsReportXlsx(params);
   }
 

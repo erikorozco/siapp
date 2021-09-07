@@ -33,8 +33,8 @@ public class ReportController {
 	@GetMapping("/ticketsAll")
 	public List<HashMap<String, Object>> getAllTicketsData(
 			HttpServletResponse response,
-			@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
-			@RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+			@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
 			@RequestParam(defaultValue = "false") Boolean exportFile) throws IOException
 	{
 		if (exportFile) {

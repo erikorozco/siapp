@@ -38,7 +38,7 @@ export class PrintTicketComponent implements OnInit, OnDestroy {
       const ticketId = params.id;
       this.titleService.setTitle('Imprimir recibo - ' + ticketId);
       this.ticket = await this.ticketService.getTicket(ticketId).toPromise();
-      this.print();
+      // this.print();
     }, () => {
       this.toastr.error('Error', 'Hubo un error al preparar los datos para imprimir')
     });
