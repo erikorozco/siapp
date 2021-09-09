@@ -45,6 +45,8 @@
               <li><h4>Infomación del paciente</h4></li>
               <li><b>Nombre: </b>{{this.record.person.name}} {{this.record.person.lastName}} {{this.record.person.secondLastName}}</li>
               <li><b>Edad: </b>{{ this.dateTimeHelper.calculateAge(this.record.bornDate) }}</li>
+              <li><b>Localidad: </b>{{ this.record.city }}</li>
+              <li><b>Parroquia: </b>{{ this.record.parish }}</li>
             </ul>
           </div>
           <div class="col-md-6">
