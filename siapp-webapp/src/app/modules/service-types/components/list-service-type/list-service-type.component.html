@@ -1,0 +1,6 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> <a [routerLink]="['/home']">Panel de control</a> -> Servicios</h1>
+</div>
+<div *ngIf="serviceTypes">
+  <app-table-pagination [tableProperties]="tableProperties" (actionsHandler)="executeAction($event)"></app-table-pagination>
+</div>

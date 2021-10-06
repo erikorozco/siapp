@@ -35,6 +35,7 @@ public class ReportController {
 			HttpServletResponse response,
 			@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
 			@RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+			@RequestParam(defaultValue = "normal") String ticketType,
 			@RequestParam(defaultValue = "false") Boolean exportFile) throws IOException
 	{
 		if (exportFile) {
@@ -49,9 +50,14 @@ public class ReportController {
 			excelCreator.export(response);
 			return null;
 			
-		} else {			
+		} else if (ticketType.equals("normal")) {			
 			return reportService.getAllTickets(startDate, endDate);
+		} else if (ticketType.equals("other")) {
+			return reportService.getAllOtherTickets(startDate, endDate);
+		} else {
+			return null;
 		}
+		
 		
     }
 	

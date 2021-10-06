@@ -16,6 +16,7 @@ export class InputTypeaheadComponent implements OnInit, OnChanges {
   @Input() isDisabled = false;
   @Input() isRequired = false;
   @Input() model: any;
+  @Input() clearAfterSelection = false;
   @Input() optionsSource: Array<TypeAheadOptionList> = [];
 
   @Output() modelChange = new EventEmitter();
@@ -67,6 +68,9 @@ export class InputTypeaheadComponent implements OnInit, OnChanges {
 
   modelChangeEmiter = (option) => {
     this.modelChange.emit(option);
+    if (this.clearAfterSelection) {
+      this.typeAheadFormControl.setValue('');
+    }
   }
 
 }

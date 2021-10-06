@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.siapp.exceptions.ResourceAlreadyExistsException;
 import com.siapp.exceptions.ResourceNotFoundException;
 import com.siapp.models.Agenda;
-import com.siapp.models.Person;
 import com.siapp.repositories.AgendaRepository;
 
 @Service

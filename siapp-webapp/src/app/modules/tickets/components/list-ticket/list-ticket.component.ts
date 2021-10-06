@@ -2,7 +2,9 @@ import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServiceTypeDataService } from 'src/app/shared/services/data/service-type-data.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
+import { OtherTicketService } from 'src/app/shared/services/other-ticket.service copy';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 import {
@@ -28,13 +30,16 @@ export class ListTicketComponent implements OnInit {
     serviceType: [],
     ticketId: null,
     recordId: null,
-    notes: null
+    concept: null,
+    ticketType: 'all',
   };
 
   constructor(
     public dateTimeHelper: DateTimeHelper,
     public userDataService: UserDataService,
     public ticketService: TicketService,
+    public otherTicketService: OtherTicketService,
+    public serviceTypeDataService: ServiceTypeDataService,
     private router: Router,
   ) { }
 
@@ -61,21 +66,38 @@ export class ListTicketComponent implements OnInit {
           route: ['/home', 'add-ticket'],
           text: 'Agregar Recibo'
         },
+        customHeaderActions: [
+          {
+            text: 'Agregar Recibo (Otros)',
+            action: 'addOtherTicket',
+            value: 'addOtherTicket',
+            iconClass: {
+              'fa-plus': true
+            },
+            buttonClass: {
+              'btn-info': true
+            }
+          }
+        ]
       }
     }];
 
   }
 
   executeAction({value, action}) {
+    const ticketType = value.record ? 'ticket' : 'other-ticket'; 
     switch (action) {
       case 'view':
-        this.viewTicket(value);
+        this.viewTicket(value, ticketType);
         break;
       case 'edit':
-        this.editTicket(value);
+        this.editTicket(value, ticketType);
         break;
       case 'print':
-        this.printTicket(value);
+        this.printTicket(value, ticketType);
+        break;
+      case 'addOtherTicket':
+        this.router.navigate(['home', 'add-other-ticket']);
         break;
       default:
         console.log(`${action} is not a valid option`);
@@ -83,44 +105,61 @@ export class ListTicketComponent implements OnInit {
     }
   }
 
-  viewTicket(ticket: any) {
-    this.router.navigate(['home', 'view-ticket', ticket.id]);
+  viewTicket(ticket: any, ticketType) {
+    this.router.navigate(['home', 'view-' + ticketType, ticket.id]);
   }
 
-  editTicket(ticket: any) {
-    this.router.navigate(['home', 'edit-ticket', ticket.id]);
+  editTicket(ticket: any, ticketType) {
+    this.router.navigate(['home', 'edit-' + ticketType, ticket.id]);
   }
 
-  printTicket(ticket: any) {
-    let newRelativeUrl = this.router.createUrlTree(['print-ticket', ticket.id]);
+  printTicket(ticket: any, ticketType) {
+    let queryParams;
+    if (ticketType === 'other-ticket') {
+      queryParams = { queryParams: { type: 'other' } }
+    }
+    let newRelativeUrl = this.router.createUrlTree(['print-ticket/' + ticket.id], queryParams);
     let baseUrl = window.location.href.replace(this.router.url, '');
     window.open(baseUrl + newRelativeUrl, '_blank');
   }
 
-  updateFilters(value, key: string) {
+  async updateFilters(value, key: string) {
     this.filters[key] = value;
-    this.filterTickets();
+    await this.filterTickets();
   }
 
-  filterTickets() {
+  async filterTickets() {
     let params = this.buildFilters();
-    this.ticketService.filterTickets(params).toPromise().then((data) => {
-      this.total = 0;
-      for (const ticket of data) {
-        if (ticket.status === 'NORMAL') {
-          this.total = this.total + ticket.total;
-        }
-      }
+    let data = [];
 
-      let [tableProperites] = this.tableProperties;
-      const newTableProperites = {
-        ...tableProperites,
-        datasource: data,
-      };
-      this.tableProperties = [newTableProperites];
-    }, (error) => {
+    try {
+      if (this.filters.ticketType === ITicketType.TIKCET) {
+        data = await this.ticketService.filterTickets(params).toPromise();
+      } else if (this.filters.ticketType === ITicketType.OTHER_TICKET) {
+        data = await this.otherTicketService.filterTickets(params).toPromise();
+      } else {
+        let normalTickets = await this.ticketService.filterTickets(params).toPromise();
+        let otherTickets = await this.otherTicketService.filterTickets(params).toPromise();
+        data = normalTickets.concat(otherTickets);
+      }
+    } catch (error) {
       console.log(error);
-    });
+    }
+
+    this.total = 0;
+    for (const ticket of data) {
+      if (ticket.status === 'NORMAL') {
+        this.total = this.total + ticket.total;
+      }
+    }
+
+    let [tableProperites] = this.tableProperties;
+    const newTableProperites = {
+      ...tableProperites,
+      datasource: data,
+    };
+    this.tableProperties = [newTableProperites];
+
   }
 
   buildFilters(): HttpParams {
@@ -131,7 +170,7 @@ export class ListTicketComponent implements OnInit {
       status,
       ticketId,
       recordId,
-      notes,
+      concept,
       serviceType,
     } = this.filters;
     let filters = {
@@ -142,7 +181,7 @@ export class ListTicketComponent implements OnInit {
       serviceType: serviceType.join(','),
       id: ticketId,
       recordId,
-      concept: notes
+      concept: concept
     }
     if (ticketId) {
       filters = {
@@ -161,16 +200,34 @@ export class ListTicketComponent implements OnInit {
   parseFunction(tickets) {
     return tickets.map((ticket) => {
       const datePipe: DatePipe = new DatePipe('es-MX');
+      let personName;
+      let recordId;
+      let therapistName = '';
       let date = new Date(ticket.createdAt.replace('-', '/'));
       let transformedDate = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
+
+      // Normal tickets are assigned to a record
+      if (ticket.record) {
+        personName = `${ticket.record.person.name} ${ticket.record.person.lastName}`,
+        recordId = ticket.record.id;
+        therapistName = `${ticket.therapist.name} ${ticket.therapist.last_name}`;
+      } else {
+      // Otherwise it is other ticket data
+        personName = `${ticket.name} ${ticket.lastName}`,
+        recordId = 'NA'
+        for (const therapist of ticket.therapists) {
+          therapistName = therapistName + `${therapist.name} ${therapist.last_name} / `;
+        }
+        therapistName = therapistName.substr(0, therapistName.length - 3);
+      }
       return {
         ...ticket,
         tableFields: [
           ticket.id,
-          ticket.record.id,
-          `${ticket.record.person.name} ${ticket.record.person.lastName}`,
-          `${ticket.therapist.name} ${ticket.therapist.last_name}`,
-          ticket.serviceType,
+          recordId,
+          personName,
+          therapistName,
+          ticket.serviceType.label,
           `$${ticket.total}.00`,
           ticket.status,
           transformedDate
@@ -179,3 +236,9 @@ export class ListTicketComponent implements OnInit {
     });
   }
 }
+
+enum ITicketType {
+  ALL = 'all',
+  TIKCET = 'ticket',
+  OTHER_TICKET = 'otherTicket',
+} 

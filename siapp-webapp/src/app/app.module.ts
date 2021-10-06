@@ -96,6 +96,10 @@ import { FormTicketComponent } from './modules/tickets/components/form-ticket/fo
 import { ReportListComponent } from './modules/reports/report-list.component';
 import { PrintTicketComponent } from './modules/tickets/components/print-ticket/print-ticket.component';
 import { ServicesSummaryComponent } from './modules/reports/components/services-summary/services-summary.component';
+import { FormServiceTypeComponent } from './modules/service-types/components/form-service-type/form-service-type.component';
+import { ListServiceTypeComponent } from './modules/service-types/components/list-service-type/list-service-type.component';
+import { FormTicketPersonDataComponent } from './modules/tickets/components/form-ticket-person-data/form-ticket-person-data.component';
+import { FormOtherTicketComponent } from './modules/tickets/components/form-other-ticket/form-other-ticket.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -166,6 +170,10 @@ registerLocaleData(localeEsMX , 'es-MX');
     ReportListComponent,
     PrintTicketComponent,
     ServicesSummaryComponent,
+    FormServiceTypeComponent,
+    ListServiceTypeComponent,
+    FormTicketPersonDataComponent,
+    FormOtherTicketComponent,
   ],
   imports: [
     BrowserModule,

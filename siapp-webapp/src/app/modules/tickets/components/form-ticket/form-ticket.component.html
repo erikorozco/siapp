@@ -41,13 +41,35 @@
         <!-- Person information -->
         <ng-container *ngIf="this.record">
           <div class="col-md-6">
-            <ul>
-              <li><h4>Infomación del paciente</h4></li>
-              <li><b>Nombre: </b>{{this.record.person.name}} {{this.record.person.lastName}} {{this.record.person.secondLastName}}</li>
-              <li><b>Edad: </b>{{ this.dateTimeHelper.calculateAge(this.record.bornDate) }}</li>
-              <li><b>Localidad: </b>{{ this.record.city }}</li>
-              <li><b>Parroquia: </b>{{ this.record.parish }}</li>
-            </ul>
+            <ng-container *ngIf="!editRecordData">
+              <ul>
+                <li>
+                  <h4>Infomación del paciente
+                    <button [disabled]="ticketForm.disabled" mdbBtn mdbTooltip="Editar" mdbWavesEffect class="btn btn-outline-primary btn-circle btn-sm" title="Editar" (click)="editRecordData=true">
+                      <i class="fas fa-pencil-alt"></i>
+                    </button>
+                  </h4>
+                </li>
+                <li><b>Nombre: </b>{{this.record.person.name}} {{this.record.person.lastName}} {{this.record.person.secondLastName}}</li>
+                <li><b>Edad: </b>{{ this.dateTimeHelper.calculateAge(this.record.bornDate) }}</li>
+                <li><b>Localidad: </b>{{ this.record.location }}</li>
+                <li><b>Municipio: </b>{{ this.record.city }}</li>
+                <li><b>Parroquia: </b>{{ this.record.parish }}</li>
+              </ul>
+            </ng-container>    
+            <ng-container *ngIf="editRecordData">
+              <h4>Editar infomación del paciente
+                <button style="margin-right: 10px" type="button" mdbBtn mdbTooltip="Cancel" mdbWavesEffect class="btn btn-primary btn-circle btn-sm" title="Cancelar" (click)="editRecordData=false">
+                  <i class="fas fa-window-close"></i>
+                </button>
+                <button *ngIf="this.ticketPersonDataFromGroup" [disabled]="this.ticketPersonDataFromGroup.invalid || this.ticketPersonDataFromGroup.pristine" type="button" mdbBtn mdbTooltip="Guardar" mdbWavesEffect class="btn btn-success btn-circle btn-sm" title="Guardar" (click)="saveFormTicketPersonData()">
+                  <i class="fas fa-save"></i>
+                </button>
+              </h4>
+              
+              <app-form-ticket-person-data [record]="this.record" (formChangeValid)="handleFormTicketPersonData($event)">
+              </app-form-ticket-person-data>
+            </ng-container>
           </div>
           <div class="col-md-6">
             <ul>
@@ -69,20 +91,22 @@
       </div>
 
       <hr>
-
       <div class="form-row">
-        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('serviceType') } ">
+
+        <!-- Form grop for Service Type -->
+        <div formGroupName="serviceType" class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('serviceType.id') } ">
           <label for="serviceType">Tipo de servicio</label>
-          <select type="option" class="form-control" formControlName="serviceType" id="serviceType">
+          <select type="option" class="form-control" formControlName="id" id="serviceType">
             <option disabled value="">Seleccione un tipo de servicio</option>
-            <option *ngFor="let serviceType of this.ticketConstants.services" [ngValue]="serviceType.value">
+            <option *ngFor="let serviceType of this.serviceTypeDataService.serviceTypes.value" [ngValue]="serviceType.value">
               {{ serviceType.label }}
             </option>
           </select>
-          <div class="form-control-feedback" *ngIf="requiredFieldValidation('serviceType')">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('serviceType.id')">
             <h6 class="feedback-field">Este campo es requerido</h6>
           </div>
         </div>
+
         <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('total') } ">
           <label for="total">$ Total</label>
           <input type="number" class="form-control" formControlName="total" id="total" placeholder="Total">

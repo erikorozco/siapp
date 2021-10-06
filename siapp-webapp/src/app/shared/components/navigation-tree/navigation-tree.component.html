@@ -10,9 +10,20 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4" *ngIf="this.root">
     <h1 class="navigation-tree h3 mb-0 text-gray-800">
-        <a [routerLink]="['/home']">Panel de control</a> >
-        <a [routerLink]="['/home', 'psycometrics-managment' ]">
-            {{ this.module }}  
-        </a>> {{ this.translatedAction }}
+        <div [ngSwitch]="this.module">
+            <div *ngSwitchCase="'Pruebas psicometricas'">
+                <a [routerLink]="['/home']">Panel de control</a> >
+                <a [routerLink]="['/home', 'psycometrics-managment' ]">
+                    {{ this.module }}  
+                </a>> {{ this.translatedAction }}
+            </div>
+            <div *ngSwitchCase="'Servicios'">
+                <a [routerLink]="['/home']">Panel de control</a> >
+                <a [routerLink]="['/home', 'service-types' ]">
+                    {{ this.module }}  
+                </a>> {{ this.translatedAction }}
+            </div>
+        </div>
+        
     </h1>
 </div>

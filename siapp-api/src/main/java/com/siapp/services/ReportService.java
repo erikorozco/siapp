@@ -24,8 +24,35 @@ public class ReportService {
 		return ReportUtil.convertGetAllTicketsArrayToObject(this.reportRepository.getAllTickets(startDate, endDate));
 	}
 	
+	/**
+	 * GEt all tickets between a date range
+	 */
+	public List<HashMap<String, Object>> getAllOtherTickets(Date startDate, Date endDate) {
+		List<HashMap<String, Object>> otherTickets = ReportUtil.convertGetAllOtherTicketsArrayToObject(this.reportRepository.getAllOtherTickets(startDate, endDate));
+		for (HashMap<String, Object> otherTicket : otherTickets) {
+			Integer otherTikcetId = (Integer) otherTicket.get("id");
+			List<Object[]> therapistNames = this.reportRepository.getTherapistsByOtherItcketId(otherTikcetId);
+			String names = "";
+			for (Object therapistName : therapistNames) {
+				names = names.concat((String) therapistName);
+				names = names.concat(" / ");
+			}
+			names = names.substring(0, names.length() - 3);
+			otherTicket.put("therapistName", names);
+		}
+		return otherTickets;
+	}
+	
 	public ExcelCreator getAllTicketsXlsx(Date startDate, Date endDate) {
-		List<HashMap<String, Object>> items = ReportUtil.convertGetAllTicketsArrayToObject(this.reportRepository.getAllTickets(startDate, endDate));
+		List<HashMap<String, Object>> normalTickets = this.getAllTickets(startDate, endDate);
+		List<HashMap<String, Object>> otherTickets = this.getAllOtherTickets(startDate, endDate);
+		
+		// Merge other tickets into normal tickets
+		for (HashMap<String, Object> otherTicket : otherTickets) {
+			normalTickets.add(otherTicket);
+		}
+		
+		
 		List<HeaderModel> headers = new ArrayList<HeaderModel>();
 		HeaderModel h1 = new HeaderModel("Folio", "id");
 		HeaderModel h2 = new HeaderModel("Fecha", "date");
@@ -33,12 +60,13 @@ public class ReportService {
 		HeaderModel h4 = new HeaderModel("Paciente", "personName");
 		HeaderModel h5 = new HeaderModel("Edad", "age");
 		HeaderModel h6 = new HeaderModel("Sexo", "gender");
-		HeaderModel h7 = new HeaderModel("Procedencia", "location");
-		HeaderModel h8 = new HeaderModel("Parroquia", "church");
-		HeaderModel h9 = new HeaderModel("Tipo de servicio", "serviceType");
-		HeaderModel h10 = new HeaderModel("Colaborador", "therapistName");
-		HeaderModel h11 = new HeaderModel("Aportacion", "total");
-		HeaderModel h12 = new HeaderModel("Estado", "status");
+		HeaderModel h7 = new HeaderModel("Localidad", "location");
+		HeaderModel h8 = new HeaderModel("Municipio", "city");
+		HeaderModel h9 = new HeaderModel("Parroquia", "church");
+		HeaderModel h10 = new HeaderModel("Tipo de servicio", "serviceType");
+		HeaderModel h11 = new HeaderModel("Colaborador", "therapistName");
+		HeaderModel h12 = new HeaderModel("Aportacion", "total");
+		HeaderModel h13 = new HeaderModel("Estado", "status");
 		headers.add(h1);
 		headers.add(h2);
 		headers.add(h3);
@@ -51,7 +79,8 @@ public class ReportService {
 		headers.add(h10);
 		headers.add(h11);
 		headers.add(h12);
-		ExcelCreator excelCreator = new ExcelCreator(items, headers);
+		headers.add(h13);
+		ExcelCreator excelCreator = new ExcelCreator(normalTickets, headers);
 		return excelCreator;
 	}
 

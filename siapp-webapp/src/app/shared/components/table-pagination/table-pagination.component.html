@@ -17,7 +17,7 @@
                 </div>
             </form>
         </ng-container>
-        <div *ngIf="tableActions.add" class="col-md-6" [ngClass]="tableActions.hideSearchBox ? 'text-left': 'text-right'">
+        <div *ngIf="tableActions.add && tableActions" class="col-md-6" [ngClass]="tableActions.hideSearchBox ? 'text-left': 'text-right'">
             <a [routerLink]="tableActions.add.route" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
@@ -25,6 +25,16 @@
                 <span class="text">{{tableActions.add.text}}</span>
             </a>
         </div>
+        <ng-container *ngIf="tableActions.customHeaderActions">
+            <div *ngFor="let btnAction of tableActions.customHeaderActions" class="col-md-6">
+                <button placement="top" mdbWavesEffect [ngClass]="btnAction.buttonClass" class="btn btn-icon-split" title="{{btnAction.text}}" (click)="action(btnAction.value, btnAction.action)">
+                    <span class="icon text-white-50">
+                        <i [ngClass]="btnAction.iconClass" class="fas"></i>
+                    </span>
+                    <span class="text">{{btnAction.text}}</span>
+                </button>
+            </div>
+        </ng-container>
         <div *ngIf="tableActions.addEnabled" class="col-md-6 text-right">
             <button class="btn btn-success btn-icon-split" (click)="action(tableActions.addModal.value, 'openAddModal')">
                 <span class="icon text-white-50">

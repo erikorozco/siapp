@@ -46,9 +46,6 @@ private static final long serialVersionUID = 1L;
     @Column(name = "estado")
     private String status;
     
-    @Column(name = "tipo_servicio")
-    private String serviceType;
-    
     //CreateAt is replaced with createdDate
     
     @Column(name = "actualizado", nullable = true)
@@ -62,6 +59,10 @@ private static final long serialVersionUID = 1L;
     @OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_expediente", referencedColumnName = "id_expediente")
     private Record record;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "id_servicio", referencedColumnName = "id_servicio")
+    private ServiceType serviceType;
     
     //@JsonManagedReference(value="therapistReference")
     @OneToOne(cascade = CascadeType.DETACH)
@@ -105,14 +106,6 @@ private static final long serialVersionUID = 1L;
 		return status;
 	}
 
-	public String getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType;
-	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
@@ -139,6 +132,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setRecord(Record record) {
 		this.record = record;
+	}
+
+	public ServiceType getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(ServiceType serviceType) {
+		this.serviceType = serviceType;
 	}
 
 	public static long getSerialversionuid() {

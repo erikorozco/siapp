@@ -1,0 +1,155 @@
+CREATE TABLE public.servicio (
+	id_servicio serial NOT NULL,
+	texto varchar NULL,
+	valor varchar NULL,
+	activo boolean NOT NULL DEFAULT true,
+	creado timestamp NULL,
+	actualizado timestamp NULL,
+	CONSTRAINT servicios_pk PRIMARY KEY (id_servicio)
+);
+
+INSERT INTO public.permiso (descripcion, "key", roles, tipo) VALUES('Pueder ver permison','canViewServiceTypeModule','ADMIN:','action');
+
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Apertura', 'Apertura', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Actualización', 'Actualización', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Asesoría espiritual', 'Asesoría espiritual', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Asesoría Legal', 'Asesoría Legal', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Centro de escucha', 'Centro de escucha', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Evaluación CI', 'Evaluación CI', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Grupo de oración', 'Grupo de oración', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Homeopatía', 'Homeopatía', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Neuropsicología', 'Neuropsicología', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Nutrición', 'Nutrición', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Psicología', 'Psicología', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Psiquiatría', 'Psiquiatría', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Tanatología', 'Tanatología', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Inscripción a talleres', 'Inscripción a talleres', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Dispensario', 'Dispensario', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de comunicación', 'Taller de comunicación', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de control de estrés', 'Taller de control de estrés', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de parejas', 'Taller de parejas', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de tanotología', 'Taller de tanotología', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de padres y adolescentes', 'Taller de padres y adolescentes', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Taller de arteterapia', 'Taller de arteterapia', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+INSERT INTO public.servicio
+(texto, valor, activo, creado, actualizado)
+VALUES('Otro', 'Otro', true, '2021-09-27 21:20:03', '2021-09-27 21:20:03');
+
+ALTER TABLE public.aportacion ADD id_servicio integer NULL;
+
+update aportacion set id_servicio = 1 where tipo_servicio = 'APERTURA';
+update aportacion set id_servicio = 2 where tipo_servicio = 'ACTUALIZACION';
+update aportacion set id_servicio = 3 where tipo_servicio = 'ASESORIA ESPIRITUAL';
+update aportacion set id_servicio = 4 where tipo_servicio = 'ASOESORIA LEGAL';
+update aportacion set id_servicio = 5 where tipo_servicio = 'CENTRO DE ESCUCHA';
+update aportacion set id_servicio = 6 where tipo_servicio = 'EVALUACION CI';
+update aportacion set id_servicio = 7 where tipo_servicio = 'GRUPO DE ORACION';
+update aportacion set id_servicio = 8 where tipo_servicio = 'HOMEOPATIA';
+update aportacion set id_servicio = 9 where tipo_servicio = 'NEUROPSICOLOGÍA';
+update aportacion set id_servicio = 10 where tipo_servicio = 'NUTRICION';
+update aportacion set id_servicio = 11 where tipo_servicio = 'PSICOLOGIA';
+update aportacion set id_servicio = 12 where tipo_servicio = 'PSIQUIATRIA';
+update aportacion set id_servicio = 13 where tipo_servicio = 'TANATOLOGÍA';
+update aportacion set id_servicio = 14 where tipo_servicio = 'Inscripción a talleres';
+update aportacion set id_servicio = 15 where tipo_servicio = 'Dispensario';
+update aportacion set id_servicio = 16 where tipo_servicio = 'Taller de comunicación';
+update aportacion set id_servicio = 17 where tipo_servicio = 'Taller de control de estrés';
+update aportacion set id_servicio = 18 where tipo_servicio = 'Taller de parejas';
+update aportacion set id_servicio = 19 where tipo_servicio = 'Taller de tanotología';
+update aportacion set id_servicio = 20 where tipo_servicio = 'Taller de padres y adolescentes';
+update aportacion set id_servicio = 21 where tipo_servicio = 'Taller de arteterapia';
+update aportacion set id_servicio = 22 where tipo_servicio = 'Otro';
+update aportacion set id_servicio = 22 where tipo_servicio isnull;
+
+
+CREATE TABLE public.otra_aportacion (
+	id_otra_aportacion serial NOT NULL,
+	total integer NULL,
+	creado date NULL,
+	actualizado timestamp NULL,
+	estado varchar NULL,
+	nota varchar NULL
+);
+COMMENT ON TABLE public.otra_aportacion IS 'Aportaciones que no estan ligadas a un expediente';
+ALTER TABLE public.otra_aportacion ADD id_servicio integer NOT NULL;
+ALTER TABLE public.otra_aportacion ADD nombre varchar NULL;
+ALTER TABLE public.otra_aportacion ADD fecha_nacimiento date NULL;
+ALTER TABLE public.otra_aportacion ADD parroquia varchar NULL;
+ALTER TABLE public.otra_aportacion ADD sexo varchar NULL;
+ALTER TABLE public.otra_aportacion ADD localidad varchar NULL;
+ALTER TABLE public.otra_aportacion ADD municipio varchar NULL;
+ALTER TABLE public.otra_aportacion ADD apellidoPaterno varchar NULL;
+ALTER TABLE public.otra_aportacion ADD apellidoMaterno varchar NULL;
+
+
+CREATE TABLE public.otra_aportacion_terapeuta (
+	id_otra_aportacion integer NOT NULL,
+	id_terapeuta integer NULL
+);
+COMMENT ON TABLE public.otra_aportacion_terapeuta IS 'Relacion muchos a muchos entre otra_aportacion y terapueta';
+
+ALTER TABLE public.expediente ALTER COLUMN nacimiento TYPE timestamp(0) USING nacimiento::timestamp;

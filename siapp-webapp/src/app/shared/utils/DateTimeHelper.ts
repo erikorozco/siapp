@@ -98,6 +98,13 @@ export class DateTimeHelper {
         let a = datePipe.transform(date, 'dd-MM-yyyy' ,'es-MX');
     }
 
+    parseRercordDateToInputDateValue(date) {
+        const datePipe: DatePipe = new DatePipe('es-MX');
+        const a = new Date(date);
+        let formattedDate =  datePipe.transform(date, 'yyyy-MM-dd' ,'es-MX')
+        return formattedDate
+      }
+
     calculateAge(recordBornDate): number {
         const bornDate = new Date(recordBornDate);
         const currentDate = new Date();

@@ -1,0 +1,22 @@
+<app-navigation-tree [entityAction]="'add-service'" [root]="true"></app-navigation-tree>
+<div class="row">
+  <div class="col-md-9 pl-5 text border-left-primary">
+      <form [formGroup]="serviceTypeForm" (ngSubmit)="onSubmit()">
+          <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('label') } ">
+              <label for="label">Nombre *</label>
+              <input type="text" class="form-control" formControlName="label" id="label" placeholder="Nombre del servicio">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('label')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+          </div>
+          <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('value') } ">
+              <label for="value">Texto para reporte *</label>
+              <input type="text" class="form-control" formControlName="value" id="value" placeholder="Valor que se utiliza cuando se genera el reporte">
+              <div class="form-control-feedback" *ngIf="requiredFieldValidation('value')">
+                  <h6 class="feedback-field">Este campo es requerido</h6>
+              </div>
+          </div>
+          <button [disabled]="serviceTypeForm.invalid || serviceTypeForm.disabled || serviceTypeForm.pristine" type="submit " class="btn btn-success btn-lg">Guardar</button>
+      </form>
+  </div>
+</div>

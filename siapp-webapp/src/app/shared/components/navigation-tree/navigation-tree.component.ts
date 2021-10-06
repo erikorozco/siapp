@@ -74,6 +74,9 @@ export class NavigationTreeComponent implements OnInit {
       case 'psycometric':
         this.module = 'Pruebas psicometricas'
         return 'prueba'  
+      case 'service':
+        this.module = 'Servicios'
+        return 'servicio'  
     }
   }
 

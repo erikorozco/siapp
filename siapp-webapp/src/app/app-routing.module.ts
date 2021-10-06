@@ -33,6 +33,9 @@ import { ListTicketComponent } from './modules/tickets/components/list-ticket/li
 import { FormTicketComponent } from './modules/tickets/components/form-ticket/form-ticket.component';
 import { ReportListComponent } from './modules/reports/report-list.component';
 import { PrintTicketComponent } from './modules/tickets/components/print-ticket/print-ticket.component';
+import { ListServiceTypeComponent } from './modules/service-types/components/list-service-type/list-service-type.component';
+import { FormServiceTypeComponent } from './modules/service-types/components/form-service-type/form-service-type.component';
+import { FormOtherTicketComponent } from './modules/tickets/components/form-other-ticket/form-other-ticket.component';
 
 const ROUTES: Routes = [
   { path: '', component: LoginComponent },
@@ -164,8 +167,19 @@ const ROUTES: Routes = [
       { path: 'edit-ticket', redirectTo: 'add-ticket' },
       { path: 'view-ticket/:id', component: FormTicketComponent },
       { path: 'view-ticket', redirectTo: 'add-ticket' },
+      { path: 'add-other-ticket', component: FormOtherTicketComponent },
+      { path: 'edit-other-ticket/:id', component: FormOtherTicketComponent },
+      { path: 'edit-other-ticket', redirectTo: 'add-other-ticket' },
+      { path: 'view-other-ticket/:id', component: FormOtherTicketComponent },
+      { path: 'view-other-ticket', redirectTo: 'add-other-ticket' },
       { path: 'therapist-agenda/:therapistId', component: AgendaComponent },
       { path: 'reports', component: ReportListComponent },
+      { path: 'service-types', component: ListServiceTypeComponent },
+      { path: 'add-service-type', component: FormServiceTypeComponent },
+      { path: 'edit-service-type/:id', component: FormServiceTypeComponent },
+      { path: 'edit-service-type', redirectTo: 'add-service-type' },
+      { path: 'view-service-type/:id', component: FormServiceTypeComponent },
+      { path: 'view-service-type', redirectTo: 'add-service-type' },
       // { path: '', component: NotFoundComponent },
       // { path: '**', component: NotFoundComponent },
     ]

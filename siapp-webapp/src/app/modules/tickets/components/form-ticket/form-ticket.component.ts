@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { ServiceTypeDataService } from 'src/app/shared/services/data/service-type-data.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
 import { DerivationService } from 'src/app/shared/services/derivation.service';
 import { RecordService } from 'src/app/shared/services/record-service';
@@ -24,10 +25,12 @@ export class FormTicketComponent implements OnInit {
   isDisabled = false;
   action = 'view-ticket';
   ticketForm: FormGroup;
+  ticketPersonDataFromGroup: FormGroup;
   ticket: any;
   record: any;
   therapist: any;
   derivations: any = [];
+  editRecordData = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,7 +43,7 @@ export class FormTicketComponent implements OnInit {
     public dateTimeHelper: DateTimeHelper,
     public dialog: MatDialog,
     public userDataService: UserDataService,
-
+    public serviceTypeDataService: ServiceTypeDataService,
   ) { }
 
   async ngOnInit() {
@@ -159,6 +162,41 @@ export class FormTicketComponent implements OnInit {
     }
   }
 
+  handleFormTicketPersonData(ticketPersonDataFromGroup: FormGroup) {
+    this.ticketPersonDataFromGroup = ticketPersonDataFromGroup;
+    if (this.ticketPersonDataFromGroup.valid) {
+      const {
+        name,
+        lastName,
+        secondLastName,
+        bornDate,
+        parish,
+        gender,
+        location,
+        city
+      } = this.ticketPersonDataFromGroup.value;
+      this.record.person.name = name;
+      this.record.person.lastName = lastName;
+      this.record.person.secondLastName = secondLastName;
+      this.record.bornDate = bornDate;
+      this.record.parish = parish;
+      this.record.gender = gender;
+      this.record.location = location;
+      this.record.city = city;
+    }
+  }
+
+  saveFormTicketPersonData() {
+    // Avoid use new Date();
+    this.record.bornDate = this.dateTimeHelper.parseStringToDate(this.record.bornDate);
+    this.recordService.updateRecord(this.record.id, this.record).subscribe((res) => {
+      this.toastr.success('La información del paciente ha sido actualizada exitosamente', 'Operacion exitosa');
+      this.editRecordData = false;
+    }, () => {
+      this.toastr.error('Ocurrio un error, Intente de Nuevo', 'Operacion invalida');
+    });
+  }
+
   onSubmit() {
     if (this.action === 'add-ticket') {
       this.ticketService.createTicket(this.ticketForm.value).toPromise().then((data: any) => {
@@ -189,7 +227,6 @@ export class FormTicketComponent implements OnInit {
       id: ['', ],
       concept: ['', ],
       status: ['NORMAL', ],
-      serviceType: ['',  Validators.compose([Validators.required])],
       total: ['',  Validators.compose([Validators.required])],
       createdAt: ['', ],
       updatedAt: ['', ],
@@ -198,6 +235,14 @@ export class FormTicketComponent implements OnInit {
       }),
       therapist: this.formBuilder.group({
         id: ['',  Validators.compose([Validators.required])],
+      }),
+      serviceType: this.formBuilder.group({
+        id: ['', Validators.compose([Validators.required])],
+        label: ['', ],
+        value: ['', ],
+        active: ['', ],
+        createdAt: ['', ],
+        updatedAt: ['', ],
       })
     });
   }

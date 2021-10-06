@@ -1,0 +1,100 @@
+<form class="form-container" [formGroup]="personTicketDataForm">
+  <!-- Name -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('name') } ">
+    <label for="name">Nombre *</label>
+    <input type="text" class="form-control" formControlName="name" id="name"
+      placeholder="Nombre">
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('name')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Last name -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('lastName') } ">
+    <label for="lastName">Apellido Paterno *</label>
+    <input type="text" class="form-control" formControlName="lastName" id="lastName"
+      placeholder="Apellido Paterno">
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('lastName')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Second last name -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('secondLastName') } ">
+    <label for="secondLastName">Apellido Materno *</label>
+    <input type="text" class="form-control" formControlName="secondLastName" id="secondLastName"
+      placeholder="Apellido Materno">
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('secondLastName')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Born Date -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('bornDate') } ">
+    <label for="bornDate">Fecha de nacimiento *</label>
+    <input type="date" class="form-control" formControlName="bornDate"
+      id="bornDate">
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('bornDate')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Parish -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('parish') } ">
+    <label for="parish">Parroquia</label>
+    <input autocomplete="off" type="text" class="form-control" formControlName="parish" id="parish" placeholder="Parroquia"
+      [matAutocomplete]="parishAutoComplete">
+    <mat-autocomplete #parishAutoComplete="matAutocomplete">
+      <mat-option *ngFor="let parish of parishes | async" [value]="parish">
+        {{parish}}
+      </mat-option>
+    </mat-autocomplete>
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('parish')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Gender -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('gender') } ">
+    <label for="gender">Sexo *</label>
+    <select type="option" class="form-control" formControlName="gender" id="gender">
+      <option selected disabled value="">
+        Seleccione un genero
+      </option>
+      <option *ngFor="let gender of this.recordFormOptions.genders" [ngValue]="gender">
+        {{ gender }}
+      </option>
+    </select>
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('gender')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- City - municipio -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('city') } ">
+    <label for="city">Municipio *</label>
+    <input autocomplete="off" type="text" class="form-control" formControlName="city" id="city" placeholder="Municipio"
+      [matAutocomplete]="cityAutoComplete">
+    <mat-autocomplete #cityAutoComplete="matAutocomplete">
+      <mat-option *ngFor="let city of cities | async" [value]="city">
+        {{city}}
+      </mat-option>
+    </mat-autocomplete>
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('city')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Location - -->
+  <div class="form-group" [ngClass]="{'has-error': requiredFieldValidation('location') } ">
+    <label for="location">Localidad *</label>
+    <input autocomplete="off" type="text" class="form-control" formControlName="location" id="location" placeholder="Localidad"
+      [matAutocomplete]="locationAutoComplete">
+    <mat-autocomplete #locationAutoComplete="matAutocomplete">
+      <mat-option *ngFor="let location of locations | async" [value]="location">
+        {{location}}
+      </mat-option>
+    </mat-autocomplete>
+    <div class="form-control-feedback" *ngIf="requiredFieldValidation('location')">
+      <h6 class="feedback-field">Este campo es requerido</h6>
+    </div>
+  </div>
+  <!-- Save button -->
+  <!-- <div class="col-md-6">
+    <button [disabled]="personTicketDataForm.invalid || personTicketDataForm.disabled || personTicketDataForm.pristine" type="submit"
+    class="btn btn-success btn-lg">Guardar</button>
+  </div> -->
+</form>

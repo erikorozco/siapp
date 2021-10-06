@@ -1,0 +1,94 @@
+<!-- BREADCURMBS -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    <a [routerLink]="['/home']">Panel de control</a> -> 
+    <a [routerLink]="['/home/tickets']">Recibos</a> -> 
+    {{this.action === 'add-other-ticket' ? 'Agregar': this.action === 'edit-other-ticket' ? 'Editar' : 'Ver'}} Recibo (Otros)</h1> 
+</div>
+
+<!-- FORM -->
+<div class="row">
+  <div class="col-md-12 pl-5 text border-left-primary">
+    <form [formGroup]="otherTicketForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <!-- Person information -->
+        <div *ngIf="this.record" class="col-md-6">
+          <app-form-ticket-person-data [isDisabled]="this.otherTicketForm.disabled" [record]="this.record" (formChangeValid)="handleFormTicketPersonData($event)">
+          </app-form-ticket-person-data>
+        </div>
+
+        <!-- Therapists -->
+        <div class="col-md-6">
+          <app-input-typeahead
+            [label]="'Terapeuta'"
+            [placeholder]="'Nombre del terapeuta'"
+            [id]="'therapistId'"
+            [optionsSource]="userDataService.users | async"
+            [clearAfterSelection]="true"
+            (modelChange)="addTherapist($event)"
+            [isDisabled]="this.otherTicketForm.disabled"
+          ></app-input-typeahead>
+        
+          <!-- List Therapists -->
+          <hr>
+          <div class="col-md-12" *ngFor="let therapist of therapists" style="padding: 5px; display: inline-grid;">
+            <button [ngClass]="{'btn-info': this.otherTicketForm.disabled, 'btn-outline-info': this.otherTicketForm.enabled}" [disabled]="this.otherTicketForm.disabled"  class="btn" type="button" (click)="deleteTherapist(therapist)">
+              {{therapist.label}}  <i style="padding-left: 5px;" class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <div class="form-row">
+
+        <!-- Form grop for Service Type -->
+        <div formGroupName="serviceType" class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('serviceType.id') } ">
+          <label for="serviceType">Tipo de servicio</label>
+          <select type="option" class="form-control" formControlName="id" id="serviceType">
+            <option disabled value="">Seleccione un tipo de servicio</option>
+            <option *ngFor="let serviceType of this.serviceTypeDataService.serviceTypes.value" [ngValue]="serviceType.value">
+              {{ serviceType.label }}
+            </option>
+          </select>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('serviceType.id')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('total') } ">
+          <label for="total">$ Total</label>
+          <input type="number" class="form-control" formControlName="total" id="total" placeholder="Total">
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('total')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+        <div class="form-group col-md-12" [ngClass]="{'has-error': requiredFieldValidation('concept') } ">
+          <label for="concept">Notas</label>
+          <textarea type="textarea" class="form-control" formControlName="concept" id="concept"
+          placeholder="Notas/Observaciones"></textarea>
+          <div class="form-control-feedback" *ngIf="requiredFieldValidation('concept')">
+            <h6 class="feedback-field">Este campo es requerido</h6>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <button [disabled]="otherTicketForm.invalid || otherTicketForm.disabled || otherTicketForm.pristine
+           || ticketPersonDataFromGroup.invalid || ticketPersonDataFromGroup.disabled || ticketPersonDataFromGroup.pristine
+           || this.therapists.length < 1" type="submit"
+          class="btn btn-success btn-lg">Guardar</button>
+        </div>
+        <div class="col-md-6 text-right">
+          <button *ngIf="this.action === 'edit-other-ticket' && otherTicket && this.otherTicket.status === 'NORMAL'" type="button"
+          class="btn btn-danger btn-lg" (click)="cancelTicket()">Cancelar Ticket</button>
+          <h1 *ngIf="otherTicket && this.otherTicket.status === 'CANCELADO'">{{this.otherTicket.status}}</h1>
+        </div >
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+    </form>
+  </div>
+</div>

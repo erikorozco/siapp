@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { OtherTicketService } from 'src/app/shared/services/other-ticket.service copy';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 
@@ -13,14 +14,17 @@ import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
   styleUrls: ['./print-ticket.component.css']
 })
 export class PrintTicketComponent implements OnInit, OnDestroy {
+  ticketType = 'normal'
   ticket: any;
   subscription: Subscription;
+  queryParamsPubscription: Subscription;
   date = new Date();
 
   constructor(
     private titleService: Title,
     private routes: ActivatedRoute,
     private ticketService: TicketService,
+    private otherTicketService: OtherTicketService,
     private toastr: ToastrService,
     public dateTimeHelper: DateTimeHelper,
   ) { }
@@ -34,11 +38,18 @@ export class PrintTicketComponent implements OnInit, OnDestroy {
   }
 
   loadTicket() {
-    this.subscription = this.routes.params.subscribe(async (params) => {
+    this.subscription = this.routes.params.subscribe((params) => {
       const ticketId = params.id;
       this.titleService.setTitle('Imprimir recibo - ' + ticketId);
-      this.ticket = await this.ticketService.getTicket(ticketId).toPromise();
-      // this.print();
+      this.queryParamsPubscription = this.routes.queryParams.subscribe(async (params) => {
+
+        if (params && params.type === 'other') {
+          this.ticketType = 'other'
+          this.ticket = await this.otherTicketService.get(ticketId).toPromise();
+        } else {
+          this.ticket = await this.ticketService.getTicket(ticketId).toPromise();
+        }
+      });
     }, () => {
       this.toastr.error('Error', 'Hubo un error al preparar los datos para imprimir')
     });

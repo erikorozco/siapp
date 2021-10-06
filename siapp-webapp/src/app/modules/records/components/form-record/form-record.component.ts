@@ -42,6 +42,7 @@ import {
   DerivationService
 } from 'src/app/shared/services/derivation.service';
 import { DatePipe } from '@angular/common';
+import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 
 @Component({
   selector: 'app-form-record',
@@ -80,7 +81,8 @@ export class FormRecordComponent implements OnInit, OnDestroy {
     private personService: PersonService,
     private recordService: RecordService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dateTimeHelper: DateTimeHelper
   ) {}
 
   ngOnInit() {
@@ -184,6 +186,11 @@ export class FormRecordComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    // Parse string data to correct born data. i.e. 2021-11-12 to UTC format
+    const bornAgeControl = this.recordForm.get(['bornDate']);
+    const date = this.dateTimeHelper.parseStringToDate(bornAgeControl.value);
+    bornAgeControl.setValue(date);
+
     this.subscription.unsubscribe(); // Unsubscribe the progress listener
     if (this.action === 'existing-person-opening-record') {
       this.recordForm.get(['medicalServices']).setValue(this.medicalServicesFormControl.value.join(','));
@@ -191,7 +198,7 @@ export class FormRecordComponent implements OnInit, OnDestroy {
       this.record = this.recordForm.value;
 
       this.recordService.createRecord(this.record).subscribe(data => {
-        this.toastr.success('El expediente ha isdo creado exitosamente', 'Operacion exitosa');
+        this.toastr.success('El expediente ha sido creado exitosamente', 'Operacion exitosa');
         this.router.navigate(['home', 'record-summary', this.params.personId]);
         window.localStorage.removeItem('recordFormFillProgress');
         window.localStorage.clear();
@@ -229,7 +236,6 @@ export class FormRecordComponent implements OnInit, OnDestroy {
       this.recordService.getRecordByPersonId(this.params.personId).subscribe(data => {
         data.bornDate = this.setDate(data.bornDate);
         data.therapists  = [];
-        debugger;
         this.recordForm.setValue(data);
         this.medicalServicesFormControl.setValue(this.recordForm.get(['medicalServices']).value.split(','));
       }, error => { console.log(error); });
@@ -357,12 +363,6 @@ export class FormRecordComponent implements OnInit, OnDestroy {
         startWith(''),
         map(value => this._filter(value, this.recordFormOptions.cities))
       );
-
-    // this.externalAreas = this.recordForm.get(['externalDerivationForm', 'derivedArea']).valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(value => this._filter(value, this.recordFormOptions.externalAreas))
-    //   );
 
     this.locations = this.recordForm.get(['location']).valueChanges
       .pipe(

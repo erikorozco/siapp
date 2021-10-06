@@ -207,10 +207,30 @@ export const API_URL_CONFIG = {
         deleteTicket : 'delete/',
       }
     },
+    otherTicketsAPI: {
+      name: 'otherTickets/',
+      endpoints: {
+        filter : 'filter?',
+        getOtherTicket : 'getById/',
+        createOtherTicket: 'create',
+        updateOtherTicket : 'update/',
+        deleteOtherTicket : 'delete/',
+      }
+    },
     reportsAPI: {
       name: 'reports/',
       endpoints: {
         ticketsAll : 'ticketsAll?' // startDate & endDate & exportFile
+      }
+    },
+    serviceTypesAPI: {
+      name: 'services/',
+      endpoints: {
+        getAll : 'getAll',
+        getById : 'getById/',
+        create: 'create',
+        update : 'update/',
+        delete : 'delete/',
       }
     },
 };

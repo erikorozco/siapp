@@ -108,6 +108,7 @@
         <div *ngIf="
             (this.permissionService.permissions | async)?.canViewUsersModule ||
             (this.permissionService.permissions | async)?.canViewTestsModule ||
+            (this.permissionService.permissions | async)?.canViewServiceTypeModule ||
             (this.permissionService.permissions | async)?.canViewReportsModule" 
         class="sidebar-heading">
             Administración
@@ -129,6 +130,7 @@
             </div>
         </li>
 
+        <!-- Pruebas psicometricas -->
         <li *ngIf="(this.permissionService.permissions | async)?.canViewTestsModule" class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" data-target="#psycometrics" aria-expanded="true" aria-controls="psycometrics">
                 <i class="fas fa-list"></i>
@@ -142,7 +144,20 @@
             </div>
         </li>
 
-        <!-- Nav Item - Charts -->
+        <li *ngIf="(this.permissionService.permissions | async)?.canViewServiceTypeModule" class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#service-types" aria-expanded="true" aria-controls="service-types">
+                <i class="fas fa-list"></i>
+                <span>Servicios</span>
+            </a>
+            <div id="service-types" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" routerLink="service-types">Servicios</a>
+                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Reports -->
         <li *ngIf="(this.permissionService.permissions | async)?.canViewReportsModule" class="nav-item">
             <a class="nav-link" routerLink="reports">
                 <i class="fas fa-fw fa-chart-area"></i>
@@ -153,6 +168,7 @@
         <hr *ngIf="
             (this.permissionService.permissions | async)?.canViewUsersModule ||
             (this.permissionService.permissions | async)?.canViewTestsModule ||
+            (this.permissionService.permissions | async)?.canViewServiceTypeModule ||
             (this.permissionService.permissions | async)?.canViewReportsModule"  
             class="sidebar-divider d-none d-md-block">
 

@@ -12,63 +12,52 @@
     </p>
     <p class="centered"><b>Folio: </b>{{this.ticket.id}}</p>
   
-    <!-- Paciente -->
+    <!-- Paciente si es ticket normal -->
     <div>
       <b><p class="centered">Paciente</p></b>
-      <p class="text-left"><b>Nombre: </b>{{ticket.record.person.name}} {{ticket.record.person.lastName}} {{ticket.record.person.secondLastName}}</p>
-      <p class="text-left"><b>Edad: </b>{{this.dateTimeHelper.calculateAge(ticket.record.bornDate)}}</p>
-      <p class="text-left"><b>Expediente: </b>{{ticket.record.id}}</p>
-      <p class="text-left"><b>Localidad: </b>{{ticket.record.city}}</p>
-      <p class="text-left"><b>Parroquia: </b>{{ticket.record.parish}}</p>
+      <!-- Normal -->
+      <ng-container *ngIf="this.ticketType === 'normal'">
+        <p class="text-left"><b>Nombre: </b>{{ticket.record.person.name}} {{ticket.record.person.lastName}} {{ticket.record.person.secondLastName}}</p>
+        <p class="text-left"><b>Edad: </b>{{this.dateTimeHelper.calculateAge(ticket.record.bornDate)}}</p>
+        <p class="text-left"><b>Expediente: </b>{{ticket.record.id}}</p>
+        <p class="text-left"><b>Municipio: </b>{{ticket.record.city}}</p>
+        <p class="text-left"><b>Localidad: </b>{{ticket.record.location}}</p>
+        <p class="text-left"><b>Parroquia: </b>{{ticket.record.parish}}</p>
+      </ng-container>
+      <!-- Other -->
+      <ng-container *ngIf="this.ticketType === 'other'">
+        <p class="text-left"><b>Nombre: </b>{{ticket.name}} {{ticket.lastName}} {{ticket.secondLastName}}</p>
+        <p class="text-left"><b>Edad: </b>{{this.dateTimeHelper.calculateAge(ticket.bornDate)}}</p>
+        <p class="text-left"><b>Municipio: </b>{{ticket.city}}</p>
+        <p class="text-left"><b>Localidad: </b>{{ticket.location}}</p>
+        <p class="text-left"><b>Parroquia: </b>{{ticket.parish}}</p>
+      </ng-container>
     </div><br>
 
     <!-- Therapist -->
     <div>
-      <b><p class="centered">Colaborador que atendío</p></b>
-      <p class="text-center">{{ticket.therapist.name}} {{ticket.therapist.last_name}} {{ticket.therapist.second_last_name}}</p>
+      <!-- Normal -->
+      <ng-container *ngIf="this.ticketType === 'normal'">
+        <b><p class="centered">Colaborador que atendío</p></b>
+        <p class="text-center">{{ticket.therapist.name}} {{ticket.therapist.last_name}} {{ticket.therapist.second_last_name}}</p>
+      </ng-container>
+      <!-- Other -->
+      <ng-container  *ngIf="this.ticketType === 'other'">
+        <b><p class="centered">Colaboradores que atendíeron</p></b>
+        <p *ngFor="let therapist of this.ticket.therapists" class="text-center">{{therapist.name}} {{therapist.last_name}} {{therapist.second_last_name}}</p>
+      </ng-container>
     </div><br><br>
 
     <!-- Servicio -->
     <div>
       <b><p class="centered">Concepto / Tipo de servicio</p></b>
-      <p class="text-center">{{ticket.serviceType}}</p>
+      <p class="text-center">{{ticket.serviceType.label}}</p>
     </div><br>
 
     <!-- Cuota -->
     <div>
       <p class="text-center"><b>Total: </b>{{ticket.total  |  currency:'MXN'}}</p>
     </div><br>
-  <!-- <table>
-      <thead>
-          <tr>
-              <th class="quantity">Q.</th>
-              <th class="description">Description</th>
-              <th class="price">$$</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td class="quantity">1.00</td>
-              <td class="description">ARDUINO UNO R3</td>
-              <td class="price">$25.00</td>
-          </tr>
-          <tr>
-              <td class="quantity">2.00</td>
-              <td class="description">JAVASCRIPT BOOK</td>
-              <td class="price">$10.00</td>
-          </tr>
-          <tr>
-              <td class="quantity">1.00</td>
-              <td class="description">STICKER PACK</td>
-              <td class="price">$10.00</td>
-          </tr>
-          <tr>
-              <td class="quantity"></td>
-              <td class="description">TOTAL</td>
-              <td class="price">$55.00</td>
-          </tr>
-      </tbody>
-  </table> -->
   <p class="centered">Gracias
       <br>http://saludintegralaltos.com/</p>
 </div>

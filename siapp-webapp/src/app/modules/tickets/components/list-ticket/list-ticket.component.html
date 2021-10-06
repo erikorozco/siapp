@@ -25,16 +25,26 @@
         <input (change)="updateFilters($event.target.value, 'endDate')" [value]="filters.endDate" type="date" class="form-control" id="end-date">
       </div>
 
+      <!-- Ticket type -->
+      <div class="col-md-4">
+        <app-input-select
+          [label]="'Tipo de recibo'"
+          [info]="'NORMAL: tienen asignado un expediente. OTROS RECIBOS:  no estan asignados a un expediente y pueden tener uno o mas colaboradores'"
+          [options]="this.ticketConstants.types"
+          (modelChange)="updateFilters($event, 'ticketType')"
+        ></app-input-select>
+      </div>
+
       <!-- Therapist -->
-        <div class="col-md-4">
-          <app-input-typeahead
-            [label]="'Terapeuta'"
-            [placeholder]="'Nombre del terapeuta'"
-            [id]="'therapistId'"
-            [optionsSource]="userDataService.users | async"
-            (modelChange)="updateFilters($event, 'therapist')"
-          ></app-input-typeahead>
-        </div>
+      <div class="col-md-4">
+        <app-input-typeahead
+          [label]="'Terapeuta'"
+          [placeholder]="'Nombre del terapeuta'"
+          [id]="'therapistId'"
+          [optionsSource]="userDataService.users | async"
+          (modelChange)="updateFilters($event, 'therapist')"
+        ></app-input-typeahead>
+      </div>
 
       <!-- Status -->
       <div class="col-md-4">
@@ -51,7 +61,7 @@
         <app-input-multi-select
           [label]="'Tipo de servicio'"
           [info]="'Filtra por todos los servicios cuando no se especifica ningún servicio'"
-          [options]="this.ticketConstants.services"
+          [options]="(this.serviceTypeDataService.serviceTypes | async)"
           (modelChange)="updateFilters($event, 'serviceType')"
         ></app-input-multi-select>
       </div>
@@ -83,7 +93,7 @@
           [label]="'Notas'"
           [placeholder]="'Notas'"
           [id]="'Notas'"
-          (modelChange)="updateFilters($event, 'notes')"
+          (modelChange)="updateFilters($event, 'concept')"
         ></app-input-search>
       </div>
 
