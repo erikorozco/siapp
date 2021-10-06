@@ -78,6 +78,43 @@ public interface ReportRepository extends JpaRepository<Person, Integer> {
 					"where oat.id_otra_aportacion = :otherTicketId",
 			nativeQuery = true)
 	List<Object[]> getTherapistsByOtherItcketId(Integer otherTicketId);
+	
+	// sumas por tipo de servios y servicios totales
+	@Query(
+			value = "select\n" + 
+					"	count(*) as totalServices,\n" + 
+					"	sum(a.total) as totalMoneyServices,\n" + 
+					"	s.texto \n" + 
+					"from\n" + 
+					"	aportacion a inner join servicio s\n" + 
+					"on s.id_servicio = a.id_servicio \n" + 
+					"where s.creado between :startDate and :endDate\n" + 
+					"	and s.activo = true \n" + 
+					"group by\n" + 
+					"	s.texto; ",
+			nativeQuery = true)
+	List<Object[]> getTotalServices(Date startDate, Date endDate);
+	
+	// sumas de servicios y servicios totales por terapeuta
+	@Query(
+			value = "select\n" + 
+					"	count(*) as totaCount,\n" + 
+					"	sum(a.total) as totalServices,\n" + 
+					"	a.id_terapeuta,\n" + 
+					"	concat_ws(' ', t.nombret, t.apellidopt, t.apellidomt) as nombreTerapeuta\n" + 
+					"from\n" + 
+					"	aportacion a\n" + 
+					"inner join terapeuta t on\n" + 
+					"	a.id_terapeuta = t.id_terapeuta\n" + 
+					"inner join servicio s on\n" + 
+					"	a.id_servicio = s.id_servicio\n" + 
+					"where s.creado between :startDate and :endDate\n" + 
+					"	and s.activo = true \n" + 
+					"group by\n" + 
+					"	a.id_terapeuta,\n" + 
+					"	nombreTerapeuta;",
+			nativeQuery = true)
+	List<Object[]> getTotalServicesByTherapist(Date startDate, Date endDate);
 
 }
 

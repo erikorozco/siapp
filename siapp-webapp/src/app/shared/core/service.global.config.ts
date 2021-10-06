@@ -220,7 +220,8 @@ export const API_URL_CONFIG = {
     reportsAPI: {
       name: 'reports/',
       endpoints: {
-        ticketsAll : 'ticketsAll?' // startDate & endDate & exportFile
+        ticketsAll : 'ticketsAll?', // startDate & endDate & exportFile
+        ticketsAllStatistics : 'ticketsStatistics?' // startDate & endDate
       }
     },
     serviceTypesAPI: {

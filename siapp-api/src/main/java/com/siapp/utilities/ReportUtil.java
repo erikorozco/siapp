@@ -51,5 +51,19 @@ public class ReportUtil {
 		}
 		return finalResult;
 	}
+	
+	public static List<HashMap<String, Object>> convertArrayToObjectList(List<Object[]> items, String[] keys) {
+		List<HashMap<String, Object>> finalResult = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> map = null;
+		for (Object[] el : items) {
+			map = new HashMap<>();
+			int index = 0;
+			for (String key : keys) {				
+				map.put(key, el[index++]);
+			}
+			finalResult.add(map);
+		}
+		return finalResult;
+	}
 
 }

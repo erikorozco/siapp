@@ -100,6 +100,8 @@ import { FormServiceTypeComponent } from './modules/service-types/components/for
 import { ListServiceTypeComponent } from './modules/service-types/components/list-service-type/list-service-type.component';
 import { FormTicketPersonDataComponent } from './modules/tickets/components/form-ticket-person-data/form-ticket-person-data.component';
 import { FormOtherTicketComponent } from './modules/tickets/components/form-other-ticket/form-other-ticket.component';
+import { ReportContainerComponent } from './shared/components/report-container/report-container.component';
+import { GeneralTotalServicesGraphComponent } from './modules/reports/components/general-total-services-graph/general-total-services-graph.component';
 // import { ListPsychometricsManagmentComponent } from './modules/psychometrics/components/list-psychometrics-managment/list-psychometrics-managment.component';
 registerLocaleData(localeEsMX , 'es-MX');
 
@@ -174,6 +176,8 @@ registerLocaleData(localeEsMX , 'es-MX');
     ListServiceTypeComponent,
     FormTicketPersonDataComponent,
     FormOtherTicketComponent,
+    ReportContainerComponent,
+    GeneralTotalServicesGraphComponent,
   ],
   imports: [
     BrowserModule,

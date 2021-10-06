@@ -84,4 +84,18 @@ public class ReportService {
 		return excelCreator;
 	}
 
+	public HashMap<String, Object> ticketsStatistics(Date startDate, Date endDate) {
+		HashMap<String, Object> report = new HashMap<String, Object>();
+		List<Object[]> totalServicesArray = this.reportRepository.getTotalServices(startDate, endDate);
+		String[] totalServicesKeys = {"totalService", "totalMoneyService", "serviceName"};
+		List<HashMap<String, Object>> totalServicesGeneral = ReportUtil.convertArrayToObjectList(totalServicesArray, totalServicesKeys);
+		report.put("totalServicesGeneral", totalServicesGeneral);
+		
+		List<Object[]> totalServicesByTherapistArray = this.reportRepository.getTotalServicesByTherapist(startDate, endDate);
+		String[] totalServicesByTherapistKeys = {"totalServices", "totalMoneyServices", "therapistId", "therapistName"};
+		List<HashMap<String, Object>> totalServicesByTherapist = ReportUtil.convertArrayToObjectList(totalServicesByTherapistArray, totalServicesByTherapistKeys);
+		report.put("totalServicesByTherapist", totalServicesByTherapist);
+		return report;
+	}
+
 }

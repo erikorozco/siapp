@@ -25,4 +25,8 @@ export class ReportService {
     console.log(baseUrl);
     window.open(baseUrl, '_blank');
   }
+
+  getAllStatisticsTicketsReport(params: HttpParams): any {
+    return this.http.get<any>(this.baseUrl + URL_CONF.reportsAPI.endpoints.ticketsAllStatistics + params.toString() );
+  }
 }

@@ -57,8 +57,16 @@ public class ReportController {
 		} else {
 			return null;
 		}
-		
-		
+    }
+	
+	@ApiOperation(value = "Get ticket statistics", notes = "Returns a list of objects", responseContainer="List")
+	@GetMapping("/ticketsStatistics")
+	public HashMap<String, Object> getTicketsStatistics(
+			HttpServletResponse response,
+			@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate)
+	{
+				return reportService.ticketsStatistics(startDate, endDate);
     }
 	
 
