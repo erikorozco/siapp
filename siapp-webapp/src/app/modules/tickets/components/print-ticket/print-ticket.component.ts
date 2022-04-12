@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { OtherTicketService } from 'src/app/shared/services/other-ticket.service copy';
+import { OtherTicketService } from 'src/app/shared/services/other-ticket.service';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 

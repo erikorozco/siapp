@@ -6,8 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { ServiceTypeDataService } from 'src/app/shared/services/data/service-type-data.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
-import { OtherTicketService } from 'src/app/shared/services/other-ticket.service copy';
-import { RecordService } from 'src/app/shared/services/record-service';
+import { OtherTicketService } from 'src/app/shared/services/other-ticket.service';
 import {
   TICKET_CONST as TicketConstants
 } from 'src/app/shared/utils/ticket.constants';
@@ -32,7 +31,6 @@ export class FormOtherTicketComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private routes: ActivatedRoute,
-    private recordService: RecordService,
     public dialog: MatDialog,
     public userDataService: UserDataService,
     public serviceTypeDataService: ServiceTypeDataService,

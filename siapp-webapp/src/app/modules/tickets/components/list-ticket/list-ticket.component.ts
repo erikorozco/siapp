@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceTypeDataService } from 'src/app/shared/services/data/service-type-data.service';
 import { UserDataService } from 'src/app/shared/services/data/user-data.service';
-import { OtherTicketService } from 'src/app/shared/services/other-ticket.service copy';
+import { OtherTicketService } from 'src/app/shared/services/other-ticket.service';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { DateTimeHelper } from 'src/app/shared/utils/DateTimeHelper';
 import {
