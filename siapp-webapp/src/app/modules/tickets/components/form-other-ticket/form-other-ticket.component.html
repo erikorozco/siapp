@@ -3,7 +3,7 @@
   <h1 class="h3 mb-0 text-gray-800">
     <a [routerLink]="['/home']">Panel de control</a> -> 
     <a [routerLink]="['/home/tickets']">Recibos</a> -> 
-    {{this.action === 'add-other-ticket' ? 'Agregar': this.action === 'edit-other-ticket' ? 'Editar' : 'Ver'}} Recibo (Otros)</h1> 
+    {{this.action === 'add-other-ticket' ? 'Agregar': this.action === 'edit-other-ticket' ? 'Editar': this.action === 'duplicate-other-ticket' ? 'Duplicar' : 'Ver'}} Recibo (Otros)</h1> 
 </div>
 
 <!-- FORM -->
@@ -46,7 +46,7 @@
         <div formGroupName="serviceType" class="form-group col-md-6" [ngClass]="{'has-error': requiredFieldValidation('serviceType.id') } ">
           <label for="serviceType">Tipo de servicio</label>
           <select type="option" class="form-control" formControlName="id" id="serviceType">
-            <option disabled value="">Seleccione un tipo de servicio</option>
+            <option [disabled]="this.action === 'edit-other-ticket'" value="" [selected]="this.action == 'duplicate-other-ticket'" >Seleccione un tipo de servicio</option>
             <option *ngFor="let serviceType of this.serviceTypeDataService.serviceTypes.value" [ngValue]="serviceType.value">
               {{ serviceType.label }}
             </option>
@@ -92,3 +92,4 @@
     </form>
   </div>
 </div>
+
