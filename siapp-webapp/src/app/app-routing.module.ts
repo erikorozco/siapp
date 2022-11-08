@@ -172,6 +172,7 @@ const ROUTES: Routes = [
       { path: 'edit-other-ticket', redirectTo: 'add-other-ticket' },
       { path: 'view-other-ticket/:id', component: FormOtherTicketComponent },
       { path: 'view-other-ticket', redirectTo: 'add-other-ticket' },
+      { path: 'duplicate-other-ticket/:id', component: FormOtherTicketComponent },
       { path: 'therapist-agenda/:therapistId', component: AgendaComponent },
       { path: 'reports', component: ReportListComponent },
       { path: 'service-types', component: ListServiceTypeComponent },

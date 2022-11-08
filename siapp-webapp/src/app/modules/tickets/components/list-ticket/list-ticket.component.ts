@@ -78,6 +78,19 @@ export class ListTicketComponent implements OnInit {
               'btn-info': true
             }
           }
+        ],
+        customActions:[
+          {
+            display: (ticket) => { return  !ticket.record},  
+            text: 'Duplicar',
+            action: 'duplicate',
+            iconClass: {
+              'fa-copy': true
+            },
+            buttonClass: {
+              'btn-info': true
+            }
+          }
         ]
       }
     }];
@@ -99,6 +112,9 @@ export class ListTicketComponent implements OnInit {
       case 'addOtherTicket':
         this.router.navigate(['home', 'add-other-ticket']);
         break;
+      case 'duplicate':
+        this.duplicateTicket(value);
+        break;
       default:
         console.log(`${action} is not a valid option`);
         break;
@@ -111,6 +127,10 @@ export class ListTicketComponent implements OnInit {
 
   editTicket(ticket: any, ticketType) {
     this.router.navigate(['home', 'edit-' + ticketType, ticket.id]);
+  }
+
+  duplicateTicket(ticket: any) {
+    this.router.navigate(['home', 'duplicate-other-ticket', ticket.id]);
   }
 
   printTicket(ticket: any, ticketType) {
