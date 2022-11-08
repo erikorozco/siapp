@@ -46,7 +46,7 @@ export class FormOtherTicketComponent implements OnInit {
         this.setFormData(data);
         this.otherTicketForm.disable();
     }, error => {console.log(error); });
-    } else if (this.duplicateIfValidation(this.action)) {
+    } else if (this.action === 'duplicate-other-ticket' || this.action === 'edit-other-ticket') {
       this.otherTicketService.get(this.otherTicketId).toPromise().then(data => {
         this.setFormData(data);
         this.otherTicket = data;
@@ -54,6 +54,7 @@ export class FormOtherTicketComponent implements OnInit {
           this.otherTicketForm.disable();
           this.isDisabled = true;
         }
+        this.ticketPersonDataFromGroup.markAsDirty();
       }, error => { console.log(error); });
     } else if (this.action === 'add-other-ticket') {
       this.record = {
@@ -69,12 +70,6 @@ export class FormOtherTicketComponent implements OnInit {
         city: null,
         location: null,
       };
-    }
-    if (this.action === 'duplicate-other-ticket') {
-      this.ticketPersonDataFromGroup.markAsDirty();
-    }
-    if (this.action === 'edit-other-ticket') {
-      this.ticketPersonDataFromGroup.markAsDirty();
     }
   }
 
@@ -137,10 +132,8 @@ export class FormOtherTicketComponent implements OnInit {
       const targetIndex = this.therapists.findIndex((t) => t.therapist.id === therapist.therapist.id);
       if (targetIndex < 0) {
         this.therapists.push(therapist);
-        if (this.duplicateIfValidation(this.action)) {
-          this.ticketPersonDataFromGroup.markAsDirty();
-          this.otherTicketForm.markAsDirty();
-        }
+        this.ticketPersonDataFromGroup.markAsDirty();
+        this.otherTicketForm.markAsDirty();
       }
     }
   }
@@ -149,22 +142,18 @@ export class FormOtherTicketComponent implements OnInit {
     const targetIndex = this.therapists.findIndex((t) => t.therapist.id === therapist.therapist.id);
     if (targetIndex >= 0) {
       this.therapists.splice(targetIndex, 1);
-      if (this.duplicateIfValidation(this.action)){
-        this.ticketPersonDataFromGroup.markAsDirty();
-        this.otherTicketForm.markAsDirty();
-      }
+      this.ticketPersonDataFromGroup.markAsDirty();
+      this.otherTicketForm.markAsDirty();
     }
   }
 
   handleFormTicketPersonData(formGrop) {
     this.ticketPersonDataFromGroup = formGrop;
-    if (this.duplicateIfValidation(this.action)) {
-      this.otherTicketForm.markAsDirty();
-    }
+    this.otherTicketForm.markAsDirty();
   }
 
   onSubmit() {
-    if (this.duplicateIfValidation(this.action)) {
+    if (this.action === 'duplicate-other-ticket' || this.action === 'add-other-ticket') {
       this.setFormTicketPersonDataToFormTicket();
       this.otherTicketForm.get('therapists').setValue(this.parseTherapistaApiFormData());
       this.otherTicketService.create(this.otherTicketForm.value).toPromise().then((data: any) => {
@@ -283,8 +272,5 @@ export class FormOtherTicketComponent implements OnInit {
 
   requiredFieldValidation(field) {
     return this.otherTicketForm.get(field).invalid && this.otherTicketForm.get(field).touched;
-  }
-  duplicateIfValidation(action){
-    return action === 'add-other-ticket' || action === 'duplicate-other-ticket';
   }
 }
