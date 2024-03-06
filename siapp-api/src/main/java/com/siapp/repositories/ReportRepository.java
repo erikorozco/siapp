@@ -49,7 +49,7 @@ public interface ReportRepository extends JpaRepository<Person, Integer> {
 			value = "select\n" + 
 					"	oa.id_otra_aportacion,\n" + 
 					"	oa.creado,\n" + 
-					"	concat_ws(' ', oa.nombre, oa.apellidoMaterno, oa.apellidoMaterno) as nombrePaciente,\n" + 
+					"	concat_ws(' ', oa.nombre, oa.apellidoPaterno, oa.apellidoMaterno) as nombrePaciente,\n" + 
 					"	extract(year\n" + 
 					"from\n" + 
 					"	age(oa.\"fecha_nacimiento\")) as edad,\n" + 
